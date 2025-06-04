@@ -35,8 +35,9 @@
                     <!-- Navigation -->
                     <nav class="hidden md:flex space-x-8">
                         <a href="#home" class="text-gray-700 hover:text-primary-500 transition-colors">Home</a>
-                        <a href="#about" class="text-gray-700 hover:text-primary-500 transition-colors">About</a>
-                        <a href="#services" class="text-gray-700 hover:text-primary-500 transition-colors">Services</a>
+                        <a href="{{ url('/about') }}" class="text-gray-700 hover:text-primary-500 transition-colors">About</a>
+                        <a href="{{ url('/partners') }}" class="text-gray-700 hover:text-primary-500 transition-colors">Partners</a>
+                        <a href="{{ url('/campaigns') }}" class="text-gray-700 hover:text-primary-500 transition-colors">Campaigns</a>
                         <a href="#contact" class="text-gray-700 hover:text-primary-500 transition-colors">Contact</a>
                     </nav>
 
@@ -73,46 +74,53 @@
         </header>
 
         <!-- Hero Section -->
-        <section id="home" class="bg-gradient-to-br from-primary-50 to-white py-20">
+        <section id="home" class="bg-gradient-to-br from-primary-50 to-white py-12 md:py-16 lg:py-20">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                     <!-- Hero Content -->
-                    <div class="space-y-8">
-                        <div class="space-y-4">
-                            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                                Islamic Financial
-                                <span class="text-primary-500">Solutions</span>
-                                for Modern Life
+                    <div class="space-y-6 md:space-y-8 text-center lg:text-left">
+                        <div class="space-y-3 md:space-y-4">
+                            <h1 class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight">
+                                Empowering Communities Through
+                                <span class="text-primary-500">Islamic Crowdfunding</span>
                             </h1>
-                            <p class="text-xl text-gray-600 leading-relaxed">
-                                Discover Shariah-compliant financial services that align with your values.
-                                Build wealth, protect your family, and achieve your dreams through ethical banking.
+                            <p class="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                                Join thousands of donors supporting verified campaigns that make a real difference.
+                                Every contribution helps build stronger communities through Shariah-compliant giving.
                             </p>
                         </div>
 
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <a href="#services" class="bg-primary-500 text-white px-8 py-4 rounded-lg font-semibold hover:bg-primary-600 transition-colors text-center">
-                                Explore Services
+                        <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start">
+                            <a href="#campaigns" class="bg-primary-500 text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold hover:bg-primary-600 transition-all duration-300 text-center transform hover:scale-105 shadow-lg hover:shadow-xl">
+                                Donate Now
                             </a>
-                            <a href="#contact" class="border-2 border-primary-500 text-primary-500 px-8 py-4 rounded-lg font-semibold hover:bg-primary-50 transition-colors text-center">
-                                Get Started
+                            <a href="#about" class="border-2 border-primary-500 text-primary-500 px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold hover:bg-primary-50 transition-all duration-300 text-center transform hover:scale-105">
+                                Start Campaign
                             </a>
                         </div>
 
-                        <!-- Trust Indicators -->
-                        <div class="flex items-center space-x-8 pt-8">
+                        <!-- Impact Stats -->
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-6 lg:space-x-8 pt-4 md:pt-8">
                             <div class="text-center">
-                                <div class="text-2xl font-bold text-gray-900">10K+</div>
-                                <div class="text-sm text-gray-600">Happy Customers</div>
+                                <div class="text-xl md:text-2xl font-bold text-primary-600">RM 2.5M+</div>
+                                <div class="text-xs md:text-sm text-gray-600">Total Raised</div>
                             </div>
                             <div class="text-center">
-                                <div class="text-2xl font-bold text-gray-900">100%</div>
-                                <div class="text-sm text-gray-600">Shariah Compliant</div>
+                                <div class="text-xl md:text-2xl font-bold text-primary-600">15K+</div>
+                                <div class="text-xs md:text-sm text-gray-600">Lives Impacted</div>
                             </div>
                             <div class="text-center">
-                                <div class="text-2xl font-bold text-gray-900">24/7</div>
-                                <div class="text-sm text-gray-600">Support</div>
+                                <div class="text-xl md:text-2xl font-bold text-primary-600">500+</div>
+                                <div class="text-xs md:text-sm text-gray-600">Active Campaigns</div>
                             </div>
+                        </div>
+
+                        <!-- Quranic Verse -->
+                        <div class="bg-primary-50 rounded-lg p-4 md:p-6 border-l-4 border-primary-500">
+                            <p class="text-sm md:text-base text-gray-700 italic leading-relaxed">
+                                "The example of those who spend their wealth in the way of Allah is like a seed of grain that grows seven ears; in each ear there are a hundred grains."
+                            </p>
+                            <p class="text-xs md:text-sm text-primary-600 font-medium mt-2">— Quran 2:261</p>
                         </div>
                     </div>
 
@@ -151,142 +159,243 @@
             </div>
         </section>
 
-        <!-- Services Section -->
-        <section id="services" class="py-20 bg-white">
+        <!-- Featured Campaigns Section -->
+        <section id="campaigns" class="py-12 md:py-16 lg:py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                        Our Islamic Financial Services
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
+                        Featured <span class="text-primary-500">Campaigns</span>
                     </h2>
-                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Comprehensive Shariah-compliant financial solutions designed to meet your personal and business needs
+                    <p class="text-base md:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto">
+                        Support verified campaigns that are making a real difference in communities worldwide. Every donation is tracked and transparent.
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Service 1 -->
-                    <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-shadow">
-                        <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-6">
-                            <svg class="w-6 h-6 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
-                            </svg>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                    <!-- Campaign 1 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                        <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                             alt="Emergency Food Relief" class="w-full h-40 md:h-48 object-cover">
+                        <div class="p-4 md:p-6">
+                            <div class="flex items-center mb-3">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80"
+                                     alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
+                                <span class="text-xs md:text-sm text-gray-600">Yayasan Muslimin</span>
+                            </div>
+                            <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Emergency Food Relief for Gaza Families</h3>
+                            <p class="text-sm md:text-base text-gray-600 mb-3 md:mb-4 leading-relaxed">
+                                Provide essential food packages to families facing severe food shortages.
+                            </p>
+
+                            <!-- Progress Bar -->
+                            <div class="mb-3 md:mb-4">
+                                <div class="flex justify-between text-xs md:text-sm text-gray-600 mb-2">
+                                    <span>RM 45,230 raised</span>
+                                    <span>73% of RM 62,000</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-primary-500 h-2 rounded-full transition-all duration-500" style="width: 73%"></div>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs md:text-sm text-gray-500">234 donors</span>
+                                <a href="#" class="bg-primary-500 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-xs md:text-sm">
+                                    Donate Now
+                                </a>
+                            </div>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Islamic Banking</h3>
-                        <p class="text-gray-600 mb-6">
-                            Shariah-compliant savings and current accounts with competitive profit rates and ethical investment principles.
-                        </p>
-                        <a href="#" class="text-primary-500 font-medium hover:text-primary-600 transition-colors">
-                            Learn More →
-                        </a>
                     </div>
 
-                    <!-- Service 2 -->
-                    <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-shadow">
-                        <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-6">
-                            <svg class="w-6 h-6 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
-                            </svg>
+                    <!-- Campaign 2 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                        <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                             alt="Education Support" class="w-full h-40 md:h-48 object-cover">
+                        <div class="p-4 md:p-6">
+                            <div class="flex items-center mb-3">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80"
+                                     alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
+                                <span class="text-xs md:text-sm text-gray-600">Education Foundation</span>
+                            </div>
+                            <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Build Islamic School in Rural Area</h3>
+                            <p class="text-sm md:text-base text-gray-600 mb-3 md:mb-4 leading-relaxed">
+                                Constructing a new Islamic school to provide quality education for rural children.
+                            </p>
+
+                            <!-- Progress Bar -->
+                            <div class="mb-3 md:mb-4">
+                                <div class="flex justify-between text-xs md:text-sm text-gray-600 mb-2">
+                                    <span>RM 180,500 raised</span>
+                                    <span>60% of RM 300,000</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-primary-500 h-2 rounded-full transition-all duration-500" style="width: 60%"></div>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs md:text-sm text-gray-500">156 donors</span>
+                                <a href="#" class="bg-primary-500 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-xs md:text-sm">
+                                    Donate Now
+                                </a>
+                            </div>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Takaful Insurance</h3>
-                        <p class="text-gray-600 mb-6">
-                            Comprehensive Islamic insurance coverage for life, health, and property protection based on mutual cooperation.
-                        </p>
-                        <a href="#" class="text-primary-500 font-medium hover:text-primary-600 transition-colors">
-                            Learn More →
-                        </a>
                     </div>
 
-                    <!-- Service 3 -->
-                    <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-shadow">
-                        <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-6">
-                            <svg class="w-6 h-6 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-                            </svg>
+                    <!-- Campaign 3 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                        <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                             alt="Healthcare Support" class="w-full h-40 md:h-48 object-cover">
+                        <div class="p-4 md:p-6">
+                            <div class="flex items-center mb-3">
+                                <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80"
+                                     alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
+                                <span class="text-xs md:text-sm text-gray-600">Health Care Malaysia</span>
+                            </div>
+                            <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Mobile Health Clinic for Remote Villages</h3>
+                            <p class="text-sm md:text-base text-gray-600 mb-3 md:mb-4 leading-relaxed">
+                                Bringing essential healthcare services to underserved remote communities.
+                            </p>
+
+                            <!-- Progress Bar -->
+                            <div class="mb-3 md:mb-4">
+                                <div class="flex justify-between text-xs md:text-sm text-gray-600 mb-2">
+                                    <span>RM 85,200 raised</span>
+                                    <span>85% of RM 100,000</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-primary-500 h-2 rounded-full transition-all duration-500" style="width: 85%"></div>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs md:text-sm text-gray-500">312 donors</span>
+                                <a href="#" class="bg-primary-500 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-xs md:text-sm">
+                                    Donate Now
+                                </a>
+                            </div>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Investment Solutions</h3>
-                        <p class="text-gray-600 mb-6">
-                            Halal investment opportunities in sukuk, Islamic funds, and Shariah-compliant equity portfolios.
-                        </p>
-                        <a href="#" class="text-primary-500 font-medium hover:text-primary-600 transition-colors">
-                            Learn More →
-                        </a>
                     </div>
 
-                    <!-- Service 4 -->
-                    <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-shadow">
-                        <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-6">
-                            <svg class="w-6 h-6 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"/>
+                </div>
+
+                <!-- View All Campaigns Button -->
+                <div class="text-center mt-8 md:mt-12">
+                    <a href="{{ url('/campaigns') }}" class="inline-flex items-center px-6 py-3 md:px-8 md:py-4 bg-white border-2 border-primary-500 text-primary-500 font-semibold rounded-lg hover:bg-primary-500 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                        View All Campaigns
+                        <svg class="w-4 h-4 md:w-5 md:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Impact Section -->
+        <section class="py-12 md:py-16 lg:py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
+                        Our <span class="text-primary-500">Impact</span>
+                    </h2>
+                    <p class="text-base md:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto">
+                        Together, we're creating meaningful change in communities worldwide through the power of Islamic crowdfunding.
+                    </p>
+                </div>
+
+                <!-- Impact Stats Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-12 md:mb-16">
+                    <div class="text-center">
+                        <div class="bg-white rounded-xl p-4 md:p-6 shadow-lg border border-gray-100">
+                            <div class="text-2xl md:text-3xl lg:text-4xl font-bold text-primary-600 mb-2">RM 2.5M+</div>
+                            <div class="text-sm md:text-base text-gray-600">Total Raised</div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-white rounded-xl p-4 md:p-6 shadow-lg border border-gray-100">
+                            <div class="text-2xl md:text-3xl lg:text-4xl font-bold text-primary-600 mb-2">15,000+</div>
+                            <div class="text-sm md:text-base text-gray-600">Lives Impacted</div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-white rounded-xl p-4 md:p-6 shadow-lg border border-gray-100">
+                            <div class="text-2xl md:text-3xl lg:text-4xl font-bold text-primary-600 mb-2">500+</div>
+                            <div class="text-sm md:text-base text-gray-600">Active Campaigns</div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-white rounded-xl p-4 md:p-6 shadow-lg border border-gray-100">
+                            <div class="text-2xl md:text-3xl lg:text-4xl font-bold text-primary-600 mb-2">8,500+</div>
+                            <div class="text-sm md:text-base text-gray-600">Generous Donors</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Focus Areas -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                    <div class="bg-white rounded-xl p-6 md:p-8 shadow-lg border border-gray-100 text-center">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
+                            <svg class="w-6 h-6 md:w-8 md:h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Islamic Financing</h3>
-                        <p class="text-gray-600 mb-6">
-                            Home, vehicle, and business financing solutions through Murabaha, Ijarah, and other Islamic contracts.
+                        <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">Education</h3>
+                        <p class="text-sm md:text-base text-gray-600 leading-relaxed">
+                            Supporting quality Islamic education and building schools in underserved communities.
                         </p>
-                        <a href="#" class="text-primary-500 font-medium hover:text-primary-600 transition-colors">
-                            Learn More →
-                        </a>
                     </div>
 
-                    <!-- Service 5 -->
-                    <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-shadow">
-                        <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-6">
-                            <svg class="w-6 h-6 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    <div class="bg-white rounded-xl p-6 md:p-8 shadow-lg border border-gray-100 text-center">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
+                            <svg class="w-6 h-6 md:w-8 md:h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Wealth Management</h3>
-                        <p class="text-gray-600 mb-6">
-                            Personalized Islamic wealth management and financial planning services for high-net-worth individuals.
+                        <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">Healthcare</h3>
+                        <p class="text-sm md:text-base text-gray-600 leading-relaxed">
+                            Providing essential medical care and health services to those who need it most.
                         </p>
-                        <a href="#" class="text-primary-500 font-medium hover:text-primary-600 transition-colors">
-                            Learn More →
-                        </a>
                     </div>
 
-                    <!-- Service 6 -->
-                    <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-shadow">
-                        <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-6">
-                            <svg class="w-6 h-6 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6"/>
+                    <div class="bg-white rounded-xl p-6 md:p-8 shadow-lg border border-gray-100 text-center">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
+                            <svg class="w-6 h-6 md:w-8 md:h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Business Solutions</h3>
-                        <p class="text-gray-600 mb-6">
-                            Islamic trade financing, working capital solutions, and business banking services for enterprises.
+                        <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">Community</h3>
+                        <p class="text-sm md:text-base text-gray-600 leading-relaxed">
+                            Empowering communities through social programs and sustainable development initiatives.
                         </p>
-                        <a href="#" class="text-primary-500 font-medium hover:text-primary-600 transition-colors">
-                            Learn More →
-                        </a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- About Section -->
-        <section id="about" class="py-20 bg-gray-50">
+        <section id="about" class="py-12 md:py-16 lg:py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <!-- About Content -->
                     <div class="space-y-6">
                         <div class="space-y-4">
-                            <h2 class="text-3xl md:text-4xl font-bold text-gray-900">
-                                About Raudhah Muamalat
+                            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900">
+                                About <span class="text-primary-500">Jariah Fund</span>
                             </h2>
-                            <p class="text-lg text-gray-600 leading-relaxed">
-                                Raudhah Muamalat is a leading Islamic financial institution committed to providing
-                                Shariah-compliant financial solutions that align with Islamic principles and values.
+                            <p class="text-base md:text-lg text-gray-600 leading-relaxed">
+                                Jariah Fund is Malaysia's leading Islamic crowdfunding platform, empowering communities
+                                through Shariah-compliant giving and transparent charitable initiatives.
                             </p>
-                            <p class="text-lg text-gray-600 leading-relaxed">
-                                With years of experience in Islamic finance, we offer comprehensive banking,
-                                investment, and insurance services that help our customers achieve their financial
-                                goals while adhering to Islamic teachings.
+                            <p class="text-base md:text-lg text-gray-600 leading-relaxed">
+                                Backed by Bank Muamalat Malaysia, we provide a trusted platform where donors can
+                                support verified campaigns that create lasting positive impact in education, healthcare,
+                                and community development.
                             </p>
                         </div>
 
                         <!-- Key Features -->
                         <div class="space-y-4">
-                            <h3 class="text-xl font-semibold text-gray-900">Why Choose Us?</h3>
+                            <h3 class="text-lg md:text-xl font-semibold text-gray-900">Why Choose Jariah Fund?</h3>
                             <div class="space-y-3">
                                 <div class="flex items-start space-x-3">
                                     <div class="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -295,8 +404,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h4 class="font-medium text-gray-900">100% Shariah Compliant</h4>
-                                        <p class="text-gray-600">All our products are certified by qualified Islamic scholars</p>
+                                        <h4 class="text-sm md:text-base font-medium text-gray-900">100% Transparent & Verified</h4>
+                                        <p class="text-xs md:text-sm text-gray-600">All campaigns are thoroughly vetted and progress is tracked in real-time</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start space-x-3">
@@ -306,8 +415,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h4 class="font-medium text-gray-900">Expert Advisory</h4>
-                                        <p class="text-gray-600">Professional guidance from Islamic finance experts</p>
+                                        <h4 class="text-sm md:text-base font-medium text-gray-900">Shariah-Compliant Giving</h4>
+                                        <p class="text-xs md:text-sm text-gray-600">All donations follow Islamic principles and guidelines</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start space-x-3">
@@ -317,33 +426,52 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h4 class="font-medium text-gray-900">Competitive Returns</h4>
-                                        <p class="text-gray-600">Attractive profit rates and investment opportunities</p>
+                                        <h4 class="text-sm md:text-base font-medium text-gray-900">Trusted by Bank Muamalat</h4>
+                                        <p class="text-xs md:text-sm text-gray-600">Backed by Malaysia's leading Islamic banking institution</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- CTA Button -->
+                        <div class="pt-4">
+                            <a href="{{ url('/about') }}" class="inline-flex items-center px-6 py-3 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm md:text-base">
+                                Learn More About Us
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
 
-                    <!-- About Image -->
+                    <!-- Mission Card -->
                     <div class="relative">
-                        <div class="bg-primary-500 rounded-2xl p-8 text-white">
-                            <div class="space-y-6">
-                                <h3 class="text-2xl font-bold">Our Mission</h3>
-                                <p class="text-primary-100 leading-relaxed">
-                                    To provide accessible, innovative, and Shariah-compliant financial solutions
-                                    that empower individuals and businesses to achieve prosperity while maintaining
-                                    their Islamic values and principles.
+                        <div class="bg-primary-500 rounded-2xl p-6 md:p-8 text-white">
+                            <div class="space-y-4 md:space-y-6">
+                                <h3 class="text-xl md:text-2xl font-bold">Our Mission</h3>
+                                <p class="text-primary-100 leading-relaxed text-sm md:text-base">
+                                    To create a transparent, trusted platform that connects generous hearts with
+                                    meaningful causes, enabling communities to support each other through
+                                    Shariah-compliant crowdfunding.
                                 </p>
-                                <div class="grid grid-cols-2 gap-4 pt-4">
+                                <div class="grid grid-cols-2 gap-3 md:gap-4 pt-2 md:pt-4">
                                     <div class="text-center">
-                                        <div class="text-3xl font-bold">15+</div>
-                                        <div class="text-primary-200 text-sm">Years Experience</div>
+                                        <div class="text-2xl md:text-3xl font-bold">RM 2.5M+</div>
+                                        <div class="text-primary-200 text-xs md:text-sm">Total Raised</div>
                                     </div>
                                     <div class="text-center">
-                                        <div class="text-3xl font-bold">50K+</div>
-                                        <div class="text-primary-200 text-sm">Satisfied Customers</div>
+                                        <div class="text-2xl md:text-3xl font-bold">15K+</div>
+                                        <div class="text-primary-200 text-xs md:text-sm">Lives Impacted</div>
                                     </div>
+                                </div>
+
+                                <!-- Islamic Quote -->
+                                <div class="bg-primary-600 rounded-lg p-3 md:p-4 border-l-4 border-white">
+                                    <p class="text-xs md:text-sm text-primary-100 italic leading-relaxed">
+                                        "Whoever relieves a believer's distress of the distressful aspects of this world,
+                                        Allah will rescue him from a difficulty of the difficulties of the Hereafter."
+                                    </p>
+                                    <p class="text-xs text-primary-200 font-medium mt-2">— Prophet Muhammad (PBUH)</p>
                                 </div>
                             </div>
                         </div>
@@ -518,10 +646,10 @@
                     <div class="space-y-4">
                         <h3 class="text-lg font-semibold">Quick Links</h3>
                         <ul class="space-y-2 text-gray-300">
-                            <li><a href="#about" class="hover:text-primary-500 transition-colors">About Us</a></li>
+                            <li><a href="{{ url('/about') }}" class="hover:text-primary-500 transition-colors">About Us</a></li>
+                            <li><a href="{{ url('/partners') }}" class="hover:text-primary-500 transition-colors">Partners</a></li>
+                            <li><a href="{{ url('/campaigns') }}" class="hover:text-primary-500 transition-colors">Campaigns</a></li>
                             <li><a href="#contact" class="hover:text-primary-500 transition-colors">Contact</a></li>
-                            <li><a href="#" class="hover:text-primary-500 transition-colors">Careers</a></li>
-                            <li><a href="#" class="hover:text-primary-500 transition-colors">News & Updates</a></li>
                             <li><a href="#" class="hover:text-primary-500 transition-colors">Privacy Policy</a></li>
                             <li><a href="#" class="hover:text-primary-500 transition-colors">Terms of Service</a></li>
                         </ul>
