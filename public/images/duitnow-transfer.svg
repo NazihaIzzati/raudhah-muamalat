@@ -1,0 +1,25 @@
+<svg width="300" height="150" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="300" height="150" fill="#f8f9fa"/>
+  
+  <!-- Mobile Phone -->
+  <g transform="translate(60, 30)">
+    <!-- Phone Body -->
+    <rect x="0" y="0" width="60" height="90" rx="8" fill="#2c3e50"/>
+    <!-- Screen -->
+    <rect x="5" y="8" width="50" height="74" rx="4" fill="#3498db"/>
+    <!-- Transfer Arrow -->
+    <path d="M15 35 L45 35 M40 30 L45 35 L40 40" stroke="#ffffff" stroke-width="3" fill="none"/>
+    <!-- Dollar Sign -->
+    <text x="30" y="55" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">$</text>
+  </g>
+  
+  <!-- Lightning Bolt -->
+  <g transform="translate(140, 45)">
+    <path d="M10 0 L0 20 L8 20 L5 35 L15 15 L7 15 Z" fill="#e74c3c"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="150" y="110" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#2c3e50" text-anchor="middle">Instant Transfer</text>
+  <text x="150" y="130" font-family="Arial, sans-serif" font-size="14" fill="#687f94" text-anchor="middle">Fast &amp; Convenient</text>
+</svg>

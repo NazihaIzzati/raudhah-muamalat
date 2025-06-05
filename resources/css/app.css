@@ -10,16 +10,16 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 
     /* Muamalat Color Palette */
-    --color-primary: #FE8000;
-    --color-primary-50: #FFF7ED;
-    --color-primary-100: #FFEDD5;
-    --color-primary-200: #FED7AA;
-    --color-primary-300: #FDBA74;
-    --color-primary-400: #FB923C;
-    --color-primary-500: #FE8000;
-    --color-primary-600: #EA580C;
-    --color-primary-700: #C2410C;
-    --color-primary-800: #9A3412;
-    --color-primary-900: #7C2D12;
-    --color-primary-950: #431407;
+    --color-primary: #FE5100;
+    --color-primary-50: #FFF4ED;
+    --color-primary-100: #FFE6D5;
+    --color-primary-200: #FFC9AA;
+    --color-primary-300: #FFA374;
+    --color-primary-400: #FF743C;
+    --color-primary-500: #FE5100;
+    --color-primary-600: #E04600;
+    --color-primary-700: #BC3A00;
+    --color-primary-800: #9A3000;
+    --color-primary-900: #7C2600;
+    --color-primary-950: #431300;
 }

@@ -20,58 +20,8 @@
             </style>
         @endif
     </head>
-    <body class="bg-white text-gray-900 font-sans">
-        <!-- Header -->
-        <header class="bg-white shadow-sm border-b border-gray-100">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center h-16">
-                    <!-- Logo -->
-                    <div class="flex items-center">
-                        <a href="{{ url('/') }}" class="text-2xl font-bold text-primary-500">
-                            Jariah Fund
-                        </a>
-                    </div>
-                    
-                    <!-- Navigation -->
-                    <nav class="hidden md:flex space-x-8">
-                        <a href="{{ url('/') }}" class="text-gray-700 hover:text-primary-500 transition-colors">Home</a>
-                        <a href="{{ url('/about') }}" class="text-gray-700 hover:text-primary-500 transition-colors">About</a>
-                        <a href="{{ url('/partners') }}" class="text-primary-500 font-medium">Partners</a>
-                        <a href="{{ url('/campaigns') }}" class="text-gray-700 hover:text-primary-500 transition-colors">Campaigns</a>
-                        <a href="{{ url('/') }}#contact" class="text-gray-700 hover:text-primary-500 transition-colors">Contact</a>
-                    </nav>
-                    
-                    <!-- Auth Links -->
-                    <div class="flex items-center space-x-4">
-                        @if (Route::has('login'))
-                            @auth
-                                <a href="{{ url('/dashboard') }}" class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition-colors">
-                                    Dashboard
-                                </a>
-                            @else
-                                <a href="{{ route('login') }}" class="text-gray-700 hover:text-primary-500 transition-colors">
-                                    Log in
-                                </a>
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition-colors">
-                                        Register
-                                    </a>
-                                @endif
-                            @endauth
-                        @endif
-                    </div>
-                    
-                    <!-- Mobile menu button -->
-                    <div class="md:hidden">
-                        <button type="button" class="text-gray-700 hover:text-primary-500">
-                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </header>
+    <body class="bg-gray-50 text-gray-900 font-sans">
+        @include('components.navigation')
 
         <!-- Hero Section -->
         <section class="bg-gradient-to-br from-primary-50 to-white py-12 md:py-16 lg:py-20">
@@ -237,94 +187,6 @@
             </div>
         </section>
 
-        <!-- Footer -->
-        <footer class="bg-gray-900 text-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- Company Info -->
-                    <div class="space-y-4">
-                        <div class="text-2xl font-bold text-primary-500">
-                            Jariah Fund
-                        </div>
-                        <p class="text-gray-300 leading-relaxed">
-                            A trusted crowdfunding platform to help the underprivileged.
-                            Contributing to society with Islamic values.
-                        </p>
-                    </div>
-
-                    <!-- Quick Links -->
-                    <div class="space-y-4">
-                        <h3 class="text-lg font-semibold">Quick Links</h3>
-                        <ul class="space-y-2 text-gray-300">
-                            <li><a href="{{ url('/') }}" class="hover:text-primary-500 transition-colors">Home</a></li>
-                            <li><a href="{{ url('/about') }}" class="hover:text-primary-500 transition-colors">About Us</a></li>
-                            <li><a href="{{ url('/partners') }}" class="hover:text-primary-500 transition-colors">Partners</a></li>
-                            <li><a href="{{ url('/') }}#contact" class="hover:text-primary-500 transition-colors">Contact</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Services -->
-                    <div class="space-y-4">
-                        <h3 class="text-lg font-semibold">Areas of Support</h3>
-                        <ul class="space-y-2 text-gray-300">
-                            <li><a href="#" class="hover:text-primary-500 transition-colors">Education Campaigns</a></li>
-                            <li><a href="#" class="hover:text-primary-500 transition-colors">Health Campaigns</a></li>
-                            <li><a href="#" class="hover:text-primary-500 transition-colors">Economic Support</a></li>
-                            <li><a href="#" class="hover:text-primary-500 transition-colors">Emergency Aid</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Contact Info -->
-                    <div class="space-y-4">
-                        <h3 class="text-lg font-semibold">Contact Info</h3>
-                        <div class="space-y-3 text-gray-300">
-                            <div class="flex items-center space-x-3">
-                                <svg class="w-5 h-5 text-primary-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                                </svg>
-                                <span>+60 3-1234 5678</span>
-                            </div>
-                            <div class="flex items-center space-x-3">
-                                <svg class="w-5 h-5 text-primary-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                                </svg>
-                                <span>info@jariahfund.com</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Bottom Footer -->
-                <div class="border-t border-gray-800 mt-12 pt-8">
-                    <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                        <div class="text-gray-400 text-sm">
-                            © {{ date('Y') }} Jariah Fund. All rights reserved.
-                        </div>
-                        <div class="flex space-x-6 text-sm text-gray-400">
-                            <a href="#" class="hover:text-primary-500 transition-colors">Privacy Policy</a>
-                            <a href="#" class="hover:text-primary-500 transition-colors">Terms of Service</a>
-                            <a href="#" class="hover:text-primary-500 transition-colors">Cookie Policy</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-
-        <!-- Smooth Scrolling Script -->
-        <script>
-            // Smooth scrolling for navigation links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-        </script>
+        @include('components.footer')
     </body>
 </html>

@@ -20,58 +20,8 @@
             </style>
         @endif
     </head>
-    <body class="bg-white text-gray-900 font-sans">
-        <!-- Header -->
-        <header class="bg-white shadow-sm border-b border-gray-100">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center h-16">
-                    <!-- Logo -->
-                    <div class="flex items-center">
-                        <a href="{{ url('/') }}" class="text-2xl font-bold text-primary-500">
-                            Jariah Fund
-                        </a>
-                    </div>
-                    
-                    <!-- Navigation -->
-                    <nav class="hidden md:flex space-x-8">
-                        <a href="{{ url('/') }}" class="text-gray-700 hover:text-primary-500 transition-colors">Home</a>
-                        <a href="{{ url('/about') }}" class="text-primary-500 font-medium">About</a>
-                        <a href="{{ url('/partners') }}" class="text-gray-700 hover:text-primary-500 transition-colors">Partners</a>
-                        <a href="{{ url('/campaigns') }}" class="text-gray-700 hover:text-primary-500 transition-colors">Campaigns</a>
-                        <a href="{{ url('/') }}#contact" class="text-gray-700 hover:text-primary-500 transition-colors">Contact</a>
-                    </nav>
-                    
-                    <!-- Auth Links -->
-                    <div class="flex items-center space-x-4">
-                        @if (Route::has('login'))
-                            @auth
-                                <a href="{{ url('/dashboard') }}" class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition-colors">
-                                    Dashboard
-                                </a>
-                            @else
-                                <a href="{{ route('login') }}" class="text-gray-700 hover:text-primary-500 transition-colors">
-                                    Log in
-                                </a>
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition-colors">
-                                        Register
-                                    </a>
-                                @endif
-                            @endauth
-                        @endif
-                    </div>
-                    
-                    <!-- Mobile menu button -->
-                    <div class="md:hidden">
-                        <button type="button" class="text-gray-700 hover:text-primary-500">
-                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </header>
+    <body class="bg-gray-50 text-gray-900 font-sans">
+        @include('components.navigation')
 
         <!-- Hero Section -->
         <section class="py-20 bg-gradient-to-br from-primary-50 to-white">
@@ -199,48 +149,7 @@
                             </div>
                         </div>
 
-                        <!-- Bank Muamalat Quote Card -->
-                        <div class="bg-gradient-to-br from-gray-800 via-gray-900 to-purple-900 rounded-2xl lg:rounded-3xl p-6 md:p-8 shadow-xl text-white relative overflow-hidden transform hover:scale-105 transition-transform duration-300">
-                            <!-- Simplified Background Pattern for Mobile -->
-                            <div class="absolute inset-0 opacity-5 md:opacity-10">
-                                <div class="absolute top-4 left-4 w-12 h-12 md:w-16 md:h-16 border border-white/20 rounded-lg"></div>
-                                <div class="absolute top-6 right-6 w-8 h-8 md:w-12 md:h-12 border border-white/20 rounded-full"></div>
-                                <div class="absolute bottom-6 left-6 w-6 h-6 md:w-8 md:h-8 border border-white/20 rounded"></div>
-                                <div class="absolute bottom-4 right-4 w-16 h-16 md:w-20 md:h-20 border border-white/20 rounded-xl"></div>
-                            </div>
 
-                            <!-- Logo/Icon -->
-                            <div class="relative mb-6 md:mb-8">
-                                <div class="flex items-center">
-                                    <div class="w-10 h-10 md:w-12 md:h-12 bg-white/20 rounded-lg flex items-center justify-center mr-3">
-                                        <svg class="w-6 h-6 md:w-7 md:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                                        </svg>
-                                    </div>
-                                    <span class="text-lg md:text-xl font-bold">Bank Muamalat</span>
-                                </div>
-                            </div>
-
-                            <!-- Quote -->
-                            <div class="relative">
-                                <blockquote class="text-base md:text-lg leading-relaxed mb-6">
-                                    "As a trusted and authoritative Islamic banking institution, Bank Muamalat Malaysia Berhad has realized an extraordinary initiative to support beneficiaries through Jariah Fund."
-                                </blockquote>
-
-                                <!-- Attribution -->
-                                <div class="flex items-center">
-                                    <div class="w-10 h-10 md:w-12 md:h-12 bg-white/20 rounded-full flex items-center justify-center mr-3 md:mr-4 flex-shrink-0">
-                                        <svg class="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <div class="font-semibold text-sm md:text-base">Bank Muamalat Malaysia</div>
-                                        <div class="text-xs md:text-sm text-white/80">Islamic Banking Institution</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- Right Content -->
@@ -251,7 +160,7 @@
                                 <span class="text-primary-600 font-semibold text-xs md:text-sm tracking-wide uppercase">Trusted Banking Partner</span>
                             </div>
                             <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
-                                Backed by Bank Muamalat Malaysia
+                                Bank Muamalat Malaysia – Our Trusted Financial Partner
                             </h2>
                         </div>
 
@@ -312,208 +221,300 @@
         </section>
 
         <!-- Payment Network Section -->
-        <section class="py-16 bg-white">
+        <section class="py-16 bg-gradient-to-br from-gray-50 to-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <div class="inline-flex items-center px-4 py-2 bg-green-50 rounded-full mb-4">
-                        <svg class="w-4 h-4 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                <div class="text-center mb-16">
+                    <div class="inline-flex items-center px-6 py-3 bg-primary-50 rounded-full mb-6 shadow-sm">
+                        <svg class="w-5 h-5 text-primary-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                         </svg>
-                        <span class="text-green-600 font-semibold text-sm tracking-wide uppercase">Secure Payments</span>
+                        <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">Donate with Confidence</span>
                     </div>
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                        <span class="text-primary-500">Easy & Secure</span> Ways to Donate
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+                        <span class="text-primary-500">Simple & Secure</span> Donation Methods
                     </h2>
-                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        We support Malaysia's most trusted payment systems to make your donations simple and secure
+                    <p class="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                        Choose from Malaysia's most trusted and convenient payment options.
+                        Your generosity is just a few clicks away with bank-grade security.
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto mb-16">
                     <!-- FPX -->
-                    <div class="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-xl p-8 border border-gray-100 hover:shadow-2xl transition-all duration-300 group">
-                        <div class="text-center">
-                            <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-105 transition-transform">
-                                <span class="text-white font-bold text-2xl">FPX</span>
+                    <div class="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300">
+                        <!-- Image Section -->
+                        <div class="h-48 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-8">
+                            <img src="{{ asset('images/fpx-payment.jpg') }}"
+                                 alt="FPX Online Banking"
+                                 class="max-w-full max-h-full object-contain">
+                        </div>
+
+                        <!-- Content Section -->
+                        <div class="p-8">
+                            <div class="flex items-center mb-4">
+                                <span class="text-2xl mr-2">🏦</span>
+                                <h3 class="text-2xl font-bold text-gray-900">FPX Online Banking</h3>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">💳 FPX Online Banking</h3>
-                            <p class="text-gray-600 leading-relaxed mb-4">
-                                Online payment system that connects directly to your bank account.
-                                <strong>Safe, fast and easy!</strong>
+
+                            <p class="text-gray-600 leading-relaxed mb-6 text-base">
+                                Connect directly to your bank account for instant donations.
+                                <span class="text-blue-600 font-semibold">Quick, secure, and hassle-free!</span>
                             </p>
-                            <div class="space-y-2 text-sm text-gray-500">
-                                <div class="flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                                    </svg>
-                                    All major Malaysian banks
+
+                            <!-- Features List -->
+                            <div class="space-y-3 mb-6">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                        <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900 text-sm">Works with Your Bank</h4>
+                                        <p class="text-xs text-gray-600">All major Malaysian banks supported</p>
+                                    </div>
                                 </div>
-                                <div class="flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                                    </svg>
-                                    No additional charges
+
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                        <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900 text-sm">No Extra Fees</h4>
+                                        <p class="text-xs text-gray-600">100% of your donation reaches the cause</p>
+                                    </div>
                                 </div>
-                                <div class="flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                                    </svg>
-                                    Instant processing
+
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                        <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900 text-sm">Instant Confirmation</h4>
+                                        <p class="text-xs text-gray-600">Get immediate receipt and confirmation</p>
+                                    </div>
                                 </div>
+                            </div>
+
+                            <!-- Call to Action -->
+                            <div class="p-3 bg-blue-50 rounded-lg text-center">
+                                <p class="text-sm text-blue-700 font-medium">
+                                    🚀 Most popular choice among donors
+                                </p>
                             </div>
                         </div>
                     </div>
 
                     <!-- DuitNow -->
-                    <div class="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-xl p-8 border border-gray-100 hover:shadow-2xl transition-all duration-300 group">
-                        <div class="text-center">
-                            <div class="w-24 h-24 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-105 transition-transform">
-                                <span class="text-white font-bold text-lg">DuitNow</span>
+                    <div class="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300">
+                        <!-- Image Section -->
+                        <div class="h-48 bg-gradient-to-br from-pink-50 to-pink-100 flex items-center justify-center p-8">
+                            <img src="{{ asset('images/duitnow-logo.svg') }}"
+                                 alt="DuitNow Transfer"
+                                 class="max-w-full max-h-full object-contain">
+                        </div>
+
+                        <!-- Content Section -->
+                        <div class="p-8">
+                            <div class="flex items-center mb-4">
+                                <span class="text-2xl mr-2">⚡</span>
+                                <h3 class="text-2xl font-bold text-gray-900">DuitNow Transfer</h3>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">⚡ DuitNow Transfer</h3>
-                            <p class="text-gray-600 leading-relaxed mb-4">
-                                Bank Negara Malaysia's real-time money transfer system.
-                                <strong>Available 24/7, instant transfers!</strong>
+
+                            <p class="text-gray-600 leading-relaxed mb-6 text-base">
+                                Malaysia's instant transfer system by Bank Negara.
+                                <span class="text-pink-600 font-semibold">Available 24/7 for immediate impact!</span>
                             </p>
-                            <div class="space-y-2 text-sm text-gray-500">
-                                <div class="flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                                    </svg>
-                                    Real-time transfers 24/7
+
+                            <!-- Features List -->
+                            <div class="space-y-3 mb-6">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                        <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900 text-sm">Lightning Fast</h4>
+                                        <p class="text-xs text-gray-600">Real-time transfers 24/7, even on weekends</p>
+                                    </div>
                                 </div>
-                                <div class="flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                                    </svg>
-                                    Use ID or Phone Number
+
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                        <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900 text-sm">Super Convenient</h4>
+                                        <p class="text-xs text-gray-600">Use your phone number or IC number</p>
+                                    </div>
                                 </div>
-                                <div class="flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                                    </svg>
-                                    Backed by Bank Negara
+
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                        <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900 text-sm">Government Backed</h4>
+                                        <p class="text-xs text-gray-600">Regulated by Bank Negara Malaysia</p>
+                                    </div>
                                 </div>
+                            </div>
+
+                            <!-- Call to Action -->
+                            <div class="p-3 bg-pink-50 rounded-lg text-center">
+                                <p class="text-sm text-pink-700 font-medium">
+                                    ⚡ Perfect for urgent donations
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="text-center">
-                    <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-8 shadow-lg border border-gray-100 max-w-3xl mx-auto">
-                        <div class="flex items-center justify-center mb-4">
-                            <svg class="w-8 h-8 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            <h4 class="text-xl font-semibold text-gray-900">🔒 Security Guaranteed</h4>
+
+            </div>
+        </section>
+
+        <!-- Our Charity Partners Section -->
+        <section class="py-16" style="background-color: #FE5100;">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between">
+                    <!-- Left Arrow -->
+                    <button class="flex-shrink-0 p-2 text-white/60 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                    </button>
+
+                    <!-- Title and Partners Container -->
+                    <div class="flex-1 flex items-center justify-center space-x-8 md:space-x-12 lg:space-x-16">
+                        <!-- Title -->
+                        <h2 class="text-lg md:text-xl font-semibold text-white whitespace-nowrap">
+                            Our Charity Partners
+                        </h2>
+
+                        <!-- Partner Logos -->
+                        <div class="flex items-center space-x-6 md:space-x-8 lg:space-x-12">
+                            <!-- MAB (Malaysian Association for the Blind) -->
+                            <div class="flex-shrink-0 bg-white rounded-lg p-2">
+                                <svg class="h-12 w-16" viewBox="0 0 80 60" fill="none">
+                                    <!-- MAB Logo - Black circular logo with white text -->
+                                    <circle cx="40" cy="30" r="25" fill="#000000"/>
+                                    <text x="40" y="35" text-anchor="middle" fill="white" font-size="8" font-weight="bold">MAB</text>
+                                </svg>
+                            </div>
+
+                            <!-- Yayasan Muslimin -->
+                            <div class="flex-shrink-0 bg-white rounded-lg p-2">
+                                <svg class="h-12 w-16" viewBox="0 0 80 60" fill="none">
+                                    <!-- Green and white logo design -->
+                                    <rect x="10" y="15" width="60" height="30" fill="#22C55E"/>
+                                    <circle cx="40" cy="30" r="8" fill="white"/>
+                                    <text x="40" y="50" text-anchor="middle" fill="#22C55E" font-size="6" font-weight="bold">YAYASAN MUSLIMIN</text>
+                                </svg>
+                            </div>
+
+                            <!-- Yayasan Ikhlas -->
+                            <div class="flex-shrink-0 bg-white rounded-lg p-2">
+                                <svg class="h-12 w-20" viewBox="0 0 100 60" fill="none">
+                                    <!-- Blue and red logo with text -->
+                                    <path d="M20 15 L50 15 L50 25 L35 35 L20 25 Z" fill="#1E40AF"/>
+                                    <path d="M50 15 L80 15 L80 25 L65 35 L50 25 Z" fill="#DC2626"/>
+                                    <text x="50" y="50" text-anchor="middle" fill="#1E40AF" font-size="8" font-weight="bold">YAYASAN</text>
+                                    <text x="50" y="58" text-anchor="middle" fill="#1E40AF" font-size="8" font-weight="bold">IKHLAS</text>
+                                </svg>
+                            </div>
+
+                            <!-- PruBSN Prihatin -->
+                            <div class="flex-shrink-0 bg-white rounded-lg p-2">
+                                <svg class="h-12 w-20" viewBox="0 0 100 60" fill="none">
+                                    <!-- Teal and red corporate logo -->
+                                    <rect x="15" y="15" width="25" height="25" fill="#0D9488"/>
+                                    <rect x="45" y="15" width="25" height="25" fill="#DC2626"/>
+                                    <text x="50" y="50" text-anchor="middle" fill="#0D9488" font-size="7" font-weight="bold">PruBSN</text>
+                                    <text x="50" y="58" text-anchor="middle" fill="#6B7280" font-size="6">Prihatin</text>
+                                </svg>
+                            </div>
+
+                            <!-- Yayasan Angkasa -->
+                            <div class="flex-shrink-0 bg-white rounded-lg p-2">
+                                <svg class="h-12 w-24" viewBox="0 0 120 60" fill="none">
+                                    <!-- Purple decorative logo with Arabic text style -->
+                                    <path d="M30 15 Q40 10 50 15 Q60 10 70 15 Q60 25 50 20 Q40 25 30 15" fill="#7C3AED"/>
+                                    <text x="60" y="35" text-anchor="middle" fill="#7C3AED" font-size="6" font-weight="bold">يايسان اعكاس</text>
+                                    <text x="60" y="45" text-anchor="middle" fill="#7C3AED" font-size="8" font-weight="bold">YAYASAN</text>
+                                    <text x="60" y="55" text-anchor="middle" fill="#7C3AED" font-size="8" font-weight="bold">angkasa</text>
+                                </svg>
+                            </div>
                         </div>
-                        <p class="text-gray-600 leading-relaxed">
-                            Both payment systems are regulated by <strong>Bank Negara Malaysia</strong>
-                            and use the latest encryption technology to protect your personal information.
-                            Your donations are processed through secure, bank-grade infrastructure.
-                        </p>
+                    </div>
+
+                    <!-- Right Arrow -->
+                    <button class="flex-shrink-0 p-2 text-white/60 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Mobile Version - Responsive Stack -->
+                <div class="md:hidden mt-8">
+                    <h2 class="text-lg font-semibold text-white text-center mb-6">
+                        Our Charity Partners
+                    </h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- MAB Mobile -->
+                        <div class="flex justify-center">
+                            <div class="bg-white rounded-lg p-2">
+                                <svg class="h-8 w-12" viewBox="0 0 80 60" fill="none">
+                                    <circle cx="40" cy="30" r="20" fill="#000000"/>
+                                    <text x="40" y="35" text-anchor="middle" fill="white" font-size="6" font-weight="bold">MAB</text>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Yayasan Muslimin Mobile -->
+                        <div class="flex justify-center">
+                            <div class="bg-white rounded-lg p-2">
+                                <svg class="h-8 w-12" viewBox="0 0 80 60" fill="none">
+                                    <rect x="15" y="20" width="50" height="20" fill="#22C55E"/>
+                                    <circle cx="40" cy="30" r="6" fill="white"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Yayasan Ikhlas Mobile -->
+                        <div class="flex justify-center">
+                            <div class="bg-white rounded-lg p-2">
+                                <svg class="h-8 w-14" viewBox="0 0 80 60" fill="none">
+                                    <path d="M20 20 L40 20 L40 25 L30 35 L20 25 Z" fill="#1E40AF"/>
+                                    <path d="M40 20 L60 20 L60 25 L50 35 L40 25 Z" fill="#DC2626"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- PruBSN Mobile -->
+                        <div class="flex justify-center">
+                            <div class="bg-white rounded-lg p-2">
+                                <svg class="h-8 w-14" viewBox="0 0 80 60" fill="none">
+                                    <rect x="20" y="20" width="15" height="15" fill="#0D9488"/>
+                                    <rect x="40" y="20" width="15" height="15" fill="#DC2626"/>
+                                </svg>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Call to Action Section -->
-        <section class="py-20 bg-gradient-to-br from-primary-500 to-primary-600">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold text-white">
-                    Ready to Make a Difference?
-                </h2>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="bg-gray-900 text-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- Company Info -->
-                    <div class="space-y-4">
-                        <div class="text-2xl font-bold text-primary-500">
-                            Jariah Fund
-                        </div>
-                        <p class="text-gray-300 leading-relaxed">
-                            A trusted crowdfunding platform to help the underprivileged.
-                            Contributing to society with Islamic values.
-                        </p>
-                    </div>
-
-                    <!-- Quick Links -->
-                    <div class="space-y-4">
-                        <h3 class="text-lg font-semibold">Quick Links</h3>
-                        <ul class="space-y-2 text-gray-300">
-                            <li><a href="{{ url('/') }}" class="hover:text-primary-500 transition-colors">Home</a></li>
-                            <li><a href="{{ url('/about') }}" class="hover:text-primary-500 transition-colors">About Us</a></li>
-                            <li><a href="{{ url('/partners') }}" class="hover:text-primary-500 transition-colors">Partners</a></li>
-                            <li><a href="{{ url('/campaigns') }}" class="hover:text-primary-500 transition-colors">Campaigns</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Services -->
-                    <div class="space-y-4">
-                        <h3 class="text-lg font-semibold">Areas of Support</h3>
-                        <ul class="space-y-2 text-gray-300">
-                            <li><a href="#" class="hover:text-primary-500 transition-colors">Education Campaigns</a></li>
-                            <li><a href="#" class="hover:text-primary-500 transition-colors">Health Campaigns</a></li>
-                            <li><a href="#" class="hover:text-primary-500 transition-colors">Economic Support</a></li>
-                            <li><a href="#" class="hover:text-primary-500 transition-colors">Emergency Aid</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Contact Info -->
-                    <div class="space-y-4">
-                        <h3 class="text-lg font-semibold">Contact Info</h3>
-                        <div class="space-y-3 text-gray-300">
-                            <div class="flex items-center space-x-3">
-                                <svg class="w-5 h-5 text-primary-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                                </svg>
-                                <span>+60 3-1234 5678</span>
-                            </div>
-                            <div class="flex items-center space-x-3">
-                                <svg class="w-5 h-5 text-primary-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                                </svg>
-                                <span>info@jariahfund.com</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Bottom Footer -->
-                <div class="border-t border-gray-800 mt-12 pt-8">
-                    <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                        <div class="text-gray-400 text-sm">
-                            © {{ date('Y') }} Jariah Fund. All rights reserved.
-                        </div>
-                        <div class="flex space-x-6 text-sm text-gray-400">
-                            <a href="#" class="hover:text-primary-500 transition-colors">Privacy Policy</a>
-                            <a href="#" class="hover:text-primary-500 transition-colors">Terms of Service</a>
-                            <a href="#" class="hover:text-primary-500 transition-colors">Cookie Policy</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-
-        <!-- Smooth Scrolling Script -->
-        <script>
-            // Smooth scrolling for navigation links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-        </script>
+        @include('components.footer')
     </body>
 </html>

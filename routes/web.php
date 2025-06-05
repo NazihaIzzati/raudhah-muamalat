@@ -18,6 +18,18 @@ Route::get('/campaigns', function () {
     return view('campaigns');
 });
 
+Route::get('/news', function () {
+    return view('news');
+});
+
+Route::get('/donate', function () {
+    return view('donate');
+});
+
+Route::get('/contact', function () {
+    return view('contact');
+});
+
 Route::get('/example', function () {
     return view('example-page');
 });
