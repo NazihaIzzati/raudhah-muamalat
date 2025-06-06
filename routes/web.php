@@ -22,6 +22,10 @@ Route::get('/news', function () {
     return view('news');
 });
 
+Route::get('/faq', function () {
+    return view('faq');
+});
+
 Route::get('/donate', function () {
     return view('donate');
 });

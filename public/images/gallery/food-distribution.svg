@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <!-- Background -->
+  <rect width="400" height="300" fill="#fff8f0"/>
+  
+  <!-- Food Distribution Illustration -->
+  <g transform="translate(50, 50)">
+    <!-- Distribution table -->
+    <rect x="100" y="120" width="100" height="15" fill="#8B4513"/>
+    
+    <!-- Food packages on table -->
+    <rect x="110" y="105" width="15" height="15" fill="#FF6B35"/>
+    <rect x="130" y="105" width="15" height="15" fill="#4CAF50"/>
+    <rect x="150" y="105" width="15" height="15" fill="#FFC107"/>
+    <rect x="170" y="105" width="15" height="15" fill="#FF5722"/>
+    
+    <!-- Volunteer distributing -->
+    <circle cx="150" cy="90" r="8" fill="#FFB6C1"/>
+    <rect x="146" y="98" width="8" height="15" fill="#2D5A3D"/>
+    
+    <!-- Volunteer's hands giving -->
+    <path d="M140 100 Q135 95 130 100" stroke="#FFB6C1" stroke-width="3" fill="none"/>
+    <path d="M160 100 Q165 95 170 100" stroke="#FFB6C1" stroke-width="3" fill="none"/>
+    
+    <!-- Recipients in line -->
+    <!-- Person 1 -->
+    <circle cx="80" cy="150" r="6" fill="#FFB6C1"/>
+    <rect x="77" y="156" width="6" height="12" fill="#4A90E2"/>
+    <!-- Holding bag -->
+    <rect x="70" y="160" width="8" height="6" fill="#8B4513"/>
+    
+    <!-- Person 2 -->
+    <circle cx="100" cy="150" r="6" fill="#FFB6C1"/>
+    <rect x="97" y="156" width="6" height="12" fill="#FF6B35"/>
+    
+    <!-- Person 3 -->
+    <circle cx="120" cy="150" r="6" fill="#FFB6C1"/>
+    <rect x="117" y="156" width="6" height="12" fill="#9C27B0"/>
+    
+    <!-- Person 4 (child) -->
+    <circle cx="140" cy="155" r="4" fill="#FFB6C1"/>
+    <rect x="138" y="159" width="4" height="8" fill="#FFC107"/>
+    
+    <!-- Person 5 -->
+    <circle cx="200" cy="150" r="6" fill="#FFB6C1"/>
+    <rect x="197" y="156" width="6" height="12" fill="#4CAF50"/>
+    <!-- Holding bag -->
+    <rect x="210" y="160" width="8" height="6" fill="#8B4513"/>
+    
+    <!-- Food truck/van in background -->
+    <rect x="220" y="80" width="60" height="30" fill="#FFFFFF" stroke="#2E5C8A" stroke-width="2"/>
+    <rect x="225" y="85" width="10" height="8" fill="#87CEEB"/>
+    <rect x="240" y="85" width="10" height="8" fill="#87CEEB"/>
+    <rect x="255" y="85" width="10" height="8" fill="#87CEEB"/>
+    
+    <!-- Wheels -->
+    <circle cx="235" cy="115" r="6" fill="#2D5A3D"/>
+    <circle cx="265" cy="115" r="6" fill="#2D5A3D"/>
+    
+    <!-- Hearts showing care -->
+    <path d="M60 70 C60 65 65 60 70 60 C75 60 80 65 80 70 C80 75 70 85 70 85 S60 75 60 70" fill="#FF4444"/>
+    <path d="M250 50 C250 45 255 40 260 40 C265 40 270 45 270 50 C270 55 260 65 260 65 S250 55 250 50" fill="#FF4444"/>
+    
+    <!-- Text on truck -->
+    <text x="250" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#2D5A3D">FOOD AID</text>
+  </g>
+  
+  <!-- Title -->
+  <text x="200" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2D5A3D">Food Distribution</text>
+</svg>

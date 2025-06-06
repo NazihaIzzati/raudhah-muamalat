@@ -1,39 +1,54 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.master')
 
-        <title>Partners - Jariah Fund Raudhah Muamalat</title>
+@section('title', 'Partners - Jariah Fund Raudhah Muamalat')
+@section('description', 'We work together with trusted and verified organizations to provide assistance to those in need. Each partner is thoroughly vetted to ensure complete transparency.')
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
-
-        <!-- Styles / Scripts -->
-        @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-            @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @else
-            <style>
-                /* Fallback styles */
-                body { font-family: 'Instrument Sans', sans-serif; }
-            </style>
-        @endif
-    </head>
-    <body class="bg-gray-50 text-gray-900 font-sans">
-        @include('components.navigation')
+@section('content')
 
         <!-- Hero Section -->
-        <section class="bg-gradient-to-br from-primary-50 to-white py-12 md:py-16 lg:py-20">
+        <section class="py-20 bg-gradient-to-br from-primary-50 to-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center">
-                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6">
-                        Our Trusted <span class="text-primary-500">Partners</span>
+                <div class="text-center max-w-4xl mx-auto">
+                    <div class="inline-flex items-center px-4 py-2 bg-primary-100 rounded-full mb-6">
+                        <svg class="w-4 h-4 text-primary-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                        <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">Our Partners</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+                        Our Trusted
+                        <span class="text-primary-500 relative block">
+                            Partners
+                            <svg class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-64 h-3 text-primary-200" viewBox="0 0 100 12" fill="currentColor">
+                                <path d="M0 8c30-4 70-4 100 0v4H0z"/>
+                            </svg>
+                        </span>
                     </h1>
-                    <p class="text-base md:text-lg lg:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                        We work together with trusted and verified organizations to provide assistance to those in need.
-                        Each partner is thoroughly vetted to ensure complete transparency and effective impact.
+                    <p class="text-xl text-gray-600 leading-relaxed mb-8">
+                        We work together with <strong>trusted and verified organizations</strong> to provide assistance to those in need.
+                        Each partner is thoroughly vetted to ensure <span class="text-primary-600 font-medium">complete transparency</span> and
+                        <span class="text-primary-600 font-medium">effective impact</span>.
                     </p>
+                    <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
+                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
+                            <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                            </svg>
+                            Verified Organizations
+                        </div>
+                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
+                            <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                            </svg>
+                            Transparent Impact
+                        </div>
+                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
+                            <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                            </svg>
+                            Trusted Network
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -187,6 +202,4 @@
             </div>
         </section>
 
-        @include('components.footer')
-    </body>
-</html>
+@endsection

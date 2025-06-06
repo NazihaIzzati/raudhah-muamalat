@@ -1,27 +1,9 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.master')
 
-        <title>JariahFund - Islamic Crowdfunding Platform</title>
+@section('title', 'JariahFund - Islamic Crowdfunding Platform')
+@section('description', 'Malaysia\'s leading Islamic crowdfunding platform. Empowering communities through Shariah-compliant giving and transparent charitable initiatives.')
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
-
-        <!-- Styles / Scripts -->
-        @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-            @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @else
-            <style>
-                /* Fallback styles */
-                body { font-family: 'Instrument Sans', sans-serif; }
-            </style>
-        @endif
-    </head>
-    <body class="bg-gray-50 text-gray-900 font-sans">
-        @include('components.navigation')
+@section('content')
 
         <!-- Hero Section -->
         <section id="home" class="bg-gradient-to-br from-primary-50 to-white py-12 md:py-16 lg:py-20">
@@ -124,11 +106,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                     <!-- Campaign 1 -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                        <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                        <img src="{{ asset('images/campaigns/emergency-food-relief.svg') }}"
                              alt="Emergency Food Relief" class="w-full h-40 md:h-48 object-cover">
                         <div class="p-4 md:p-6">
                             <div class="flex items-center mb-3">
-                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80"
+                                <img src="{{ asset('images/logos/organization-avatar.svg') }}"
                                      alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
                                 <span class="text-xs md:text-sm text-gray-600">Yayasan Muslimin</span>
                             </div>
@@ -257,7 +239,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mb-12 md:mb-16">
                     <!-- Main News Article -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
-                        <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        <img src="{{ asset('images/news/community-event.svg') }}"
                              alt="Community Event" class="w-full h-48 md:h-64 object-cover">
                         <div class="p-6 md:p-8">
                             <div class="flex items-center mb-3">
@@ -340,22 +322,22 @@
                                 <div class="w-full flex-shrink-0">
                                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
                                         <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Community Gathering" data-description="Local community members coming together for a charity event">
-                                            <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                                            <img src="{{ asset('images/gallery/community-gathering.svg') }}"
                                                  alt="Community gathering" class="w-full h-32 md:h-40 object-cover">
                                             <div class="p-3">
                                                 <h4 class="text-sm font-semibold text-gray-900">Community Gathering</h4>
                                                 <p class="text-xs text-gray-600">Charity event in Kuala Lumpur</p>
                                             </div>
                                         </div>
-                                        <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Food Distribution" data-description="Volunteers distributing food packages to families in need">
-                                            <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                                        <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="{{ asset('images/gallery/food-distribution.svg') }}" data-title="Food Distribution" data-description="Volunteers distributing food packages to families in need">
+                                            <img src="{{ asset('images/gallery/food-distribution.svg') }}"
                                                  alt="Food distribution" class="w-full h-32 md:h-40 object-cover">
                                             <div class="p-3">
                                                 <h4 class="text-sm font-semibold text-gray-900">Food Distribution</h4>
                                                 <p class="text-xs text-gray-600">Emergency relief program</p>
                                             </div>
                                         </div>
-                                        <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1544027993-37dbfe43562a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Education Program" data-description="Children attending classes in our newly built school">
+                                        <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="{{ asset('images/campaigns/education-initiative.svg') }}" data-title="Education Program" data-description="Children attending classes in our newly built school">
                                             <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
                                                  alt="Education program" class="w-full h-32 md:h-40 object-cover">
                                             <div class="p-3">
@@ -558,142 +540,127 @@
 
 
 
-        @include('components.footer')
+@endsection
 
-        <!-- Photo Gallery Modal -->
-        <div id="gallery-modal" class="fixed inset-0 bg-black bg-opacity-75 hidden z-50 items-center justify-center p-4">
-            <div class="relative max-w-4xl w-full">
-                <button id="close-gallery-modal" class="absolute top-4 right-4 text-white hover:text-gray-300 z-10">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
-                <img id="modal-image" src="" alt="" class="w-full h-auto rounded-lg">
-                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6 rounded-b-lg">
-                    <h3 id="modal-title" class="text-white text-xl font-bold mb-2"></h3>
-                    <p id="modal-description" class="text-gray-200"></p>
-                </div>
-            </div>
+@push('scripts')
+<!-- Photo Gallery Modal -->
+<div id="gallery-modal" class="fixed inset-0 bg-black bg-opacity-75 hidden z-50 items-center justify-center p-4">
+    <div class="relative max-w-4xl w-full">
+        <button id="close-gallery-modal" class="absolute top-4 right-4 text-white hover:text-gray-300 z-10">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+        <img id="modal-image" src="" alt="" class="w-full h-auto rounded-lg">
+        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6 rounded-b-lg">
+            <h3 id="modal-title" class="text-white text-xl font-bold mb-2"></h3>
+            <p id="modal-description" class="text-gray-200"></p>
         </div>
+    </div>
+</div>
 
-        <!-- JavaScript for Interactive Features -->
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Gallery Slider Functionality
-                const gallerySlider = document.getElementById('gallery-slider');
-                const galleryPrev = document.getElementById('gallery-prev');
-                const galleryNext = document.getElementById('gallery-next');
-                const galleryIndicators = document.querySelectorAll('.gallery-indicator');
-                const galleryItems = document.querySelectorAll('.gallery-item');
-                const galleryModal = document.getElementById('gallery-modal');
-                const modalImage = document.getElementById('modal-image');
-                const modalTitle = document.getElementById('modal-title');
-                const modalDescription = document.getElementById('modal-description');
-                const closeGalleryModal = document.getElementById('close-gallery-modal');
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Gallery Slider Functionality
+    const gallerySlider = document.getElementById('gallery-slider');
+    const galleryPrev = document.getElementById('gallery-prev');
+    const galleryNext = document.getElementById('gallery-next');
+    const galleryIndicators = document.querySelectorAll('.gallery-indicator');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const galleryModal = document.getElementById('gallery-modal');
+    const modalImage = document.getElementById('modal-image');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDescription = document.getElementById('modal-description');
+    const closeGalleryModal = document.getElementById('close-gallery-modal');
 
-                let currentSlide = 0;
-                const totalSlides = 2;
+    let currentSlide = 0;
+    const totalSlides = 2;
 
-                // Update slider position
-                function updateSlider() {
-                    gallerySlider.style.transform = `translateX(-${currentSlide * 100}%)`;
+    // Update slider position
+    function updateSlider() {
+        gallerySlider.style.transform = `translateX(-${currentSlide * 100}%)`;
 
-                    // Update indicators
-                    galleryIndicators.forEach((indicator, index) => {
-                        if (index === currentSlide) {
-                            indicator.classList.remove('bg-gray-300');
-                            indicator.classList.add('bg-primary-500');
-                        } else {
-                            indicator.classList.remove('bg-primary-500');
-                            indicator.classList.add('bg-gray-300');
-                        }
-                    });
-                }
+        // Update indicators
+        galleryIndicators.forEach((indicator, index) => {
+            if (index === currentSlide) {
+                indicator.classList.remove('bg-gray-300');
+                indicator.classList.add('bg-primary-500');
+            } else {
+                indicator.classList.remove('bg-primary-500');
+                indicator.classList.add('bg-gray-300');
+            }
+        });
+    }
 
-                // Previous slide
-                galleryPrev.addEventListener('click', function() {
-                    currentSlide = currentSlide > 0 ? currentSlide - 1 : totalSlides - 1;
-                    updateSlider();
-                });
+    // Previous slide
+    galleryPrev.addEventListener('click', function() {
+        currentSlide = currentSlide > 0 ? currentSlide - 1 : totalSlides - 1;
+        updateSlider();
+    });
 
-                // Next slide
-                galleryNext.addEventListener('click', function() {
-                    currentSlide = currentSlide < totalSlides - 1 ? currentSlide + 1 : 0;
-                    updateSlider();
-                });
+    // Next slide
+    galleryNext.addEventListener('click', function() {
+        currentSlide = currentSlide < totalSlides - 1 ? currentSlide + 1 : 0;
+        updateSlider();
+    });
 
-                // Indicator clicks
-                galleryIndicators.forEach((indicator, index) => {
-                    indicator.addEventListener('click', function() {
-                        currentSlide = index;
-                        updateSlider();
-                    });
-                });
+    // Indicator clicks
+    galleryIndicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', function() {
+            currentSlide = index;
+            updateSlider();
+        });
+    });
 
-                // Auto-slide every 5 seconds
-                setInterval(function() {
-                    currentSlide = currentSlide < totalSlides - 1 ? currentSlide + 1 : 0;
-                    updateSlider();
-                }, 5000);
+    // Auto-slide every 5 seconds
+    setInterval(function() {
+        currentSlide = currentSlide < totalSlides - 1 ? currentSlide + 1 : 0;
+        updateSlider();
+    }, 5000);
 
-                // Gallery item clicks (open modal)
-                galleryItems.forEach(item => {
-                    item.addEventListener('click', function() {
-                        const imageSrc = this.dataset.image;
-                        const title = this.dataset.title;
-                        const description = this.dataset.description;
+    // Gallery item clicks (open modal)
+    galleryItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const imageSrc = this.dataset.image;
+            const title = this.dataset.title;
+            const description = this.dataset.description;
 
-                        modalImage.src = imageSrc;
-                        modalTitle.textContent = title;
-                        modalDescription.textContent = description;
-                        galleryModal.classList.remove('hidden');
-                        document.body.style.overflow = 'hidden';
-                    });
-                });
+            modalImage.src = imageSrc;
+            modalTitle.textContent = title;
+            modalDescription.textContent = description;
+            galleryModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+    });
 
-                // Close modal
-                closeGalleryModal.addEventListener('click', function() {
-                    galleryModal.classList.add('hidden');
-                    document.body.style.overflow = 'auto';
-                });
+    // Close modal
+    closeGalleryModal.addEventListener('click', function() {
+        galleryModal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    });
 
-                // Close modal when clicking outside
-                galleryModal.addEventListener('click', function(e) {
-                    if (e.target === galleryModal) {
-                        galleryModal.classList.add('hidden');
-                        document.body.style.overflow = 'auto';
-                    }
-                });
+    // Close modal when clicking outside
+    galleryModal.addEventListener('click', function(e) {
+        if (e.target === galleryModal) {
+            galleryModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+    });
 
-                // Contact interactions
-                window.openMap = function() {
-                    const address = "Menara Muamalat, No. 22, Jalan Melaka, Kuala Lumpur, Malaysia 50100";
-                    const encodedAddress = encodeURIComponent(address);
-                    window.open(`https://www.google.com/maps/search/?api=1&query=${encodedAddress}`, '_blank');
-                };
+    // Contact interactions
+    window.openMap = function() {
+        const address = "Menara Muamalat, No. 22, Jalan Melaka, Kuala Lumpur, Malaysia 50100";
+        const encodedAddress = encodeURIComponent(address);
+        window.open(`https://www.google.com/maps/search/?api=1&query=${encodedAddress}`, '_blank');
+    };
 
-                window.callPhone = function() {
-                    window.location.href = 'tel:+60321612000';
-                };
+    window.callPhone = function() {
+        window.location.href = 'tel:+60321612000';
+    };
 
-                window.sendEmail = function() {
-                    window.location.href = 'mailto:info@jariahfund.com?subject=Inquiry from Jariah Fund Website';
-                };
-
-                // Smooth scrolling for navigation links
-                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                    anchor.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        const target = document.querySelector(this.getAttribute('href'));
-                        if (target) {
-                            target.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'start'
-                            });
-                        }
-                    });
-                });
-            });
-        </script>
-    </body>
-</html>
+    window.sendEmail = function() {
+        window.location.href = 'mailto:info@jariahfund.com?subject=Inquiry from Jariah Fund Website';
+    };
+});
+</script>
+@endpush

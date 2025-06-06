@@ -109,10 +109,10 @@
 
                     <!-- Right Image -->
                     <div class="flex justify-center lg:justify-end">
-                        <div class="rounded-2xl overflow-hidden shadow-xl max-w-md">
-                            <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                                 alt="Community support and charity work"
-                                 class="w-full h-96 object-cover">
+                        <div class="rounded-2xl overflow-hidden shadow-xl max-w-md bg-white p-8">
+                            <img src="{{ asset('images/logos/jariah-fund-logo.svg') }}"
+                                 alt="Jariah Fund Logo"
+                                 class="w-full h-96 object-contain">
                         </div>
                     </div>
                 </div>
@@ -244,7 +244,7 @@
                     <div class="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300">
                         <!-- Image Section -->
                         <div class="h-48 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-8">
-                            <img src="{{ asset('images/fpx-payment.jpg') }}"
+                            <img src="{{ asset('images/payment/fpx-payment.jpg') }}"
                                  alt="FPX Online Banking"
                                  class="max-w-full max-h-full object-contain">
                         </div>
@@ -313,7 +313,7 @@
                     <div class="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300">
                         <!-- Image Section -->
                         <div class="h-48 bg-gradient-to-br from-pink-50 to-pink-100 flex items-center justify-center p-8">
-                            <img src="{{ asset('images/duitnow-logo.svg') }}"
+                            <img src="{{ asset('images/payment/duitnow-logo.svg') }}"
                                  alt="DuitNow Transfer"
                                  class="max-w-full max-h-full object-contain">
                         </div>

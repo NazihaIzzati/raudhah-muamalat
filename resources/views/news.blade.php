@@ -1,46 +1,53 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.master')
 
-        <title>News & Events - Jariah Fund</title>
+@section('title', 'News & Events - Jariah Fund')
+@section('description', 'Stay updated with our latest initiatives, success stories, and upcoming events. Discover how your contributions are making a real difference.')
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
-
-        <!-- Styles / Scripts -->
-        @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-            @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @else
-            <style>
-                /* Fallback styles */
-                body { font-family: 'Instrument Sans', sans-serif; }
-            </style>
-        @endif
-    </head>
-    <body class="bg-gray-50 text-gray-900 font-sans">
-        @include('components.navigation')
+@section('content')
 
         <!-- Hero Section -->
-        <section class="bg-gradient-to-br from-primary-50 to-white py-12 md:py-16 lg:py-20">
+        <section class="py-20 bg-gradient-to-br from-primary-50 to-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center">
-                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6">
-                        Latest <span class="text-primary-500">News & Events</span>
+                <div class="text-center max-w-4xl mx-auto">
+                    <div class="inline-flex items-center px-4 py-2 bg-primary-100 rounded-full mb-6">
+                        <svg class="w-4 h-4 text-primary-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                        </svg>
+                        <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">News & Events</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+                        Stay Connected with
+                        <span class="text-primary-500 relative block">
+                            Our Mission
+                            <svg class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-64 h-3 text-primary-200" viewBox="0 0 100 12" fill="currentColor">
+                                <path d="M0 8c30-4 70-4 100 0v4H0z"/>
+                            </svg>
+                        </span>
                     </h1>
-                    <p class="text-base md:text-lg lg:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-6 md:mb-8">
-                        Stay updated with our latest initiatives, success stories, and upcoming events.
-                        Discover how your contributions are making a real difference in communities across Malaysia.
+                    <p class="text-xl text-gray-600 leading-relaxed mb-8">
+                        Stay updated with our <strong>latest initiatives, success stories, and upcoming events</strong>.
+                        Discover how your contributions are making a <span class="text-primary-600 font-medium">real difference</span> in
+                        <span class="text-primary-600 font-medium">communities across Malaysia</span>.
                     </p>
-                    <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
-                        <a href="#news" class="bg-primary-500 text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                            Browse Updates
-                        </a>
-                        <a href="#" class="border-2 border-primary-500 text-primary-500 px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold hover:bg-primary-50 transition-all duration-300 transform hover:scale-105">
-                            Subscribe Newsletter
-                        </a>
+                    <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
+                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
+                            <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                            </svg>
+                            Latest Updates
+                        </div>
+                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
+                            <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                            </svg>
+                            Impact Stories
+                        </div>
+                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
+                            <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                            </svg>
+                            Community Events
+                        </div>
                     </div>
                 </div>
             </div>
@@ -57,7 +64,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                     <!-- Featured News Card 1 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                        <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                        <img src="{{ asset('images/campaigns/emergency-food-relief.svg') }}"
                              alt="Emergency Food Relief" class="w-full h-40 md:h-48 object-cover">
                         <div class="p-4 md:p-6">
                             <div class="flex items-center mb-3">
@@ -80,7 +87,7 @@
 
                     <!-- Featured News Card 2 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                        <img src="{{ asset('images/campaigns/education-initiative.svg') }}"
                              alt="Education Initiative" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <div class="flex items-center mb-3">
@@ -173,13 +180,13 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <a href="#" class="block">
-                                <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                                <img src="{{ asset('images/campaigns/medical-mission.svg') }}"
                                      alt="Mobile Clinic" class="w-full h-32 object-cover rounded-lg mb-2">
                                 <h4 class="font-semibold text-gray-900 text-sm mb-1">Mobile Clinic Success</h4>
                                 <p class="text-xs text-gray-600">500 patients treated in rural areas</p>
                             </a>
                             <a href="#" class="block">
-                                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                                <img src="{{ asset('images/campaigns/medical-mission.svg') }}"
                                      alt="Medical Equipment" class="w-full h-32 object-cover rounded-lg mb-2">
                                 <h4 class="font-semibold text-gray-900 text-sm mb-1">New Medical Equipment</h4>
                                 <p class="text-xs text-gray-600">Advanced diagnostic tools acquired</p>
@@ -197,7 +204,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Small News Card 1 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                        <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                        <img src="{{ asset('images/news/workshop.svg') }}"
                              alt="Workshop" class="w-full h-32 object-cover">
                         <div class="p-4">
                             <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-medium mb-2 inline-block">Event</span>
@@ -279,6 +286,4 @@
             </div>
         </section>
 
-        @include('components.footer')
-    </body>
-</html>
+@endsection
