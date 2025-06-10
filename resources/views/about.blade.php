@@ -1,27 +1,9 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.master')
 
-        <title>Tentang Kami - Jariah Fund Raudhah Muamalat</title>
+@section('title', 'About Us - Jariah Fund Raudhah Muamalat')
+@section('description', 'Learn about Jariah Fund, Malaysia\'s trusted Islamic crowdfunding platform that empowers communities through education, healthcare, and economic assistance programs.')
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
-
-        <!-- Styles / Scripts -->
-        @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-            @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @else
-            <style>
-                /* Fallback styles */
-                body { font-family: 'Instrument Sans', sans-serif; }
-            </style>
-        @endif
-    </head>
-    <body class="bg-gray-50 text-gray-900 font-sans">
-        @include('components.navigation')
+@section('content')
 
         <!-- Hero Section -->
         <section class="py-20 bg-gradient-to-br from-primary-50 to-white">
@@ -515,6 +497,4 @@
             </div>
         </section>
 
-        @include('components.footer')
-    </body>
-</html>
+@endsection

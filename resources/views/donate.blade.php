@@ -1,303 +1,696 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.master')
 
-        <title>Donate Now - Jariah Fund</title>
+@section('title', 'Donate Now - Jariah Fund')
+@section('description', 'Make a secure donation to support meaningful campaigns that create lasting impact in communities across Malaysia. Every donation makes a difference.')
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
-
-        <!-- Styles / Scripts -->
-        @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-            @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @else
-            <style>
-                /* Fallback styles */
-                body { font-family: 'Instrument Sans', sans-serif; }
-            </style>
-        @endif
-    </head>
-    <body class="bg-gray-50 text-gray-900 font-sans">
-        @include('components.navigation')
+@section('content')
 
         <!-- Hero Section -->
-        <section class="bg-gradient-to-br from-primary-50 to-white py-12 md:py-16 lg:py-20">
+        <section class="py-20 bg-gradient-to-br from-primary-50 to-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center">
-                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6">
-                        Make a <span class="text-primary-500">Donation</span>
+                <div class="text-center max-w-4xl mx-auto">
+                    <div class="inline-flex items-center px-4 py-2 bg-primary-100 rounded-full mb-6">
+                        <svg class="w-4 h-4 text-primary-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                        <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">Secure Donation</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+                        Make a Difference
+                        <span class="text-primary-500 relative block">
+                            Today
+                            <svg class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-64 h-3 text-primary-200" viewBox="0 0 100 12" fill="currentColor">
+                                <path d="M0 8c30-4 70-4 100 0v4H0z"/>
+                            </svg>
+                        </span>
                     </h1>
-                    <p class="text-base md:text-lg lg:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-6 md:mb-8">
-                        Your generosity helps us create lasting impact in communities across Malaysia. Every donation, no matter the size, makes a meaningful difference in someone's life.
+                    <p class="text-xl text-gray-600 leading-relaxed mb-8">
+                        Support <strong>verified campaigns</strong> that make a real difference in communities worldwide.
+                        Each donation is secured with <span class="text-primary-600 font-medium">complete transparency</span> and
+                        <span class="text-primary-600 font-medium">effective impact</span>.
                     </p>
-                    <div class="flex items-center justify-center space-x-6 text-sm text-gray-600">
-                        <div class="flex items-center">
-                            <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            <span>Secure & Safe</span>
-                        </div>
-                        <div class="flex items-center">
-                            <svg class="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
-                            </svg>
-                            <span>Tax Deductible</span>
-                        </div>
-                        <div class="flex items-center">
-                            <svg class="w-5 h-5 mr-2 text-primary-500" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
-                            </svg>
-                            <span>100% Transparent</span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Donation Form Section -->
-        <section class="py-12 md:py-16 bg-white">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-                    <div class="p-8 md:p-12">
-                        <div class="text-center mb-8">
-                            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Choose Your Donation Amount</h2>
-                            <p class="text-gray-600">Select an amount below or enter a custom amount</p>
-                        </div>
-
-                        <form action="#" method="POST" class="space-y-8">
-                            @csrf
-
-                            <!-- Quick Amount Selection -->
-                            <div>
-                                <label class="block text-lg font-semibold text-gray-900 mb-4">Select Amount</label>
-                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                    <label class="cursor-pointer">
-                                        <input type="radio" name="amount" value="50" class="sr-only peer">
-                                        <div class="border-2 border-gray-200 peer-checked:border-primary-500 peer-checked:bg-primary-50 p-6 rounded-xl text-center transition-all duration-300 hover:border-primary-300">
-                                            <div class="text-2xl font-bold text-primary-600">RM 50</div>
-                                            <div class="text-sm text-gray-600 mt-1">Basic Support</div>
-                                        </div>
-                                    </label>
-                                    <label class="cursor-pointer">
-                                        <input type="radio" name="amount" value="100" class="sr-only peer">
-                                        <div class="border-2 border-gray-200 peer-checked:border-primary-500 peer-checked:bg-primary-50 p-6 rounded-xl text-center transition-all duration-300 hover:border-primary-300">
-                                            <div class="text-2xl font-bold text-primary-600">RM 100</div>
-                                            <div class="text-sm text-gray-600 mt-1">Standard</div>
-                                        </div>
-                                    </label>
-                                    <label class="cursor-pointer">
-                                        <input type="radio" name="amount" value="250" class="sr-only peer">
-                                        <div class="border-2 border-gray-200 peer-checked:border-primary-500 peer-checked:bg-primary-50 p-6 rounded-xl text-center transition-all duration-300 hover:border-primary-300">
-                                            <div class="text-2xl font-bold text-primary-600">RM 250</div>
-                                            <div class="text-sm text-gray-600 mt-1">Generous</div>
-                                        </div>
-                                    </label>
-                                    <label class="cursor-pointer">
-                                        <input type="radio" name="amount" value="500" class="sr-only peer">
-                                        <div class="border-2 border-gray-200 peer-checked:border-primary-500 peer-checked:bg-primary-50 p-6 rounded-xl text-center transition-all duration-300 hover:border-primary-300">
-                                            <div class="text-2xl font-bold text-primary-600">RM 500</div>
-                                            <div class="text-sm text-gray-600 mt-1">Impactful</div>
-                                        </div>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- Custom Amount -->
-                            <div>
-                                <label for="custom-amount" class="block text-lg font-semibold text-gray-900 mb-4">Or Enter Custom Amount</label>
-                                <div class="relative">
-                                    <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg font-medium">RM</span>
-                                    <input type="number" id="custom-amount" name="custom_amount" placeholder="0.00" min="10"
-                                           class="w-full pl-12 pr-4 py-4 text-lg border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors">
-                                </div>
-                                <p class="text-sm text-gray-500 mt-2">Minimum donation amount is RM 10</p>
-                            </div>
-
-                            <!-- Donation Type -->
-                            <div>
-                                <label class="block text-lg font-semibold text-gray-900 mb-4">Donation Frequency</label>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <label class="cursor-pointer">
-                                        <input type="radio" name="donation_type" value="one_time" checked class="sr-only peer">
-                                        <div class="border-2 border-gray-200 peer-checked:border-primary-500 peer-checked:bg-primary-50 p-4 rounded-xl transition-all duration-300">
-                                            <div class="flex items-center">
-                                                <div class="w-4 h-4 border-2 border-gray-300 peer-checked:border-primary-500 rounded-full mr-3 flex items-center justify-center">
-                                                    <div class="w-2 h-2 bg-primary-500 rounded-full opacity-0 peer-checked:opacity-100"></div>
-                                                </div>
-                                                <div>
-                                                    <div class="font-semibold text-gray-900">One-time Donation</div>
-                                                    <div class="text-sm text-gray-600">Make a single donation today</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </label>
-                                    <label class="cursor-pointer">
-                                        <input type="radio" name="donation_type" value="monthly" class="sr-only peer">
-                                        <div class="border-2 border-gray-200 peer-checked:border-primary-500 peer-checked:bg-primary-50 p-4 rounded-xl transition-all duration-300">
-                                            <div class="flex items-center">
-                                                <div class="w-4 h-4 border-2 border-gray-300 peer-checked:border-primary-500 rounded-full mr-3 flex items-center justify-center">
-                                                    <div class="w-2 h-2 bg-primary-500 rounded-full opacity-0 peer-checked:opacity-100"></div>
-                                                </div>
-                                                <div>
-                                                    <div class="font-semibold text-gray-900">Monthly Donation</div>
-                                                    <div class="text-sm text-gray-600">Ongoing monthly support</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- Payment Method -->
-                            <div>
-                                <label class="block text-lg font-semibold text-gray-900 mb-4">Payment Method</label>
-                                <select name="payment_method" class="w-full px-4 py-4 text-lg border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors">
-                                    <option value="">Select Payment Method</option>
-                                    <option value="duitnow">DuitNow QR</option>
-                                    <option value="fpx">FPX Online Banking</option>
-                                    <option value="card">Credit/Debit Card</option>
-                                </select>
-                            </div>
-
-                            <!-- Donor Information -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label for="donor_name" class="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
-                                    <input type="text" id="donor_name" name="donor_name" required
-                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                                </div>
-                                <div>
-                                    <label for="donor_email" class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
-                                    <input type="email" id="donor_email" name="donor_email" required
-                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                                </div>
-                                <div>
-                                    <label for="donor_phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                                    <input type="tel" id="donor_phone" name="donor_phone"
-                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                                </div>
-                                <div>
-                                    <label for="donor_address" class="block text-sm font-medium text-gray-700 mb-2">Address (for receipt)</label>
-                                    <input type="text" id="donor_address" name="donor_address"
-                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                                </div>
-                            </div>
-
-                            <!-- Anonymous Donation -->
-                            <div class="flex items-center">
-                                <input type="checkbox" id="anonymous" name="anonymous" class="w-4 h-4 text-primary-500 border-gray-300 rounded focus:ring-primary-500">
-                                <label for="anonymous" class="ml-2 text-sm text-gray-700">Make this donation anonymous</label>
-                            </div>
-
-                            <!-- Donate Button -->
-                            <div class="text-center">
-                                <button type="submit" class="w-full md:w-auto bg-primary-500 text-white px-12 py-4 rounded-xl text-lg font-semibold hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                                    Donate Now
-                                </button>
-                            </div>
-
-                            <!-- Terms -->
-                            <div class="text-center text-sm text-gray-500">
-                                <p>By donating, you agree to our <a href="#" class="text-primary-500 hover:underline">Terms of Service</a> and <a href="#" class="text-primary-500 hover:underline">Privacy Policy</a></p>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Impact Section -->
-        <section class="py-12 md:py-16 bg-gray-50">
+        <!-- Campaign & Donation Section -->
+        <section class="py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Your Impact</h2>
-                    <p class="text-base md:text-lg text-gray-600">See how your donation makes a real difference</p>
-                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Impact Card 1 -->
-                    <div class="bg-white rounded-xl shadow-lg p-8 text-center border border-gray-100">
-                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C20.832 18.477 19.246 18 17.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-                            </svg>
+                    <!-- Campaign Information - Left Side -->
+                    <div class="order-2 lg:order-1">
+                        <!-- Campaign Image -->
+                        <div class="relative mb-8">
+                            <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                                 alt="Emergency Food Relief for Gaza Families"
+                                 class="w-full h-80 object-cover rounded-xl">
+
+                            <!-- Overlay Content -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent rounded-xl flex items-end">
+                                <div class="p-8 text-white w-full">
+                                    <div class="inline-flex items-center px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full mb-4">
+                                        <span class="text-white font-medium text-sm">Featured Campaign</span>
+                                    </div>
+                                    <h1 class="text-3xl font-bold mb-2">
+                                        Emergency Food Relief for Gaza Families
+                                    </h1>
+                                    <p class="text-white/90 text-base">
+                                        Provide essential food packages to families in need
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3">Education</h3>
-                        <p class="text-gray-600 mb-4">RM 50 can provide school supplies for one child for a month</p>
-                        <div class="text-2xl font-bold text-blue-600">2,450+</div>
-                        <div class="text-sm text-gray-500">Children Supported</div>
+
+                        <!-- Progress Indicator -->
+                        <div class="bg-white rounded-xl p-6 mb-8 border border-gray-100">
+                            <div class="flex justify-between items-baseline mb-4">
+                                <div>
+                                    <div class="text-2xl font-bold text-gray-900">RM 45,230</div>
+                                    <div class="text-sm text-gray-500">raised of RM 62,000 goal</div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-semibold text-primary-600">73%</div>
+                                    <div class="text-sm text-gray-500">funded</div>
+                                </div>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
+                                <div style="background-color: #FE5000; width: 73%;" class="h-2 rounded-full transition-all duration-1000"></div>
+                            </div>
+                            <div class="flex items-center justify-between text-sm text-gray-600">
+                                <div class="flex items-center">
+                                    @include('components.uxwing-icon', ['name' => 'people', 'class' => 'w-4 h-4 mr-2'])
+                                    <span>234 donors</span>
+                                </div>
+                                <div>15 days left</div>
+                            </div>
+                        </div>
+
+                        <!-- Campaign Content -->
+                        <div class="bg-white rounded-xl border border-gray-100 p-8">
+                            <!-- Organization Info -->
+                            <div class="flex items-center mb-8 pb-6 border-b border-gray-100">
+                                <div class="w-12 h-12 rounded-lg flex items-center justify-center mr-4 bg-primary-50">
+                                    <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-1">Yayasan Muslimin</h3>
+                                    <div class="flex items-center">
+                                        <span class="text-sm text-gray-600 mr-3">Verified Islamic Foundation</span>
+                                        <div class="flex items-center px-2 py-1 bg-green-50 rounded-full">
+                                            <svg class="w-3 h-3 text-green-600 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                            </svg>
+                                            <span class="text-xs font-medium text-green-700">Verified</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Campaign Title -->
+                            <h1 class="text-2xl font-bold text-gray-900 mb-6 leading-tight">
+                                Emergency Food Relief for Gaza Families
+                            </h1>
+
+                            <!-- Campaign Description -->
+                            <div class="space-y-6">
+                                <p class="text-gray-600 leading-relaxed">
+                                    Provide essential food packages to families in Gaza who are facing severe food shortages. Each package feeds a family of 6 for one month and includes rice, flour, oil, lentils, and other nutritious staples.
+                                </p>
+
+                                <!-- Quranic Quote -->
+                                <div class="p-6 bg-primary-50 rounded-xl border-l-4 border-primary-500">
+                                    <blockquote class="text-gray-800 font-medium mb-2">
+                                        "And whoever saves a life, it is as if he has saved all of mankind."
+                                    </blockquote>
+                                    <cite class="text-gray-600 text-sm">— Quran 5:32</cite>
+                                </div>
+
+                                <!-- Key Benefits -->
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Why Support This Campaign?</h3>
+                                    <div class="space-y-3">
+                                        <div class="flex items-start space-x-3">
+                                            <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                <svg class="w-3 h-3 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-medium text-gray-900 text-sm">Immediate Impact</h4>
+                                                <p class="text-gray-600 text-sm">Food packages are distributed directly to families in urgent need.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-start space-x-3">
+                                            <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                <svg class="w-3 h-3 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-medium text-gray-900 text-sm">Verified Distribution</h4>
+                                                <p class="text-gray-600 text-sm">All distributions are verified and documented for transparency.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-start space-x-3">
+                                            <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                <svg class="w-3 h-3 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-medium text-gray-900 text-sm">Life-Saving Support</h4>
+                                                <p class="text-gray-600 text-sm">Your donation helps prevent malnutrition and saves lives.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Share Section -->
+                            <div class="border-t border-gray-100 pt-6 mt-8">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-medium text-gray-900 mb-1">Share this campaign</h4>
+                                        <p class="text-sm text-gray-600">Help us reach more people</p>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <button onclick="shareOnFacebook()" class="w-9 h-9 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center justify-center transition-colors" title="Share on Facebook">
+                                            @include('components.uxwing-icon', ['name' => 'facebook', 'class' => 'w-4 h-4'])
+                                        </button>
+                                        <button onclick="shareOnTwitter()" class="w-9 h-9 bg-black hover:bg-gray-800 text-white rounded-lg flex items-center justify-center transition-colors" title="Share on X">
+                                            @include('components.uxwing-icon', ['name' => 'twitter', 'class' => 'w-4 h-4'])
+                                        </button>
+                                        <button onclick="shareOnWhatsApp()" class="w-9 h-9 bg-green-500 hover:bg-green-600 text-white rounded-lg flex items-center justify-center transition-colors" title="Share on WhatsApp">
+                                            @include('components.uxwing-icon', ['name' => 'whatsapp', 'class' => 'w-4 h-4'])
+                                        </button>
+                                        <button onclick="copyLink()" class="w-9 h-9 bg-gray-500 hover:bg-gray-600 text-white rounded-lg flex items-center justify-center transition-colors" title="Copy Link">
+                                            @include('components.uxwing-icon', ['name' => 'copy-link', 'class' => 'w-4 h-4'])
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Impact Card 2 -->
-                    <div class="bg-white rounded-xl shadow-lg p-8 text-center border border-gray-100">
-                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3">Healthcare</h3>
-                        <p class="text-gray-600 mb-4">RM 100 can provide medical care for a family in need</p>
-                        <div class="text-2xl font-bold text-green-600">1,850+</div>
-                        <div class="text-sm text-gray-500">Families Helped</div>
-                    </div>
+                    <!-- Donation Form - Right Side -->
+                    <div class="order-1 lg:order-2">
+                        <div class="bg-white rounded-xl border border-gray-200 sticky top-6">
+                            <!-- Form Header -->
+                            <div class="px-8 py-6 border-b border-gray-100">
+                                <h2 class="text-xl font-semibold text-gray-900 mb-2">Make Your Donation</h2>
+                                <p class="text-gray-600">Every contribution makes a difference</p>
+                            </div>
 
-                    <!-- Impact Card 3 -->
-                    <div class="bg-white rounded-xl shadow-lg p-8 text-center border border-gray-100">
-                        <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"/>
-                            </svg>
+                            <!-- Professional Form -->
+                            <div class="px-8 py-8">
+                                <form action="#" method="POST" class="space-y-8" onsubmit="return handleDonationSubmit(event)">
+                                    @csrf
+                                    <input type="hidden" name="campaign_id" value="1">
+                                    <input type="hidden" name="donation_type" id="donation-type-input" value="single">
+
+                                    <!-- Donation Type -->
+                                    <div>
+                                        <label class="block text-base font-medium text-gray-900 mb-4">Donation Type</label>
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <button type="button" id="single-btn" class="py-3 px-4 border-2 border-primary-500 bg-primary-500 text-white rounded-lg text-sm font-medium transition-colors hover:bg-primary-600 hover:border-primary-600">
+                                                One-Time
+                                            </button>
+                                            <button type="button" id="monthly-btn" class="py-3 px-4 border-2 border-gray-200 bg-white text-gray-700 rounded-lg text-sm font-medium transition-colors hover:border-gray-300 hover:bg-gray-50">
+                                                Monthly
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- Amount Selection -->
+                                    <div>
+                                        <label class="block text-base font-medium text-gray-900 mb-4">Select Amount (MYR)</label>
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <label class="cursor-pointer amount-option">
+                                                <input type="radio" name="amount" value="50" class="sr-only">
+                                                <div class="amount-button border-2 border-gray-200 py-4 px-4 rounded-lg text-center transition-colors hover:border-primary-300 hover:bg-primary-50">
+                                                    <div class="text-lg font-semibold text-gray-900">RM 50</div>
+                                                </div>
+                                            </label>
+                                            <label class="cursor-pointer amount-option">
+                                                <input type="radio" name="amount" value="150" class="sr-only">
+                                                <div class="amount-button border-2 border-gray-200 py-4 px-4 rounded-lg text-center transition-colors hover:border-primary-300 hover:bg-primary-50">
+                                                    <div class="text-lg font-semibold text-gray-900">RM 150</div>
+                                                </div>
+                                            </label>
+                                            <label class="cursor-pointer amount-option">
+                                                <input type="radio" name="amount" value="250" class="sr-only" checked>
+                                                <div class="amount-button border-2 border-primary-500 bg-primary-500 py-4 px-4 rounded-lg text-center transition-colors">
+                                                    <div class="text-lg font-semibold text-white">RM 250</div>
+                                                </div>
+                                            </label>
+                                            <label class="cursor-pointer amount-option">
+                                                <input type="radio" name="amount" value="500" class="sr-only">
+                                                <div class="amount-button border-2 border-gray-200 py-4 px-4 rounded-lg text-center transition-colors hover:border-primary-300 hover:bg-primary-50">
+                                                    <div class="text-lg font-semibold text-gray-900">RM 500</div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Custom Amount -->
+                                    <div>
+                                        <label class="block text-base font-medium text-gray-900 mb-4">Custom Amount</label>
+                                        <div class="relative">
+                                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                <span class="text-sm font-medium text-gray-500">MYR</span>
+                                            </div>
+                                            <input type="number" name="custom_amount" id="custom-amount" placeholder="Enter amount" min="1" step="1"
+                                                   class="w-full pl-16 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                                        </div>
+                                    </div>
+
+                                    <!-- Payment Methods -->
+                                    <div>
+                                        <label class="block text-base font-medium text-gray-900 mb-4">Payment Method</label>
+                                        <div class="space-y-3">
+                                            <!-- FPX Option -->
+                                            <label class="cursor-pointer payment-option">
+                                                <input type="radio" name="payment_method" value="fpx" class="sr-only" checked>
+                                                <div class="payment-card flex items-center p-4 border-2 border-primary-500 bg-primary-50 rounded-lg transition-colors">
+                                                    <div class="w-10 h-8 bg-blue-600 rounded text-white text-xs flex items-center justify-center font-semibold mr-4">FPX</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-medium text-gray-900">FPX Online Banking</div>
+                                                        <div class="text-sm text-gray-600">Direct bank transfer</div>
+                                                    </div>
+                                                    <div class="w-5 h-5 border-2 border-primary-500 rounded-full flex items-center justify-center">
+                                                        <div class="w-2 h-2 bg-primary-500 rounded-full"></div>
+                                                    </div>
+                                                </div>
+                                            </label>
+
+                                            <!-- DuitNow QR Option -->
+                                            <label class="cursor-pointer payment-option">
+                                                <input type="radio" name="payment_method" value="duitnow_qr" class="sr-only">
+                                                <div class="payment-card flex items-center p-4 border-2 border-gray-200 rounded-lg transition-colors hover:border-gray-300">
+                                                    <div class="w-10 h-8 bg-green-600 rounded text-white text-xs flex items-center justify-center font-semibold mr-4">QR</div>
+                                                    <div class="flex-1">
+                                                        <div class="font-medium text-gray-900">DuitNow QR</div>
+                                                        <div class="text-sm text-gray-600">Scan with banking app</div>
+                                                    </div>
+                                                    <div class="payment-radio w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center">
+                                                        <div class="w-2 h-2 bg-primary-500 rounded-full" style="display: none;"></div>
+                                                    </div>
+                                                </div>
+                                            </label>
+
+                                            <!-- Credit/Debit Card Option -->
+                                            <label class="cursor-pointer payment-option">
+                                                <input type="radio" name="payment_method" value="card" class="sr-only">
+                                                <div class="payment-card flex items-center p-4 border-2 border-gray-200 rounded-lg transition-colors hover:border-gray-300">
+                                                    <div class="flex space-x-1 mr-4">
+                                                        <div class="w-6 h-4 bg-blue-700 rounded text-white text-xs flex items-center justify-center font-semibold">V</div>
+                                                        <div class="w-6 h-4 bg-red-500 rounded text-white text-xs flex items-center justify-center font-semibold">M</div>
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <div class="font-medium text-gray-900">Credit/Debit Card</div>
+                                                        <div class="text-sm text-gray-600">Visa, Mastercard</div>
+                                                    </div>
+                                                    <div class="payment-radio w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center">
+                                                        <div class="w-2 h-2 bg-primary-500 rounded-full" style="display: none;"></div>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Donate Button -->
+                                    <div class="pt-8 border-t border-gray-100">
+                                        <button type="submit" class="w-full bg-primary-500 hover:bg-primary-600 text-white py-4 px-6 rounded-lg text-lg font-semibold transition-colors">
+                                            Donate Now
+                                        </button>
+
+                                        <!-- Trust Indicators -->
+                                        <div class="mt-6 text-center">
+                                            <div class="flex items-center justify-center text-sm text-gray-600 mb-4">
+                                                @include('components.uxwing-icon', ['name' => 'security', 'class' => 'w-4 h-4 text-green-600 mr-2'])
+                                                <span>Secure & encrypted payment</span>
+                                            </div>
+                                            <div class="flex justify-center gap-6 text-xs text-gray-500">
+                                                <div class="flex items-center">
+                                                    <span class="mr-1">🔒</span>
+                                                    <span>SSL Secured</span>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <span class="mr-1">⚡</span>
+                                                    <span>Instant</span>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <span class="mr-1">🏆</span>
+                                                    <span>Tax Receipt</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                            </div>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3">Community</h3>
-                        <p class="text-gray-600 mb-4">RM 250 can support community development projects</p>
-                        <div class="text-2xl font-bold text-primary-600">320+</div>
-                        <div class="text-sm text-gray-500">Projects Funded</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- FAQ Section -->
-        <section class="py-12 md:py-16 bg-white">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
-                    <p class="text-base md:text-lg text-gray-600">Common questions about donating</p>
-                </div>
 
-                <div class="space-y-6">
-                    <!-- FAQ Item 1 -->
-                    <div class="bg-gray-50 rounded-lg p-6">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Is my donation secure?</h3>
-                        <p class="text-gray-600">Yes, all donations are processed through secure, encrypted payment gateways. We use industry-standard security measures to protect your personal and financial information.</p>
-                    </div>
 
-                    <!-- FAQ Item 2 -->
-                    <div class="bg-gray-50 rounded-lg p-6">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Will I receive a receipt for tax purposes?</h3>
-                        <p class="text-gray-600">Yes, you will receive an official tax-deductible receipt via email immediately after your donation is processed. This receipt can be used for tax deduction purposes.</p>
-                    </div>
 
-                    <!-- FAQ Item 3 -->
-                    <div class="bg-gray-50 rounded-lg p-6">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-3">How is my donation used?</h3>
-                        <p class="text-gray-600">100% of your donation goes directly to our programs. We maintain complete transparency in how funds are allocated and provide regular updates on the impact of your contribution.</p>
-                    </div>
 
-                    <!-- FAQ Item 4 -->
-                    <div class="bg-gray-50 rounded-lg p-6">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Can I cancel my monthly donation?</h3>
-                        <p class="text-gray-600">Yes, you can cancel or modify your monthly donation at any time by contacting our support team or through your donor portal. There are no cancellation fees.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+@endsection
 
-        @include('components.footer')
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Toggle buttons functionality
+    const singleBtn = document.getElementById('single-btn');
+    const monthlyBtn = document.getElementById('monthly-btn');
+    const donationTypeInput = document.getElementById('donation-type-input');
 
-    </body>
-</html>
+    function setActiveButton(activeBtn, inactiveBtn, type) {
+        // Reset buttons
+        activeBtn.classList.remove('text-gray-700', 'bg-white', 'border-gray-200');
+        activeBtn.classList.add('text-white', 'border-primary-500', 'bg-primary-500');
+
+        inactiveBtn.classList.remove('text-white', 'border-primary-500', 'bg-primary-500');
+        inactiveBtn.classList.add('text-gray-700', 'bg-white', 'border-gray-200');
+
+        // Update hidden input
+        if (donationTypeInput) {
+            donationTypeInput.value = type;
+        }
+    }
+
+    // Button events
+    if (singleBtn && monthlyBtn) {
+        singleBtn.addEventListener('click', function() {
+            setActiveButton(singleBtn, monthlyBtn, 'single');
+        });
+
+        monthlyBtn.addEventListener('click', function() {
+            setActiveButton(monthlyBtn, singleBtn, 'monthly');
+        });
+    }
+
+    // Amount selection functionality
+    const amountInputs = document.querySelectorAll('input[name="amount"]');
+    const customAmountInput = document.getElementById('custom-amount');
+
+    // Handle amount selection
+    amountInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            // Clear custom amount when radio button is selected
+            if (customAmountInput) {
+                customAmountInput.value = '';
+            }
+
+            // Update visual state for all amount buttons
+            amountInputs.forEach(otherInput => {
+                const button = otherInput.closest('label').querySelector('.amount-button');
+                const textElement = button.querySelector('div');
+                if (otherInput === this) {
+                    // Selected state
+                    button.classList.remove('border-gray-200', 'hover:border-primary-300', 'hover:bg-primary-50');
+                    button.classList.add('border-primary-500', 'bg-primary-500');
+                    textElement.classList.remove('text-gray-900');
+                    textElement.classList.add('text-white');
+                } else {
+                    // Unselected state
+                    button.classList.remove('border-primary-500', 'bg-primary-500');
+                    button.classList.add('border-gray-200', 'hover:border-primary-300', 'hover:bg-primary-50');
+                    textElement.classList.remove('text-white');
+                    textElement.classList.add('text-gray-900');
+                }
+            });
+        });
+    });
+
+    // Handle custom amount input
+    if (customAmountInput) {
+        customAmountInput.addEventListener('input', function() {
+            if (this.value) {
+                // Clear amount radio selections when custom amount is entered
+                amountInputs.forEach(input => {
+                    input.checked = false;
+                    const button = input.closest('label').querySelector('.amount-button');
+                    const textElement = button.querySelector('div');
+                    button.classList.remove('border-primary-500', 'bg-primary-500');
+                    button.classList.add('border-gray-200', 'hover:border-primary-300', 'hover:bg-primary-50');
+                    textElement.classList.remove('text-white');
+                    textElement.classList.add('text-gray-900');
+                });
+            }
+        });
+    }
+
+    // Handle payment method selection
+    const paymentInputs = document.querySelectorAll('input[name="payment_method"]');
+    paymentInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            paymentInputs.forEach(otherInput => {
+                const card = otherInput.closest('label').querySelector('.payment-card');
+                const radio = otherInput.closest('label').querySelector('.payment-radio');
+                const radioInner = radio ? radio.querySelector('div') : null;
+
+                if (otherInput === this) {
+                    // Selected state
+                    card.classList.remove('border-gray-200', 'hover:border-gray-300');
+                    card.classList.add('border-primary-500', 'bg-primary-50');
+                    if (radio) {
+                        radio.classList.remove('border-gray-300');
+                        radio.classList.add('border-primary-500');
+                        // Show inner dot
+                        if (radioInner) {
+                            radioInner.style.display = 'block';
+                        }
+                    }
+                } else {
+                    // Unselected state
+                    card.classList.remove('border-primary-500', 'bg-primary-50');
+                    card.classList.add('border-gray-200', 'hover:border-gray-300');
+                    if (radio) {
+                        radio.classList.remove('border-primary-500');
+                        radio.classList.add('border-gray-300');
+                        // Hide inner dot
+                        if (radioInner) {
+                            radioInner.style.display = 'none';
+                        }
+                    }
+                }
+            });
+        });
+    });
+
+    // Form validation and submission handler
+    window.handleDonationSubmit = function(e) {
+        e.preventDefault();
+
+        const selectedAmount = document.querySelector('input[name="amount"]:checked');
+        const customAmount = customAmountInput ? customAmountInput.value : '';
+        const selectedPayment = document.querySelector('input[name="payment_method"]:checked');
+
+        // Validate amount
+        if (!selectedAmount && !customAmount) {
+            showNotification('Please select or enter a donation amount.', 'error');
+            return false;
+        }
+
+        if (customAmount && parseFloat(customAmount) < 1) {
+            showNotification('Please enter a valid donation amount (minimum RM 1).', 'error');
+            return false;
+        }
+
+        // Validate payment method
+        if (!selectedPayment) {
+            showNotification('Please select a payment method.', 'error');
+            return false;
+        }
+
+        // Get donation details
+        const amount = selectedAmount ? selectedAmount.value : customAmount;
+        const donationType = donationTypeInput ? donationTypeInput.value : 'single';
+        const paymentMethod = selectedPayment.value;
+
+        // Show success message
+        showNotification(`Thank you! Your ${donationType} donation of RM ${amount} via ${getPaymentMethodName(paymentMethod)} has been processed successfully.`, 'success');
+
+        // Reset form after successful submission
+        setTimeout(() => {
+            document.querySelector('form').reset();
+            // Reset visual states
+            resetFormStates();
+        }, 2000);
+
+        return false;
+    };
+
+    function getPaymentMethodName(method) {
+        switch(method) {
+            case 'fpx': return 'FPX Online Banking';
+            case 'duitnow_qr': return 'DuitNow QR';
+            case 'card': return 'Credit/Debit Card';
+            default: return method;
+        }
+    }
+
+    function resetFormStates() {
+        // Reset donation type buttons
+        if (singleBtn && monthlyBtn) {
+            setActiveButton(singleBtn, monthlyBtn, 'single');
+        }
+
+        // Reset amount buttons
+        amountInputs.forEach(input => {
+            const button = input.closest('label').querySelector('.amount-button');
+            const textElement = button.querySelector('div');
+            button.classList.remove('border-primary-500', 'bg-primary-500');
+            button.classList.add('border-gray-200', 'hover:border-primary-300', 'hover:bg-primary-50');
+            textElement.classList.remove('text-white');
+            textElement.classList.add('text-gray-900');
+        });
+
+        // Reset payment method buttons
+        const paymentInputs = document.querySelectorAll('input[name="payment_method"]');
+        paymentInputs.forEach(input => {
+            const card = input.closest('label').querySelector('.payment-card');
+            const radio = input.closest('label').querySelector('.payment-radio');
+            const radioInner = radio ? radio.querySelector('div') : null;
+
+            if (input.value === 'fpx') {
+                // Set FPX as default
+                input.checked = true;
+                card.classList.add('border-primary-500', 'bg-primary-50');
+                if (radio) {
+                    radio.classList.add('border-primary-500');
+                    if (radioInner) radioInner.style.display = 'block';
+                }
+            } else {
+                card.classList.remove('border-primary-500', 'bg-primary-50');
+                card.classList.add('border-gray-200', 'hover:border-gray-300');
+                if (radio) {
+                    radio.classList.remove('border-primary-500');
+                    radio.classList.add('border-gray-300');
+                    if (radioInner) radioInner.style.display = 'none';
+                }
+            }
+        });
+    }
+
+    function showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.textContent = message;
+
+        const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
+        notification.className = `fixed top-4 right-4 ${bgColor} text-white px-6 py-4 rounded-lg shadow-lg z-50 transition-all duration-300 max-w-md`;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
+            }, 300);
+        }, type === 'success' ? 4000 : 3000);
+    }
+
+    // Accessibility improvements
+    const amountLabels = document.querySelectorAll('label[class*="cursor-pointer"]');
+    amountLabels.forEach(label => {
+        label.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const input = this.querySelector('input');
+                if (input) {
+                    input.checked = true;
+                    input.dispatchEvent(new Event('change'));
+                }
+            }
+        });
+
+        // Make labels focusable
+        label.setAttribute('tabindex', '0');
+    });
+
+    // Social Media Share Functions
+    window.shareOnFacebook = function() {
+        const url = encodeURIComponent(window.location.href);
+        const title = encodeURIComponent('Emergency Food Relief for Gaza Families');
+        const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+        window.open(shareUrl, '_blank', 'width=600,height=400');
+    };
+
+    window.shareOnTwitter = function() {
+        const url = encodeURIComponent(window.location.href);
+        const text = encodeURIComponent('Help provide emergency food relief for Gaza families! Every donation saves lives and provides essential nutrition.');
+        const shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+        window.open(shareUrl, '_blank', 'width=600,height=400');
+    };
+
+    window.shareOnWhatsApp = function() {
+        const url = encodeURIComponent(window.location.href);
+        const text = encodeURIComponent('🍽️ Help provide emergency food relief for Gaza families!\n\nEmergency Food Relief for Gaza Families\n\nEvery donation provides essential food packages to families in urgent need. Join us in this life-saving mission.');
+        const shareUrl = `https://wa.me/?text=${text}%20${url}`;
+        window.open(shareUrl, '_blank');
+    };
+
+    window.shareOnTelegram = function() {
+        const url = encodeURIComponent(window.location.href);
+        const text = encodeURIComponent('🍽️ Help provide emergency food relief for Gaza families!\n\nEmergency Food Relief for Gaza Families');
+        const shareUrl = `https://t.me/share/url?url=${url}&text=${text}`;
+        window.open(shareUrl, '_blank');
+    };
+
+    window.copyLink = function() {
+        const url = window.location.href;
+
+        if (navigator.clipboard && window.isSecureContext) {
+            // Use modern clipboard API
+            navigator.clipboard.writeText(url).then(function() {
+                showCopyNotification('Link copied to clipboard!');
+            }).catch(function() {
+                fallbackCopyTextToClipboard(url);
+            });
+        } else {
+            // Fallback for older browsers
+            fallbackCopyTextToClipboard(url);
+        }
+    };
+
+    function fallbackCopyTextToClipboard(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.position = "fixed";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            document.execCommand('copy');
+            showCopyNotification('Link copied to clipboard!');
+        } catch (err) {
+            showCopyNotification('Failed to copy link');
+        }
+
+        document.body.removeChild(textArea);
+    }
+
+    function showCopyNotification(message) {
+        showNotification(message, 'success');
+    }
+});
+</script>
+@endpush

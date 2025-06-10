@@ -11,6 +11,60 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
 
+        <!-- UXWing Icons Reference -->
+        <meta name="icon-source" content="https://uxwing.com/" />
+        <meta name="icon-license" content="Free for commercial use - No attribution required" />
+
+        <!-- UXWing Icon System Styles -->
+        <style>
+            /* UXWing Icon System - Professional Icon Styling */
+            .uxw-icon {
+                display: inline-block;
+                width: 1em;
+                height: 1em;
+                fill: currentColor;
+                vertical-align: middle;
+                transition: all 0.2s ease;
+            }
+
+            .uxw-icon-sm { width: 0.875rem; height: 0.875rem; }
+            .uxw-icon-md { width: 1.25rem; height: 1.25rem; }
+            .uxw-icon-lg { width: 1.5rem; height: 1.5rem; }
+            .uxw-icon-xl { width: 2rem; height: 2rem; }
+
+            .uxw-icon-primary { color: #FE5100; }
+            .uxw-icon-secondary { color: #6B7280; }
+            .uxw-icon-white { color: #FFFFFF; }
+
+            .uxw-icon-hover:hover {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+
+            /* Social Media Icon Specific Styles */
+            .uxw-social-icon {
+                width: 2.5rem;
+                height: 2.5rem;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+
+            .uxw-social-icon:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            }
+
+            .uxw-social-facebook { background-color: #1877F2; color: white; }
+            .uxw-social-twitter { background-color: #000000; color: white; }
+            .uxw-social-whatsapp { background-color: #25D366; color: white; }
+            .uxw-social-telegram { background-color: #0088CC; color: white; }
+            .uxw-social-copy { background-color: #6B7280; color: white; }
+        </style>
+
         <!-- Styles / Scripts -->
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
             @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -42,6 +96,7 @@
                         <a href="{{ url('/partners') }}" class="@if(request()->is('partners')) text-primary-500 font-medium @else text-gray-700 hover:text-primary-500 @endif transition-colors text-sm lg:text-base">Partners</a>
                         <a href="{{ url('/campaigns') }}" class="@if(request()->is('campaigns')) text-primary-500 font-medium @else text-gray-700 hover:text-primary-500 @endif transition-colors text-sm lg:text-base">Campaigns</a>
                         <a href="{{ url('/news') }}" class="@if(request()->is('news')) text-primary-500 font-medium @else text-gray-700 hover:text-primary-500 @endif transition-colors text-sm lg:text-base">News</a>
+                        <a href="{{ url('/faq') }}" class="@if(request()->is('faq')) text-primary-500 font-medium @else text-gray-700 hover:text-primary-500 @endif transition-colors text-sm lg:text-base">FAQ</a>
                         <a href="{{ url('/contact') }}" class="@if(request()->is('contact')) text-primary-500 font-medium @else text-gray-700 hover:text-primary-500 @endif transition-colors text-sm lg:text-base">Contact</a>
                     </nav>
 
@@ -83,6 +138,7 @@
                         <a href="{{ url('/partners') }}" class="@if(request()->is('partners')) text-primary-500 font-medium bg-primary-50 @else text-gray-700 hover:text-primary-500 hover:bg-primary-50 @endif block px-3 py-2 transition-all duration-300 rounded-lg text-sm">Partners</a>
                         <a href="{{ url('/campaigns') }}" class="@if(request()->is('campaigns')) text-primary-500 font-medium bg-primary-50 @else text-gray-700 hover:text-primary-500 hover:bg-primary-50 @endif block px-3 py-2 transition-all duration-300 rounded-lg text-sm">Campaigns</a>
                         <a href="{{ url('/news') }}" class="@if(request()->is('news')) text-primary-500 font-medium bg-primary-50 @else text-gray-700 hover:text-primary-500 hover:bg-primary-50 @endif block px-3 py-2 transition-all duration-300 rounded-lg text-sm">News</a>
+                        <a href="{{ url('/faq') }}" class="@if(request()->is('faq')) text-primary-500 font-medium bg-primary-50 @else text-gray-700 hover:text-primary-500 hover:bg-primary-50 @endif block px-3 py-2 transition-all duration-300 rounded-lg text-sm">FAQ</a>
                         <a href="{{ url('/contact') }}" class="@if(request()->is('contact')) text-primary-500 font-medium bg-primary-50 @else text-gray-700 hover:text-primary-500 hover:bg-primary-50 @endif block px-3 py-2 transition-all duration-300 rounded-lg text-sm">Contact</a>
                     </div>
                 </div>
@@ -135,6 +191,8 @@
                             <li><a href="{{ url('/partners') }}" class="hover:text-primary-500 transition-colors">Partners</a></li>
                             <li><a href="{{ url('/campaigns') }}" class="hover:text-primary-500 transition-colors">Campaigns</a></li>
                             <li><a href="{{ url('/news') }}" class="hover:text-primary-500 transition-colors">News & Events</a></li>
+                            <li><a href="{{ url('/faq') }}" class="hover:text-primary-500 transition-colors">FAQ</a></li>
+                            <li><a href="{{ url('/contact') }}" class="hover:text-primary-500 transition-colors">Contact</a></li>
                         </ul>
                     </div>
 
@@ -192,12 +250,101 @@
             </div>
         </footer>
 
+        <!-- UXWing Icon System JavaScript -->
+        <script>
+            // UXWing Icon Library - Professional Icon Management System
+            // Source: https://uxwing.com/ - Free for commercial use, no attribution required
+
+            const UXWingIcons = {
+                // Social Media Icons
+                facebook: `<svg class="uxw-icon" fill="currentColor" viewBox="0 0 512 512">
+                    <path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256C0 376 82.7 476.8 194.2 504.5V334.2H141.4V256h52.8V222.3c0-87.1 39.4-127.5 125-127.5c16.2 0 44.9 3.2 56.6 6.3v70.9c-6.2-0.6-17-1-30.2-1c-42.9 0-59.4 16.6-59.4 59.2V256h81.3l-13.9 78.2h-67.4V510.1C433.7 494.8 512 386.9 512 256z"/>
+                </svg>`,
+
+                twitter: `<svg class="uxw-icon" fill="currentColor" viewBox="0 0 512 512">
+                    <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
+                </svg>`,
+
+                whatsapp: `<svg class="uxw-icon" fill="currentColor" viewBox="0 0 512 512">
+                    <path d="M260.062 32C138.605 32 40.134 129.701 40.134 250.232c0 41.23 11.532 79.79 31.559 112.687L32 480l121.764-38.682c31.508 17.285 67.745 27.146 106.298 27.146C381.535 468.464 480 370.749 480 250.232C480 129.701 381.535 32 260.062 32zm109.362 301.11c-5.174 12.827-28.574 24.533-38.899 25.072-10.314.547-10.608 7.994-66.84-16.434-56.225-24.434-90.052-83.844-92.719-87.67-2.669-3.812-21.78-31.047-21.78-59.067 0-28.027 13.758-41.756 18.65-47.084 4.897-5.33 10.607-6.630 14.142-6.630 3.536 0 7.071.16 10.141.3 3.249.14 7.607-1.249 11.895 9.061 4.281 10.31 14.691 35.811 15.985 38.501 1.297 2.687 2.166 5.821 0.434 9.634-1.732 3.813-2.594 6.168-5.256 9.547-2.669 3.379-5.606 7.558-8.005 10.134-2.669 2.99-5.453 6.2-2.34 12.143 3.106 5.936 13.793 22.701 29.618 36.781 20.369 18.145 37.549 23.734 42.898 26.428 5.342 2.694 8.447 2.284 11.537-1.388 3.106-3.678 13.284-15.464 16.82-20.824 3.51-5.359 7.045-4.464 11.824-2.688 4.78 1.77 30.409 14.267 35.611 16.87 5.195 2.59 8.688 3.886 9.985 6.046 1.297 2.165 1.297 12.433-3.874 25.502z"/>
+                </svg>`,
+
+                telegram: `<svg class="uxw-icon" fill="currentColor" viewBox="0 0 512 512">
+                    <path d="M248 8C111.033 8 0 119.033 0 256s111.033 248 248 248 248-111.033 248-248S384.967 8 248 8zm121.344 169.65l-40.253 190.477c-3.036 13.381-10.956 16.69-22.209 10.378l-61.344-45.191-29.61 28.474c-3.28 3.28-6.018 6.018-12.343 6.018l4.411-62.582 114.188-103.204c4.967-4.411-1.081-6.87-7.73-2.458L155.331 298.705l-59.416-18.592c-12.912-4.033-13.148-12.912 2.691-19.07L237.655 184.2c10.7-4.032 20.062 2.458 16.689 19.45z"/>
+                </svg>`,
+
+                copyLink: `<svg class="uxw-icon" fill="currentColor" viewBox="0 0 512 512">
+                    <path d="M307.2 169.6c-35.3-35.3-92.7-35.3-128 0L89.6 259.2c-35.3 35.3-35.3 92.7 0 128 35.3 35.3 92.7 35.3 128 0l89.6-89.6c35.3-35.3 35.3-92.7 0-128zM179.2 342.4c-17.7 17.7-46.3 17.7-64 0s-17.7-46.3 0-64l89.6-89.6c17.7-17.7 46.3-17.7 64 0s17.7 46.3 0 64l-89.6 89.6z"/>
+                    <path d="M332.8 342.4c35.3 35.3 92.7 35.3 128 0l89.6-89.6c35.3-35.3 35.3-92.7 0-128-35.3-35.3-92.7-35.3-128 0l-89.6 89.6c-35.3 35.3-35.3 92.7 0 128zM460.8 169.6c17.7-17.7 17.7-46.3 0-64s-46.3-17.7-64 0l-89.6 89.6c-17.7 17.7-17.7 46.3 0 64s46.3 17.7 64 0l89.6-89.6z"/>
+                </svg>`,
+
+                // Interface Icons
+                people: `<svg class="uxw-icon" fill="currentColor" viewBox="0 0 512 512">
+                    <path d="M256 0c-74.439 0-135 60.561-135 135s60.561 135 135 135 135-60.561 135-135S330.439 0 256 0zM423.966 358.195C387.006 320.667 338.009 296 256 296s-131.006 24.667-167.966 62.195C51.255 395.539 31 444.833 31 512h450c0-67.167-20.255-116.461-57.034-153.805z"/>
+                </svg>`,
+
+                security: `<svg class="uxw-icon" fill="currentColor" viewBox="0 0 512 512">
+                    <path d="M256 0c-74.439 0-135 60.561-135 135 0 74.439 60.561 135 135 135s135-60.561 135-135C391 60.561 330.439 0 256 0zM256 240c-57.897 0-105-47.103-105-105S198.103 30 256 30s105 47.103 105 105S313.897 240 256 240zM256 90c-24.813 0-45 20.187-45 45s20.187 45 45 45 45-20.187 45-45S280.813 90 256 90zM256 150c-8.271 0-15-6.729-15-15s6.729-15 15-15 15 6.729 15 15S264.271 150 256 150zM423.966 358.195C387.006 320.667 338.009 296 256 296s-131.006 24.667-167.966 62.195C51.255 395.539 31 444.833 31 512h450C481 444.833 460.745 395.539 423.966 358.195z"/>
+                </svg>`,
+
+                // Utility function to get icon
+                get: function(iconName, className = '') {
+                    if (this[iconName]) {
+                        return this[iconName].replace('class="uxw-icon"', `class="uxw-icon ${className}"`);
+                    }
+                    return '';
+                },
+
+                // Render icon in element
+                render: function(elementId, iconName, className = '') {
+                    const element = document.getElementById(elementId);
+                    if (element && this[iconName]) {
+                        element.innerHTML = this.get(iconName, className);
+                    }
+                }
+            };
+
+            // Global helper functions for UXWing icons
+            window.UXWingIcons = UXWingIcons;
+
+            // Helper function to create social share buttons
+            function createSocialShareButton(platform, url, text = '') {
+                const shareUrls = {
+                    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+                    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`,
+                    whatsapp: `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`,
+                    telegram: `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`
+                };
+
+                if (shareUrls[platform]) {
+                    window.open(shareUrls[platform], '_blank', 'width=600,height=400');
+                }
+            }
+
+            // Copy to clipboard function
+            function copyToClipboard(text) {
+                navigator.clipboard.writeText(text).then(function() {
+                    // Show success message
+                    const toast = document.createElement('div');
+                    toast.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50';
+                    toast.textContent = 'Link copied to clipboard!';
+                    document.body.appendChild(toast);
+
+                    setTimeout(() => {
+                        document.body.removeChild(toast);
+                    }, 3000);
+                }).catch(function(err) {
+                    console.error('Could not copy text: ', err);
+                });
+            }
+        </script>
+
         <!-- Mobile Menu Script -->
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const mobileMenuButton = document.getElementById('mobile-menu-button');
                 const mobileMenu = document.getElementById('mobile-menu');
-                
+
                 if (mobileMenuButton && mobileMenu) {
                     mobileMenuButton.addEventListener('click', function() {
                         mobileMenu.classList.toggle('hidden');
