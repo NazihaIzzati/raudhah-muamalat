@@ -102,22 +102,31 @@
 
                     <!-- Auth Links -->
                     <div class="hidden md:flex items-center space-x-3 lg:space-x-4">
-                        @if (Route::has('login'))
-                            @auth
-                                <a href="{{ url('/dashboard') }}" class="bg-primary-500 text-white px-3 py-2 lg:px-4 lg:py-2 rounded-lg hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-sm lg:text-base">
-                                    Dashboard
+                        @auth
+                            <span class="text-gray-700 text-sm">Welcome, {{ Auth::user()->name }}</span>
+                            @if(Auth::user()->isAdmin())
+                                <a href="{{ route('admin.dashboard') }}" class="text-gray-700 hover:text-primary-500 transition-colors text-sm lg:text-base">
+                                    Admin
                                 </a>
                             @else
-                                <a href="{{ route('login') }}" class="text-gray-700 hover:text-primary-500 transition-colors text-sm lg:text-base">
-                                    Log in
+                                <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-primary-500 transition-colors text-sm lg:text-base">
+                                    Dashboard
                                 </a>
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="bg-primary-500 text-white px-3 py-2 lg:px-4 lg:py-2 rounded-lg hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-sm lg:text-base">
-                                        Register
-                                    </a>
-                                @endif
-                            @endauth
-                        @endif
+                            @endif
+                            <form action="{{ route('logout') }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit" class="text-gray-700 hover:text-primary-500 transition-colors text-sm lg:text-base">
+                                    Logout
+                                </button>
+                            </form>
+                        @else
+                            <a href="{{ route('login') }}" class="text-gray-700 hover:text-primary-500 transition-colors text-sm lg:text-base">
+                                Log in
+                            </a>
+                            <a href="{{ route('register') }}" class="bg-primary-500 text-white px-3 py-2 lg:px-4 lg:py-2 rounded-lg hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-sm lg:text-base">
+                                Register
+                            </a>
+                        @endauth
                     </div>
 
                     <!-- Mobile menu button -->
