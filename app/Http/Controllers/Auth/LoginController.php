@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Cookie;
 
 class LoginController extends Controller
 {
@@ -37,6 +38,10 @@ class LoginController extends Controller
         $remember = $request->has('remember');
 
         if (Auth::attempt($credentials, $remember)) {
+            // Set the remember_web cookie if remember is checked
+            if ($remember) {
+                $this->setRememberMeCookie();
+            }
             $request->session()->regenerate();
 
             $user = Auth::user();
@@ -65,5 +70,13 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+    
+    /**
+     * Set the remember_web cookie for remember me functionality
+     */
+    protected function setRememberMeCookie()
+    {
+        Cookie::queue('remember_web', 'remembered', 60 * 24 * 30); // 30 days
     }
 }

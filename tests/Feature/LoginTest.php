@@ -19,7 +19,7 @@ class LoginTest extends TestCase
         $response = $this->get('/login');
         
         $response->assertStatus(200);
-        $response->assertSee('Login');
+        $response->assertSee('Sign in');
         $response->assertSee('E-Mail Address');
         $response->assertSee('Password');
     }

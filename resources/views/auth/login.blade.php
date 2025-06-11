@@ -37,7 +37,7 @@
             
             <!-- Email Field -->
             <div>
-                <label for="email" class="block text-sm font-medium text-slate-700 mb-2">Email address</label>
+                <label for="email" class="block text-sm font-medium text-slate-700 mb-2">E-Mail Address</label>
                 <input 
                     id="email" 
                     name="email" 

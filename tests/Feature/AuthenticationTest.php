@@ -79,6 +79,7 @@ class AuthenticationTest extends TestCase
             'email' => 'test@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
+            'terms' => 'on',
         ]);
 
         $this->assertAuthenticated();
