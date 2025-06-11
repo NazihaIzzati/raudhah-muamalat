@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\DonationController as AdminDonationController;
 use App\Http\Controllers\AdminTestController;
 
 // Public routes
@@ -63,4 +64,11 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/settings', [AdminDashboardController::class, 'settings'])->name('admin.settings');
     // Profile page route
     Route::view('/profile', 'admin.profile')->name('admin.profile');
+    
+    // Donation management routes
+    Route::get('/donations', [AdminDonationController::class, 'index'])->name('admin.donations.index');
+    Route::get('/donations/{donation}', [AdminDonationController::class, 'show'])->name('admin.donations.show');
+    Route::post('/donations/{donation}/status', [AdminDonationController::class, 'updateStatus'])->name('admin.donations.update-status');
+    Route::delete('/donations/{donation}', [AdminDonationController::class, 'destroy'])->name('admin.donations.destroy');
+    Route::get('/donations-export', [AdminDonationController::class, 'export'])->name('admin.donations.export');
 });
