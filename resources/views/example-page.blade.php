@@ -26,10 +26,10 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Feature Card 1 -->
                 <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <div class="aspect-w-16 aspect-h-9">
-                        <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                             alt="Feature 1" 
-                             class="w-full h-48 object-cover">
+                    <div class="aspect-video">
+                        <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                             alt="Feature 1"
+                             class="w-full h-full object-cover">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-gray-900 mb-3">Consistent Design</h3>
@@ -165,21 +165,4 @@
     </section>
 @endsection
 
-@push('styles')
-<style>
-    /* Custom styles for this example page */
-    .aspect-w-16 {
-        position: relative;
-        padding-bottom: 56.25%; /* 16:9 aspect ratio */
-    }
-    
-    .aspect-w-16 img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-</style>
-@endpush
+

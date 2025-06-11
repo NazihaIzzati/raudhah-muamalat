@@ -30,20 +30,31 @@
                         <span class="text-primary-600 font-medium">healthcare</span>, and
                         <span class="text-primary-600 font-medium">economic assistance</span> programs.
                     </p>
+
+                    <!-- Call to Action Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                        <a href="{{ url('/campaigns') }}" class="bg-primary-500 text-white px-8 py-4 rounded-lg font-semibold hover:bg-primary-600 transition-all duration-300 text-center transform hover:scale-105 shadow-lg hover:shadow-xl">
+                            View Our Campaigns
+                        </a>
+                        <a href="{{ url('/donate') }}" class="border-2 border-primary-500 text-primary-500 px-8 py-4 rounded-lg font-semibold hover:bg-primary-50 transition-all duration-300 text-center transform hover:scale-105">
+                            Start Donating
+                        </a>
+                    </div>
+
                     <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
-                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
+                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer">
                             <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
                             </svg>
                             100% Secure
                         </div>
-                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
+                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer">
                             <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
                             </svg>
                             Tax Deductible
                         </div>
-                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
+                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer">
                             <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
                             </svg>
@@ -92,7 +103,7 @@
                     <!-- Right Image -->
                     <div class="flex justify-center lg:justify-end">
                         <div class="rounded-2xl overflow-hidden shadow-xl max-w-md bg-white p-8">
-                            <img src="{{ asset('images/logos/jariah-fund-logo.svg') }}"
+                            <img src="{{ asset('images/logos/jariahfund_logo.png') }}"
                                  alt="Jariah Fund Logo"
                                  class="w-full h-96 object-contain">
                         </div>
@@ -105,33 +116,11 @@
         <section class="py-12 md:py-16 bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start lg:items-center">
-                    <!-- Left Cards -->
-                    <div class="space-y-6 lg:space-y-8">
-                        <!-- Better Lives Together Card -->
-                        <div class="bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl lg:rounded-3xl p-6 md:p-8 shadow-xl text-white relative overflow-hidden transform hover:scale-105 transition-transform duration-300">
-                            <!-- Islamic Arch Pattern -->
-                            <div class="text-center">
-                                <div class="flex justify-center mb-4 md:mb-6">
-                                    <svg class="w-24 h-16 md:w-32 md:h-20 text-white" viewBox="0 0 200 100" fill="none">
-                                        <!-- Multiple Islamic arches -->
-                                        <path d="M20 80 Q20 40 40 40 Q60 40 60 80" stroke="currentColor" stroke-width="2.5" fill="none"/>
-                                        <path d="M40 80 Q40 40 60 40 Q80 40 80 80" stroke="currentColor" stroke-width="2.5" fill="none"/>
-                                        <path d="M60 80 Q60 40 80 40 Q100 40 100 80" stroke="currentColor" stroke-width="2.5" fill="none"/>
-                                        <path d="M80 80 Q80 40 100 40 Q120 40 120 80" stroke="currentColor" stroke-width="2.5" fill="none"/>
-                                        <path d="M100 80 Q100 40 120 40 Q140 40 140 80" stroke="currentColor" stroke-width="2.5" fill="none"/>
-                                        <path d="M120 80 Q120 40 140 40 Q160 40 160 80" stroke="currentColor" stroke-width="2.5" fill="none"/>
-                                        <path d="M140 80 Q140 40 160 40 Q180 40 180 80" stroke="currentColor" stroke-width="2.5" fill="none"/>
-                                    </svg>
-                                </div>
-                                <h3 class="text-2xl md:text-3xl font-bold mb-3 md:mb-4">Better lives, together</h3>
-                                <div class="space-y-1">
-                                    <p class="text-base md:text-lg text-white/90 font-medium">#IslamicBankingForAll</p>
-                                    <p class="text-base md:text-lg text-white/90 font-medium">#HereToHelp</p>
-                                </div>
-                            </div>
-                        </div>
-
-
+                    <!-- Left Image -->
+                    <div class="flex justify-center lg:justify-start">
+                        <img src="{{ asset('images/logos/betterlives.png') }}"
+                             alt="Better Lives Together"
+                             class="max-w-full h-auto object-contain">
                     </div>
 
                     <!-- Right Content -->
@@ -169,7 +158,7 @@
 
                         <!-- Key Features -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mt-6 md:mt-8">
-                            <div class="bg-white rounded-lg p-3 md:p-4 shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+                            <div class="bg-white rounded-lg p-3 md:p-4 shadow-md border border-gray-100 hover:shadow-xl hover:scale-105 hover:border-primary-200 transition-all duration-300 cursor-pointer">
                                 <div class="flex items-center">
                                     <div class="w-8 h-8 md:w-10 md:h-10 bg-primary-100 rounded-lg flex items-center justify-center mr-3">
                                         <svg class="w-4 h-4 md:w-5 md:h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -183,7 +172,7 @@
                                 </div>
                             </div>
 
-                            <div class="bg-white rounded-lg p-3 md:p-4 shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+                            <div class="bg-white rounded-lg p-3 md:p-4 shadow-md border border-gray-100 hover:shadow-xl hover:scale-105 hover:border-primary-200 transition-all duration-300 cursor-pointer">
                                 <div class="flex items-center">
                                     <div class="w-8 h-8 md:w-10 md:h-10 bg-primary-100 rounded-lg flex items-center justify-center mr-3">
                                         <svg class="w-4 h-4 md:w-5 md:h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -223,10 +212,10 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto mb-16">
                     <!-- FPX -->
-                    <div class="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300">
+                    <div class="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl hover:scale-105 hover:border-primary-200 transition-all duration-300 cursor-pointer">
                         <!-- Image Section -->
                         <div class="h-48 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-8">
-                            <img src="{{ asset('images/payment/fpx-payment.jpg') }}"
+                            <img src="{{ asset('images/payment/fpxlogo.png') }}"
                                  alt="FPX Online Banking"
                                  class="max-w-full max-h-full object-contain">
                         </div>
@@ -292,10 +281,10 @@
                     </div>
 
                     <!-- DuitNow -->
-                    <div class="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300">
+                    <div class="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl hover:scale-105 hover:border-primary-200 transition-all duration-300 cursor-pointer">
                         <!-- Image Section -->
                         <div class="h-48 bg-gradient-to-br from-pink-50 to-pink-100 flex items-center justify-center p-8">
-                            <img src="{{ asset('images/payment/duitnow-logo.svg') }}"
+                            <img src="{{ asset('images/payment/duitnowlogo.png') }}"
                                  alt="DuitNow Transfer"
                                  class="max-w-full max-h-full object-contain">
                         </div>
@@ -361,20 +350,19 @@
                     </div>
                 </div>
 
-
             </div>
         </section>
 
         <!-- Our Charity Partners Section -->
-        <section class="py-16" style="background-color: #FE5100;">
+        <section class="py-16 bg-primary-500">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between">
                     <!-- Left Arrow -->
-                    <button class="flex-shrink-0 p-2 text-white/60 hover:text-white transition-colors">
+                    <a href="{{ url('/partners') }}" class="flex-shrink-0 p-2 text-white/60 hover:text-white transition-colors" title="View All Partners">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                         </svg>
-                    </button>
+                    </a>
 
                     <!-- Title and Partners Container -->
                     <div class="flex-1 flex items-center justify-center space-x-8 md:space-x-12 lg:space-x-16">
@@ -386,65 +374,55 @@
                         <!-- Partner Logos -->
                         <div class="flex items-center space-x-6 md:space-x-8 lg:space-x-12">
                             <!-- MAB (Malaysian Association for the Blind) -->
-                            <div class="flex-shrink-0 bg-white rounded-lg p-2">
-                                <svg class="h-12 w-16" viewBox="0 0 80 60" fill="none">
-                                    <!-- MAB Logo - Black circular logo with white text -->
-                                    <circle cx="40" cy="30" r="25" fill="#000000"/>
-                                    <text x="40" y="35" text-anchor="middle" fill="white" font-size="8" font-weight="bold">MAB</text>
-                                </svg>
+                            <div class="flex-shrink-0 bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
+                                <img src="{{ asset('images/charity/mab.png') }}"
+                                     alt="Malaysian Association for the Blind"
+                                     class="h-12 w-16 object-contain">
                             </div>
 
-                            <!-- Yayasan Muslimin -->
-                            <div class="flex-shrink-0 bg-white rounded-lg p-2">
-                                <svg class="h-12 w-16" viewBox="0 0 80 60" fill="none">
-                                    <!-- Green and white logo design -->
-                                    <rect x="10" y="15" width="60" height="30" fill="#22C55E"/>
-                                    <circle cx="40" cy="30" r="8" fill="white"/>
-                                    <text x="40" y="50" text-anchor="middle" fill="#22C55E" font-size="6" font-weight="bold">YAYASAN MUSLIMIN</text>
-                                </svg>
+                            <!-- Yayasan Muslim -->
+                            <div class="flex-shrink-0 bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
+                                <img src="{{ asset('images/charity/yayasanmuslim.png') }}"
+                                     alt="Yayasan Muslim"
+                                     class="h-12 w-16 object-contain">
                             </div>
 
                             <!-- Yayasan Ikhlas -->
-                            <div class="flex-shrink-0 bg-white rounded-lg p-2">
-                                <svg class="h-12 w-20" viewBox="0 0 100 60" fill="none">
-                                    <!-- Blue and red logo with text -->
-                                    <path d="M20 15 L50 15 L50 25 L35 35 L20 25 Z" fill="#1E40AF"/>
-                                    <path d="M50 15 L80 15 L80 25 L65 35 L50 25 Z" fill="#DC2626"/>
-                                    <text x="50" y="50" text-anchor="middle" fill="#1E40AF" font-size="8" font-weight="bold">YAYASAN</text>
-                                    <text x="50" y="58" text-anchor="middle" fill="#1E40AF" font-size="8" font-weight="bold">IKHLAS</text>
-                                </svg>
+                            <div class="flex-shrink-0 bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
+                                <img src="{{ asset('images/charity/yayasanikhlas.png') }}"
+                                     alt="Yayasan Ikhlas"
+                                     class="h-12 w-20 object-contain">
                             </div>
 
                             <!-- PruBSN Prihatin -->
-                            <div class="flex-shrink-0 bg-white rounded-lg p-2">
-                                <svg class="h-12 w-20" viewBox="0 0 100 60" fill="none">
-                                    <!-- Teal and red corporate logo -->
-                                    <rect x="15" y="15" width="25" height="25" fill="#0D9488"/>
-                                    <rect x="45" y="15" width="25" height="25" fill="#DC2626"/>
-                                    <text x="50" y="50" text-anchor="middle" fill="#0D9488" font-size="7" font-weight="bold">PruBSN</text>
-                                    <text x="50" y="58" text-anchor="middle" fill="#6B7280" font-size="6">Prihatin</text>
-                                </svg>
+                            <div class="flex-shrink-0 bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
+                                <img src="{{ asset('images/charity/prubsn.png') }}"
+                                     alt="PruBSN Prihatin"
+                                     class="h-12 w-20 object-contain">
                             </div>
 
                             <!-- Yayasan Angkasa -->
-                            <div class="flex-shrink-0 bg-white rounded-lg p-2">
-                                <svg class="h-12 w-24" viewBox="0 0 120 60" fill="none">
-                                    <!-- Purple decorative logo with Arabic text style -->
-                                    <path d="M30 15 Q40 10 50 15 Q60 10 70 15 Q60 25 50 20 Q40 25 30 15" fill="#7C3AED"/>
-                                    <text x="60" y="35" text-anchor="middle" fill="#7C3AED" font-size="6" font-weight="bold">يايسان اعكاس</text>
-                                    <text x="60" y="45" text-anchor="middle" fill="#7C3AED" font-size="8" font-weight="bold">YAYASAN</text>
-                                    <text x="60" y="55" text-anchor="middle" fill="#7C3AED" font-size="8" font-weight="bold">angkasa</text>
-                                </svg>
+                            <div class="flex-shrink-0 bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
+                                <img src="{{ asset('images/charity/yaysanangkasa.png') }}"
+                                     alt="Yayasan Angkasa"
+                                     class="h-12 w-24 object-contain">
+                            </div>
+
+                            <!-- NASOM -->
+                            <div class="flex-shrink-0 bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
+                                <img src="{{ asset('images/charity/nasom.png') }}"
+                                     alt="NASOM"
+                                     class="h-12 w-16 object-contain">
                             </div>
                         </div>
                     </div>
 
                     <!-- Right Arrow -->
-                    <button class="flex-shrink-0 p-2 text-white/60 hover:text-white transition-colors">
+                    <a href="{{ url('/partners') }}" class="flex-shrink-0 p-2 text-white/60 hover:text-white transition-colors" title="View All Partners">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
-                    </button>
+                    </a>
                 </div>
 
                 <!-- Mobile Version - Responsive Stack -->
@@ -455,41 +433,55 @@
                     <div class="grid grid-cols-2 gap-4">
                         <!-- MAB Mobile -->
                         <div class="flex justify-center">
-                            <div class="bg-white rounded-lg p-2">
-                                <svg class="h-8 w-12" viewBox="0 0 80 60" fill="none">
-                                    <circle cx="40" cy="30" r="20" fill="#000000"/>
-                                    <text x="40" y="35" text-anchor="middle" fill="white" font-size="6" font-weight="bold">MAB</text>
-                                </svg>
+                            <div class="bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
+                                <img src="{{ asset('images/charity/mab.png') }}"
+                                     alt="Malaysian Association for the Blind"
+                                     class="h-8 w-12 object-contain">
                             </div>
                         </div>
 
-                        <!-- Yayasan Muslimin Mobile -->
+                        <!-- Yayasan Muslim Mobile -->
                         <div class="flex justify-center">
-                            <div class="bg-white rounded-lg p-2">
-                                <svg class="h-8 w-12" viewBox="0 0 80 60" fill="none">
-                                    <rect x="15" y="20" width="50" height="20" fill="#22C55E"/>
-                                    <circle cx="40" cy="30" r="6" fill="white"/>
-                                </svg>
+                            <div class="bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
+                                <img src="{{ asset('images/charity/yayasanmuslim.png') }}"
+                                     alt="Yayasan Muslim"
+                                     class="h-8 w-12 object-contain">
                             </div>
                         </div>
 
                         <!-- Yayasan Ikhlas Mobile -->
                         <div class="flex justify-center">
-                            <div class="bg-white rounded-lg p-2">
-                                <svg class="h-8 w-14" viewBox="0 0 80 60" fill="none">
-                                    <path d="M20 20 L40 20 L40 25 L30 35 L20 25 Z" fill="#1E40AF"/>
-                                    <path d="M40 20 L60 20 L60 25 L50 35 L40 25 Z" fill="#DC2626"/>
-                                </svg>
+                            <div class="bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
+                                <img src="{{ asset('images/charity/yayasanikhlas.png') }}"
+                                     alt="Yayasan Ikhlas"
+                                     class="h-8 w-14 object-contain">
                             </div>
                         </div>
 
                         <!-- PruBSN Mobile -->
                         <div class="flex justify-center">
-                            <div class="bg-white rounded-lg p-2">
-                                <svg class="h-8 w-14" viewBox="0 0 80 60" fill="none">
-                                    <rect x="20" y="20" width="15" height="15" fill="#0D9488"/>
-                                    <rect x="40" y="20" width="15" height="15" fill="#DC2626"/>
-                                </svg>
+                            <div class="bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
+                                <img src="{{ asset('images/charity/prubsn.png') }}"
+                                     alt="PruBSN Prihatin"
+                                     class="h-8 w-14 object-contain">
+                            </div>
+                        </div>
+
+                        <!-- Yayasan Angkasa Mobile -->
+                        <div class="flex justify-center">
+                            <div class="bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
+                                <img src="{{ asset('images/charity/yaysanangkasa.png') }}"
+                                     alt="Yayasan Angkasa"
+                                     class="h-8 w-16 object-contain">
+                            </div>
+                        </div>
+
+                        <!-- NASOM Mobile -->
+                        <div class="flex justify-center">
+                            <div class="bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
+                                <img src="{{ asset('images/charity/nasom.png') }}"
+                                     alt="NASOM"
+                                     class="h-8 w-12 object-contain">
                             </div>
                         </div>
                     </div>

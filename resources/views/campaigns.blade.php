@@ -85,7 +85,7 @@
                                     <span>73% of RM 62,000</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-primary-500 h-2 rounded-full transition-all duration-500" style="width: 73%"></div>
+                                    <div class="bg-primary-500 h-2 rounded-full transition-all duration-500 w-[73%]"></div>
                                 </div>
                             </div>
                             <div class="flex justify-between items-center">
@@ -118,7 +118,7 @@
                                     <span>57% of RM 50,000</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 57%"></div>
+                                    <div class="bg-primary-500 h-2 rounded-full w-[57%]"></div>
                                 </div>
                             </div>
                             <div class="flex justify-between items-center">
@@ -151,7 +151,7 @@
                                     <span>62% of RM 30,000</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-green-500 h-2 rounded-full" style="width: 62%"></div>
+                                    <div class="bg-primary-500 h-2 rounded-full w-[62%]"></div>
                                 </div>
                             </div>
                             <div class="flex justify-between items-center">

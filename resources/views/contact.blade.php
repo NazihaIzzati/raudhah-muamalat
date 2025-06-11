@@ -3,6 +3,25 @@
 @section('title', 'Contact Us - Jariah Fund')
 @section('description', 'Get in touch with our expert team. We provide professional guidance and assistance to help you make a meaningful impact in your community.')
 
+@push('styles')
+<style>
+/* Clean Card Styling */
+.contact-form-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(254, 81, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.contact-form-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  border-color: rgba(254, 81, 0, 0.2);
+}
+</style>
+@endpush
+
 @section('content')
 
         <!-- Hero Section -->
@@ -30,19 +49,19 @@
                         <span class="text-primary-600 font-medium">meaningful impact</span> in your community.
                     </p>
                     <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
-                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
+                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer">
                             <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
                             </svg>
                             24/7 Support
                         </div>
-                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
+                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer">
                             <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
                             </svg>
                             Expert Guidance
                         </div>
-                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
+                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer">
                             <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
                             </svg>
@@ -63,7 +82,7 @@
                         <!-- Contact Information Cards -->
                         <div class="space-y-6">
                             <!-- Office Address -->
-                            <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group cursor-pointer" onclick="openMap()">
+                            <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl hover:scale-105 hover:border-primary-200 border border-gray-100 transition-all duration-300 group cursor-pointer" onclick="openMap()">
                                 <div class="p-6">
                                     <div class="flex items-start space-x-4">
                                         <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -87,7 +106,7 @@
                             </div>
 
                             <!-- Phone Support -->
-                            <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group cursor-pointer" onclick="callPhone()">
+                            <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl hover:scale-105 hover:border-primary-200 border border-gray-100 transition-all duration-300 group cursor-pointer" onclick="callPhone()">
                                 <div class="p-6">
                                     <div class="flex items-start space-x-4">
                                         <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -110,7 +129,7 @@
                             </div>
 
                             <!-- Email Support -->
-                            <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group cursor-pointer" onclick="sendEmail()">
+                            <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl hover:scale-105 hover:border-primary-200 border border-gray-100 transition-all duration-300 group cursor-pointer" onclick="sendEmail()">
                                 <div class="p-6">
                                     <div class="flex items-start space-x-4">
                                         <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -133,7 +152,7 @@
                             </div>
 
                             <!-- Business Hours -->
-                            <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl hover:scale-105 hover:border-primary-200 border border-gray-100 transition-all duration-300 cursor-pointer">
                                 <div class="p-6">
                                     <div class="flex items-start space-x-4">
                                         <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -155,7 +174,7 @@
                             </div>
 
                             <!-- Social Media & Additional Contact -->
-                            <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl hover:scale-105 hover:border-primary-200 border border-gray-100 transition-all duration-300 cursor-pointer">
                                 <div class="p-6">
                                     <div class="flex items-start space-x-4">
                                         <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -198,19 +217,18 @@
                     </div>
 
                     <!-- Contact Form Section -->
-                    <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <div class="p-8">
-                            <div class="text-center mb-8">
-                                <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <svg class="w-8 h-8 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                                    </svg>
-                                </div>
-                                <h2 class="text-2xl font-bold text-gray-900 mb-2">Send us a Message</h2>
-                                <p class="text-gray-600 leading-relaxed">
-                                    Fill out the form below and we'll get back to you within <span class="font-semibold text-primary-600">24 hours</span>
-                                </p>
+                    <div class="contact-form-card p-8">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                </svg>
                             </div>
+                            <h2 class="text-2xl font-bold text-gray-900 mb-2">Send us a Message</h2>
+                            <p class="text-gray-600 leading-relaxed">
+                                Fill out the form below and we'll get back to you within <span class="font-semibold text-primary-600">24 hours</span>
+                            </p>
+                        </div>
                         <form id="contact-form" class="space-y-6">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>

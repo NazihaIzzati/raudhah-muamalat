@@ -54,127 +54,225 @@
         </section>
 
         <!-- Main Content -->
-        <section class="py-12 bg-gray-50">
+        <section class="py-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Partners Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
                     <!-- Yayasan Muslimin -->
-                    <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <div class="aspect-w-16 aspect-h-9">
-                            <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-primary-200 transform hover:scale-105">
+                        <!-- Logo Section -->
+                        <div class="h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-8">
+                            <img src="{{ asset('images/charity/yayasanmuslim.png') }}"
                                  alt="Yayasan Muslimin"
-                                 class="w-full h-48 object-cover">
+                                 class="w-32 h-24 object-contain">
                         </div>
+
+                        <!-- Content Section -->
                         <div class="p-6">
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">Yayasan Muslimin</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed mb-4">
-                                An Islamic foundation dedicated to revitalizing the spirit of wakaf, sedekah and zakat institutions
-                                to enhance socio-economic and educational development of the Muslim community.
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-xl font-bold text-gray-900">Yayasan Muslimin</h3>
+                                <span class="inline-flex items-center px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">
+                                    ✓ Verified
+                                </span>
+                            </div>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-4">
+                                The aspiration of establishing Yayasan Muslimin is to revitalize the spirit of wakaf, sedekah and zakat institutions
+                                as required by Islam to enhance development in the socio-economic and educational fields of the Muslim community.
+                                Its existence opens wider opportunities for society to contribute for charitable purposes to the development of Islam.
                             </p>
-                            <a href="https://yayasanmuslimin.org/" target="_blank"
-                               class="inline-block text-primary-500 font-medium hover:text-primary-600 transition-colors">
-                                Find Out More
-                            </a>
+
+                            <!-- Action Section -->
+                            <div class="flex items-center justify-between">
+                                <a href="https://yayasanmuslimin.org/" target="_blank"
+                                   class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
+                                    Learn More
+                                    <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                    </svg>
+                                </a>
+                                <span class="text-xs text-gray-400">Islamic Foundation</span>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Yayasan Ikhlas -->
-                    <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <div class="aspect-w-16 aspect-h-9">
-                            <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-primary-200 transform hover:scale-105">
+                        <!-- Logo Section -->
+                        <div class="h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-8">
+                            <img src="{{ asset('images/charity/yayasanikhlas.png') }}"
                                  alt="Yayasan Ikhlas"
-                                 class="w-full h-48 object-cover">
+                                 class="w-32 h-24 object-contain">
                         </div>
+
+                        <!-- Content Section -->
                         <div class="p-6">
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">Yayasan Ikhlas</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed mb-4">
-                                A charitable organization dedicated to alleviating the burden faced by orphans, people with disabilities,
-                                the poor and those affected by disasters, while providing assistance for learning and research.
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-xl font-bold text-gray-900">Yayasan Ikhlas</h3>
+                                <span class="inline-flex items-center px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">
+                                    ✓ Verified
+                                </span>
+                            </div>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-4">
+                                Yayasan Ikhlas is an organization established under the Trustees (Incorporation) Act 1952 (Act 258) on 5 March 2009,
+                                aimed at alleviating the burden faced by orphans, people with disabilities, the poor and those affected by disasters,
+                                while providing assistance or incentives to individuals or groups for learning or research in Malaysia.
                             </p>
-                            <a href="http://www.yayasanikhlas.org.my/" target="_blank"
-                               class="inline-block text-primary-500 font-medium hover:text-primary-600 transition-colors">
-                                Find Out More
-                            </a>
+
+                            <!-- Action Section -->
+                            <div class="flex items-center justify-between">
+                                <a href="http://www.yayasanikhlas.org.my/" target="_blank"
+                                   class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
+                                    Learn More
+                                    <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                    </svg>
+                                </a>
+                                <span class="text-xs text-gray-400">Charitable Organization</span>
+                            </div>
                         </div>
                     </div>
 
                     <!-- MAB -->
-                    <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <div class="aspect-w-16 aspect-h-9">
-                            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-primary-200 transform hover:scale-105">
+                        <!-- Logo Section -->
+                        <div class="h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-8">
+                            <img src="{{ asset('images/charity/mab.png') }}"
                                  alt="Malaysian Association for the Blind"
-                                 class="w-full h-48 object-cover">
+                                 class="w-32 h-24 object-contain">
                         </div>
+
+                        <!-- Content Section -->
                         <div class="p-6">
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">Malaysian Association for the Blind (MAB)</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed mb-4">
-                                A leading voluntary organization in Malaysia that cares for people with visual impairments,
-                                providing services to help the blind and prevent avoidable blindness tragedies.
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-xl font-bold text-gray-900">Malaysian Association for the Blind (MAB)</h3>
+                                <span class="inline-flex items-center px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">
+                                    ✓ Verified
+                                </span>
+                            </div>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
+                                Malaysian Association for the Blind (MAB) is a leading voluntary organization in Malaysia that cares for people
+                                with visual impairments. The association provides services to help the blind and prevent avoidable blindness tragedies.
                             </p>
-                            <a href="https://mab.org.my/maborg/default.html" target="_blank"
-                               class="inline-block text-primary-500 font-medium hover:text-primary-600 transition-colors">
-                                Find Out More
-                            </a>
+
+                            <!-- Action Section -->
+                            <div class="flex items-center justify-between">
+                                <a href="https://mab.org.my/maborg/default.html" target="_blank"
+                                   class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
+                                    Learn More
+                                    <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                    </svg>
+                                </a>
+                                <span class="text-xs text-gray-400">Disability Support</span>
+                            </div>
                         </div>
                     </div>
 
                     <!-- NASOM -->
-                    <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <div class="aspect-w-16 aspect-h-9">
-                            <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-primary-200 transform hover:scale-105">
+                        <!-- Logo Section -->
+                        <div class="h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-8">
+                            <img src="{{ asset('images/charity/nasom.png') }}"
                                  alt="National Autism Society of Malaysia"
-                                 class="w-full h-48 object-cover">
+                                 class="w-32 h-24 object-contain">
                         </div>
+
+                        <!-- Content Section -->
                         <div class="p-6">
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">National Autism Society of Malaysia (NASOM)</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed mb-4">
-                                An association formed by parents and professionals dedicated to providing lifelong services
-                                to people with autism, supporting families and promoting autism awareness.
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-xl font-bold text-gray-900">National Autism Society of Malaysia (NASOM)</h3>
+                                <span class="inline-flex items-center px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">
+                                    ✓ Verified
+                                </span>
+                            </div>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
+                                National Autism Society of Malaysia (NASOM) is an association formed in 1987 by a group of parents and professionals
+                                with the purpose of providing lifelong services to people with autism.
                             </p>
-                            <a href="http://www.nasom.org.my/" target="_blank"
-                               class="inline-block text-primary-500 font-medium hover:text-primary-600 transition-colors">
-                                Find Out More
-                            </a>
+
+                            <!-- Action Section -->
+                            <div class="flex items-center justify-between">
+                                <a href="http://www.nasom.org.my/" target="_blank"
+                                   class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
+                                    Learn More
+                                    <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                    </svg>
+                                </a>
+                                <span class="text-xs text-gray-400">Autism Support</span>
+                            </div>
                         </div>
                     </div>
 
                     <!-- PruBSN -->
-                    <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <div class="aspect-w-16 aspect-h-9">
-                            <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-primary-200 transform hover:scale-105">
+                        <!-- Logo Section -->
+                        <div class="h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-8">
+                            <img src="{{ asset('images/charity/prubsn.png') }}"
                                  alt="PruBSN Prihatin"
-                                 class="w-full h-48 object-cover">
+                                 class="w-32 h-24 object-contain">
                         </div>
+
+                        <!-- Content Section -->
                         <div class="p-6">
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">PruBSN Prihatin</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-xl font-bold text-gray-900">PruBSN Prihatin</h3>
+                                <span class="inline-flex items-center px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">
+                                    ✓ Verified
+                                </span>
+                            </div>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
                                 A charitable body under Prudential BSN Takaful providing educational opportunities, life skills,
                                 health and well-being support, and disaster relief for underprivileged communities.
                             </p>
-                            <a href="https://www.prubsn.com.my/ms/caring-for-society/" target="_blank"
-                               class="inline-block text-primary-500 font-medium hover:text-primary-600 transition-colors">
-                                Find Out More
-                            </a>
+
+                            <!-- Action Section -->
+                            <div class="flex items-center justify-between">
+                                <a href="https://www.prubsn.com.my/ms/caring-for-society/" target="_blank"
+                                   class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
+                                    Learn More
+                                    <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                    </svg>
+                                </a>
+                                <span class="text-xs text-gray-400">Corporate Foundation</span>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Yayasan Angkasa -->
-                    <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <div class="aspect-w-16 aspect-h-9">
-                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-primary-200 transform hover:scale-105">
+                        <!-- Logo Section -->
+                        <div class="h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-8">
+                            <img src="{{ asset('images/charity/yaysanangkasa.png') }}"
                                  alt="Yayasan Angkasa"
-                                 class="w-full h-48 object-cover">
+                                 class="w-32 h-24 object-contain">
                         </div>
+
+                        <!-- Content Section -->
                         <div class="p-6">
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">Yayasan Angkasa</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-xl font-bold text-gray-900">Yayasan Angkasa</h3>
+                                <span class="inline-flex items-center px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">
+                                    ✓ Verified
+                                </span>
+                            </div>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
                                 A foundation established by the Malaysian National Cooperative Movement providing educational financing,
                                 motivation courses, and entrepreneurship programs to develop skilled individuals.
                             </p>
-                            <a href="https://www.yayasanangkasa.coop/" target="_blank"
-                               class="inline-block text-primary-500 font-medium hover:text-primary-600 transition-colors">
-                                Find Out More
-                            </a>
+
+                            <!-- Action Section -->
+                            <div class="flex items-center justify-between">
+                                <a href="https://www.yayasanangkasa.coop/" target="_blank"
+                                   class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
+                                    Learn More
+                                    <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                    </svg>
+                                </a>
+                                <span class="text-xs text-gray-400">Educational Foundation</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -192,7 +290,7 @@
                     contact us to learn about the application process to become a verified partner.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="{{ url('/') }}#contact" class="bg-white text-primary-500 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                    <a href="{{ url('/contact') }}" class="bg-white text-primary-500 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
                         Contact Us
                     </a>
                     <a href="{{ url('/about') }}" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary-500 transition-colors">

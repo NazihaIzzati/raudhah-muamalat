@@ -75,7 +75,7 @@
                                 </div>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
-                                <div style="background-color: #FE5000; width: 73%;" class="h-2 rounded-full transition-all duration-1000"></div>
+                                <div class="bg-primary-500 h-2 rounded-full transition-all duration-1000 w-[73%]"></div>
                             </div>
                             <div class="flex items-center justify-between text-sm text-gray-600">
                                 <div class="flex items-center">
@@ -300,7 +300,7 @@
                                                         <div class="text-sm text-gray-600">Scan with banking app</div>
                                                     </div>
                                                     <div class="payment-radio w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center">
-                                                        <div class="w-2 h-2 bg-primary-500 rounded-full" style="display: none;"></div>
+                                                        <div class="w-2 h-2 bg-primary-500 rounded-full hidden"></div>
                                                     </div>
                                                 </div>
                                             </label>
@@ -318,7 +318,7 @@
                                                         <div class="text-sm text-gray-600">Visa, Mastercard</div>
                                                     </div>
                                                     <div class="payment-radio w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center">
-                                                        <div class="w-2 h-2 bg-primary-500 rounded-full" style="display: none;"></div>
+                                                        <div class="w-2 h-2 bg-primary-500 rounded-full hidden"></div>
                                                     </div>
                                                 </div>
                                             </label>
@@ -471,7 +471,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         radio.classList.add('border-primary-500');
                         // Show inner dot
                         if (radioInner) {
-                            radioInner.style.display = 'block';
+                            radioInner.classList.remove('hidden');
+                            radioInner.classList.add('block');
                         }
                     }
                 } else {
@@ -483,7 +484,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         radio.classList.add('border-gray-300');
                         // Hide inner dot
                         if (radioInner) {
-                            radioInner.style.display = 'none';
+                            radioInner.classList.remove('block');
+                            radioInner.classList.add('hidden');
                         }
                     }
                 }
@@ -580,7 +582,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (radio) {
                     radio.classList.remove('border-primary-500');
                     radio.classList.add('border-gray-300');
-                    if (radioInner) radioInner.style.display = 'none';
+                    if (radioInner) {
+                        radioInner.classList.remove('block');
+                        radioInner.classList.add('hidden');
+                    }
                 }
             }
         });
@@ -596,7 +601,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(notification);
 
         setTimeout(() => {
-            notification.style.opacity = '0';
+            notification.classList.add('opacity-0');
             setTimeout(() => {
                 if (document.body.contains(notification)) {
                     document.body.removeChild(notification);
@@ -671,9 +676,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function fallbackCopyTextToClipboard(text) {
         const textArea = document.createElement("textarea");
         textArea.value = text;
-        textArea.style.top = "0";
-        textArea.style.left = "0";
-        textArea.style.position = "fixed";
+        textArea.className = "fixed top-0 left-0 opacity-0 pointer-events-none";
         document.body.appendChild(textArea);
         textArea.focus();
         textArea.select();

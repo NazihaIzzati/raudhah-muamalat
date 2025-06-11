@@ -26,7 +26,7 @@
                             <a href="{{ url('/donate') }}" class="bg-primary-500 text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold hover:bg-primary-600 transition-all duration-300 text-center transform hover:scale-105 shadow-lg hover:shadow-xl">
                                 Donate Now
                             </a>
-                            <a href="#about" class="border-2 border-primary-500 text-primary-500 px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold hover:bg-primary-50 transition-all duration-300 text-center transform hover:scale-105">
+                            <a href="{{ url('/campaigns') }}" class="border-2 border-primary-500 text-primary-500 px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold hover:bg-primary-50 transition-all duration-300 text-center transform hover:scale-105">
                                 Start Campaign
                             </a>
                         </div>
@@ -126,7 +126,7 @@
                                     <span>73% of RM 62,000</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-primary-500 h-2 rounded-full transition-all duration-500" style="width: 73%"></div>
+                                    <div class="bg-primary-500 h-2 rounded-full transition-all duration-500 w-[73%]"></div>
                                 </div>
                             </div>
 
@@ -161,7 +161,7 @@
                                     <span>60% of RM 300,000</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-primary-500 h-2 rounded-full transition-all duration-500" style="width: 60%"></div>
+                                    <div class="bg-primary-500 h-2 rounded-full transition-all duration-500 w-[60%]"></div>
                                 </div>
                             </div>
 
@@ -196,7 +196,7 @@
                                     <span>85% of RM 100,000</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-primary-500 h-2 rounded-full transition-all duration-500" style="width: 85%"></div>
+                                    <div class="bg-primary-500 h-2 rounded-full transition-all duration-500 w-[85%]"></div>
                                 </div>
                             </div>
 
@@ -251,7 +251,7 @@
                                 We're proud to announce that our platform has successfully raised over RM 3 million for various charitable causes,
                                 impacting thousands of lives across Malaysia and beyond.
                             </p>
-                            <a href="#" class="inline-flex items-center text-primary-500 font-medium hover:text-primary-600 transition-colors text-sm md:text-base">
+                            <a href="{{ url('/news') }}" class="inline-flex items-center text-primary-500 font-medium hover:text-primary-600 transition-colors text-sm md:text-base">
                                 Read More
                                 <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -418,7 +418,7 @@
 
                 <!-- View More Button -->
                 <div class="text-center">
-                    <a href="#" class="inline-flex items-center px-6 py-3 md:px-8 md:py-4 bg-white border-2 border-primary-500 text-primary-500 font-semibold rounded-lg hover:bg-primary-500 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    <a href="{{ url('/news') }}" class="inline-flex items-center px-6 py-3 md:px-8 md:py-4 bg-white border-2 border-primary-500 text-primary-500 font-semibold rounded-lg hover:bg-primary-500 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                         View All News & Events
                         <svg class="w-4 h-4 md:w-5 md:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -502,7 +502,7 @@
 
                     <!-- Mission Card -->
                     <div class="relative">
-                        <div class="rounded-2xl p-6 md:p-8 text-white" style="background-color: #FE5100;">
+                        <div class="rounded-2xl p-6 md:p-8 text-white bg-primary-500">
                             <div class="space-y-4 md:space-y-6">
                                 <h3 class="text-xl md:text-2xl font-bold">Our Mission</h3>
                                 <p class="text-primary-100 leading-relaxed text-sm md:text-base">

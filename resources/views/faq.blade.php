@@ -620,14 +620,16 @@
             const answer = item.querySelector('.faq-answer p').textContent.toLowerCase();
 
             if (question.includes(searchTerm) || answer.includes(searchTerm)) {
-                item.style.display = 'block';
+                item.classList.remove('hidden');
+                item.classList.add('block');
 
                 // Highlight search terms
                 if (searchTerm.length > 2) {
                     highlightSearchTerm(item, searchTerm);
                 }
             } else {
-                item.style.display = 'none';
+                item.classList.remove('block');
+                item.classList.add('hidden');
             }
         });
 
@@ -635,12 +637,14 @@
         const sections = ['basics', 'donations', 'campaigns', 'operations', 'other'];
         sections.forEach(sectionId => {
             const section = document.getElementById(sectionId);
-            const visibleItems = section.querySelectorAll('.faq-item[style="display: block"], .faq-item:not([style*="display: none"])');
+            const visibleItems = section.querySelectorAll('.faq-item.block, .faq-item:not(.hidden)');
 
             if (searchTerm === '' || visibleItems.length > 0) {
-                section.style.display = 'block';
+                section.classList.remove('hidden');
+                section.classList.add('block');
             } else {
-                section.style.display = 'none';
+                section.classList.remove('block');
+                section.classList.add('hidden');
             }
         });
     });
@@ -676,7 +680,7 @@
 
             // Ensure all items start collapsed
             answer.classList.add('hidden');
-            icon.style.transform = 'rotate(0deg)';
+            icon.classList.remove('rotate-45');
             item.classList.remove('bg-primary-50', 'border-primary-200');
         });
     });
