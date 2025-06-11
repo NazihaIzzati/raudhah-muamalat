@@ -58,6 +58,14 @@ class Campaign extends Model
     }
     
     /**
+     * Get the posters for this campaign.
+     */
+    public function posters()
+    {
+        return $this->hasMany(Poster::class);
+    }
+    
+    /**
      * Check if campaign is active.
      */
     public function isActive()

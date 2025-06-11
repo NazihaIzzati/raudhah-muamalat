@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Donation;
 use App\Models\Campaign;
+use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 
 class DonationController extends Controller
 {
@@ -47,12 +49,177 @@ class DonationController extends Controller
     }
     
     /**
+     * Show the form for creating a new donation.
+     */
+    public function create()
+    {
+        $campaigns = Campaign::where('status', 'active')->pluck('title', 'id');
+        $users = User::pluck('name', 'id');
+        $paymentMethods = ['credit_card' => 'Credit Card', 'bank_transfer' => 'Bank Transfer', 'paypal' => 'PayPal', 'cash' => 'Cash', 'other' => 'Other'];
+        $statuses = ['completed' => 'Completed', 'pending' => 'Pending', 'failed' => 'Failed', 'refunded' => 'Refunded'];
+        $currencies = ['USD' => 'USD', 'EUR' => 'EUR', 'GBP' => 'GBP', 'MYR' => 'MYR', 'IDR' => 'IDR'];
+        
+        return view('admin.donations.create', compact('campaigns', 'users', 'paymentMethods', 'statuses', 'currencies'));
+    }
+    
+    /**
+     * Store a newly created donation in storage.
+     */
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'nullable|exists:users,id',
+            'campaign_id' => 'required|exists:campaigns,id',
+            'donor_name' => 'required|string|max:255',
+            'donor_email' => 'required|email|max:255',
+            'donor_phone' => 'nullable|string|max:20',
+            'amount' => 'required|numeric|min:0.01',
+            'currency' => 'required|string|max:3',
+            'payment_method' => 'required|string|max:255',
+            'payment_status' => 'required|in:completed,pending,failed,refunded',
+            'transaction_id' => 'nullable|string|max:255',
+            'message' => 'nullable|string',
+            'is_anonymous' => 'boolean',
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        
+        // Create donation
+        $donation = new Donation($request->all());
+        $donation->is_anonymous = $request->has('is_anonymous');
+        
+        // Set paid_at date if status is completed
+        if ($request->payment_status === 'completed') {
+            $donation->paid_at = now();
+        }
+        
+        $donation->save();
+        
+        // Update campaign raised amount if donation is completed
+        if ($request->payment_status === 'completed' && $donation->campaign) {
+            $campaign = $donation->campaign;
+            $campaign->raised_amount = $campaign->raised_amount + $donation->amount;
+            $campaign->save();
+        }
+        
+        return redirect()->route('admin.donations.index')
+            ->with('success', 'Donation created successfully.');
+    }
+    
+    /**
      * Show the details for a specific donation.
      */
     public function show(Donation $donation)
     {
         $donation->load(['user', 'campaign']);
         return view('admin.donations.show', compact('donation'));
+    }
+    
+    /**
+     * Show the form for editing the specified donation.
+     */
+    public function edit(Donation $donation)
+    {
+        $campaigns = Campaign::pluck('title', 'id');
+        $users = User::pluck('name', 'id');
+        $paymentMethods = ['credit_card' => 'Credit Card', 'bank_transfer' => 'Bank Transfer', 'paypal' => 'PayPal', 'cash' => 'Cash', 'other' => 'Other'];
+        $statuses = ['completed' => 'Completed', 'pending' => 'Pending', 'failed' => 'Failed', 'refunded' => 'Refunded'];
+        $currencies = ['USD' => 'USD', 'EUR' => 'EUR', 'GBP' => 'GBP', 'MYR' => 'MYR', 'IDR' => 'IDR'];
+        
+        return view('admin.donations.edit', compact('donation', 'campaigns', 'users', 'paymentMethods', 'statuses', 'currencies'));
+    }
+    
+    /**
+     * Update the specified donation in storage.
+     */
+    public function update(Request $request, Donation $donation)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'nullable|exists:users,id',
+            'campaign_id' => 'required|exists:campaigns,id',
+            'donor_name' => 'required|string|max:255',
+            'donor_email' => 'required|email|max:255',
+            'donor_phone' => 'nullable|string|max:20',
+            'amount' => 'required|numeric|min:0.01',
+            'currency' => 'required|string|max:3',
+            'payment_method' => 'required|string|max:255',
+            'payment_status' => 'required|in:completed,pending,failed,refunded',
+            'transaction_id' => 'nullable|string|max:255',
+            'message' => 'nullable|string',
+            'is_anonymous' => 'boolean',
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        
+        // Store old values for comparison
+        $oldStatus = $donation->payment_status;
+        $oldAmount = $donation->amount;
+        $oldCampaignId = $donation->campaign_id;
+        
+        // Update donation
+        $donation->fill($request->except('is_anonymous'));
+        $donation->is_anonymous = $request->has('is_anonymous');
+        
+        // Set paid_at date if status is completed and wasn't before
+        if ($request->payment_status === 'completed' && $oldStatus !== 'completed') {
+            $donation->paid_at = now();
+        }
+        
+        // Handle campaign raised amount updates
+        
+        // If campaign changed, update both old and new campaign
+        if ($oldCampaignId != $request->campaign_id) {
+            // Reduce amount from old campaign if donation was completed
+            if ($oldStatus === 'completed' && $oldCampaignId) {
+                $oldCampaign = Campaign::find($oldCampaignId);
+                if ($oldCampaign) {
+                    $oldCampaign->raised_amount = max(0, $oldCampaign->raised_amount - $oldAmount);
+                    $oldCampaign->save();
+                }
+            }
+            
+            // Add amount to new campaign if donation is completed
+            if ($request->payment_status === 'completed') {
+                $newCampaign = Campaign::find($request->campaign_id);
+                if ($newCampaign) {
+                    $newCampaign->raised_amount = $newCampaign->raised_amount + $request->amount;
+                    $newCampaign->save();
+                }
+            }
+        } 
+        // If campaign didn't change but status or amount did
+        else {
+            $campaign = Campaign::find($request->campaign_id);
+            if ($campaign) {
+                // If donation was completed and is still completed but amount changed
+                if ($oldStatus === 'completed' && $request->payment_status === 'completed' && $oldAmount != $request->amount) {
+                    $campaign->raised_amount = $campaign->raised_amount - $oldAmount + $request->amount;
+                }
+                // If donation was not completed but now is
+                elseif ($oldStatus !== 'completed' && $request->payment_status === 'completed') {
+                    $campaign->raised_amount = $campaign->raised_amount + $request->amount;
+                }
+                // If donation was completed but now is not
+                elseif ($oldStatus === 'completed' && $request->payment_status !== 'completed') {
+                    $campaign->raised_amount = max(0, $campaign->raised_amount - $oldAmount);
+                }
+                
+                $campaign->save();
+            }
+        }
+        
+        $donation->save();
+        
+        return redirect()->route('admin.donations.show', $donation)
+            ->with('success', 'Donation updated successfully.');
     }
     
     /**

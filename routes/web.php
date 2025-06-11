@@ -6,6 +6,10 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\DonationController as AdminDonationController;
+use App\Http\Controllers\Admin\CampaignController as AdminCampaignController;
+use App\Http\Controllers\Admin\PosterController as AdminPosterController;
+use App\Http\Controllers\Admin\BranchController as AdminBranchController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\AdminTestController;
 
 // Public routes
@@ -59,16 +63,54 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('aut
 // Admin routes
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
-    Route::get('/users', [AdminDashboardController::class, 'users'])->name('admin.users');
-    Route::get('/campaigns', [AdminDashboardController::class, 'campaigns'])->name('admin.campaigns');
     Route::get('/settings', [AdminDashboardController::class, 'settings'])->name('admin.settings');
     // Profile page route
     Route::view('/profile', 'admin.profile')->name('admin.profile');
     
+    // User management routes
+    Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users.index');
+    Route::get('/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
+    Route::post('/users', [AdminUserController::class, 'store'])->name('admin.users.store');
+    Route::get('/users/{user}', [AdminUserController::class, 'show'])->name('admin.users.show');
+    Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
+    
     // Donation management routes
     Route::get('/donations', [AdminDonationController::class, 'index'])->name('admin.donations.index');
+    Route::get('/donations/create', [AdminDonationController::class, 'create'])->name('admin.donations.create');
+    Route::post('/donations', [AdminDonationController::class, 'store'])->name('admin.donations.store');
     Route::get('/donations/{donation}', [AdminDonationController::class, 'show'])->name('admin.donations.show');
+    Route::get('/donations/{donation}/edit', [AdminDonationController::class, 'edit'])->name('admin.donations.edit');
+    Route::put('/donations/{donation}', [AdminDonationController::class, 'update'])->name('admin.donations.update');
     Route::post('/donations/{donation}/status', [AdminDonationController::class, 'updateStatus'])->name('admin.donations.update-status');
     Route::delete('/donations/{donation}', [AdminDonationController::class, 'destroy'])->name('admin.donations.destroy');
     Route::get('/donations-export', [AdminDonationController::class, 'export'])->name('admin.donations.export');
+    
+    // Campaign management routes
+    Route::get('/campaigns', [AdminCampaignController::class, 'index'])->name('admin.campaigns.index');
+    Route::get('/campaigns/create', [AdminCampaignController::class, 'create'])->name('admin.campaigns.create');
+    Route::post('/campaigns', [AdminCampaignController::class, 'store'])->name('admin.campaigns.store');
+    Route::get('/campaigns/{campaign}', [AdminCampaignController::class, 'show'])->name('admin.campaigns.show');
+    Route::get('/campaigns/{campaign}/edit', [AdminCampaignController::class, 'edit'])->name('admin.campaigns.edit');
+    Route::put('/campaigns/{campaign}', [AdminCampaignController::class, 'update'])->name('admin.campaigns.update');
+    Route::delete('/campaigns/{campaign}', [AdminCampaignController::class, 'destroy'])->name('admin.campaigns.destroy');
+    
+    // Poster management routes
+    Route::get('/posters', [AdminPosterController::class, 'index'])->name('admin.posters.index');
+    Route::get('/posters/create', [AdminPosterController::class, 'create'])->name('admin.posters.create');
+    Route::post('/posters', [AdminPosterController::class, 'store'])->name('admin.posters.store');
+    Route::get('/posters/{poster}', [AdminPosterController::class, 'show'])->name('admin.posters.show');
+    Route::get('/posters/{poster}/edit', [AdminPosterController::class, 'edit'])->name('admin.posters.edit');
+    Route::put('/posters/{poster}', [AdminPosterController::class, 'update'])->name('admin.posters.update');
+    Route::delete('/posters/{poster}', [AdminPosterController::class, 'destroy'])->name('admin.posters.destroy');
+    
+    // Branch management routes
+    Route::get('/branches', [AdminBranchController::class, 'index'])->name('admin.branches.index');
+    Route::get('/branches/create', [AdminBranchController::class, 'create'])->name('admin.branches.create');
+    Route::post('/branches', [AdminBranchController::class, 'store'])->name('admin.branches.store');
+    Route::get('/branches/{branch}', [AdminBranchController::class, 'show'])->name('admin.branches.show');
+    Route::get('/branches/{branch}/edit', [AdminBranchController::class, 'edit'])->name('admin.branches.edit');
+    Route::put('/branches/{branch}', [AdminBranchController::class, 'update'])->name('admin.branches.update');
+    Route::delete('/branches/{branch}', [AdminBranchController::class, 'destroy'])->name('admin.branches.destroy');
 });
