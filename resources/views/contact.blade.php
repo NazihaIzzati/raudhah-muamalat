@@ -19,85 +19,261 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   border-color: rgba(254, 81, 0, 0.2);
 }
+
+/* Animation Keyframes */
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-20px) rotate(1deg); }
+    66% { transform: translateY(-10px) rotate(-1deg); }
+}
+
+@keyframes float-delayed {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-15px) rotate(-1deg); }
+    66% { transform: translateY(-8px) rotate(1deg); }
+}
+
+@keyframes float-slow {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(0.5deg); }
+}
+
+@keyframes float-gentle {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-in-left {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-in-right {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes bounce-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) translateY(50px);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05) translateY(-10px);
+    }
+    70% {
+        transform: scale(0.95) translateY(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes draw-line {
+    from {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+    to {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+}
+
+@keyframes highlight {
+    0%, 100% {
+        background-size: 0% 100%;
+    }
+    50% {
+        background-size: 100% 100%;
+    }
+}
+
+@keyframes pulse-gentle {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+@keyframes bounce-gentle {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Animation Classes */
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+    animation: float-delayed 8s ease-in-out infinite;
+}
+
+.animate-float-slow {
+    animation: float-slow 10s ease-in-out infinite;
+}
+
+.animate-float-gentle {
+    animation: float-gentle 4s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+.animate-bounce-in {
+    animation: bounce-in 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+.animate-draw-line {
+    animation: draw-line 1s ease-out forwards;
+    opacity: 0;
+    transform-origin: left center;
+}
+
+.animate-highlight {
+    background: linear-gradient(120deg, transparent 0%, transparent 50%, #fef3c7 50%, #fde68a 100%);
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    animation: highlight 2s ease-in-out forwards;
+    animation-delay: 1s;
+}
+
+.animate-pulse-gentle {
+    animation: pulse-gentle 3s ease-in-out infinite;
+}
+
+.animate-bounce-gentle {
+    animation: bounce-gentle 2s ease-in-out infinite;
+}
+
+/* Scroll-triggered animations */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease-out;
+}
+
+.animate-on-scroll.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.animate-on-scroll[data-animation="slide-in-left"] {
+    transform: translateX(-50px);
+}
+
+.animate-on-scroll[data-animation="slide-in-left"].animate-in {
+    transform: translateX(0);
+}
+
+.animate-on-scroll[data-animation="slide-in-right"] {
+    transform: translateX(50px);
+}
+
+.animate-on-scroll[data-animation="slide-in-right"].animate-in {
+    transform: translateX(0);
+}
+
+/* Form input animations */
+.form-input-focus {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 3px rgba(254, 81, 0, 0.1);
+}
+
+/* Enhanced hover effects */
+.hover-lift {
+    transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
 </style>
 @endpush
 
 @section('content')
 
-        <!-- Hero Section -->
-        <section class="py-20 bg-gradient-to-br from-primary-50 to-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-4xl mx-auto">
-                    <div class="inline-flex items-center px-4 py-2 bg-primary-100 rounded-full mb-6">
-                        <svg class="w-4 h-4 text-primary-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                        </svg>
-                        <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">Contact Us</span>
-                    </div>
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
-                        Get in Touch with
-                        <span class="text-primary-500 relative block">
-                            Our Expert Team
-                            <svg class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-64 h-3 text-primary-200" viewBox="0 0 100 12" fill="currentColor">
-                                <path d="M0 8c30-4 70-4 100 0v4H0z"/>
-                            </svg>
-                        </span>
-                    </h1>
-                    <p class="text-xl text-gray-600 leading-relaxed mb-8">
-                        We're here to support your <strong>Islamic crowdfunding journey</strong>. Our dedicated team provides
-                        <span class="text-primary-600 font-medium">professional guidance</span> and assistance to help you make a
-                        <span class="text-primary-600 font-medium">meaningful impact</span> in your community.
-                    </p>
-                    <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
-                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer">
-                            <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                            </svg>
-                            24/7 Support
-                        </div>
-                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer">
-                            <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                            </svg>
-                            Expert Guidance
-                        </div>
-                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer">
-                            <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                            </svg>
-                            Quick Response
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        @include('components.hero-section', [
+            'badge' => [
+                'text' => 'Contact Us',
+                'icon' => '<svg class="w-4 h-4 text-primary-600 mr-2 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>'
+            ],
+            'title' => 'Get in Touch with',
+            'subtitle' => 'Our Expert Team',
+            'description' => 'We\'re here to support your <strong>Islamic crowdfunding journey</strong>. Our dedicated team provides',
+            'highlights' => [
+                ['text' => 'professional guidance', 'delay' => '0.6s'],
+                ['text' => 'meaningful impact', 'delay' => '0.8s']
+            ],
+            'pills' => [
+                ['text' => '24/7 Support', 'delay' => '0.6s'],
+                ['text' => 'Expert Guidance', 'delay' => '0.7s'],
+                ['text' => 'Quick Response', 'delay' => '0.8s']
+            ]
+        ])
 
-        <!-- Contact Information Section -->
+        <!-- Contact Information Section with Animations -->
         <section class="py-16 bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Main Content Grid -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                     <!-- Contact Information Section -->
-                    <div class="space-y-8">
+                    <div class="space-y-8 animate-on-scroll" data-animation="slide-in-left">
                         <!-- Contact Information Cards -->
                         <div class="space-y-6">
                             <!-- Office Address -->
-                            <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl hover:scale-105 hover:border-primary-200 border border-gray-100 transition-all duration-300 group cursor-pointer" onclick="openMap()">
+                            <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl hover:scale-105 hover:border-primary-200 border border-gray-100 transition-all duration-300 group cursor-pointer animate-fade-in-up" style="animation-delay: 0.1s;" onclick="openMap()">
                                 <div class="p-6">
                                     <div class="flex items-start space-x-4">
-                                        <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                                            <svg class="w-6 h-6 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0 animate-pulse-gentle">
+                                            <svg class="w-6 h-6 text-primary-500 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                                             </svg>
                                         </div>
                                         <div class="flex-1">
-                                            <h3 class="text-xl font-bold text-gray-900 mb-3">Visit Our Office</h3>
-                                            <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                                            <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors duration-300">Visit Our Office</h3>
+                                            <p class="text-gray-600 text-sm leading-relaxed mb-4 group-hover:text-gray-700 transition-colors duration-300">
                                                 Menara Muamalat<br>
                                                 No. 22, Jalan Melaka<br>
                                                 50100 Kuala Lumpur, Malaysia
                                             </p>
-                                            <span class="inline-block text-primary-500 font-medium hover:text-primary-600 transition-colors">
+                                            <span class="inline-block text-primary-500 font-medium hover:text-primary-600 transition-colors animate-bounce-gentle">
                                                 View on Map
                                             </span>
                                         </div>
@@ -217,16 +393,16 @@
                     </div>
 
                     <!-- Contact Form Section -->
-                    <div class="contact-form-card p-8">
+                    <div class="contact-form-card p-8 animate-on-scroll animate-float-gentle" data-animation="slide-in-right">
                         <div class="text-center mb-8">
-                            <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <svg class="w-8 h-8 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse-gentle">
+                                <svg class="w-8 h-8 text-primary-500 animate-bounce-gentle" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                                 </svg>
                             </div>
-                            <h2 class="text-2xl font-bold text-gray-900 mb-2">Send us a Message</h2>
-                            <p class="text-gray-600 leading-relaxed">
-                                Fill out the form below and we'll get back to you within <span class="font-semibold text-primary-600">24 hours</span>
+                            <h2 class="text-2xl font-bold text-gray-900 mb-2 animate-fade-in-up" style="animation-delay: 0.2s;">Send us a Message</h2>
+                            <p class="text-gray-600 leading-relaxed animate-fade-in-up" style="animation-delay: 0.3s;">
+                                Fill out the form below and we'll get back to you within <span class="font-semibold text-primary-600 animate-highlight">24 hours</span>
                             </p>
                         </div>
                         <form id="contact-form" class="space-y-6">
@@ -356,8 +532,50 @@
         window.location.href = 'mailto:jariahfund@muamalat.com.my?subject=Inquiry from Jariah Fund Website';
     }
 
-    // Form validation and submission
+    // Scroll-triggered animations
     document.addEventListener('DOMContentLoaded', function() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with animate-on-scroll class
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Enhanced form input animations
+        const formInputs = document.querySelectorAll('input, select, textarea');
+        formInputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.classList.add('form-input-focus');
+            });
+
+            input.addEventListener('blur', function() {
+                this.classList.remove('form-input-focus');
+            });
+        });
+
+        // Parallax effect for background elements
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.animate-float, .animate-float-delayed, .animate-float-slow');
+
+            parallaxElements.forEach((element, index) => {
+                const speed = 0.5 + (index * 0.1);
+                element.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+    // Form validation and submission
         const form = document.getElementById('contact-form');
         const submitBtn = document.getElementById('submit-btn');
         const submitText = document.getElementById('submit-text');

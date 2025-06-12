@@ -5,84 +5,48 @@
 
 @section('content')
 
-        <!-- Hero Section -->
-        <section class="py-20 bg-gradient-to-br from-primary-50 to-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-4xl mx-auto">
-                    <div class="inline-flex items-center px-4 py-2 bg-primary-100 rounded-full mb-6">
-                        <svg class="w-4 h-4 text-primary-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">About Us</span>
-                    </div>
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
-                        Empowering Communities
-                        <span class="text-primary-500 relative block">
-                            Through Trusted Giving
-                            <svg class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-64 h-3 text-primary-200" viewBox="0 0 100 12" fill="currentColor">
-                                <path d="M0 8c30-4 70-4 100 0v4H0z"/>
-                            </svg>
-                        </span>
-                    </h1>
-                    <p class="text-xl text-gray-600 leading-relaxed mb-8">
-                        <strong>Jariah Fund</strong> is Malaysia's trusted Islamic crowdfunding platform that makes it easy
-                        to support those in need through <span class="text-primary-600 font-medium">education</span>,
-                        <span class="text-primary-600 font-medium">healthcare</span>, and
-                        <span class="text-primary-600 font-medium">economic assistance</span> programs.
-                    </p>
+        @include('components.hero-section', [
+            'badge' => [
+                'text' => 'About Us',
+                'icon' => '<svg class="w-4 h-4 text-primary-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
+            ],
+            'title' => 'Empowering Communities',
+            'subtitle' => 'Through Trusted Giving',
+            'description' => '<strong>Jariah Fund</strong> is Malaysia\'s trusted Islamic crowdfunding platform that makes it easy to support those in need through',
+            'highlights' => [
+                ['text' => 'education', 'delay' => '0.6s'],
+                ['text' => 'healthcare', 'delay' => '0.8s'],
+                ['text' => 'economic assistance', 'delay' => '1.0s']
+            ],
+            'cta_buttons' => [
+                ['text' => 'View Our Campaigns', 'url' => url('/campaigns'), 'type' => 'primary'],
+                ['text' => 'Start Donating', 'url' => url('/donate'), 'type' => 'secondary']
+            ],
+            'pills' => [
+                ['text' => '100% Secure', 'delay' => '0.7s'],
+                ['text' => 'Tax Deductible', 'delay' => '0.8s'],
+                ['text' => 'Transparent & Trusted', 'delay' => '0.9s']
+            ]
+        ])
 
-                    <!-- Call to Action Buttons -->
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                        <a href="{{ url('/campaigns') }}" class="bg-primary-500 text-white px-8 py-4 rounded-lg font-semibold hover:bg-primary-600 transition-all duration-300 text-center transform hover:scale-105 shadow-lg hover:shadow-xl">
-                            View Our Campaigns
-                        </a>
-                        <a href="{{ url('/donate') }}" class="border-2 border-primary-500 text-primary-500 px-8 py-4 rounded-lg font-semibold hover:bg-primary-50 transition-all duration-300 text-center transform hover:scale-105">
-                            Start Donating
-                        </a>
-                    </div>
-
-                    <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
-                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer">
-                            <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                            </svg>
-                            100% Secure
-                        </div>
-                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer">
-                            <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                            </svg>
-                            Tax Deductible
-                        </div>
-                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer">
-                            <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                            </svg>
-                            Transparent & Trusted
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Main Content Grid -->
+        <!-- Main Content Grid with Animations -->
         <section class="py-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Mission Section -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
                     <!-- Left Content -->
-                    <div class="space-y-8">
+                    <div class="space-y-8 animate-on-scroll" data-animation="slide-in-left">
                         <!-- Header -->
-                        <div>
-                            <div class="inline-flex items-center px-4 py-2 bg-primary-100 rounded-full mb-4">
+                        <div class="animate-fade-in-up" style="animation-delay: 0.1s;">
+                            <div class="inline-flex items-center px-4 py-2 bg-primary-100 rounded-full mb-4 hover:bg-primary-200 transition-colors duration-300">
                                 <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">About us</span>
                             </div>
                         </div>
 
                         <!-- Our Objective -->
-                        <div class="space-y-6">
-                            <h3 class="text-2xl font-bold text-gray-900">Our Objective</h3>
-                            <p class="text-gray-600 leading-relaxed">
+                        <div class="space-y-6 animate-fade-in-up" style="animation-delay: 0.2s;">
+                            <h3 class="text-2xl font-bold text-gray-900 hover:text-primary-600 transition-colors duration-300">Our Objective</h3>
+                            <p class="text-gray-600 leading-relaxed transform hover:scale-105 transition-transform duration-300 hover:text-gray-700">
                                 We are committed to helping the less fortunate in our community and
                                 contributing to the welfare of Malaysian society through Islamic principles
                                 and values-based banking services.
@@ -90,9 +54,9 @@
                         </div>
 
                         <!-- Non-Profit Platform -->
-                        <div class="space-y-6">
-                            <h3 class="text-2xl font-bold text-gray-900">Non-Profit Platform</h3>
-                            <p class="text-gray-600 leading-relaxed">
+                        <div class="space-y-6 animate-fade-in-up" style="animation-delay: 0.3s;">
+                            <h3 class="text-2xl font-bold text-gray-900 hover:text-primary-600 transition-colors duration-300">Non-Profit Platform</h3>
+                            <p class="text-gray-600 leading-relaxed transform hover:scale-105 transition-transform duration-300 hover:text-gray-700">
                                 Jariah Fund is a 100% non-profit platform that prioritizes Value Based
                                 Intermediaries (VBI) in Islamic banking services, ensuring all donations
                                 reach those who need them most.
@@ -101,36 +65,36 @@
                     </div>
 
                     <!-- Right Image -->
-                    <div class="flex justify-center lg:justify-end">
-                        <div class="rounded-2xl overflow-hidden shadow-xl max-w-md bg-white p-8">
+                    <div class="flex justify-center lg:justify-end animate-on-scroll" data-animation="slide-in-right">
+                        <div class="rounded-2xl overflow-hidden shadow-xl max-w-md bg-white p-8 hover:shadow-2xl hover:scale-105 transition-all duration-500 animate-float-gentle">
                             <img src="{{ asset('images/logos/jariahfund_logo.png') }}"
                                  alt="Jariah Fund Logo"
-                                 class="w-full h-96 object-contain">
+                                 class="w-full h-96 object-contain hover:scale-110 transition-transform duration-500">
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Bank Muamalat Section -->
+        <!-- Bank Muamalat Section with Animations -->
         <section class="py-12 md:py-16 bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start lg:items-center">
                     <!-- Left Image -->
-                    <div class="flex justify-center lg:justify-start">
+                    <div class="flex justify-center lg:justify-start animate-on-scroll" data-animation="slide-in-left">
                         <img src="{{ asset('images/logos/betterlives.png') }}"
                              alt="Better Lives Together"
-                             class="max-w-full h-auto object-contain">
+                             class="max-w-full h-auto object-contain hover:scale-105 transition-transform duration-500 animate-float-gentle">
                     </div>
 
                     <!-- Right Content -->
-                    <div class="space-y-6 lg:space-y-8">
+                    <div class="space-y-6 lg:space-y-8 animate-on-scroll" data-animation="slide-in-right">
                         <!-- Header -->
-                        <div>
-                            <div class="inline-flex items-center px-3 py-2 md:px-4 md:py-2 bg-primary-100 rounded-full mb-3 md:mb-4">
+                        <div class="animate-fade-in-up" style="animation-delay: 0.1s;">
+                            <div class="inline-flex items-center px-3 py-2 md:px-4 md:py-2 bg-primary-100 rounded-full mb-3 md:mb-4 hover:bg-primary-200 transition-colors duration-300 animate-pulse-gentle">
                                 <span class="text-primary-600 font-semibold text-xs md:text-sm tracking-wide uppercase">Trusted Banking Partner</span>
                             </div>
-                            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
+                            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 md:mb-4 hover:text-primary-600 transition-colors duration-300">
                                 Bank Muamalat Malaysia – Our Trusted Financial Partner
                             </h2>
                         </div>
@@ -191,20 +155,20 @@
             </div>
         </section>
 
-        <!-- Payment Network Section -->
+        <!-- Payment Network Section with Animations -->
         <section class="py-16 bg-gradient-to-br from-gray-50 to-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <div class="inline-flex items-center px-6 py-3 bg-primary-50 rounded-full mb-6 shadow-sm">
-                        <svg class="w-5 h-5 text-primary-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="text-center mb-16 animate-on-scroll" data-animation="fade-in-up">
+                    <div class="inline-flex items-center px-6 py-3 bg-primary-50 rounded-full mb-6 shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 animate-bounce-in">
+                        <svg class="w-5 h-5 text-primary-600 mr-3 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                         </svg>
                         <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">Donate with Confidence</span>
                     </div>
-                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-                        <span class="text-primary-500">Simple & Secure</span> Donation Methods
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 animate-fade-in-up" style="animation-delay: 0.2s;">
+                        <span class="text-primary-500 animate-highlight">Simple & Secure</span> Donation Methods
                     </h2>
-                    <p class="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                    <p class="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed animate-fade-in-up" style="animation-delay: 0.3s;">
                         Choose from Malaysia's most trusted and convenient payment options.
                         Your generosity is just a few clicks away with bank-grade security.
                     </p>
@@ -212,12 +176,12 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto mb-16">
                     <!-- FPX -->
-                    <div class="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl hover:scale-105 hover:border-primary-200 transition-all duration-300 cursor-pointer">
+                    <div class="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl hover:scale-105 hover:border-primary-200 transition-all duration-300 cursor-pointer animate-on-scroll animate-float-gentle" data-animation="slide-in-left">
                         <!-- Image Section -->
-                        <div class="h-48 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-8">
+                        <div class="h-48 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-8 hover:from-blue-100 hover:to-blue-200 transition-all duration-300">
                             <img src="{{ asset('images/payment/fpxlogo.png') }}"
                                  alt="FPX Online Banking"
-                                 class="max-w-full max-h-full object-contain">
+                                 class="max-w-full max-h-full object-contain hover:scale-110 transition-transform duration-300">
                         </div>
 
                         <!-- Content Section -->
@@ -281,12 +245,12 @@
                     </div>
 
                     <!-- DuitNow -->
-                    <div class="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl hover:scale-105 hover:border-primary-200 transition-all duration-300 cursor-pointer">
+                    <div class="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl hover:scale-105 hover:border-primary-200 transition-all duration-300 cursor-pointer animate-on-scroll animate-float-gentle" data-animation="slide-in-right" style="animation-delay: 0.2s;">
                         <!-- Image Section -->
-                        <div class="h-48 bg-gradient-to-br from-pink-50 to-pink-100 flex items-center justify-center p-8">
+                        <div class="h-48 bg-gradient-to-br from-pink-50 to-pink-100 flex items-center justify-center p-8 hover:from-pink-100 hover:to-pink-200 transition-all duration-300">
                             <img src="{{ asset('images/payment/duitnowlogo.png') }}"
                                  alt="DuitNow Transfer"
-                                 class="max-w-full max-h-full object-contain">
+                                 class="max-w-full max-h-full object-contain hover:scale-110 transition-transform duration-300">
                         </div>
 
                         <!-- Content Section -->
@@ -353,12 +317,18 @@
             </div>
         </section>
 
-        <!-- Our Charity Partners Section -->
-        <section class="py-16 bg-primary-500">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex items-center justify-between">
+        <!-- Our Charity Partners Section with Animations -->
+        <section class="py-16 bg-primary-500 relative overflow-hidden">
+            <!-- Animated Background Elements -->
+            <div class="absolute top-0 left-0 w-full h-full">
+                <div class="absolute top-10 left-10 w-24 h-24 bg-white/10 rounded-full blur-2xl animate-float"></div>
+                <div class="absolute bottom-10 right-10 w-32 h-32 bg-white/5 rounded-full blur-3xl animate-float-delayed"></div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="flex items-center justify-between animate-on-scroll" data-animation="fade-in-up">
                     <!-- Left Arrow -->
-                    <a href="{{ url('/partners') }}" class="flex-shrink-0 p-2 text-white/60 hover:text-white transition-colors" title="View All Partners">
+                    <a href="{{ url('/partners') }}" class="flex-shrink-0 p-2 text-white/60 hover:text-white transition-all duration-300 hover:scale-110 animate-bounce-gentle" title="View All Partners">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                         </svg>
@@ -367,31 +337,31 @@
                     <!-- Title and Partners Container -->
                     <div class="flex-1 flex items-center justify-center space-x-8 md:space-x-12 lg:space-x-16">
                         <!-- Title -->
-                        <h2 class="text-lg md:text-xl font-semibold text-white whitespace-nowrap">
+                        <h2 class="text-lg md:text-xl font-semibold text-white whitespace-nowrap animate-fade-in-up" style="animation-delay: 0.2s;">
                             Our Charity Partners
                         </h2>
 
                         <!-- Partner Logos -->
                         <div class="flex items-center space-x-6 md:space-x-8 lg:space-x-12">
                             <!-- MAB (Malaysian Association for the Blind) -->
-                            <div class="flex-shrink-0 bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
+                            <div class="flex-shrink-0 bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer animate-bounce-in" style="animation-delay: 0.3s;">
                                 <img src="{{ asset('images/charity/mab.png') }}"
                                      alt="Malaysian Association for the Blind"
-                                     class="h-12 w-16 object-contain">
+                                     class="h-12 w-16 object-contain hover:rotate-3 transition-transform duration-300">
                             </div>
 
                             <!-- Yayasan Muslim -->
-                            <div class="flex-shrink-0 bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
+                            <div class="flex-shrink-0 bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer animate-bounce-in" style="animation-delay: 0.4s;">
                                 <img src="{{ asset('images/charity/yayasanmuslim.png') }}"
                                      alt="Yayasan Muslim"
-                                     class="h-12 w-16 object-contain">
+                                     class="h-12 w-16 object-contain hover:rotate-3 transition-transform duration-300">
                             </div>
 
                             <!-- Yayasan Ikhlas -->
-                            <div class="flex-shrink-0 bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
+                            <div class="flex-shrink-0 bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer animate-bounce-in" style="animation-delay: 0.5s;">
                                 <img src="{{ asset('images/charity/yayasanikhlas.png') }}"
                                      alt="Yayasan Ikhlas"
-                                     class="h-12 w-20 object-contain">
+                                     class="h-12 w-20 object-contain hover:rotate-3 transition-transform duration-300">
                             </div>
 
                             <!-- PruBSN Prihatin -->
@@ -490,3 +460,294 @@
         </section>
 
 @endsection
+
+@push('styles')
+<style>
+    /* Floating Background Elements */
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        33% { transform: translateY(-20px) rotate(1deg); }
+        66% { transform: translateY(-10px) rotate(-1deg); }
+    }
+
+    @keyframes float-delayed {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        33% { transform: translateY(-15px) rotate(-1deg); }
+        66% { transform: translateY(-8px) rotate(1deg); }
+    }
+
+    @keyframes float-slow {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-12px) rotate(0.5deg); }
+    }
+
+    @keyframes float-gentle {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-8px); }
+    }
+
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .animate-float-delayed {
+        animation: float-delayed 8s ease-in-out infinite;
+    }
+
+    .animate-float-slow {
+        animation: float-slow 10s ease-in-out infinite;
+    }
+
+    .animate-float-gentle {
+        animation: float-gentle 4s ease-in-out infinite;
+    }
+
+    /* Entrance Animations */
+    @keyframes fade-in-up {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slide-in-left {
+        from {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slide-in-right {
+        from {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes bounce-in {
+        0% {
+            opacity: 0;
+            transform: scale(0.3) translateY(50px);
+        }
+        50% {
+            opacity: 1;
+            transform: scale(1.05) translateY(-10px);
+        }
+        70% {
+            transform: scale(0.95) translateY(0);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    @keyframes draw-line {
+        from {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        to {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+    }
+
+    @keyframes highlight {
+        0%, 100% {
+            background-size: 0% 100%;
+        }
+        50% {
+            background-size: 100% 100%;
+        }
+    }
+
+    @keyframes pulse-button {
+        0%, 100% {
+            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+        }
+        50% {
+            box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+        }
+    }
+
+    @keyframes pulse-gentle {
+        0%, 100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.02);
+        }
+    }
+
+    @keyframes bounce-gentle {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-5px);
+        }
+    }
+
+    /* Animation Classes */
+    .animate-fade-in-up {
+        animation: fade-in-up 0.8s ease-out forwards;
+        opacity: 0;
+    }
+
+    .animate-bounce-in {
+        animation: bounce-in 0.8s ease-out forwards;
+        opacity: 0;
+    }
+
+    .animate-draw-line {
+        animation: draw-line 1s ease-out forwards;
+        opacity: 0;
+        transform-origin: left center;
+    }
+
+    .animate-highlight {
+        background: linear-gradient(120deg, transparent 0%, transparent 50%, #fef3c7 50%, #fde68a 100%);
+        background-size: 0% 100%;
+        background-repeat: no-repeat;
+        animation: highlight 2s ease-in-out forwards;
+        animation-delay: 1s;
+    }
+
+    .animate-pulse-button {
+        animation: pulse-button 2s infinite;
+    }
+
+    .animate-pulse-gentle {
+        animation: pulse-gentle 3s ease-in-out infinite;
+    }
+
+    .animate-bounce-gentle {
+        animation: bounce-gentle 2s ease-in-out infinite;
+    }
+
+    /* Scroll-triggered animations */
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s ease-out;
+    }
+
+    .animate-on-scroll.animate-in {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .animate-on-scroll[data-animation="slide-in-left"] {
+        transform: translateX(-50px);
+    }
+
+    .animate-on-scroll[data-animation="slide-in-left"].animate-in {
+        transform: translateX(0);
+    }
+
+    .animate-on-scroll[data-animation="slide-in-right"] {
+        transform: translateX(50px);
+    }
+
+    .animate-on-scroll[data-animation="slide-in-right"].animate-in {
+        transform: translateX(0);
+    }
+
+    /* Smooth scrolling */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Enhanced hover effects */
+    .hover-lift {
+        transition: all 0.3s ease;
+    }
+
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+</style>
+@endpush
+
+@push('scripts')
+<script>
+    // Scroll-triggered animations
+    document.addEventListener('DOMContentLoaded', function() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with animate-on-scroll class
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add staggered animation delays for partner logos
+        const partnerLogos = document.querySelectorAll('.animate-bounce-in');
+        partnerLogos.forEach((logo, index) => {
+            logo.style.animationDelay = `${0.3 + (index * 0.1)}s`;
+        });
+
+        // Enhanced hover effects for interactive elements
+        const interactiveElements = document.querySelectorAll('a, button, .cursor-pointer');
+        interactiveElements.forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+
+            element.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Parallax effect for background elements
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.animate-float, .animate-float-delayed, .animate-float-slow');
+
+            parallaxElements.forEach((element, index) => {
+                const speed = 0.5 + (index * 0.1);
+                element.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Add loading animation to images
+        const images = document.querySelectorAll('img');
+        images.forEach(img => {
+            img.addEventListener('load', function() {
+                this.style.opacity = '0';
+                this.style.transform = 'scale(0.8)';
+                this.style.transition = 'all 0.5s ease';
+
+                setTimeout(() => {
+                    this.style.opacity = '1';
+                    this.style.transform = 'scale(1)';
+                }, 100);
+            });
+        });
+    });
+</script>
+@endpush

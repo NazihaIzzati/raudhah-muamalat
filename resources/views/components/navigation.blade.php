@@ -3,10 +3,17 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
             <!-- Logo -->
-            <div class="flex items-center">
+            <div class="flex items-center space-x-4">
                 <a href="{{ url('/') }}" class="text-2xl font-bold text-primary-500">
                     Jariah Fund
                 </a>
+                <!-- BMMB Logo -->
+                <div class="flex items-center">
+                    <div class="w-px h-8 bg-gray-300 mx-3"></div>
+                    <img src="{{ asset('images/logos/bmmb.png') }}"
+                         alt="Bank Muamalat Malaysia Berhad"
+                         class="h-8 md:h-10 w-auto object-contain">
+                </div>
             </div>
             
             <!-- Navigation -->

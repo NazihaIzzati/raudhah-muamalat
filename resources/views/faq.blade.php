@@ -5,52 +5,23 @@
 
 @section('content')
 
-        <!-- Hero Section -->
-        <section class="py-20 bg-gradient-to-br from-primary-50 to-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-4xl mx-auto">
-                    <div class="inline-flex items-center px-4 py-2 bg-primary-100 rounded-full mb-6">
-                        <svg class="w-4 h-4 text-primary-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">FAQ</span>
-                    </div>
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
-                        Frequently Asked
-                        <span class="text-primary-500 relative block">
-                            Questions
-                            <svg class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-64 h-3 text-primary-200" viewBox="0 0 100 12" fill="currentColor">
-                                <path d="M0 8c30-4 70-4 100 0v4H0z"/>
-                            </svg>
-                        </span>
-                    </h1>
-                    <p class="text-xl text-gray-600 leading-relaxed mb-8">
-                        Find answers to <strong>common questions</strong> about Jariah Fund, donations, campaigns, and our services.
-                        If you can't find what you're looking for, <span class="text-primary-600 font-medium">feel free to contact us</span>.
-                    </p>
-                    <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
-                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
-                            <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                            </svg>
-                            Instant Answers
-                        </div>
-                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
-                            <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                            </svg>
-                            Comprehensive Guide
-                        </div>
-                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
-                            <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                            </svg>
-                            24/7 Support
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        @include('components.hero-section', [
+            'badge' => [
+                'text' => 'FAQ',
+                'icon' => '<svg class="w-4 h-4 text-primary-600 mr-2 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
+            ],
+            'title' => 'Frequently Asked',
+            'subtitle' => 'Questions',
+            'description' => 'Find answers to <strong>common questions</strong> about Jariah Fund, donations, campaigns, and our services. If you can\'t find what you\'re looking for,',
+            'highlights' => [
+                ['text' => 'feel free to contact us', 'delay' => '0.6s']
+            ],
+            'pills' => [
+                ['text' => 'Instant Answers', 'delay' => '0.6s'],
+                ['text' => 'Comprehensive Guide', 'delay' => '0.7s'],
+                ['text' => '24/7 Support', 'delay' => '0.8s']
+            ]
+        ])
 
         <!-- Category Navigation -->
         <section class="py-6 mt-4 mb-4 bg-gray-50">
@@ -116,7 +87,7 @@
                         <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Basics</h2>
                         <p class="text-lg text-gray-600">Learn about Jariah Fund and crowdfunding fundamentals</p>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
                         <!-- FAQ Item 1 -->
                         <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
                             <div class="flex items-center justify-between">
@@ -182,9 +153,9 @@
                         <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Donations</h2>
                         <p class="text-lg text-gray-600">Everything you need to know about making donations</p>
                     </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="space-y-4">
                         <!-- FAQ Item 1 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer lg:col-span-2" onclick="toggleFaq(this)">
+                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
                             <div class="flex items-center justify-between">
                                 <h3 class="text-lg font-semibold text-gray-900 pr-4">How do I donate to a campaign?</h3>
                                 <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -293,7 +264,7 @@
                         </div>
 
                         <!-- FAQ Item 8 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer lg:col-span-2" onclick="toggleFaq(this)">
+                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
                             <div class="flex items-center justify-between">
                                 <h3 class="text-lg font-semibold text-gray-900 pr-4">How do I apply for a tax exemption receipt?</h3>
                                 <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -331,9 +302,9 @@
                         <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Campaigns</h2>
                         <p class="text-lg text-gray-600">Learn about campaign management and updates</p>
                     </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="space-y-4">
                         <!-- FAQ Item 1 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer lg:col-span-2" onclick="toggleFaq(this)">
+                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
                             <div class="flex items-center justify-between">
                                 <h3 class="text-lg font-semibold text-gray-900 pr-4">What happens if a campaign doesn't reach its target amount on time?</h3>
                                 <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -354,7 +325,7 @@
                         </div>
 
                         <!-- FAQ Item 2 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer lg:col-span-2" onclick="toggleFaq(this)">
+                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
                             <div class="flex items-center justify-between">
                                 <h3 class="text-lg font-semibold text-gray-900 pr-4">How do I get updates from campaigns I've donated to?</h3>
                                 <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -367,7 +338,7 @@
                         </div>
 
                         <!-- FAQ Item 3 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer lg:col-span-2" onclick="toggleFaq(this)">
+                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
                             <div class="flex items-center justify-between">
                                 <h3 class="text-lg font-semibold text-gray-900 pr-4">How do I contact charity partners?</h3>
                                 <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -393,7 +364,7 @@
                         <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Operations</h2>
                         <p class="text-lg text-gray-600">How Jariah Fund operates and manages partnerships</p>
                     </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="space-y-4">
                         <!-- FAQ Item 1 -->
                         <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
                             <div class="flex items-center justify-between">
@@ -446,9 +417,9 @@
                         <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Other Matters</h2>
                         <p class="text-lg text-gray-600">Privacy, partnerships, and additional information</p>
                     </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="space-y-4">
                         <!-- FAQ Item 1 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer lg:col-span-2" onclick="toggleFaq(this)">
+                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
                             <div class="flex items-center justify-between">
                                 <h3 class="text-lg font-semibold text-gray-900 pr-4">Does Jariah Fund share my personal information?</h3>
                                 <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -511,7 +482,7 @@
                         </div>
 
                         <!-- FAQ Item 5 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer lg:col-span-2" onclick="toggleFaq(this)">
+                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
                             <div class="flex items-center justify-between">
                                 <h3 class="text-lg font-semibold text-gray-900 pr-4">If we are an Organization/Foundation/NGO/NPO and interested in uploading campaigns on the Jariah Fund portal, what are the steps?</h3>
                                 <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -572,6 +543,8 @@
 
 @endsection
 
+
+
 @push('scripts')
 <script>
     // Toggle FAQ items
@@ -582,11 +555,9 @@
         if (answer.classList.contains('hidden')) {
             answer.classList.remove('hidden');
             icon.style.transform = 'rotate(180deg)';
-            element.classList.add('bg-primary-50', 'border-primary-200');
         } else {
             answer.classList.add('hidden');
             icon.style.transform = 'rotate(0deg)';
-            element.classList.remove('bg-primary-50', 'border-primary-200');
         }
     }
 
@@ -610,67 +581,6 @@
         }
     }
 
-    // Search functionality
-    document.getElementById('faq-search').addEventListener('input', function(e) {
-        const searchTerm = e.target.value.toLowerCase();
-        const faqItems = document.querySelectorAll('.faq-item');
-
-        faqItems.forEach(item => {
-            const question = item.querySelector('h3').textContent.toLowerCase();
-            const answer = item.querySelector('.faq-answer p').textContent.toLowerCase();
-
-            if (question.includes(searchTerm) || answer.includes(searchTerm)) {
-                item.classList.remove('hidden');
-                item.classList.add('block');
-
-                // Highlight search terms
-                if (searchTerm.length > 2) {
-                    highlightSearchTerm(item, searchTerm);
-                }
-            } else {
-                item.classList.remove('block');
-                item.classList.add('hidden');
-            }
-        });
-
-        // Show/hide section headers based on visible items
-        const sections = ['basics', 'donations', 'campaigns', 'operations', 'other'];
-        sections.forEach(sectionId => {
-            const section = document.getElementById(sectionId);
-            const visibleItems = section.querySelectorAll('.faq-item.block, .faq-item:not(.hidden)');
-
-            if (searchTerm === '' || visibleItems.length > 0) {
-                section.classList.remove('hidden');
-                section.classList.add('block');
-            } else {
-                section.classList.remove('block');
-                section.classList.add('hidden');
-            }
-        });
-    });
-
-    // Highlight search terms
-    function highlightSearchTerm(item, term) {
-        const question = item.querySelector('h3');
-        const answer = item.querySelector('.faq-answer p');
-
-        [question, answer].forEach(element => {
-            const text = element.textContent;
-            const regex = new RegExp(`(${term})`, 'gi');
-            const highlightedText = text.replace(regex, '<mark class="bg-yellow-200 px-1 rounded">$1</mark>');
-            element.innerHTML = highlightedText;
-        });
-    }
-
-    // Clear highlights when search is cleared
-    document.getElementById('faq-search').addEventListener('input', function(e) {
-        if (e.target.value === '') {
-            document.querySelectorAll('mark').forEach(mark => {
-                mark.outerHTML = mark.innerHTML;
-            });
-        }
-    });
-
     // Initialize all FAQ items as collapsed
     document.addEventListener('DOMContentLoaded', function() {
         const allItems = document.querySelectorAll('.faq-item');
@@ -681,8 +591,91 @@
             // Ensure all items start collapsed
             answer.classList.add('hidden');
             icon.classList.remove('rotate-45');
-            item.classList.remove('bg-primary-50', 'border-primary-200');
         });
     });
 </script>
+@endpush
+
+@push('styles')
+<style>
+    /* Animation Keyframes */
+    @keyframes fade-in-up {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes bounce-in {
+        0% {
+            opacity: 0;
+            transform: scale(0.3) translateY(50px);
+        }
+        50% {
+            opacity: 1;
+            transform: scale(1.05) translateY(-10px);
+        }
+        70% {
+            transform: scale(0.95) translateY(0);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    @keyframes draw-line {
+        from {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        to {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+    }
+
+    @keyframes highlight {
+        0%, 100% {
+            background-size: 0% 100%;
+        }
+        50% {
+            background-size: 100% 100%;
+        }
+    }
+
+    /* Animation Classes */
+    .animate-fade-in-up {
+        animation: fade-in-up 0.8s ease-out forwards;
+        opacity: 0;
+    }
+
+    .animate-bounce-in {
+        animation: bounce-in 0.8s ease-out forwards;
+        opacity: 0;
+    }
+
+    .animate-draw-line {
+        animation: draw-line 1s ease-out forwards;
+        opacity: 0;
+        transform-origin: left center;
+    }
+
+    .animate-highlight {
+        background: linear-gradient(120deg, transparent 0%, transparent 50%, #fef3c7 50%, #fde68a 100%);
+        background-size: 0% 100%;
+        background-repeat: no-repeat;
+        animation: highlight 2s ease-in-out forwards;
+        animation-delay: 1s;
+    }
+
+    /* Smooth scrolling */
+    html {
+        scroll-behavior: smooth;
+    }
+</style>
 @endpush

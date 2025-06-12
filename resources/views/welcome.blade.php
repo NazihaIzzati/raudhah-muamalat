@@ -12,43 +12,48 @@
                     <!-- Hero Content -->
                     <div class="space-y-6 md:space-y-8 text-center lg:text-left">
                         <div class="space-y-3 md:space-y-4">
-                            <h1 class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight">
+                            <h1 class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight animate-fade-in-up" style="animation-delay: 0.1s;">
                                 Empowering Communities Through
-                                <span class="text-primary-500">Islamic Crowdfunding</span>
+                                <span class="text-primary-500 relative animate-fade-in-up" style="animation-delay: 0.2s;">
+                                    Islamic Crowdfunding
+                                    <svg class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-64 h-3 text-primary-200 animate-draw-line" viewBox="0 0 100 12" fill="currentColor" style="animation-delay: 0.6s;">
+                                        <path d="M0 8c30-4 70-4 100 0v4H0z"/>
+                                    </svg>
+                                </span>
                             </h1>
-                            <p class="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                                Join thousands of donors supporting verified campaigns that make a real difference.
-                                Every contribution helps build stronger communities through Shariah-compliant giving.
+                            <p class="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0 animate-fade-in-up" style="animation-delay: 0.3s;">
+                                Join thousands of donors supporting <strong>verified campaigns</strong> that make a real difference.
+                                Every contribution helps build stronger communities through <span class="text-primary-600 font-medium animate-highlight">Shariah-compliant giving</span>.
                             </p>
                         </div>
 
-                        <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start">
-                            <a href="{{ url('/donate') }}" class="bg-primary-500 text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold hover:bg-primary-600 transition-all duration-300 text-center transform hover:scale-105 shadow-lg hover:shadow-xl">
+                        <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start animate-fade-in-up" style="animation-delay: 0.4s;">
+                            <a href="{{ url('/donate') }}" class="bg-primary-500 text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold hover:bg-primary-600 transition-all duration-300 text-center transform hover:scale-105 shadow-lg hover:shadow-xl animate-pulse-button">
                                 Donate Now
                             </a>
-                            <a href="{{ url('/campaigns') }}" class="border-2 border-primary-500 text-primary-500 px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold hover:bg-primary-50 transition-all duration-300 text-center transform hover:scale-105">
-                                Start Campaign
+                            <a href="{{ url('/campaigns') }}" class="border-2 border-primary-500 text-primary-500 px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold hover:bg-primary-50 transition-all duration-300 text-center transform hover:scale-105 hover:rotate-1">
+                                View Campaigns
                             </a>
                         </div>
 
                         <!-- Impact Stats -->
-                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-6 lg:space-x-8 pt-4 md:pt-8">
-                            <div class="text-center">
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-6 lg:space-x-8 pt-4 md:pt-8 animate-fade-in-up" style="animation-delay: 0.5s;">
+                            <div class="text-center animate-bounce-in" style="animation-delay: 0.6s;">
                                 <div class="text-xl md:text-2xl font-bold text-primary-600">RM 2.5M+</div>
                                 <div class="text-xs md:text-sm text-gray-600">Total Raised</div>
                             </div>
-                            <div class="text-center">
+                            <div class="text-center animate-bounce-in" style="animation-delay: 0.7s;">
                                 <div class="text-xl md:text-2xl font-bold text-primary-600">15K+</div>
                                 <div class="text-xs md:text-sm text-gray-600">Lives Impacted</div>
                             </div>
-                            <div class="text-center">
+                            <div class="text-center animate-bounce-in" style="animation-delay: 0.8s;">
                                 <div class="text-xl md:text-2xl font-bold text-primary-600">500+</div>
                                 <div class="text-xs md:text-sm text-gray-600">Active Campaigns</div>
                             </div>
                         </div>
 
                         <!-- Quranic Verse -->
-                        <div class="bg-primary-50 rounded-lg p-4 md:p-6 border-l-4 border-primary-500">
+                        <div class="bg-primary-50 rounded-lg p-4 md:p-6 border-l-4 border-primary-500 animate-fade-in-up" style="animation-delay: 0.6s;">
                             <p class="text-sm md:text-base text-gray-700 italic leading-relaxed">
                                 "The example of those who spend their wealth in the way of Allah is like a seed of grain that grows seven ears; in each ear there are a hundred grains."
                             </p>
@@ -57,13 +62,13 @@
                     </div>
 
                     <!-- Hero Image -->
-                    <div class="relative">
-                        <div class="bg-gradient-to-br from-primary-100 to-primary-200 rounded-2xl p-8 shadow-xl">
+                    <div class="relative animate-fade-in-up" style="animation-delay: 0.4s;">
+                        <div class="bg-gradient-to-br from-primary-100 to-primary-200 rounded-2xl p-8 shadow-xl animate-float">
                             <div class="bg-white rounded-xl p-6 shadow-lg">
                                 <div class="space-y-4">
                                     <div class="flex items-center justify-between">
                                         <h3 class="font-semibold text-gray-900">Islamic Banking</h3>
-                                        <div class="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
+                                        <div class="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center animate-pulse-gentle">
                                             <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                                                 <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                             </svg>
@@ -541,6 +546,121 @@
 
 
 @endsection
+
+@push('styles')
+<style>
+/* Hero Animation Keyframes */
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-20px) rotate(1deg); }
+    66% { transform: translateY(-10px) rotate(-1deg); }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) translateY(50px);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05) translateY(-10px);
+    }
+    70% {
+        transform: scale(0.95) translateY(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes draw-line {
+    from {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+    to {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+}
+
+@keyframes highlight {
+    0%, 100% {
+        background-size: 0% 100%;
+    }
+    50% {
+        background-size: 100% 100%;
+    }
+}
+
+@keyframes pulse-button {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(254, 81, 0, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(254, 81, 0, 0);
+    }
+}
+
+@keyframes pulse-gentle {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+/* Animation Classes */
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+.animate-bounce-in {
+    animation: bounce-in 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+.animate-draw-line {
+    animation: draw-line 1s ease-out forwards;
+    opacity: 0;
+    transform-origin: left center;
+}
+
+.animate-highlight {
+    background: linear-gradient(120deg, transparent 0%, transparent 50%, #fef3c7 50%, #fde68a 100%);
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    animation: highlight 2s ease-in-out forwards;
+    animation-delay: 1s;
+}
+
+.animate-pulse-button {
+    animation: pulse-button 2s infinite;
+}
+
+.animate-pulse-gentle {
+    animation: pulse-gentle 3s ease-in-out infinite;
+}
+</style>
+@endpush
 
 @push('scripts')
 <!-- Photo Gallery Modal -->

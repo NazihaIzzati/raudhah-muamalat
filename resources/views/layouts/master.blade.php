@@ -83,10 +83,17 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-14 md:h-16">
                     <!-- Logo -->
-                    <div class="flex items-center">
+                    <div class="flex items-center space-x-4">
                         <a href="{{ url('/') }}" class="text-xl md:text-2xl font-bold text-primary-500">
                             Jariah Fund
                         </a>
+                        <!-- BMMB Logo -->
+                        <div class="flex items-center">
+                            <div class="w-px h-8 bg-gray-300 mx-3"></div>
+                            <img src="{{ asset('images/logos/bmmb.png') }}"
+                                 alt="Bank Muamalat Malaysia Berhad"
+                                 class="h-8 md:h-10 w-auto object-contain">
+                        </div>
                     </div>
 
                     <!-- Navigation -->
@@ -165,8 +172,17 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <!-- Company Info -->
                     <div class="space-y-4">
-                        <div class="text-2xl font-bold text-primary-500">
-                            Jariah Fund
+                        <div class="flex items-center space-x-4">
+                            <div class="text-2xl font-bold text-primary-500">
+                                Jariah Fund
+                            </div>
+                            <!-- BMMB Logo in Footer -->
+                            <div class="flex items-center">
+                                <div class="w-px h-6 bg-gray-600 mx-3"></div>
+                                <img src="{{ asset('images/logos/bmmb.png') }}"
+                                     alt="Bank Muamalat Malaysia Berhad"
+                                     class="h-6 w-auto object-contain opacity-80">
+                            </div>
                         </div>
                         <p class="text-gray-300 leading-relaxed">
                             A trusted crowdfunding platform to help the underprivileged.
