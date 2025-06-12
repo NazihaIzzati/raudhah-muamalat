@@ -11,6 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Remove branch_id column from donations table
+        Schema::table('donations', function (Blueprint $table) {
+            $table->dropForeign(['branch_id']);
+            $table->dropColumn('branch_id');
+        });
+        
+        // Drop branches table
+        Schema::dropIfExists('branches');
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        // Recreate branches table
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -31,13 +47,10 @@ return new class extends Migration
             $table->foreignId('created_by')->constrained('users');
             $table->timestamps();
         });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('branches');
+        
+        // Add branch_id column back to donations table
+        Schema::table('donations', function (Blueprint $table) {
+            $table->foreignId('branch_id')->nullable()->after('campaign_id')->constrained()->nullOnDelete();
+        });
     }
 };

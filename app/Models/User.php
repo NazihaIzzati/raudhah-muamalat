@@ -96,14 +96,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the branches created by the user.
-     */
-    public function branches(): HasMany
-    {
-        return $this->hasMany(Branch::class, 'created_by');
-    }
-
-    /**
      * Get the posters created by the user.
      */
     public function posters(): HasMany

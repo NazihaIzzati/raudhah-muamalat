@@ -17,7 +17,6 @@ class Donation extends Model
     protected $fillable = [
         'user_id',
         'campaign_id',
-        'branch_id',
         'donor_name',
         'donor_email',
         'donor_phone',
@@ -56,13 +55,5 @@ class Donation extends Model
     public function campaign()
     {
         return $this->belongsTo(Campaign::class);
-    }
-    
-    /**
-     * Get the branch where this donation was made.
-     */
-    public function branch()
-    {
-        return $this->belongsTo(Branch::class);
     }
 }
