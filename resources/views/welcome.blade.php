@@ -22,8 +22,7 @@
                                 </span>
                             </h1>
                             <p class="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0 animate-fade-in-up" style="animation-delay: 0.3s;">
-                                Join thousands of donors supporting <strong>verified campaigns</strong> that make a real difference.
-                                Every contribution helps build stronger communities through <span class="text-primary-600 font-medium animate-highlight">Shariah-compliant giving</span>.
+                                To date, Jariah Fund has completed <strong>20 public funding campaigns</strong> with a total of <strong>RM167,330.10</strong> that has benefited <strong>2,564 beneficiaries</strong>. Join us in building stronger communities through <span class="text-primary-600 font-medium animate-highlight">Shariah-compliant giving</span>.
                             </p>
                         </div>
 
@@ -39,16 +38,16 @@
                         <!-- Impact Stats -->
                         <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-6 lg:space-x-8 pt-4 md:pt-8 animate-fade-in-up" style="animation-delay: 0.5s;">
                             <div class="text-center animate-bounce-in" style="animation-delay: 0.6s;">
-                                <div class="text-xl md:text-2xl font-bold text-primary-600">RM 2.5M+</div>
+                                <div class="text-xl md:text-2xl font-bold text-primary-600">RM 167K+</div>
                                 <div class="text-xs md:text-sm text-gray-600">Total Raised</div>
                             </div>
                             <div class="text-center animate-bounce-in" style="animation-delay: 0.7s;">
-                                <div class="text-xl md:text-2xl font-bold text-primary-600">15K+</div>
-                                <div class="text-xs md:text-sm text-gray-600">Lives Impacted</div>
+                                <div class="text-xl md:text-2xl font-bold text-primary-600">2,564</div>
+                                <div class="text-xs md:text-sm text-gray-600">Beneficiaries</div>
                             </div>
                             <div class="text-center animate-bounce-in" style="animation-delay: 0.8s;">
-                                <div class="text-xl md:text-2xl font-bold text-primary-600">500+</div>
-                                <div class="text-xs md:text-sm text-gray-600">Active Campaigns</div>
+                                <div class="text-xl md:text-2xl font-bold text-primary-600">20</div>
+                                <div class="text-xs md:text-sm text-gray-600">Completed Campaigns</div>
                             </div>
                         </div>
 
@@ -326,37 +325,21 @@
                                 <!-- Slide 1 -->
                                 <div class="w-full flex-shrink-0">
                                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                                        <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Community Gathering" data-description="Local community members coming together for a charity event">
-                                            <img src="{{ asset('images/gallery/community-gathering.svg') }}"
+                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Community Gathering" data-description="Local community members coming together for a charity event">
+                                            <img src="{{ asset('../images/campaigns/map_01.jpg') }}"
                                                  alt="Community gathering" class="w-full h-32 md:h-40 object-cover">
-                                            <div class="p-3">
-                                                <h4 class="text-sm font-semibold text-gray-900">Community Gathering</h4>
-                                                <p class="text-xs text-gray-600">Charity event in Kuala Lumpur</p>
-                                            </div>
                                         </div>
-                                        <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="{{ asset('images/gallery/food-distribution.svg') }}" data-title="Food Distribution" data-description="Volunteers distributing food packages to families in need">
-                                            <img src="{{ asset('images/gallery/food-distribution.svg') }}"
+                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="{{ asset('images/gallery/food-distribution.svg') }}" data-title="Food Distribution" data-description="Volunteers distributing food packages to families in need">
+                                            <img src="{{ asset('../images/campaigns/map_02.jpg') }}"
                                                  alt="Food distribution" class="w-full h-32 md:h-40 object-cover">
-                                            <div class="p-3">
-                                                <h4 class="text-sm font-semibold text-gray-900">Food Distribution</h4>
-                                                <p class="text-xs text-gray-600">Emergency relief program</p>
-                                            </div>
                                         </div>
-                                        <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="{{ asset('images/campaigns/education-initiative.svg') }}" data-title="Education Program" data-description="Children attending classes in our newly built school">
-                                            <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="{{ asset('images/campaigns/education-initiative.svg') }}" data-title="Education Program" data-description="Children attending classes in our newly built school">
+                                            <img src="{{ asset('../images/campaigns/mab_01.jpg') }}"
                                                  alt="Education program" class="w-full h-32 md:h-40 object-cover">
-                                            <div class="p-3">
-                                                <h4 class="text-sm font-semibold text-gray-900">Education Program</h4>
-                                                <p class="text-xs text-gray-600">New school in rural area</p>
-                                            </div>
                                         </div>
-                                        <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Healthcare Service" data-description="Mobile clinic providing medical care to remote communities">
-                                            <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Healthcare Service" data-description="Mobile clinic providing medical care to remote communities">
+                                            <img src="{{ asset('../images/campaigns/mab_02.jpg') }}"
                                                  alt="Healthcare service" class="w-full h-32 md:h-40 object-cover">
-                                            <div class="p-3">
-                                                <h4 class="text-sm font-semibold text-gray-900">Healthcare Service</h4>
-                                                <p class="text-xs text-gray-600">Mobile clinic outreach</p>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -364,37 +347,21 @@
                                 <!-- Slide 2 -->
                                 <div class="w-full flex-shrink-0">
                                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                                        <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Water Well Project" data-description="New water well providing clean water to rural village">
-                                            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Water Well Project" data-description="New water well providing clean water to rural village">
+                                            <img src="{{ asset('../images/campaigns/mab_03.jpg') }}"
                                                  alt="Water well project" class="w-full h-32 md:h-40 object-cover">
-                                            <div class="p-3">
-                                                <h4 class="text-sm font-semibold text-gray-900">Water Well Project</h4>
-                                                <p class="text-xs text-gray-600">Clean water initiative</p>
-                                            </div>
                                         </div>
-                                        <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Skills Training" data-description="Vocational training program for young adults">
-                                            <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Skills Training" data-description="Vocational training program for young adults">
+                                            <img src="{{ asset('../images/campaigns/02.jpg') }}"
                                                  alt="Skills training" class="w-full h-32 md:h-40 object-cover">
-                                            <div class="p-3">
-                                                <h4 class="text-sm font-semibold text-gray-900">Skills Training</h4>
-                                                <p class="text-xs text-gray-600">Vocational development</p>
-                                            </div>
                                         </div>
-                                        <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Orphan Support" data-description="Supporting orphaned children with education and care">
-                                            <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Orphan Support" data-description="Supporting orphaned children with education and care">
+                                            <img src="{{ asset('../images/campaigns/03.jpg') }}"
                                                  alt="Orphan support" class="w-full h-32 md:h-40 object-cover">
-                                            <div class="p-3">
-                                                <h4 class="text-sm font-semibold text-gray-900">Orphan Support</h4>
-                                                <p class="text-xs text-gray-600">Care and education</p>
-                                            </div>
                                         </div>
-                                        <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Mosque Construction" data-description="Building new mosque for the local community">
-                                            <img src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Mosque Construction" data-description="Building new mosque for the local community">
+                                            <img src="{{ asset('../images/campaigns/04.jpg') }}"
                                                  alt="Mosque construction" class="w-full h-32 md:h-40 object-cover">
-                                            <div class="p-3">
-                                                <h4 class="text-sm font-semibold text-gray-900">Mosque Construction</h4>
-                                                <p class="text-xs text-gray-600">Community worship center</p>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -517,12 +484,12 @@
                                 </p>
                                 <div class="grid grid-cols-2 gap-3 md:gap-4 pt-2 md:pt-4">
                                     <div class="text-center">
-                                        <div class="text-2xl md:text-3xl font-bold">RM 2.5M+</div>
+                                        <div class="text-2xl md:text-3xl font-bold">RM 167K+</div>
                                         <div class="text-primary-200 text-xs md:text-sm">Total Raised</div>
                                     </div>
                                     <div class="text-center">
-                                        <div class="text-2xl md:text-3xl font-bold">15K+</div>
-                                        <div class="text-primary-200 text-xs md:text-sm">Lives Impacted</div>
+                                        <div class="text-2xl md:text-3xl font-bold">2,564</div>
+                                        <div class="text-primary-200 text-xs md:text-sm">Beneficiaries</div>
                                     </div>
                                 </div>
 
