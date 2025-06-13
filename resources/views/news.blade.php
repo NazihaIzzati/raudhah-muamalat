@@ -35,7 +35,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 animate-on-scroll" data-animation="stagger-up">
                     <!-- Featured News Card 1 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                        <img src="{{ asset('images/campaigns/emergency-food-relief.svg') }}"
+                        <img src="{{ asset('images/news/success.jpg') }}"
                              alt="Emergency Food Relief" class="w-full h-40 md:h-48 object-cover">
                         <div class="p-4 md:p-6">
                             <div class="flex items-center mb-3">
@@ -58,7 +58,7 @@
 
                     <!-- Featured News Card 2 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <img src="{{ asset('images/campaigns/education-initiative.svg') }}"
+                        <img src="{{ asset('images/news/success_02.jpg') }}"
                              alt="Education Initiative" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <div class="flex items-center mb-3">
@@ -81,7 +81,7 @@
 
                     <!-- Featured News Card 3 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                        <img src="{{ asset('images/news/success_03.jpg') }}"
                              alt="Charity Gala" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <div class="flex items-center mb-3">

@@ -22,7 +22,7 @@
                                 </span>
                             </h1>
                             <p class="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0 animate-fade-in-up" style="animation-delay: 0.3s;">
-                                To date, Jariah Fund has completed <strong>20 public funding campaigns</strong> with a total of <strong>RM167,330.10</strong> that has benefited <strong>2,564 beneficiaries</strong>. Join us in building stronger communities through <span class="text-primary-600 font-medium animate-highlight">Shariah-compliant giving</span>.
+                                With <strong>RM 167K+ Total Raised</strong>, we have successfully supported <strong>2,564 Beneficiaries</strong> through <strong>20 Completed Campaigns</strong>. Join us in building stronger communities through <span class="text-primary-600 font-medium animate-highlight">Shariah-compliant giving</span>.
                             </p>
                         </div>
 
@@ -50,47 +50,15 @@
                                 <div class="text-xs md:text-sm text-gray-600">Completed Campaigns</div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Quranic Verse -->
+                   <!-- Platform Quote -->
                         <div class="bg-primary-50 rounded-lg p-4 md:p-6 border-l-4 border-primary-500 animate-fade-in-up" style="animation-delay: 0.6s;">
                             <p class="text-sm md:text-base text-gray-700 italic leading-relaxed">
-                                "The example of those who spend their wealth in the way of Allah is like a seed of grain that grows seven ears; in each ear there are a hundred grains."
+                                "Together, we can create lasting change in our communities through transparent, Shariah-compliant crowdfunding that empowers those in need."
                             </p>
-                            <p class="text-xs md:text-sm text-primary-600 font-medium mt-2">— Quran 2:261</p>
+                            <p class="text-xs md:text-sm text-primary-600 font-medium mt-2">— Jariah Fund Mission</p>
                         </div>
-                    </div>
-
-                    <!-- Hero Image -->
-                    <div class="relative animate-fade-in-up" style="animation-delay: 0.4s;">
-                        <div class="bg-gradient-to-br from-primary-100 to-primary-200 rounded-2xl p-8 shadow-xl animate-float">
-                            <div class="bg-white rounded-xl p-6 shadow-lg">
-                                <div class="space-y-4">
-                                    <div class="flex items-center justify-between">
-                                        <h3 class="font-semibold text-gray-900">Islamic Banking</h3>
-                                        <div class="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center animate-pulse-gentle">
-                                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div class="space-y-2">
-                                        <div class="flex justify-between text-sm">
-                                            <span class="text-gray-600">Savings Account</span>
-                                            <span class="font-medium">RM 25,000</span>
-                                        </div>
-                                        <div class="flex justify-between text-sm">
-                                            <span class="text-gray-600">Investment</span>
-                                            <span class="font-medium text-green-600">+12.5%</span>
-                                        </div>
-                                        <div class="flex justify-between text-sm">
-                                            <span class="text-gray-600">Financing</span>
-                                            <span class="font-medium">Available</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
@@ -110,17 +78,16 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                     <!-- Campaign 1 -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                        <img src="{{ asset('images/campaigns/emergency-food-relief.svg') }}"
-                             alt="Emergency Food Relief" class="w-full h-40 md:h-48 object-cover">
+                        <img src="{{ asset('images/campaigns/01.jpg') }}" class="w-full h-40 md:h-48 object-cover">
                         <div class="p-4 md:p-6">
                             <div class="flex items-center mb-3">
-                                <img src="{{ asset('images/logos/organization-avatar.svg') }}"
+                                <img src="{{ asset('images/charity/yayasanmuslim.png') }}"
                                      alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
                                 <span class="text-xs md:text-sm text-gray-600">Yayasan Muslimin</span>
                             </div>
-                            <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Emergency Food Relief for Gaza Families</h3>
+                            <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Vision for Education Program</h3>
                             <p class="text-sm md:text-base text-gray-600 mb-3 md:mb-4 leading-relaxed">
-                                Provide essential food packages to families facing severe food shortages.
+                                The Vision for Education Program is an initiative under PruBSN Prihatin that aims to help school students from asnaf and B40 groups who face vision problems.
                             </p>
 
                             <!-- Progress Bar -->
@@ -145,27 +112,27 @@
 
                     <!-- Campaign 2 -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                        <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                             alt="Education Support" class="w-full h-40 md:h-48 object-cover">
+                        <img src="{{ asset('images/campaigns/mab_project.jpg') }}"
+                             alt="Clean Water Project" class="w-full h-40 md:h-48 object-cover">
                         <div class="p-4 md:p-6">
                             <div class="flex items-center mb-3">
-                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80"
+                                <img src="{{ asset('images/charity/yayasanikhlas.png') }}"
                                      alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
-                                <span class="text-xs md:text-sm text-gray-600">Education Foundation</span>
+                                <span class="text-xs md:text-sm text-gray-600">Yayasan Ikhlas</span>
                             </div>
-                            <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Build Islamic School in Rural Area</h3>
+                            <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Clean Water Wells for Rural Communities</h3>
                             <p class="text-sm md:text-base text-gray-600 mb-3 md:mb-4 leading-relaxed">
-                                Constructing a new Islamic school to provide quality education for rural children.
+                                Build sustainable water wells in remote villages to provide clean, safe drinking water for families who currently walk hours to access water.
                             </p>
 
                             <!-- Progress Bar -->
                             <div class="mb-3 md:mb-4">
                                 <div class="flex justify-between text-xs md:text-sm text-gray-600 mb-2">
-                                    <span>RM 180,500 raised</span>
-                                    <span>60% of RM 300,000</span>
+                                    <span>RM 28,450 raised</span>
+                                    <span>57% of RM 50,000</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-primary-500 h-2 rounded-full transition-all duration-500 w-[60%]"></div>
+                                    <div class="bg-primary-500 h-2 rounded-full transition-all duration-500 w-[57%]"></div>
                                 </div>
                             </div>
 
@@ -180,32 +147,32 @@
 
                     <!-- Campaign 3 -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                        <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                             alt="Healthcare Support" class="w-full h-40 md:h-48 object-cover">
+                        <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                             alt="Orphan Education" class="w-full h-40 md:h-48 object-cover">
                         <div class="p-4 md:p-6">
                             <div class="flex items-center mb-3">
-                                <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80"
+                                <img src="{{ asset('images/charity/nasom.png') }}"
                                      alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
-                                <span class="text-xs md:text-sm text-gray-600">Health Care Malaysia</span>
+                                <span class="text-xs md:text-sm text-gray-600">NASOM</span>
                             </div>
-                            <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Mobile Health Clinic for Remote Villages</h3>
+                            <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Education Support for Orphaned Children</h3>
                             <p class="text-sm md:text-base text-gray-600 mb-3 md:mb-4 leading-relaxed">
-                                Bringing essential healthcare services to underserved remote communities.
+                                Sponsor the education of orphaned children by providing school supplies, uniforms, and tuition fees to ensure they have access to quality education.
                             </p>
 
                             <!-- Progress Bar -->
                             <div class="mb-3 md:mb-4">
                                 <div class="flex justify-between text-xs md:text-sm text-gray-600 mb-2">
-                                    <span>RM 85,200 raised</span>
-                                    <span>85% of RM 100,000</span>
+                                    <span>RM 18,750 raised</span>
+                                    <span>62% of RM 30,000</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-primary-500 h-2 rounded-full transition-all duration-500 w-[85%]"></div>
+                                    <div class="bg-primary-500 h-2 rounded-full transition-all duration-500 w-[62%]"></div>
                                 </div>
                             </div>
 
                             <div class="flex justify-between items-center">
-                                <span class="text-xs md:text-sm text-gray-500">312 donors</span>
+                                <span class="text-xs md:text-sm text-gray-500">89 donors</span>
                                 <a href="{{ url('/donate') }}" class="bg-primary-500 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-xs md:text-sm">
                                     Donate Now
                                 </a>
@@ -243,7 +210,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mb-12 md:mb-16">
                     <!-- Main News Article -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
-                        <img src="{{ asset('images/news/community-event.svg') }}"
+                        <img src="{{ asset('../images/news/success.jpg') }}"
                              alt="Community Event" class="w-full h-48 md:h-64 object-cover">
                         <div class="p-6 md:p-8">
                             <div class="flex items-center mb-3">
@@ -268,7 +235,7 @@
                     <div class="space-y-6">
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
                             <div class="flex items-start space-x-4">
-                                <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                                <img src="../images/news/success.jpg"
                                      alt="Workshop" class="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover flex-shrink-0">
                                 <div class="flex-1">
                                     <div class="flex items-center mb-2">
@@ -283,7 +250,7 @@
 
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
                             <div class="flex items-start space-x-4">
-                                <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                                <img src="../images/news/success_02.jpg"
                                      alt="Medical Mission" class="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover flex-shrink-0">
                                 <div class="flex-1">
                                     <div class="flex items-center mb-2">
@@ -298,7 +265,7 @@
 
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
                             <div class="flex items-start space-x-4">
-                                <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                                <img src="../images/news/success_03.jpg"
                                      alt="School Opening" class="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover flex-shrink-0">
                                 <div class="flex-1">
                                     <div class="flex items-center mb-2">
@@ -311,6 +278,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
 
                 <!-- Photo Gallery Slider -->
