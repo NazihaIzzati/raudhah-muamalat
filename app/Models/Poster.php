@@ -20,6 +20,9 @@ class Poster extends Model
         'image_path',
         'description',
         'status',
+        'category',
+        'featured',
+        'file_size',
         'display_from',
         'display_until',
         'display_order',
@@ -36,6 +39,8 @@ class Poster extends Model
         'display_from' => 'date',
         'display_until' => 'date',
         'display_order' => 'integer',
+        'featured' => 'boolean',
+        'file_size' => 'integer',
     ];
     
     /**
@@ -55,11 +60,19 @@ class Poster extends Model
     }
     
     /**
-     * Check if poster is active.
+     * Check if poster is published.
+     */
+    public function isPublished()
+    {
+        return $this->status === 'published';
+    }
+    
+    /**
+     * Check if poster is active (published and in display period).
      */
     public function isActive()
     {
-        return $this->status === 'active';
+        return $this->isPublished() && $this->isInDisplayPeriod();
     }
     
     /**

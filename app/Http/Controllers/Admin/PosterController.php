@@ -15,13 +15,40 @@ class PosterController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posters = Poster::with(['campaign', 'creator'])
-            ->orderBy('display_order')
-            ->paginate(10);
-            
-        return view('admin.posters.index', compact('posters'));
+        $query = Poster::with(['campaign', 'creator']);
+        
+        // Handle search
+        if ($request->filled('search')) {
+            $searchTerm = $request->get('search');
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('title', 'like', "%{$searchTerm}%")
+                  ->orWhere('description', 'like', "%{$searchTerm}%");
+            });
+        }
+        
+        // Handle status filter
+        if ($request->filled('status') && $request->get('status') !== '') {
+            $query->where('status', $request->get('status'));
+        }
+        
+        // Handle category filter
+        if ($request->filled('category') && $request->get('category') !== '') {
+            $query->where('category', $request->get('category'));
+        }
+        
+        $posters = $query->orderBy('display_order')->paginate(10);
+        
+        // Define status options for the filter dropdown
+        $statuses = [
+            '' => 'All Statuses',
+            'published' => 'Published',
+            'draft' => 'Draft',
+            'archived' => 'Archived',
+        ];
+        
+        return view('admin.posters.index', compact('posters', 'statuses'));
     }
 
     /**
@@ -41,12 +68,14 @@ class PosterController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status' => ['required', Rule::in(['active', 'inactive'])],
+            'status' => ['required', Rule::in(['published', 'draft', 'archived'])],
+            'category' => 'nullable|string|in:promotional,informational,event,campaign',
             'display_from' => 'nullable|date',
             'display_until' => 'nullable|date|after_or_equal:display_from',
             'display_order' => 'nullable|integer|min:0',
             'campaign_id' => 'nullable|exists:campaigns,id',
             'poster_image' => 'required|image|max:2048', // 2MB max
+            'featured' => 'boolean',
         ]);
         
         // Generate slug
@@ -62,6 +91,7 @@ class PosterController extends Controller
         // Handle file upload
         if ($request->hasFile('poster_image')) {
             $imagePath = $request->file('poster_image')->store('posters', 'public');
+            $fileSize = round($request->file('poster_image')->getSize() / 1024); // Size in KB
         }
         
         // Create poster
@@ -71,10 +101,13 @@ class PosterController extends Controller
             'image_path' => $imagePath ?? null,
             'description' => $validated['description'] ?? null,
             'status' => $validated['status'],
+            'category' => $validated['category'] ?? null,
             'display_from' => $validated['display_from'] ?? null,
             'display_until' => $validated['display_until'] ?? null,
             'display_order' => $validated['display_order'] ?? 0,
             'campaign_id' => $validated['campaign_id'] ?? null,
+            'featured' => $validated['featured'] ?? false,
+            'file_size' => $fileSize ?? null,
             'created_by' => auth()->id(),
         ]);
         
@@ -107,12 +140,14 @@ class PosterController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status' => ['required', Rule::in(['active', 'inactive'])],
+            'status' => ['required', Rule::in(['published', 'draft', 'archived'])],
+            'category' => 'nullable|string|in:promotional,informational,event,campaign',
             'display_from' => 'nullable|date',
             'display_until' => 'nullable|date|after_or_equal:display_from',
             'display_order' => 'nullable|integer|min:0',
             'campaign_id' => 'nullable|exists:campaigns,id',
             'poster_image' => 'nullable|image|max:2048', // 2MB max
+            'featured' => 'boolean',
         ]);
         
         // Update slug if title changed
@@ -137,17 +172,21 @@ class PosterController extends Controller
             }
             
             $imagePath = $request->file('poster_image')->store('posters', 'public');
+            $fileSize = round($request->file('poster_image')->getSize() / 1024); // Size in KB
             $poster->image_path = $imagePath;
+            $poster->file_size = $fileSize;
         }
         
         // Update poster
         $poster->title = $validated['title'];
         $poster->description = $validated['description'] ?? null;
         $poster->status = $validated['status'];
+        $poster->category = $validated['category'] ?? null;
         $poster->display_from = $validated['display_from'] ?? null;
         $poster->display_until = $validated['display_until'] ?? null;
         $poster->display_order = $validated['display_order'] ?? 0;
         $poster->campaign_id = $validated['campaign_id'] ?? null;
+        $poster->featured = $validated['featured'] ?? false;
         $poster->save();
         
         return redirect()->route('admin.posters.show', $poster)

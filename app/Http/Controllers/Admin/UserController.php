@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -100,6 +101,16 @@ class UserController extends Controller
             'bio' => $validated['bio'] ?? null,
             'profile_photo' => $validated['profile_photo'] ?? null,
         ]);
+        
+        // Create notification for new user creation (only for regular users, not admins)
+        if ($validated['role'] === 'user') {
+            try {
+                Notification::createUserRegistrationNotification($user);
+            } catch (\Exception $e) {
+                // Log error but don't fail the user creation
+                \Log::error('Failed to create user registration notification: ' . $e->getMessage());
+            }
+        }
         
         return redirect()->route('admin.users.show', $user)
             ->with('success', 'User created successfully.');

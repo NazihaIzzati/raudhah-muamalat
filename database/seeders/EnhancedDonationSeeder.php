@@ -9,7 +9,7 @@ use App\Models\Campaign;
 use App\Models\User;
 use Carbon\Carbon;
 
-class DonationSeeder extends Seeder
+class EnhancedDonationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -165,33 +165,35 @@ class DonationSeeder extends Seeder
         }
         
         // Create some recurring donations (monthly donors)
-        $recurringDonors = $users->take(10); // Top 10 users as recurring donors
-        
-        foreach ($recurringDonors as $donor) {
-            $campaign = $campaigns->random();
-            $monthlyAmount = rand(50, 300);
+        if (!$users->isEmpty()) {
+            $recurringDonors = $users->take(min(10, $users->count())); // Top 10 users as recurring donors
             
-            // Create 6 months of recurring donations
-            for ($month = 0; $month < 6; $month++) {
-                $donationDate = Carbon::now()->subMonths($month)->subDays(rand(1, 28));
+            foreach ($recurringDonors as $donor) {
+                $campaign = $campaigns->random();
+                $monthlyAmount = rand(50, 300);
                 
-                Donation::create([
-                    'user_id' => $donor->id,
-                    'campaign_id' => $campaign->id,
-                    'donor_name' => $donor->name,
-                    'donor_email' => $donor->email,
-                    'donor_phone' => $donor->phone,
-                    'amount' => $monthlyAmount + rand(-10, 10), // Slight variation
-                    'currency' => 'MYR',
-                    'payment_method' => 'fpx_online_banking',
-                    'payment_status' => 'completed',
-                    'transaction_id' => strtoupper(substr(md5(microtime() . $donor->id . $month), 0, 12)),
-                    'message' => 'Monthly recurring donation - Barakallahu feeki',
-                    'is_anonymous' => false,
-                    'paid_at' => $donationDate,
-                    'created_at' => $donationDate,
-                    'updated_at' => $donationDate,
-                ]);
+                // Create 6 months of recurring donations
+                for ($month = 0; $month < 6; $month++) {
+                    $donationDate = Carbon::now()->subMonths($month)->subDays(rand(1, 28));
+                    
+                    Donation::create([
+                        'user_id' => $donor->id,
+                        'campaign_id' => $campaign->id,
+                        'donor_name' => $donor->name,
+                        'donor_email' => $donor->email,
+                        'donor_phone' => $donor->phone,
+                        'amount' => $monthlyAmount + rand(-10, 10), // Slight variation
+                        'currency' => 'MYR',
+                        'payment_method' => 'fpx_online_banking',
+                        'payment_status' => 'completed',
+                        'transaction_id' => strtoupper(substr(md5(microtime() . $donor->id . $month), 0, 12)),
+                        'message' => 'Monthly recurring donation - Barakallahu feeki',
+                        'is_anonymous' => false,
+                        'paid_at' => $donationDate,
+                        'created_at' => $donationDate,
+                        'updated_at' => $donationDate,
+                    ]);
+                }
             }
         }
         
@@ -207,4 +209,4 @@ class DonationSeeder extends Seeder
         
         $this->command->info('Created ' . Donation::count() . ' donations across ' . $campaigns->count() . ' campaigns.');
     }
-}
+} 

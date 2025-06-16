@@ -92,7 +92,7 @@
                                 </svg>
                                 <!-- Notification Badge -->
                                 <span x-show="unreadCount > 0" 
-                                      x-text="unreadCount"
+                                      x-text="unreadCount > 99 ? '99+' : unreadCount.toString()"
                                       class="absolute -top-1 -right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-500 rounded-full min-w-[20px] h-5 animate-pulse">
                                 </span>
                             </button>
@@ -314,7 +314,7 @@
                                     <span class="flex-1">Notifications</span>
                                     <!-- Notification Badge -->
                                     <span x-show="unreadCount > 0" 
-                                          x-text="unreadCount"
+                                          x-text="unreadCount > 99 ? '99+' : unreadCount.toString()"
                                           class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-500 rounded-full min-w-[20px] h-5 ml-2 animate-pulse">
                                     </span>
                                 </a>
@@ -335,6 +335,91 @@
                                 Settings
                             </a>
                         </nav>
+                    </div>
+
+                    <!-- Notification Summary Widget -->
+                    <div class="px-4 py-3 border-t border-gray-200 bg-gray-50" 
+                         x-data="{ 
+                            notifications: [],
+                            unreadCount: 0,
+                            async fetchNotificationSummary() {
+                                try {
+                                    const response = await fetch('/admin/notifications');
+                                    const data = await response.json();
+                                    this.notifications = (data.notifications || []).slice(0, 2);
+                                    this.unreadCount = data.unread_count || 0;
+                                } catch (error) {
+                                    console.error('Failed to fetch notifications:', error);
+                                    this.notifications = [];
+                                    this.unreadCount = 0;
+                                }
+                            }
+                         }" 
+                         x-init="fetchNotificationSummary(); setInterval(() => fetchNotificationSummary(), 120000)">
+                        
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xs font-semibold text-gray-600 uppercase tracking-wider">Recent Activity</h3>
+                            <span x-show="unreadCount > 0" 
+                                  x-text="unreadCount"
+                                  class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-500 rounded-full min-w-[16px] h-4">
+                            </span>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <template x-if="notifications.length === 0">
+                                <div class="text-center py-3">
+                                    <svg class="mx-auto h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM11 19H6.5A2.5 2.5 0 014 16.5v-9A2.5 2.5 0 016.5 5h11A2.5 2.5 0 0120 7.5v3.5"></path>
+                                    </svg>
+                                    <p class="text-xs text-gray-500 mt-1">All caught up!</p>
+                                </div>
+                            </template>
+                            
+                            <template x-for="notification in notifications" :key="notification.id">
+                                <div class="flex items-start space-x-2 p-2 rounded-md hover:bg-white cursor-pointer transition-colors duration-200"
+                                     :class="{ 'bg-blue-50': !notification.read_at }"
+                                     @click="window.location.href = '{{ route('admin.notifications.show') }}'">
+                                    <!-- Icon -->
+                                    <div class="flex-shrink-0 mt-0.5">
+                                        <template x-if="notification.type === 'donation'">
+                                            <div class="h-6 w-6 bg-green-100 rounded-full flex items-center justify-center">
+                                                <svg class="h-3 w-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                                </svg>
+                                            </div>
+                                        </template>
+                                        <template x-if="notification.type === 'user_registration'">
+                                            <div class="h-6 w-6 bg-blue-100 rounded-full flex items-center justify-center">
+                                                <svg class="h-3 w-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                                                </svg>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    
+                                    <!-- Content -->
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-xs font-medium text-gray-900 truncate" x-text="notification.title"></p>
+                                        <p class="text-xs text-gray-500 truncate" x-text="notification.message"></p>
+                                        <p class="text-xs text-gray-400" x-text="notification.time_ago"></p>
+                                    </div>
+                                    
+                                    <!-- Unread indicator -->
+                                    <template x-if="!notification.read_at">
+                                        <div class="flex-shrink-0 mt-1">
+                                            <div class="h-2 w-2 bg-[#fe5000] rounded-full"></div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </template>
+                        </div>
+                        
+                        <div class="mt-3 pt-2 border-t border-gray-200">
+                            <a href="{{ route('admin.notifications.show') }}" 
+                               class="block text-center text-xs text-[#fe5000] hover:text-[#fe5000]/80 font-medium py-1 rounded-md hover:bg-white transition-colors duration-200">
+                                View All Notifications
+                            </a>
+                        </div>
                     </div>
 
                     <!-- User Profile Dropdown - Fixed at Bottom -->

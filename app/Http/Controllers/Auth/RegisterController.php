@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -43,6 +44,14 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
             'role' => 'user', // Default role
         ]);
+
+        // Create notification for new user registration
+        try {
+            Notification::createUserRegistrationNotification($user);
+        } catch (\Exception $e) {
+            // Log error but don't fail the registration
+            \Log::error('Failed to create user registration notification: ' . $e->getMessage());
+        }
 
         Auth::login($user);
 

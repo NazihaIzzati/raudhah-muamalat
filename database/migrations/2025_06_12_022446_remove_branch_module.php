@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Remove branch_id column from donations table
-        Schema::table('donations', function (Blueprint $table) {
-            $table->dropForeign(['branch_id']);
-            $table->dropColumn('branch_id');
-        });
+        // Remove branch_id column from donations table if it exists
+        if (Schema::hasColumn('donations', 'branch_id')) {
+            Schema::table('donations', function (Blueprint $table) {
+                $table->dropForeign(['branch_id']);
+                $table->dropColumn('branch_id');
+            });
+        }
         
         // Drop branches table
         Schema::dropIfExists('branches');

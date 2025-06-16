@@ -229,22 +229,22 @@
                 
                 <!-- Password Section -->
                 <div class="space-y-6">
-                    <div class="flex items-center bg-gradient-to-r from-[#fe5000]/10 to-orange-50 p-4 rounded-xl border border-[#fe5000]/20">
+                    <div class="flex items-center bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-xl border border-blue-200">
                         <div class="flex-shrink-0">
-                            <div class="h-10 w-10 bg-[#fe5000] rounded-lg flex items-center justify-center">
+                            <div class="h-10 w-10 bg-blue-500 rounded-lg flex items-center justify-center">
                                 <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                                 </svg>
                             </div>
                         </div>
                         <div class="ml-4">
-                            <h4 class="text-lg font-semibold text-[#fe5000]">Update Password</h4>
-                            <p class="text-sm text-[#fe5000]/70">Leave blank to keep current password</p>
+                            <h4 class="text-lg font-semibold text-blue-800">Password Update</h4>
+                            <p class="text-sm text-blue-600">Leave blank to keep current password</p>
                         </div>
                     </div>
                     
                     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                        <!-- Password -->
+                        <!-- New Password -->
                         <div class="group">
                             <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">
                                 New Password <span class="text-gray-400 text-xs">(Optional)</span>
@@ -252,25 +252,16 @@
                             <div class="relative rounded-xl shadow-sm">
                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-gray-400 group-hover:text-[#fe5000] transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                                     </svg>
                                 </div>
                                 <input type="password" name="password" id="password" 
-                                    class="pl-12 pr-12 py-3 focus:ring-2 focus:ring-[#fe5000] focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-[#fe5000] bg-white transition-all duration-200" 
+                                    class="pl-12 pr-4 py-3 focus:ring-2 focus:ring-[#fe5000] focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-[#fe5000] bg-white transition-all duration-200 placeholder-gray-400" 
                                     placeholder="Enter new password...">
-                                <div class="absolute inset-y-0 right-0 pr-4 flex items-center">
-                                    <button type="button" id="toggle-password" class="text-gray-400 hover:text-[#fe5000] focus:outline-none transition-colors duration-200">
-                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                        </svg>
-                                    </button>
-                                </div>
                             </div>
-                            <p class="mt-2 text-xs text-gray-500">Minimum 8 characters with letters and numbers</p>
                         </div>
                         
-                        <!-- Password Confirmation -->
+                        <!-- Confirm New Password -->
                         <div class="group">
                             <label for="password_confirmation" class="block text-sm font-semibold text-gray-700 mb-2">
                                 Confirm New Password <span class="text-gray-400 text-xs">(Optional)</span>
@@ -282,25 +273,74 @@
                                     </svg>
                                 </div>
                                 <input type="password" name="password_confirmation" id="password_confirmation" 
-                                    class="pl-12 pr-4 py-3 focus:ring-2 focus:ring-[#fe5000] focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-[#fe5000] bg-white transition-all duration-200" 
+                                    class="pl-12 pr-4 py-3 focus:ring-2 focus:ring-[#fe5000] focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-[#fe5000] bg-white transition-all duration-200 placeholder-gray-400" 
                                     placeholder="Confirm new password...">
                             </div>
-                            <p class="mt-2 text-xs text-gray-500">Re-enter the new password to confirm</p>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Enhanced Action Buttons -->
-            <div class="px-6 py-4 bg-gradient-to-r from-gray-50 to-gray-100 border-t border-gray-200 rounded-b-xl">
-                <div class="flex flex-col sm:flex-row sm:justify-end space-y-3 sm:space-y-0 sm:space-x-3">
-                    <a href="{{ route('admin.users.show', $user) }}" class="inline-flex items-center justify-center px-6 py-3 border border-gray-300 rounded-xl shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fe5000] transition-all duration-200">
-                        <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+                
+                <!-- Profile Image Section -->
+                <div class="space-y-6">
+                    <div class="flex items-center bg-gradient-to-r from-purple-50 to-purple-100 p-4 rounded-xl border border-purple-200">
+                        <div class="flex-shrink-0">
+                            <div class="h-10 w-10 bg-purple-500 rounded-lg flex items-center justify-center">
+                                <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold text-purple-800">Profile Image</h4>
+                            <p class="text-sm text-purple-600">Update the user's profile picture</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Current Profile Photo -->
+                    @if($user->profile_photo)
+                        <div class="group">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Current Profile Photo</label>
+                            <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                <div class="flex-shrink-0">
+                                    <img src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" class="h-16 w-16 rounded-xl object-cover border border-gray-300">
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm text-gray-600">Current profile image</p>
+                                    <p class="text-xs text-gray-500 mt-1">Upload a new image below to replace this one</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                    
+                    <!-- Profile Photo Upload -->
+                    <div class="group">
+                        <label for="profile_photo" class="block text-sm font-semibold text-gray-700 mb-2">
+                            {{ $user->profile_photo ? 'New Profile Photo' : 'Profile Photo' }} <span class="text-gray-400 text-xs">(Optional)</span>
+                        </label>
+                        <div class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-xl hover:border-[#fe5000] transition-colors duration-200">
+                            <div class="space-y-2 text-center">
+                                <svg class="mx-auto h-12 w-12 text-gray-400 group-hover:text-[#fe5000] transition-colors duration-200" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <div class="flex text-sm text-gray-600">
+                                    <label for="profile_photo" class="relative cursor-pointer bg-white rounded-md font-medium text-[#fe5000] hover:text-[#fe5000]/80 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-[#fe5000]">
+                                        <span>Upload a file</span>
+                                        <input id="profile_photo" name="profile_photo" type="file" class="sr-only" accept="image/*">
+                                    </label>
+                                    <p class="pl-1">or drag and drop</p>
+                                </div>
+                                <p class="text-xs text-gray-500">PNG, JPG, GIF up to 2MB</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Form Actions -->
+                <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
+                    <a href="{{ route('admin.users.show', $user) }}" class="inline-flex items-center px-6 py-3 border border-gray-300 rounded-xl shadow-sm text-sm font-semibold text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fe5000] transition-all duration-200">
                         Cancel
                     </a>
-                    <button type="submit" class="inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-gradient-to-r from-[#fe5000] to-orange-600 hover:from-[#fe5000]/90 hover:to-orange-600/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fe5000] transition-all duration-200 transform hover:scale-105">
+                    <button type="submit" class="inline-flex items-center px-8 py-3 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-gradient-to-r from-[#fe5000] to-orange-600 hover:from-[#fe5000]/90 hover:to-orange-600/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fe5000] transition-all duration-200 transform hover:scale-105">
                         <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
                         </svg>
@@ -311,17 +351,4 @@
         </form>
     </div>
 </div>
-
-<script>
-document.getElementById('toggle-password').addEventListener('click', function() {
-    const passwordField = document.getElementById('password');
-    const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-    passwordField.setAttribute('type', type);
-    
-    // Toggle icon
-    this.innerHTML = type === 'password' 
-        ? '<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>'
-        : '<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path></svg>';
-});
-</script>
 @endsection 

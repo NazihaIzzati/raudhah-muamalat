@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\CampaignController as AdminCampaignController;
 use App\Http\Controllers\Admin\PosterController as AdminPosterController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
+use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
 use App\Http\Controllers\AdminTestController;
 
 // Public routes
@@ -71,6 +72,14 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/settings', [AdminDashboardController::class, 'settings'])->name('admin.settings');
     // Profile page route
     Route::view('/profile', 'admin.profile')->name('admin.profile');
+    
+    // Notification routes
+    Route::get('/notifications', [AdminNotificationController::class, 'index'])->name('admin.notifications.index');
+    Route::get('/notifications/all', [AdminNotificationController::class, 'show'])->name('admin.notifications.show');
+    Route::post('/notifications/{notificationId}/read', [AdminNotificationController::class, 'markAsRead'])->name('admin.notifications.read');
+    Route::post('/notifications/mark-all-read', [AdminNotificationController::class, 'markAllAsRead'])->name('admin.notifications.mark-all-read');
+    Route::delete('/notifications/{notification}', [AdminNotificationController::class, 'destroy'])->name('admin.notifications.destroy');
+    Route::post('/notifications/bulk-action', [AdminNotificationController::class, 'bulkAction'])->name('admin.notifications.bulk-action');
     
     // User management routes
     Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users.index');

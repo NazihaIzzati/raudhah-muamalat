@@ -236,6 +236,7 @@
                             </div>
                             <p class="mt-2 text-xs text-gray-500">Re-enter the password to confirm</p>
                         </div>
+
                     </div>
                 </div>
             </div>

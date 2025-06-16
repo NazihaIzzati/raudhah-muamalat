@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Donation;
 use App\Models\Campaign;
 use App\Models\User;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Validator;
 
 class DonationController extends Controller
@@ -104,6 +105,14 @@ class DonationController extends Controller
             $campaign = $donation->campaign;
             $campaign->raised_amount = $campaign->raised_amount + $donation->amount;
             $campaign->save();
+        }
+        
+        // Create notification for new donation
+        try {
+            Notification::createDonationNotification($donation);
+        } catch (\Exception $e) {
+            // Log error but don't fail the donation creation
+            \Log::error('Failed to create donation notification: ' . $e->getMessage());
         }
         
         return redirect()->route('admin.donations.index')
@@ -206,6 +215,14 @@ class DonationController extends Controller
                 // If donation was not completed but now is
                 elseif ($oldStatus !== 'completed' && $request->payment_status === 'completed') {
                     $campaign->raised_amount = $campaign->raised_amount + $request->amount;
+                    
+                    // Create notification for newly completed donation
+                    try {
+                        Notification::createDonationNotification($donation);
+                    } catch (\Exception $e) {
+                        // Log error but don't fail the update
+                        \Log::error('Failed to create donation notification: ' . $e->getMessage());
+                    }
                 }
                 // If donation was completed but now is not
                 elseif ($oldStatus === 'completed' && $request->payment_status !== 'completed') {
@@ -239,6 +256,14 @@ class DonationController extends Controller
             $campaign = $donation->campaign;
             $campaign->raised_amount = $campaign->raised_amount + $donation->amount;
             $campaign->save();
+            
+            // Create notification for newly completed donation
+            try {
+                Notification::createDonationNotification($donation);
+            } catch (\Exception $e) {
+                // Log error but don't fail the status update
+                \Log::error('Failed to create donation notification: ' . $e->getMessage());
+            }
         }
         
         // If donation was previously completed but now isn't, reduce campaign raised amount
