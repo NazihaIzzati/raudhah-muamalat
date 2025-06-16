@@ -31,7 +31,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 md:mb-8 gap-3">
                     <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Featured Campaigns</h2>
-                    <a href="#" class="text-primary-500 font-medium hover:text-primary-600 text-sm md:text-base">View all</a>
+                    <a href="{{ url('/all-campaigns') }}" class="text-primary-500 font-medium hover:text-primary-600 text-sm md:text-base">View all</a>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">

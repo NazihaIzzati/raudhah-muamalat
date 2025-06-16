@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\DonationController as AdminDonationController;
 use App\Http\Controllers\Admin\CampaignController as AdminCampaignController;
@@ -27,6 +28,10 @@ Route::get('/partners', function () {
 
 Route::get('/campaigns', function () {
     return view('campaigns');
+});
+
+Route::get('/all-campaigns', function () {
+    return view('all-campaigns');
 });
 
 Route::get('/news', function () {

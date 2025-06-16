@@ -10,22 +10,22 @@
                 'text' => 'About Us',
                 'icon' => '<svg class="w-4 h-4 text-primary-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
             ],
-            'title' => 'Empowering Communities',
-            'subtitle' => 'Through Trusted Giving',
-            'description' => '<strong>Jariah Fund</strong> is Malaysia\'s trusted Islamic crowdfunding platform that makes it easy to support those in need through',
+            'title' => 'Building A Better World',
+            'subtitle' => 'Through Islamic Crowdfunding',
+            'description' => '<strong>Jariah Fund</strong> is Malaysia\'s premier Shariah-compliant crowdfunding platform that channels your donations to create lasting impact through',
             'highlights' => [
-                ['text' => 'education', 'delay' => '0.6s'],
-                ['text' => 'healthcare', 'delay' => '0.8s'],
-                ['text' => 'economic assistance', 'delay' => '1.0s']
+                ['text' => 'social welfare programs', 'delay' => '0.6s'],
+                ['text' => 'educational initiatives', 'delay' => '0.8s'],
+                ['text' => 'humanitarian relief', 'delay' => '1.0s']
             ],
             'cta_buttons' => [
-                ['text' => 'View Our Campaigns', 'url' => url('/campaigns'), 'type' => 'primary'],
-                ['text' => 'Start Donating', 'url' => url('/donate'), 'type' => 'secondary']
+                ['text' => 'Support Our Causes', 'url' => url('/campaigns'), 'type' => 'primary'],
+                ['text' => 'Learn How It Works', 'url' => url('/how-it-works'), 'type' => 'secondary']
             ],
             'pills' => [
-                ['text' => '100% Secure', 'delay' => '0.7s'],
-                ['text' => 'Tax Deductible', 'delay' => '0.8s'],
-                ['text' => 'Transparent & Trusted', 'delay' => '0.9s']
+                ['text' => '100% Shariah-Compliant', 'delay' => '0.7s'],
+                ['text' => 'No Administrative Fees', 'delay' => '0.8s'],
+                ['text' => 'Full Transparency', 'delay' => '0.9s']
             ]
         ])
 
@@ -39,27 +39,27 @@
                         <!-- Header -->
                         <div class="animate-fade-in-up" style="animation-delay: 0.1s;">
                             <div class="inline-flex items-center px-4 py-2 bg-primary-100 rounded-full mb-4 hover:bg-primary-200 transition-colors duration-300">
-                                <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">About us</span>
+                                <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">Our Mission</span>
                             </div>
                         </div>
 
-                        <!-- Our Objective -->
+                        <!-- Our Vision -->
                         <div class="space-y-6 animate-fade-in-up" style="animation-delay: 0.2s;">
-                            <h3 class="text-2xl font-bold text-gray-900 hover:text-primary-600 transition-colors duration-300">Our Objective</h3>
+                            <h3 class="text-2xl font-bold text-gray-900 hover:text-primary-600 transition-colors duration-300">Our Vision</h3>
                             <p class="text-gray-600 leading-relaxed transform hover:scale-105 transition-transform duration-300 hover:text-gray-700">
-                                We are committed to helping the less fortunate in our community and
-                                contributing to the welfare of Malaysian society through Islamic principles
-                                and values-based banking services.
+                                To be the leading Islamic crowdfunding platform in Malaysia that bridges compassionate 
+                                donors with meaningful causes, creating sustainable positive change through the principles 
+                                of Shariah and ethical financial practices.
                             </p>
                         </div>
 
-                        <!-- Non-Profit Platform -->
+                        <!-- Our Values -->
                         <div class="space-y-6 animate-fade-in-up" style="animation-delay: 0.3s;">
-                            <h3 class="text-2xl font-bold text-gray-900 hover:text-primary-600 transition-colors duration-300">Non-Profit Platform</h3>
+                            <h3 class="text-2xl font-bold text-gray-900 hover:text-primary-600 transition-colors duration-300">Our Values</h3>
                             <p class="text-gray-600 leading-relaxed transform hover:scale-105 transition-transform duration-300 hover:text-gray-700">
-                                Jariah Fund is a 100% non-profit platform that prioritizes Value Based
-                                Intermediaries (VBI) in Islamic banking services, ensuring all donations
-                                reach those who need them most.
+                                Jariah Fund operates on the Islamic principles of <span class="font-semibold">sadaqah</span> (voluntary giving) and 
+                                <span class="font-semibold">amanah</span> (trust), ensuring that every ringgit donated is 
+                                managed with absolute integrity and directed to those most in need without administrative deductions.
                             </p>
                         </div>
                     </div>
@@ -92,35 +92,35 @@
                         <!-- Header -->
                         <div class="animate-fade-in-up" style="animation-delay: 0.1s;">
                             <div class="inline-flex items-center px-3 py-2 md:px-4 md:py-2 bg-primary-100 rounded-full mb-3 md:mb-4 hover:bg-primary-200 transition-colors duration-300 animate-pulse-gentle">
-                                <span class="text-primary-600 font-semibold text-xs md:text-sm tracking-wide uppercase">Trusted Banking Partner</span>
+                                <span class="text-primary-600 font-semibold text-xs md:text-sm tracking-wide uppercase">Islamic Banking Partner</span>
                             </div>
                             <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 md:mb-4 hover:text-primary-600 transition-colors duration-300">
-                                Bank Muamalat Malaysia – Our Trusted Financial Partner
+                                Bank Muamalat Malaysia – Powering Ethical Finance
                             </h2>
                         </div>
 
                         <!-- Content Paragraphs -->
                         <div class="space-y-4 md:space-y-6 text-gray-600 leading-relaxed">
                             <p class="text-sm md:text-base">
-                                Bank Muamalat began operations on <strong>October 1, 1999</strong> as a merger of Islamic banking assets
-                                from Bank Bumiputra Malaysia Berhad, Bank of Commerce (M) Berhad and BBMB Kewangan.
-                                Our objective is to help the less fortunate in the community and contribute to Malaysian society.
+                                Since <strong>October 1, 1999</strong>, Bank Muamalat has been at the forefront of Islamic finance in Malaysia, 
+                                upholding the principles of <span class="italic">Shariah</span> while delivering modern financial solutions. As Jariah Fund's banking partner,
+                                they ensure every donation is handled with the highest ethical standards.
                             </p>
 
                             <p class="text-sm md:text-base">
-                                Bank Muamalat Malaysia Berhad is the <strong>second bank</strong> to offer Islamic banking under the
-                                "Islamic Banking Act 1983" in Malaysia, after Bank Islam Malaysia Berhad. We are committed to
-                                providing Islamic banking services to all Malaysians regardless of race or religion.
+                                As the <strong>second full-fledged Islamic bank</strong> established under the Islamic Banking Act 1983,
+                                Bank Muamalat provides the trusted infrastructure that enables Jariah Fund to operate with complete transparency
+                                and accountability, ensuring your contributions create maximum impact.
                             </p>
 
                             <p class="text-sm md:text-base">
-                                Jariah Fund is a <strong>100% non-profit platform</strong> that prioritizes Value Based Intermediaries (VBI)
-                                in Islamic banking services. <strong>DRB-HICOM</strong> holds 70% shares in Bank Muamalat while
-                                <strong>Khazanah Nasional Berhad</strong> holds the remainder - backed by Malaysia's leading corporations.
+                                Our partnership ensures that <strong>100% of every donation</strong> goes directly to the causes you care about.
+                                Together, we're pioneering a new approach to charitable giving that combines Islamic values with
+                                modern technology to make giving easy, impactful, and rewarding.
                             </p>
                         </div>
 
-                        <!-- Key Features -->
+                        <!-- Islamic Banking Principles -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mt-6 md:mt-8">
                             <div class="bg-white rounded-lg p-3 md:p-4 shadow-md border border-gray-100 hover:shadow-xl hover:scale-105 hover:border-primary-200 transition-all duration-300 cursor-pointer">
                                 <div class="flex items-center">
@@ -130,8 +130,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h4 class="font-semibold text-gray-900 text-sm md:text-base">Shariah Compliant</h4>
-                                        <p class="text-xs md:text-sm text-gray-600">100% Islamic banking</p>
+                                        <h4 class="font-semibold text-gray-900 text-sm md:text-base">Riba-Free</h4>
+                                        <p class="text-xs md:text-sm text-gray-600">Interest-free transactions</p>
                                     </div>
                                 </div>
                             </div>
@@ -144,8 +144,36 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h4 class="font-semibold text-gray-900 text-sm md:text-base">Non-Profit</h4>
-                                        <p class="text-xs md:text-sm text-gray-600">100% for charity</p>
+                                        <h4 class="font-semibold text-gray-900 text-sm md:text-base">Amanah</h4>
+                                        <p class="text-xs md:text-sm text-gray-600">Trustworthy management</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white rounded-lg p-3 md:p-4 shadow-md border border-gray-100 hover:shadow-xl hover:scale-105 hover:border-primary-200 transition-all duration-300 cursor-pointer">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 md:w-10 md:h-10 bg-primary-100 rounded-lg flex items-center justify-center mr-3">
+                                        <svg class="w-4 h-4 md:w-5 md:h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900 text-sm md:text-base">Zakat Integration</h4>
+                                        <p class="text-xs md:text-sm text-gray-600">Tax-efficient giving</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white rounded-lg p-3 md:p-4 shadow-md border border-gray-100 hover:shadow-xl hover:scale-105 hover:border-primary-200 transition-all duration-300 cursor-pointer">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 md:w-10 md:h-10 bg-primary-100 rounded-lg flex items-center justify-center mr-3">
+                                        <svg class="w-4 h-4 md:w-5 md:h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900 text-sm md:text-base">Shariah Board</h4>
+                                        <p class="text-xs md:text-sm text-gray-600">Expert religious oversight</p>
                                     </div>
                                 </div>
                             </div>

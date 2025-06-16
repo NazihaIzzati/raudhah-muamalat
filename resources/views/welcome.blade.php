@@ -9,20 +9,21 @@
         <section id="home" class="bg-gradient-to-br from-primary-50 to-white py-12 md:py-16 lg:py-20">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                    
                     <!-- Hero Content -->
                     <div class="space-y-6 md:space-y-8 text-center lg:text-left">
                         <div class="space-y-3 md:space-y-4">
                             <h1 class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight animate-fade-in-up" style="animation-delay: 0.1s;">
-                                Empowering Communities Through
+                                Support Worthy Causes Through
                                 <span class="text-primary-500 relative animate-fade-in-up" style="animation-delay: 0.2s;">
-                                    Islamic Crowdfunding
+                                    Shariah-Compliant Giving
                                     <svg class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-64 h-3 text-primary-200 animate-draw-line" viewBox="0 0 100 12" fill="currentColor" style="animation-delay: 0.6s;">
                                         <path d="M0 8c30-4 70-4 100 0v4H0z"/>
                                     </svg>
                                 </span>
                             </h1>
                             <p class="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0 animate-fade-in-up" style="animation-delay: 0.3s;">
-                                With <strong>RM 167K+ Total Raised</strong>, we have successfully supported <strong>2,564 Beneficiaries</strong> through <strong>20 Completed Campaigns</strong>. Join us in building stronger communities through <span class="text-primary-600 font-medium animate-highlight">Shariah-compliant giving</span>.
+                                Every contribution makes a difference. Join our community of <strong>3,500+ donors</strong> who have helped transform lives through <span class="text-primary-600 font-medium animate-highlight">transparent and impactful campaigns</span>. 100% of your donation goes directly to the cause you choose.
                             </p>
                         </div>
 
@@ -55,7 +56,7 @@
                    <!-- Platform Quote -->
                         <div class="bg-primary-50 rounded-lg p-4 md:p-6 border-l-4 border-primary-500 animate-fade-in-up" style="animation-delay: 0.6s;">
                             <p class="text-sm md:text-base text-gray-700 italic leading-relaxed">
-                                "Together, we can create lasting change in our communities through transparent, Shariah-compliant crowdfunding that empowers those in need."
+                                "Every act of giving creates a ripple effect of positive change. Your generosity today becomes someone's hope for tomorrow."
                             </p>
                             <p class="text-xs md:text-sm text-primary-600 font-medium mt-2">— Jariah Fund Mission</p>
                         </div>
@@ -78,7 +79,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                     <!-- Campaign 1 -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                        <img src="{{ asset('images/campaigns/01.jpg') }}" class="w-full h-40 md:h-48 object-cover">
+                        <img src="{{ asset('images/campaigns/01.jpg') }}" class="w-full h-48 object-cover">
                         <div class="p-4 md:p-6">
                             <div class="flex items-center mb-3">
                                 <img src="{{ asset('images/charity/yayasanmuslim.png') }}"
@@ -113,7 +114,7 @@
                     <!-- Campaign 2 -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                         <img src="{{ asset('images/campaigns/mab_project.jpg') }}"
-                             alt="Clean Water Project" class="w-full h-40 md:h-48 object-cover">
+                             alt="Clean Water Project" class="w-full h-48 object-cover">
                         <div class="p-4 md:p-6">
                             <div class="flex items-center mb-3">
                                 <img src="{{ asset('images/charity/yayasanikhlas.png') }}"
@@ -148,7 +149,7 @@
                     <!-- Campaign 3 -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                         <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                             alt="Orphan Education" class="w-full h-40 md:h-48 object-cover">
+                             alt="Orphan Education" class="w-full h-48 object-cover">
                         <div class="p-4 md:p-6">
                             <div class="flex items-center mb-3">
                                 <img src="{{ asset('images/charity/nasom.png') }}"
@@ -184,7 +185,7 @@
 
                 <!-- View All Campaigns Button -->
                 <div class="text-center mt-8 md:mt-12">
-                    <a href="{{ url('/campaigns') }}" class="inline-flex items-center px-6 py-3 md:px-8 md:py-4 bg-white border-2 border-primary-500 text-primary-500 font-semibold rounded-lg hover:bg-primary-500 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    <a href="{{ url('/all-campaigns') }}" class="inline-flex items-center px-6 py-3 md:px-8 md:py-4 bg-white border-2 border-primary-500 text-primary-500 font-semibold rounded-lg hover:bg-primary-500 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                         View All Campaigns
                         <svg class="w-4 h-4 md:w-5 md:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -236,7 +237,7 @@
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
                             <div class="flex items-start space-x-4">
                                 <img src="../images/news/success.jpg"
-                                     alt="Workshop" class="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover flex-shrink-0">
+                                     alt="Workshop" class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
                                 <div class="flex-1">
                                     <div class="flex items-center mb-2">
                                         <span class="bg-green-100 text-green-600 px-2 py-1 rounded-full text-xs font-medium">Upcoming Event</span>
@@ -251,7 +252,7 @@
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
                             <div class="flex items-start space-x-4">
                                 <img src="../images/news/success_02.jpg"
-                                     alt="Medical Mission" class="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover flex-shrink-0">
+                                     alt="Medical Mission" class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
                                 <div class="flex-1">
                                     <div class="flex items-center mb-2">
                                         <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs font-medium">Success Story</span>
@@ -266,7 +267,7 @@
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
                             <div class="flex items-start space-x-4">
                                 <img src="../images/news/success_03.jpg"
-                                     alt="School Opening" class="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover flex-shrink-0">
+                                     alt="School Opening" class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
                                 <div class="flex-1">
                                     <div class="flex items-center mb-2">
                                         <span class="bg-purple-100 text-purple-600 px-2 py-1 rounded-full text-xs font-medium">Achievement</span>
@@ -475,10 +476,6 @@
                 </div>
             </div>
         </section>
-
-
-
-
 
 @endsection
 
