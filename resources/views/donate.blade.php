@@ -314,7 +314,7 @@
                                 <div class="carousel-track" id="carouselTrack">
                                     <!-- Slide 1 - Eye Examination -->
                                     <div class="carousel-slide">
-                                        <img src="{{ asset('images/campaigns/01.jpg') }}"
+                                        <img src="{{ asset('assets/images/campaigns/01.jpg') }}"
                                              onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'"
                                              alt="Eye examination for students"
                                              class="w-full h-80 object-cover">
@@ -331,7 +331,7 @@
 
                                     <!-- Slide 2 - Students with Glasses -->
                                     <div class="carousel-slide">
-                                        <img src="{{ asset('images/campaigns/02.jpg') }}"
+                                        <img src="{{ asset('assets/images/campaigns/02.jpg') }}"
                                              onerror="this.src='https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'"
                                              alt="Students wearing glasses in classroom"
                                              class="w-full h-80 object-cover">
@@ -348,7 +348,7 @@
 
                                     <!-- Slide 3 - Eye Care Equipment -->
                                     <div class="carousel-slide">
-                                        <img src="{{ asset('images/campaigns/03.jpg') }}"
+                                        <img src="{{ asset('assets/images/campaigns/03.jpg') }}"
                                              onerror="this.src='https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'"
                                              alt="Eye care equipment and examination tools"
                                              class="w-full h-80 object-cover">
@@ -365,7 +365,7 @@
 
                                     <!-- Slide 4 - Community Impact -->
                                     <div class="carousel-slide">
-                                        <img src="{{ asset('images/campaigns/04.jpg') }}"
+                                        <img src="{{ asset('assets/images/campaigns/04.jpg') }}"
                                              onerror="this.src='https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'"
                                              alt="Community children and families"
                                              class="w-full h-80 object-cover">
@@ -566,7 +566,7 @@
                             <!-- Organization Info -->
                             <div class="flex items-center mb-8 pb-6 border-b border-gray-100">
                                 <div class="w-12 h-12 rounded-lg flex items-center justify-center mr-4 bg-primary-50 hover-scale">
-                                    <img src="{{ asset('images/charity/prubsn.png') }}"
+                                    <img src="{{ asset('assets/images/charity/prubsn.png') }}"
                                          alt="PruBSN Prihatin"
                                          class="w-8 h-8 object-contain">
                                 </div>

@@ -37,7 +37,7 @@
                                  tabindex="0"
                                  role="button"
                                  aria-label="Learn more about Yayasan Muslimin">
-                                <img src="{{ asset('images/charity/yayasanmuslim.png') }}"
+                                <img src="{{ asset('assets/images/charity/yayasanmuslim.png') }}"
                                      alt="Yayasan Muslimin Logo"
                                      class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
                                      loading="lazy">
@@ -83,7 +83,7 @@
                                  tabindex="0"
                                  role="button"
                                  aria-label="Learn more about Yayasan Ikhlas">
-                                <img src="{{ asset('images/charity/yayasanikhlas.png') }}"
+                                <img src="{{ asset('assets/images/charity/yayasanikhlas.png') }}"
                                      alt="Yayasan Ikhlas Logo"
                                      class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
                                      loading="lazy">
@@ -129,7 +129,7 @@
                                  tabindex="0"
                                  role="button"
                                  aria-label="Learn more about Malaysian Association for the Blind">
-                                <img src="{{ asset('images/charity/mab.png') }}"
+                                <img src="{{ asset('assets/images/charity/mab.png') }}"
                                      alt="Malaysian Association for the Blind Logo"
                                      class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
                                      loading="lazy">
@@ -174,7 +174,7 @@
                                  tabindex="0"
                                  role="button"
                                  aria-label="Learn more about National Autism Society of Malaysia">
-                                <img src="{{ asset('images/charity/nasom.png') }}"
+                                <img src="{{ asset('assets/images/charity/nasom.png') }}"
                                      alt="National Autism Society of Malaysia Logo"
                                      class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
                                      loading="lazy">
@@ -219,7 +219,7 @@
                                  tabindex="0"
                                  role="button"
                                  aria-label="Learn more about PruBSN Prihatin">
-                                <img src="{{ asset('images/charity/prubsn.png') }}"
+                                <img src="{{ asset('assets/images/charity/prubsn.png') }}"
                                      alt="PruBSN Prihatin Logo"
                                      class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
                                      loading="lazy">
@@ -264,7 +264,7 @@
                                  tabindex="0"
                                  role="button"
                                  aria-label="Learn more about Yayasan Angkasa">
-                                <img src="{{ asset('images/charity/yaysanangkasa.png') }}"
+                                <img src="{{ asset('assets/images/charity/yaysanangkasa.png') }}"
                                      alt="Yayasan Angkasa Logo"
                                      class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
                                      loading="lazy">

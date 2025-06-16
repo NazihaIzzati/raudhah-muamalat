@@ -35,7 +35,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 animate-on-scroll" data-animation="stagger-up">
                     <!-- Featured News Card 1 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                        <img src="{{ asset('images/news/success.jpg') }}"
+                        <img src="{{ asset('assets/images/news/success.jpg') }}"
                              alt="Emergency Food Relief" class="w-full h-40 md:h-48 object-cover">
                         <div class="p-4 md:p-6">
                             <div class="flex items-center mb-3">
@@ -58,7 +58,7 @@
 
                     <!-- Featured News Card 2 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <img src="{{ asset('images/news/success_02.jpg') }}"
+                        <img src="{{ asset('assets/images/news/success_02.jpg') }}"
                              alt="Education Initiative" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <div class="flex items-center mb-3">
@@ -81,7 +81,7 @@
 
                     <!-- Featured News Card 3 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <img src="{{ asset('images/news/success_03.jpg') }}"
+                        <img src="{{ asset('assets/images/news/success_03.jpg') }}"
                              alt="Charity Gala" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <div class="flex items-center mb-3">
@@ -151,13 +151,13 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <a href="#" class="block">
-                                <img src="{{ asset('images/campaigns/medical-mission.svg') }}"
+                                <img src="{{ asset('assets/images/campaigns/medical-mission.svg') }}"
                                      alt="Mobile Clinic" class="w-full h-32 object-cover rounded-lg mb-2">
                                 <h4 class="font-semibold text-gray-900 text-sm mb-1">Mobile Clinic Success</h4>
                                 <p class="text-xs text-gray-600">500 patients treated in rural areas</p>
                             </a>
                             <a href="#" class="block">
-                                <img src="{{ asset('images/campaigns/medical-mission.svg') }}"
+                                <img src="{{ asset('assets/images/campaigns/medical-mission.svg') }}"
                                      alt="Medical Equipment" class="w-full h-32 object-cover rounded-lg mb-2">
                                 <h4 class="font-semibold text-gray-900 text-sm mb-1">New Medical Equipment</h4>
                                 <p class="text-xs text-gray-600">Advanced diagnostic tools acquired</p>
@@ -175,7 +175,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Small News Card 1 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                        <img src="{{ asset('images/news/workshop.svg') }}"
+                        <img src="{{ asset('assets/images/news/workshop.svg') }}"
                              alt="Workshop" class="w-full h-32 object-cover">
                         <div class="p-4">
                             <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-medium mb-2 inline-block">Event</span>

@@ -67,7 +67,7 @@
                     <!-- Right Image -->
                     <div class="flex justify-center lg:justify-end animate-on-scroll" data-animation="slide-in-right">
                         <div class="rounded-2xl overflow-hidden shadow-xl max-w-md bg-white p-8 hover:shadow-2xl hover:scale-105 transition-all duration-500 animate-float-gentle">
-                            <img src="{{ asset('images/logos/jariahfund_logo.png') }}"
+                            <img src="{{ asset('assets/images/logos/jariahfund_logo.png') }}"
                                  alt="Jariah Fund Logo"
                                  class="w-full h-96 object-contain hover:scale-110 transition-transform duration-500">
                         </div>
@@ -82,7 +82,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start lg:items-center">
                     <!-- Left Image -->
                     <div class="flex justify-center lg:justify-start animate-on-scroll" data-animation="slide-in-left">
-                        <img src="{{ asset('images/logos/betterlives.png') }}"
+                        <img src="{{ asset('assets/images/logos/betterlives.png') }}"
                              alt="Better Lives Together"
                              class="max-w-full h-auto object-contain hover:scale-105 transition-transform duration-500 animate-float-gentle">
                     </div>
@@ -207,7 +207,7 @@
                     <div class="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl hover:scale-105 hover:border-primary-200 transition-all duration-300 cursor-pointer animate-on-scroll animate-float-gentle" data-animation="slide-in-left">
                         <!-- Image Section -->
                         <div class="h-48 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-8 hover:from-blue-100 hover:to-blue-200 transition-all duration-300">
-                            <img src="{{ asset('images/payment/fpxlogo.png') }}"
+                            <img src="{{ asset('assets/images/payment/fpxlogo.png') }}"
                                  alt="FPX Online Banking"
                                  class="max-w-full max-h-full object-contain hover:scale-110 transition-transform duration-300">
                         </div>
@@ -276,7 +276,7 @@
                     <div class="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl hover:scale-105 hover:border-primary-200 transition-all duration-300 cursor-pointer animate-on-scroll animate-float-gentle" data-animation="slide-in-right" style="animation-delay: 0.2s;">
                         <!-- Image Section -->
                         <div class="h-48 bg-gradient-to-br from-pink-50 to-pink-100 flex items-center justify-center p-8 hover:from-pink-100 hover:to-pink-200 transition-all duration-300">
-                            <img src="{{ asset('images/payment/duitnowlogo.png') }}"
+                            <img src="{{ asset('assets/images/payment/duitnowlogo.png') }}"
                                  alt="DuitNow Transfer"
                                  class="max-w-full max-h-full object-contain hover:scale-110 transition-transform duration-300">
                         </div>
@@ -373,42 +373,42 @@
                         <div class="flex items-center space-x-6 md:space-x-8 lg:space-x-12">
                             <!-- MAB (Malaysian Association for the Blind) -->
                             <div class="flex-shrink-0 bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer animate-bounce-in" style="animation-delay: 0.3s;">
-                                <img src="{{ asset('images/charity/mab.png') }}"
+                                <img src="{{ asset('assets/images/charity/mab.png') }}"
                                      alt="Malaysian Association for the Blind"
                                      class="h-12 w-16 object-contain hover:rotate-3 transition-transform duration-300">
                             </div>
 
                             <!-- Yayasan Muslim -->
                             <div class="flex-shrink-0 bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer animate-bounce-in" style="animation-delay: 0.4s;">
-                                <img src="{{ asset('images/charity/yayasanmuslim.png') }}"
+                                <img src="{{ asset('assets/images/charity/yayasanmuslim.png') }}"
                                      alt="Yayasan Muslim"
                                      class="h-12 w-16 object-contain hover:rotate-3 transition-transform duration-300">
                             </div>
 
                             <!-- Yayasan Ikhlas -->
                             <div class="flex-shrink-0 bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer animate-bounce-in" style="animation-delay: 0.5s;">
-                                <img src="{{ asset('images/charity/yayasanikhlas.png') }}"
+                                <img src="{{ asset('assets/images/charity/yayasanikhlas.png') }}"
                                      alt="Yayasan Ikhlas"
                                      class="h-12 w-20 object-contain hover:rotate-3 transition-transform duration-300">
                             </div>
 
                             <!-- PruBSN Prihatin -->
                             <div class="flex-shrink-0 bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
-                                <img src="{{ asset('images/charity/prubsn.png') }}"
+                                <img src="{{ asset('assets/images/charity/prubsn.png') }}"
                                      alt="PruBSN Prihatin"
                                      class="h-12 w-20 object-contain">
                             </div>
 
                             <!-- Yayasan Angkasa -->
                             <div class="flex-shrink-0 bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
-                                <img src="{{ asset('images/charity/yaysanangkasa.png') }}"
+                                <img src="{{ asset('assets/images/charity/yaysanangkasa.png') }}"
                                      alt="Yayasan Angkasa"
                                      class="h-12 w-24 object-contain">
                             </div>
 
                             <!-- NASOM -->
                             <div class="flex-shrink-0 bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
-                                <img src="{{ asset('images/charity/nasom.png') }}"
+                                <img src="{{ asset('assets/images/charity/nasom.png') }}"
                                      alt="NASOM"
                                      class="h-12 w-16 object-contain">
                             </div>
@@ -432,7 +432,7 @@
                         <!-- MAB Mobile -->
                         <div class="flex justify-center">
                             <div class="bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
-                                <img src="{{ asset('images/charity/mab.png') }}"
+                                <img src="{{ asset('assets/images/charity/mab.png') }}"
                                      alt="Malaysian Association for the Blind"
                                      class="h-8 w-12 object-contain">
                             </div>
@@ -441,7 +441,7 @@
                         <!-- Yayasan Muslim Mobile -->
                         <div class="flex justify-center">
                             <div class="bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
-                                <img src="{{ asset('images/charity/yayasanmuslim.png') }}"
+                                <img src="{{ asset('assets/images/charity/yayasanmuslim.png') }}"
                                      alt="Yayasan Muslim"
                                      class="h-8 w-12 object-contain">
                             </div>
@@ -450,7 +450,7 @@
                         <!-- Yayasan Ikhlas Mobile -->
                         <div class="flex justify-center">
                             <div class="bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
-                                <img src="{{ asset('images/charity/yayasanikhlas.png') }}"
+                                <img src="{{ asset('assets/images/charity/yayasanikhlas.png') }}"
                                      alt="Yayasan Ikhlas"
                                      class="h-8 w-14 object-contain">
                             </div>
@@ -459,7 +459,7 @@
                         <!-- PruBSN Mobile -->
                         <div class="flex justify-center">
                             <div class="bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
-                                <img src="{{ asset('images/charity/prubsn.png') }}"
+                                <img src="{{ asset('assets/images/charity/prubsn.png') }}"
                                      alt="PruBSN Prihatin"
                                      class="h-8 w-14 object-contain">
                             </div>
@@ -468,7 +468,7 @@
                         <!-- Yayasan Angkasa Mobile -->
                         <div class="flex justify-center">
                             <div class="bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
-                                <img src="{{ asset('images/charity/yaysanangkasa.png') }}"
+                                <img src="{{ asset('assets/images/charity/yaysanangkasa.png') }}"
                                      alt="Yayasan Angkasa"
                                      class="h-8 w-16 object-contain">
                             </div>
@@ -477,7 +477,7 @@
                         <!-- NASOM Mobile -->
                         <div class="flex justify-center">
                             <div class="bg-white rounded-lg p-2 hover:shadow-md hover:scale-110 transition-all duration-300 cursor-pointer">
-                                <img src="{{ asset('images/charity/nasom.png') }}"
+                                <img src="{{ asset('assets/images/charity/nasom.png') }}"
                                      alt="NASOM"
                                      class="h-8 w-12 object-contain">
                             </div>

@@ -79,10 +79,10 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                     <!-- Campaign 1 -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                        <img src="{{ asset('images/campaigns/01.jpg') }}" class="w-full h-48 object-cover">
+                        <img src="{{ asset('assets/images/campaigns/01.jpg') }}" class="w-full h-48 object-cover">
                         <div class="p-4 md:p-6">
                             <div class="flex items-center mb-3">
-                                <img src="{{ asset('images/charity/yayasanmuslim.png') }}"
+                                <img src="{{ asset('assets/images/charity/yayasanmuslim.png') }}"
                                      alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
                                 <span class="text-xs md:text-sm text-gray-600">Yayasan Muslimin</span>
                             </div>
@@ -113,11 +113,11 @@
 
                     <!-- Campaign 2 -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                        <img src="{{ asset('images/campaigns/mab_project.jpg') }}"
+                        <img src="{{ asset('assets/images/campaigns/mab_project.jpg') }}"
                              alt="Clean Water Project" class="w-full h-48 object-cover">
                         <div class="p-4 md:p-6">
                             <div class="flex items-center mb-3">
-                                <img src="{{ asset('images/charity/yayasanikhlas.png') }}"
+                                <img src="{{ asset('assets/images/charity/yayasanikhlas.png') }}"
                                      alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
                                 <span class="text-xs md:text-sm text-gray-600">Yayasan Ikhlas</span>
                             </div>
@@ -152,7 +152,7 @@
                              alt="Orphan Education" class="w-full h-48 object-cover">
                         <div class="p-4 md:p-6">
                             <div class="flex items-center mb-3">
-                                <img src="{{ asset('images/charity/nasom.png') }}"
+                                <img src="{{ asset('assets/images/charity/nasom.png') }}"
                                      alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
                                 <span class="text-xs md:text-sm text-gray-600">NASOM</span>
                             </div>
@@ -211,7 +211,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mb-12 md:mb-16">
                     <!-- Main News Article -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
-                        <img src="{{ asset('../images/news/success.jpg') }}"
+                        <img src="{{ asset('assets/images/news/success.jpg') }}"
                              alt="Community Event" class="w-full h-48 md:h-64 object-cover">
                         <div class="p-6 md:p-8">
                             <div class="flex items-center mb-3">
@@ -236,7 +236,7 @@
                     <div class="space-y-6">
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
                             <div class="flex items-start space-x-4">
-                                <img src="../images/news/success.jpg"
+                                <img src="{{ asset('assets/images/news/success.jpg') }}"
                                      alt="Workshop" class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
                                 <div class="flex-1">
                                     <div class="flex items-center mb-2">
@@ -251,7 +251,7 @@
 
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
                             <div class="flex items-start space-x-4">
-                                <img src="../images/news/success_02.jpg"
+                                <img src="{{ asset('assets/images/news/success_02.jpg') }}"
                                      alt="Medical Mission" class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
                                 <div class="flex-1">
                                     <div class="flex items-center mb-2">
@@ -266,7 +266,7 @@
 
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
                             <div class="flex items-start space-x-4">
-                                <img src="../images/news/success_03.jpg"
+                                <img src="{{ asset('assets/images/news/success_03.jpg') }}"
                                      alt="School Opening" class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
                                 <div class="flex-1">
                                     <div class="flex items-center mb-2">
@@ -295,19 +295,19 @@
                                 <div class="w-full flex-shrink-0">
                                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
                                         <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Community Gathering" data-description="Local community members coming together for a charity event">
-                                            <img src="{{ asset('../images/campaigns/map_01.jpg') }}"
+                                            <img src="{{ asset('assets/images/campaigns/map_01.jpg') }}"
                                                  alt="Community gathering" class="w-full h-32 md:h-40 object-cover">
                                         </div>
-                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="{{ asset('images/gallery/food-distribution.svg') }}" data-title="Food Distribution" data-description="Volunteers distributing food packages to families in need">
-                                            <img src="{{ asset('../images/campaigns/map_02.jpg') }}"
+                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="{{ asset('assets/images/gallery/food-distribution.svg') }}" data-title="Food Distribution" data-description="Volunteers distributing food packages to families in need">
+                                            <img src="{{ asset('assets/images/campaigns/map_02.jpg') }}"
                                                  alt="Food distribution" class="w-full h-32 md:h-40 object-cover">
                                         </div>
-                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="{{ asset('images/campaigns/education-initiative.svg') }}" data-title="Education Program" data-description="Children attending classes in our newly built school">
-                                            <img src="{{ asset('../images/campaigns/mab_01.jpg') }}"
+                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="{{ asset('assets/images/campaigns/education-initiative.svg') }}" data-title="Education Program" data-description="Children attending classes in our newly built school">
+                                            <img src="{{ asset('assets/images/campaigns/mab_01.jpg') }}"
                                                  alt="Education program" class="w-full h-32 md:h-40 object-cover">
                                         </div>
                                         <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Healthcare Service" data-description="Mobile clinic providing medical care to remote communities">
-                                            <img src="{{ asset('../images/campaigns/mab_02.jpg') }}"
+                                            <img src="{{ asset('assets/images/campaigns/mab_02.jpg') }}"
                                                  alt="Healthcare service" class="w-full h-32 md:h-40 object-cover">
                                         </div>
                                     </div>
@@ -317,19 +317,20 @@
                                 <div class="w-full flex-shrink-0">
                                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
                                         <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Water Well Project" data-description="New water well providing clean water to rural village">
-                                            <img src="{{ asset('../images/campaigns/mab_03.jpg') }}"
+                                            <img src="{{ asset('assets/images/campaigns/mab_03.jpg') }}"
                                                  alt="Water well project" class="w-full h-32 md:h-40 object-cover">
                                         </div>
                                         <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Skills Training" data-description="Vocational training program for young adults">
-                                            <img src="{{ asset('../images/campaigns/02.jpg') }}"
+                                            <img src="{{ asset('assets/images/campaigns/02.jpg') }}"
                                                  alt="Skills training" class="w-full h-32 md:h-40 object-cover">
                                         </div>
                                         <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Orphan Support" data-description="Supporting orphaned children with education and care">
-                                            <img src="{{ asset('../images/campaigns/03.jpg') }}"
+                                            <img src="{{ asset('assets/images/campaigns/03.jpg') }}"
                                                  alt="Orphan support" class="w-full h-32 md:h-40 object-cover">
                                         </div>
                                         <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Mosque Construction" data-description="Building new mosque for the local community">
-                                            <img src="{{ asset('../images/campaigns/04.jpg') }}"
+                                            <img src="{{ asset('assets/images/campaigns/04.jpg') }}"
+                                            <img src="{{ asset('assets/images/campaigns/04.jpg') }}') }}"
                                                  alt="Mosque construction" class="w-full h-32 md:h-40 object-cover">
                                         </div>
                                     </div>

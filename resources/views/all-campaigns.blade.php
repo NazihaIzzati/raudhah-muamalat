@@ -56,10 +56,10 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12">
                 <!-- Campaign 1 -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                    <img src="{{ asset('images/campaigns/01.jpg') }}" class="w-full h-48 object-cover">
+                    <img src="{{ asset('assets/images/campaigns/01.jpg') }}" class="w-full h-48 object-cover">
                     <div class="p-4 md:p-6">
                         <div class="flex items-center mb-3">
-                            <img src="{{ asset('images/charity/yayasanmuslim.png') }}" alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
+                            <img src="{{ asset('assets/images/charity/yayasanmuslim.png') }}" alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
                             <span class="text-xs md:text-sm text-gray-600">Yayasan Muslimin</span>
                         </div>
                         <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Vision for Education Program</h3>
@@ -89,10 +89,10 @@
 
                 <!-- Campaign 2 -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                    <img src="{{ asset('images/campaigns/mab_project.jpg') }}" alt="Clean Water Project" class="w-full h-48 object-cover">
+                    <img src="{{ asset('assets/images/campaigns/mab_project.jpg') }}" alt="Clean Water Project" class="w-full h-48 object-cover">
                     <div class="p-4 md:p-6">
                         <div class="flex items-center mb-3">
-                            <img src="{{ asset('images/charity/yayasanikhlas.png') }}" alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
+                            <img src="{{ asset('assets/images/charity/yayasanikhlas.png') }}" alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
                             <span class="text-xs md:text-sm text-gray-600">Yayasan Ikhlas</span>
                         </div>
                         <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Clean Water Wells for Rural Communities</h3>
@@ -122,10 +122,10 @@
 
                 <!-- Campaign 3 -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                    <img src="{{ asset('images/campaigns/03.jpg') }}" alt="Orphan Education" class="w-full h-48 object-cover">
+                    <img src="{{ asset('assets/images/campaigns/03.jpg') }}" alt="Orphan Education" class="w-full h-48 object-cover">
                     <div class="p-4 md:p-6">
                         <div class="flex items-center mb-3">
-                            <img src="{{ asset('images/charity/nasom.png') }}" alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
+                            <img src="{{ asset('assets/images/charity/nasom.png') }}" alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
                             <span class="text-xs md:text-sm text-gray-600">NASOM</span>
                         </div>
                         <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Education Support for Orphaned Children</h3>
@@ -155,10 +155,10 @@
 
                 <!-- Campaign 4 -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                    <img src="{{ asset('images/campaigns/04.jpg') }}" alt="Mosque Renovation" class="w-full h-48 object-cover">
+                    <img src="{{ asset('assets/images/campaigns/04.jpg') }}" alt="Mosque Renovation" class="w-full h-48 object-cover">
                     <div class="p-4 md:p-6">
                         <div class="flex items-center mb-3">
-                            <img src="{{ asset('images/charity/yayasanmuslim.png') }}" alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
+                            <img src="{{ asset('assets/images/charity/yayasanmuslim.png') }}" alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
                             <span class="text-xs md:text-sm text-gray-600">Islamic Relief</span>
                         </div>
                         <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Rural Mosque Renovation Project</h3>
@@ -188,10 +188,10 @@
 
                 <!-- Campaign 5 -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                    <img src="{{ asset('images/campaigns/mab_01.jpg') }}" alt="Medical Aid" class="w-full h-48 object-cover">
+                    <img src="{{ asset('assets/images/campaigns/mab_01.jpg') }}" alt="Medical Aid" class="w-full h-48 object-cover">
                     <div class="p-4 md:p-6">
                         <div class="flex items-center mb-3">
-                            <img src="{{ asset('images/charity/yayasanikhlas.png') }}" alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
+                            <img src="{{ asset('assets/images/charity/yayasanikhlas.png') }}" alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
                             <span class="text-xs md:text-sm text-gray-600">Malaysian Red Crescent</span>
                         </div>
                         <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Emergency Medical Aid for Flood Victims</h3>
@@ -221,10 +221,10 @@
 
                 <!-- Campaign 6 -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                    <img src="{{ asset('images/campaigns/mab_02.jpg') }}" alt="Food Security" class="w-full h-48 object-cover">
+                    <img src="{{ asset('assets/images/campaigns/mab_02.jpg') }}" alt="Food Security" class="w-full h-48 object-cover">
                     <div class="p-4 md:p-6">
                         <div class="flex items-center mb-3">
-                            <img src="{{ asset('images/charity/nasom.png') }}" alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
+                            <img src="{{ asset('assets/images/charity/nasom.png') }}" alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
                             <span class="text-xs md:text-sm text-gray-600">Food Aid Foundation</span>
                         </div>
                         <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Food Security Initiative for Urban Poor</h3>
@@ -254,10 +254,10 @@
 
                 <!-- Campaign 7 -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                    <img src="{{ asset('images/campaigns/mab_03.jpg') }}" alt="Micro Business" class="w-full h-48 object-cover">
+                    <img src="{{ asset('assets/images/campaigns/mab_03.jpg') }}" alt="Micro Business" class="w-full h-48 object-cover">
                     <div class="p-4 md:p-6">
                         <div class="flex items-center mb-3">
-                            <img src="{{ asset('images/charity/yayasanmuslim.png') }}" alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
+                            <img src="{{ asset('assets/images/charity/yayasanmuslim.png') }}" alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
                             <span class="text-xs md:text-sm text-gray-600">Amanah Ikhtiar Malaysia</span>
                         </div>
                         <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Micro-Business Grants for Single Mothers</h3>
@@ -287,10 +287,10 @@
 
                 <!-- Campaign 8 -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                    <img src="{{ asset('images/campaigns/map_01.jpg') }}" alt="School Construction" class="w-full h-48 object-cover">
+                    <img src="{{ asset('assets/images/campaigns/map_01.jpg') }}" alt="School Construction" class="w-full h-48 object-cover">
                     <div class="p-4 md:p-6">
                         <div class="flex items-center mb-3">
-                            <img src="{{ asset('images/charity/yayasanikhlas.png') }}" alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
+                            <img src="{{ asset('assets/images/charity/yayasanikhlas.png') }}" alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
                             <span class="text-xs md:text-sm text-gray-600">Yayasan Pendidikan Islam</span>
                         </div>
                         <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Rural School Construction Project</h3>
@@ -320,10 +320,10 @@
 
                 <!-- Campaign 9 -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                    <img src="{{ asset('images/campaigns/map_02.jpg') }}" alt="Tech Education" class="w-full h-48 object-cover">
+                    <img src="{{ asset('assets/images/campaigns/map_02.jpg') }}" alt="Tech Education" class="w-full h-48 object-cover">
                     <div class="p-4 md:p-6">
                         <div class="flex items-center mb-3">
-                            <img src="{{ asset('images/charity/nasom.png') }}" alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
+                            <img src="{{ asset('assets/images/charity/nasom.png') }}" alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
                             <span class="text-xs md:text-sm text-gray-600">Digital Future Malaysia</span>
                         </div>
                         <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Tech Education for Rural Youth</h3>

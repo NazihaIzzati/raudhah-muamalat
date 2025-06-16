@@ -37,10 +37,10 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                     <!-- Campaign Card 1 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                        <img src="../images/campaigns/01.jpg" class="w-full h-40 md:h-48 object-cover">
+                        <img src="{{ asset('assets/images/campaigns/01.jpg') }}" class="w-full h-40 md:h-48 object-cover">
                         <div class="p-4 md:p-6">
                             <div class="flex items-center mb-3">
-                                <img src="../images/charity/yayasanmuslim.png"
+                                <img src="{{ asset('assets/images/charity/yayasanmuslim.png') }}"
                                      alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
                                 <span class="text-xs md:text-sm text-gray-600">Yayasan Muslimin</span>
                             </div>
@@ -68,11 +68,11 @@
 
                     <!-- Campaign Card 2 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <img src="../images/campaigns/mab_project.jpg" 
+                        <img src="{{ asset('assets/images/campaigns/mab_project.jpg') }}" 
                              alt="Clean Water Project" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <div class="flex items-center mb-3">
-                                <img src="../images/charity/yayasanikhlas.png" 
+                                <img src="{{ asset('assets/images/charity/yayasanikhlas.png') }}" 
                                      alt="Organization" class="w-8 h-8 rounded-full mr-3">
                                 <span class="text-sm text-gray-600">Yayasan Ikhlas</span>
                             </div>
@@ -105,7 +105,7 @@
                              alt="Orphan Education" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <div class="flex items-center mb-3">
-                                <img src="../images/charity/nasom.png" 
+                                <img src="{{ asset('assets/images/charity/nasom.png') }}" 
                                      alt="Organization" class="w-8 h-8 rounded-full mr-3">
                                 <span class="text-sm text-gray-600">NASOM</span>
                             </div>
@@ -163,7 +163,7 @@
 
                         <!-- Campaign Image -->
                         <div class="relative">
-                            <img src="../images/campaigns/ppe.png"
+                            <img src="{{ asset('assets/images/campaigns/ppe.png') }}"
                                  alt="Ramadan Food Distribution" class="w-full h-56 object-cover">
                         </div>
 
