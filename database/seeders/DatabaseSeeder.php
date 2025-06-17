@@ -31,6 +31,12 @@ class DatabaseSeeder extends Seeder
             
             // Events (independent)
             EventSeeder::class,
+            
+            // Partners (independent)
+            PartnerSeeder::class,
+            
+            // FAQs (depends on users)
+            FaqSeeder::class,
         ]);
         
         $this->command->info('✅ Database seeding completed successfully!');
@@ -41,6 +47,8 @@ class DatabaseSeeder extends Seeder
         $this->command->info('💰 Donations: ' . \App\Models\Donation::count());
         $this->command->info('📋 Posters: ' . \App\Models\Poster::count());
         $this->command->info('📅 Events: ' . \App\Models\Event::count());
+        $this->command->info('🤝 Partners: ' . \App\Models\Partner::count());
+        $this->command->info('❓ FAQs: ' . \App\Models\Faq::count());
         $this->command->info('');
         $this->command->info('🔑 Admin Login:');
         $this->command->info('Email: admin@raudhahmuamalat.com');

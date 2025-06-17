@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\PosterController as AdminPosterController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
+use App\Http\Controllers\Admin\PartnerController as AdminPartnerController;
+use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\AdminTestController;
 
 // Public routes
@@ -127,4 +129,22 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/posters/{poster}/edit', [AdminPosterController::class, 'edit'])->name('admin.posters.edit');
     Route::put('/posters/{poster}', [AdminPosterController::class, 'update'])->name('admin.posters.update');
     Route::delete('/posters/{poster}', [AdminPosterController::class, 'destroy'])->name('admin.posters.destroy');
+    
+    // Partner management routes
+    Route::get('/partners', [AdminPartnerController::class, 'index'])->name('admin.partners.index');
+    Route::get('/partners/create', [AdminPartnerController::class, 'create'])->name('admin.partners.create');
+    Route::post('/partners', [AdminPartnerController::class, 'store'])->name('admin.partners.store');
+    Route::get('/partners/{partner}', [AdminPartnerController::class, 'show'])->name('admin.partners.show');
+    Route::get('/partners/{partner}/edit', [AdminPartnerController::class, 'edit'])->name('admin.partners.edit');
+    Route::put('/partners/{partner}', [AdminPartnerController::class, 'update'])->name('admin.partners.update');
+    Route::delete('/partners/{partner}', [AdminPartnerController::class, 'destroy'])->name('admin.partners.destroy');
+    
+    // FAQ management routes
+    Route::get('/faqs', [AdminFaqController::class, 'index'])->name('admin.faqs.index');
+    Route::get('/faqs/create', [AdminFaqController::class, 'create'])->name('admin.faqs.create');
+    Route::post('/faqs', [AdminFaqController::class, 'store'])->name('admin.faqs.store');
+    Route::get('/faqs/{faq}', [AdminFaqController::class, 'show'])->name('admin.faqs.show');
+    Route::get('/faqs/{faq}/edit', [AdminFaqController::class, 'edit'])->name('admin.faqs.edit');
+    Route::put('/faqs/{faq}', [AdminFaqController::class, 'update'])->name('admin.faqs.update');
+    Route::delete('/faqs/{faq}', [AdminFaqController::class, 'destroy'])->name('admin.faqs.destroy');
 });
