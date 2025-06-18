@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\DonationController as AdminDonationController;
 use App\Http\Controllers\Admin\CampaignController as AdminCampaignController;
@@ -15,6 +16,9 @@ use App\Http\Controllers\Admin\NotificationController as AdminNotificationContro
 use App\Http\Controllers\Admin\PartnerController as AdminPartnerController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\AdminTestController;
+
+// Language switcher route
+Route::get('/language/{locale}', [LanguageController::class, 'switchLanguage'])->name('language.switch');
 
 // Public routes
 Route::get('/', function () {

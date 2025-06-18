@@ -1,18 +1,18 @@
 @extends('layouts.master')
 
-@section('title', 'All Campaigns - Jariah Fund')
+@section('title', __('app.all_campaigns') . ' - Jariah Fund')
 @section('description', 'Browse all our campaigns and find meaningful causes to support. Every donation makes a difference through Shariah-compliant giving.')
 
 @section('content')
     <!-- Hero Section -->
     @include('components.hero-section', [
         'badge' => [
-            'text' => 'All Campaigns',
+            'text' => __('app.all_campaigns'),
             'icon' => '<svg class="w-4 h-4 text-primary-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>'
         ],
-        'title' => 'Make a Lasting',
-        'subtitle' => 'Impact Through Giving',
-        'description' => 'Browse our full range of verified campaigns. Each one has been carefully vetted to ensure',
+        'title' => __('app.make_a_lasting'),
+        'subtitle' => __('app.impact_through_giving'),
+        'description' => __('app.browse_our_full_range'),
         'highlights' => [
             ['text' => 'complete transparency', 'delay' => '0.6s'],
             ['text' => 'meaningful impact', 'delay' => '0.8s']
@@ -32,22 +32,22 @@
             <div class="mb-8 flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">
                     <h2 class="text-xl md:text-2xl font-bold text-gray-900">
-                        Supporting <span class="text-primary-500">Worthy Causes</span>
+                        {{ __('app.supporting_worthy_causes') }}
                     </h2>
                 </div>
                 <div class="flex items-center space-x-4">
                     <select class="bg-white border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
-                        <option value="all">All Categories</option>
-                        <option value="education">Education</option>
-                        <option value="healthcare">Healthcare</option>
-                        <option value="community">Community</option>
-                        <option value="emergency">Emergency Relief</option>
+                        <option value="all">{{ __('app.all_categories') }}</option>
+                        <option value="education">{{ __('app.education') }}</option>
+                        <option value="healthcare">{{ __('app.healthcare') }}</option>
+                        <option value="community">{{ __('app.community') }}</option>
+                        <option value="emergency">{{ __('app.emergency_relief') }}</option>
                     </select>
                     <select class="bg-white border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
-                        <option value="newest">Newest First</option>
-                        <option value="oldest">Oldest First</option>
-                        <option value="goal">Highest Goal</option>
-                        <option value="percent">Highest % Complete</option>
+                        <option value="newest">{{ __('app.newest_first') }}</option>
+                        <option value="oldest">{{ __('app.oldest_first') }}</option>
+                        <option value="goal">{{ __('app.highest_goal') }}</option>
+                        <option value="percent">{{ __('app.highest_percent_complete') }}</option>
                     </select>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                         <div class="flex justify-between items-center">
                             <span class="text-xs md:text-sm text-gray-500">234 donors</span>
                             <a href="{{ url('/donate') }}" class="bg-primary-500 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-xs md:text-sm">
-                                Donate Now
+                                {{ __('app.donate_now') }}
                             </a>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                         <div class="flex justify-between items-center">
                             <span class="text-xs md:text-sm text-gray-500">156 donors</span>
                             <a href="{{ url('/donate') }}" class="bg-primary-500 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-xs md:text-sm">
-                                Donate Now
+                                {{ __('app.donate_now') }}
                             </a>
                         </div>
                     </div>
@@ -147,7 +147,7 @@
                         <div class="flex justify-between items-center">
                             <span class="text-xs md:text-sm text-gray-500">89 donors</span>
                             <a href="{{ url('/donate') }}" class="bg-primary-500 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-xs md:text-sm">
-                                Donate Now
+                                {{ __('app.donate_now') }}
                             </a>
                         </div>
                     </div>
@@ -180,7 +180,7 @@
                         <div class="flex justify-between items-center">
                             <span class="text-xs md:text-sm text-gray-500">312 donors</span>
                             <a href="{{ url('/donate') }}" class="bg-primary-500 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-xs md:text-sm">
-                                Donate Now
+                                {{ __('app.donate_now') }}
                             </a>
                         </div>
                     </div>
@@ -213,7 +213,7 @@
                         <div class="flex justify-between items-center">
                             <span class="text-xs md:text-sm text-gray-500">205 donors</span>
                             <a href="{{ url('/donate') }}" class="bg-primary-500 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-xs md:text-sm">
-                                Donate Now
+                                {{ __('app.donate_now') }}
                             </a>
                         </div>
                     </div>
@@ -246,7 +246,7 @@
                         <div class="flex justify-between items-center">
                             <span class="text-xs md:text-sm text-gray-500">97 donors</span>
                             <a href="{{ url('/donate') }}" class="bg-primary-500 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-xs md:text-sm">
-                                Donate Now
+                                {{ __('app.donate_now') }}
                             </a>
                         </div>
                     </div>
@@ -279,7 +279,7 @@
                         <div class="flex justify-between items-center">
                             <span class="text-xs md:text-sm text-gray-500">178 donors</span>
                             <a href="{{ url('/donate') }}" class="bg-primary-500 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-xs md:text-sm">
-                                Donate Now
+                                {{ __('app.donate_now') }}
                             </a>
                         </div>
                     </div>
@@ -312,7 +312,7 @@
                         <div class="flex justify-between items-center">
                             <span class="text-xs md:text-sm text-gray-500">345 donors</span>
                             <a href="{{ url('/donate') }}" class="bg-primary-500 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-xs md:text-sm">
-                                Donate Now
+                                {{ __('app.donate_now') }}
                             </a>
                         </div>
                     </div>
@@ -345,7 +345,7 @@
                         <div class="flex justify-between items-center">
                             <span class="text-xs md:text-sm text-gray-500">137 donors</span>
                             <a href="{{ url('/donate') }}" class="bg-primary-500 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-xs md:text-sm">
-                                Donate Now
+                                {{ __('app.donate_now') }}
                             </a>
                         </div>
                     </div>

@@ -1,26 +1,26 @@
 @extends('layouts.master')
 
-@section('title', 'Partners - Jariah Fund Raudhah Muamalat')
-@section('description', 'We work together with trusted and verified organizations to provide assistance to those in need. Each partner is thoroughly vetted to ensure complete transparency.')
+@section('title', __('app.partners_page_title'))
+@section('description', __('app.partners_page_description'))
 
 @section('content')
 
         @include('components.hero-section', [
             'badge' => [
-                'text' => 'Our Partners',
+                'text' => __('app.our_partners'),
                 'icon' => '<svg class="w-4 h-4 text-primary-600 mr-2 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>'
             ],
-            'title' => 'Our Trusted',
-            'subtitle' => 'Partners',
-            'description' => 'We work together with <strong>trusted and verified organizations</strong> to provide assistance to those in need. Each partner is thoroughly vetted to ensure',
+            'title' => __('app.our_trusted'),
+            'subtitle' => __('app.partners'),
+            'description' => __('app.partners_hero_description'),
             'highlights' => [
-                ['text' => 'complete transparency', 'delay' => '0.6s'],
-                ['text' => 'effective impact', 'delay' => '0.8s']
+                ['text' => __('app.complete_transparency'), 'delay' => '0.6s'],
+                ['text' => __('app.effective_impact'), 'delay' => '0.8s']
             ],
             'pills' => [
-                ['text' => 'Verified Organizations', 'delay' => '0.6s'],
-                ['text' => 'Transparent Impact', 'delay' => '0.7s'],
-                ['text' => 'Trusted Network', 'delay' => '0.8s']
+                ['text' => __('app.verified_organizations'), 'delay' => '0.6s'],
+                ['text' => __('app.transparent_impact'), 'delay' => '0.7s'],
+                ['text' => __('app.trusted_network'), 'delay' => '0.8s']
             ]
         ])
 
@@ -36,9 +36,9 @@
                             <div class="logo-container w-48 h-48 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center p-6 transition-all duration-700 hover:scale-110 hover:-translate-y-4 hover:rotate-3 group cursor-pointer animate-float"
                                  tabindex="0"
                                  role="button"
-                                 aria-label="Learn more about Yayasan Muslimin">
+                                 aria-label="{{ __('app.learn_more_about') }} {{ __('app.yayasan_muslimin') }}">
                                 <img src="{{ asset('assets/images/charity/yayasanmuslim.png') }}"
-                                     alt="Yayasan Muslimin Logo"
+                                     alt="{{ __('app.yayasan_muslimin_logo') }}"
                                      class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
                                      loading="lazy">
                                 <!-- Hover indicator -->
@@ -53,24 +53,22 @@
                         <!-- Content Section -->
                         <div class="p-6">
                             <div class="mb-3">
-                                <h3 class="text-xl font-bold text-gray-900">Yayasan Muslimin</h3>
+                                <h3 class="text-xl font-bold text-gray-900">{{ __('app.yayasan_muslimin') }}</h3>
                             </div>
                             <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-4">
-                                The aspiration of establishing Yayasan Muslimin is to revitalize the spirit of wakaf, sedekah and zakat institutions
-                                as required by Islam to enhance development in the socio-economic and educational fields of the Muslim community.
-                                Its existence opens wider opportunities for society to contribute for charitable purposes to the development of Islam.
+                                {{ __('app.yayasan_muslimin_description') }}
                             </p>
 
                             <!-- Action Section -->
                             <div class="flex items-center justify-between">
                                 <a href="https://yayasanmuslimin.org/" target="_blank"
                                    class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
-                                    Learn More
+                                    {{ __('app.learn_more') }}
                                     <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                                     </svg>
                                 </a>
-                                <span class="text-xs text-gray-400">Islamic Foundation</span>
+                                <span class="text-xs text-gray-400">{{ __('app.islamic_foundation') }}</span>
                             </div>
                         </div>
                     </div>
@@ -82,9 +80,9 @@
                             <div class="logo-container w-48 h-48 bg-gradient-to-br from-blue-50 to-blue-100 rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center p-6 transition-all duration-700 hover:scale-110 hover:-translate-y-4 hover:rotate-3 group cursor-pointer animate-float-delay-1"
                                  tabindex="0"
                                  role="button"
-                                 aria-label="Learn more about Yayasan Ikhlas">
+                                 aria-label="{{ __('app.learn_more_about') }} {{ __('app.yayasan_ikhlas') }}">
                                 <img src="{{ asset('assets/images/charity/yayasanikhlas.png') }}"
-                                     alt="Yayasan Ikhlas Logo"
+                                     alt="{{ __('app.yayasan_ikhlas_logo') }}"
                                      class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
                                      loading="lazy">
                                 <!-- Hover indicator -->
@@ -99,24 +97,22 @@
                         <!-- Content Section -->
                         <div class="p-6">
                             <div class="mb-3">
-                                <h3 class="text-xl font-bold text-gray-900">Yayasan Ikhlas</h3>
+                                <h3 class="text-xl font-bold text-gray-900">{{ __('app.yayasan_ikhlas') }}</h3>
                             </div>
                             <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-4">
-                                Yayasan Ikhlas is an organization established under the Trustees (Incorporation) Act 1952 (Act 258) on 5 March 2009,
-                                aimed at alleviating the burden faced by orphans, people with disabilities, the poor and those affected by disasters,
-                                while providing assistance or incentives to individuals or groups for learning or research in Malaysia.
+                                {{ __('app.yayasan_ikhlas_description') }}
                             </p>
 
                             <!-- Action Section -->
                             <div class="flex items-center justify-between">
                                 <a href="http://www.yayasanikhlas.org.my/" target="_blank"
                                    class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
-                                    Learn More
+                                    {{ __('app.learn_more') }}
                                     <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                                     </svg>
                                 </a>
-                                <span class="text-xs text-gray-400">Charitable Organization</span>
+                                <span class="text-xs text-gray-400">{{ __('app.charitable_organization') }}</span>
                             </div>
                         </div>
                     </div>
@@ -128,9 +124,9 @@
                             <div class="logo-container w-48 h-48 bg-gradient-to-br from-purple-50 to-purple-100 rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center p-6 transition-all duration-700 hover:scale-110 hover:-translate-y-4 hover:rotate-3 group cursor-pointer animate-float-delay-2"
                                  tabindex="0"
                                  role="button"
-                                 aria-label="Learn more about Malaysian Association for the Blind">
+                                 aria-label="{{ __('app.learn_more_about') }} {{ __('app.mab_full') }}">
                                 <img src="{{ asset('assets/images/charity/mab.png') }}"
-                                     alt="Malaysian Association for the Blind Logo"
+                                     alt="{{ __('app.mab_logo') }}"
                                      class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
                                      loading="lazy">
                                 <!-- Hover indicator -->
@@ -145,23 +141,22 @@
                         <!-- Content Section -->
                         <div class="p-6">
                             <div class="mb-3">
-                                <h3 class="text-lg font-bold text-gray-900">Malaysian Association for the Blind (MAB)</h3>
+                                <h3 class="text-lg font-bold text-gray-900">{{ __('app.mab_full') }}</h3>
                             </div>
                             <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
-                                Malaysian Association for the Blind (MAB) is a leading voluntary organization in Malaysia that cares for people
-                                with visual impairments. The association provides services to help the blind and prevent avoidable blindness tragedies.
+                                {{ __('app.mab_description') }}
                             </p>
 
                             <!-- Action Section -->
                             <div class="flex items-center justify-between">
                                 <a href="https://mab.org.my/maborg/default.html" target="_blank"
                                    class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
-                                    Learn More
+                                    {{ __('app.learn_more') }}
                                     <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                                     </svg>
                                 </a>
-                                <span class="text-xs text-gray-400">Disability Support</span>
+                                <span class="text-xs text-gray-400">{{ __('app.disability_support') }}</span>
                             </div>
                         </div>
                     </div>
@@ -173,9 +168,9 @@
                             <div class="logo-container w-48 h-48 bg-gradient-to-br from-orange-50 to-orange-100 rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center p-6 transition-all duration-700 hover:scale-110 hover:-translate-y-4 hover:rotate-3 group cursor-pointer animate-float-delay-3"
                                  tabindex="0"
                                  role="button"
-                                 aria-label="Learn more about National Autism Society of Malaysia">
+                                 aria-label="{{ __('app.learn_more_about') }} {{ __('app.nasom_full') }}">
                                 <img src="{{ asset('assets/images/charity/nasom.png') }}"
-                                     alt="National Autism Society of Malaysia Logo"
+                                     alt="{{ __('app.nasom_logo') }}"
                                      class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
                                      loading="lazy">
                                 <!-- Hover indicator -->
@@ -190,23 +185,22 @@
                         <!-- Content Section -->
                         <div class="p-6">
                             <div class="mb-3">
-                                <h3 class="text-xl font-bold text-gray-900">National Autism Society of Malaysia (NASOM)</h3>
+                                <h3 class="text-xl font-bold text-gray-900">{{ __('app.nasom_full') }}</h3>
                             </div>
                             <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
-                                National Autism Society of Malaysia (NASOM) is an association formed in 1987 by a group of parents and professionals
-                                with the purpose of providing lifelong services to people with autism.
+                                {{ __('app.nasom_description') }}
                             </p>
 
                             <!-- Action Section -->
                             <div class="flex items-center justify-between">
                                 <a href="http://www.nasom.org.my/" target="_blank"
                                    class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
-                                    Learn More
+                                    {{ __('app.learn_more') }}
                                     <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                                     </svg>
                                 </a>
-                                <span class="text-xs text-gray-400">Autism Support</span>
+                                <span class="text-xs text-gray-400">{{ __('app.autism_support') }}</span>
                             </div>
                         </div>
                     </div>
@@ -218,9 +212,9 @@
                             <div class="logo-container w-48 h-48 bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center p-6 transition-all duration-700 hover:scale-110 hover:-translate-y-4 hover:rotate-3 group cursor-pointer animate-float-delay-4"
                                  tabindex="0"
                                  role="button"
-                                 aria-label="Learn more about PruBSN Prihatin">
+                                 aria-label="{{ __('app.learn_more_about') }} {{ __('app.prubsn_prihatin') }}">
                                 <img src="{{ asset('assets/images/charity/prubsn.png') }}"
-                                     alt="PruBSN Prihatin Logo"
+                                     alt="{{ __('app.prubsn_prihatin_logo') }}"
                                      class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
                                      loading="lazy">
                                 <!-- Hover indicator -->
@@ -235,23 +229,22 @@
                         <!-- Content Section -->
                         <div class="p-6">
                             <div class="mb-3">
-                                <h3 class="text-xl font-bold text-gray-900">PruBSN Prihatin</h3>
+                                <h3 class="text-xl font-bold text-gray-900">{{ __('app.prubsn_prihatin') }}</h3>
                             </div>
                             <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
-                                A charitable body under Prudential BSN Takaful providing educational opportunities, life skills,
-                                health and well-being support, and disaster relief for underprivileged communities.
+                                {{ __('app.prubsn_description') }}
                             </p>
 
                             <!-- Action Section -->
                             <div class="flex items-center justify-between">
                                 <a href="https://www.prubsn.com.my/ms/caring-for-society/" target="_blank"
                                    class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
-                                    Learn More
+                                    {{ __('app.learn_more') }}
                                     <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                                     </svg>
                                 </a>
-                                <span class="text-xs text-gray-400">Corporate Foundation</span>
+                                <span class="text-xs text-gray-400">{{ __('app.corporate_foundation') }}</span>
                             </div>
                         </div>
                     </div>
@@ -263,9 +256,9 @@
                             <div class="logo-container w-48 h-48 bg-gradient-to-br from-teal-50 to-teal-100 rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center p-6 transition-all duration-700 hover:scale-110 hover:-translate-y-4 hover:rotate-3 group cursor-pointer animate-float-delay-5"
                                  tabindex="0"
                                  role="button"
-                                 aria-label="Learn more about Yayasan Angkasa">
+                                 aria-label="{{ __('app.learn_more_about') }} {{ __('app.yayasan_angkasa') }}">
                                 <img src="{{ asset('assets/images/charity/yaysanangkasa.png') }}"
-                                     alt="Yayasan Angkasa Logo"
+                                     alt="{{ __('app.yayasan_angkasa_logo') }}"
                                      class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
                                      loading="lazy">
                                 <!-- Hover indicator -->
@@ -280,23 +273,22 @@
                         <!-- Content Section -->
                         <div class="p-6">
                             <div class="mb-3">
-                                <h3 class="text-xl font-bold text-gray-900">Yayasan Angkasa</h3>
+                                <h3 class="text-xl font-bold text-gray-900">{{ __('app.yayasan_angkasa') }}</h3>
                             </div>
                             <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
-                                A foundation established by the Malaysian National Cooperative Movement providing educational financing,
-                                motivation courses, and entrepreneurship programs to develop skilled individuals.
+                                {{ __('app.yayasan_angkasa_description') }}
                             </p>
 
                             <!-- Action Section -->
                             <div class="flex items-center justify-between">
                                 <a href="https://www.yayasanangkasa.coop/" target="_blank"
                                    class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
-                                    Learn More
+                                    {{ __('app.learn_more') }}
                                     <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                                     </svg>
                                 </a>
-                                <span class="text-xs text-gray-400">Educational Foundation</span>
+                                <span class="text-xs text-gray-400">{{ __('app.educational_foundation') }}</span>
                             </div>
                         </div>
                     </div>
@@ -314,18 +306,17 @@
 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 animate-on-scroll" data-animation="fade-in-up">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 animate-fade-in-up" style="animation-delay: 0.1s;">
-                    Want to Become Our Partner?
+                    {{ __('app.want_to_become_partner') }}
                 </h2>
                 <p class="text-xl text-primary-100 mb-8 max-w-3xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s;">
-                    If your organization is interested in partnering with Jariah Fund to help the community,
-                    contact us to learn about the application process to become a verified partner.
+                    {{ __('app.partner_application_description') }}
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style="animation-delay: 0.3s;">
                     <a href="{{ url('/contact') }}" class="bg-white text-primary-500 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg animate-pulse-button">
-                        Contact Us
+                        {{ __('app.contact_us') }}
                     </a>
                     <a href="{{ url('/about') }}" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary-500 transition-all duration-300 transform hover:scale-105">
-                        About Jariah Fund
+                        {{ __('app.about_jariah_fund') }}
                     </a>
                 </div>
             </div>

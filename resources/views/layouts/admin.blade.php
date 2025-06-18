@@ -50,6 +50,9 @@
 
                     <!-- Notifications and Profile Section -->
                     <div class="flex items-center space-x-4">
+                        <!-- Language Switcher -->
+                        @include('components.language-switcher')
+                        
                         <!-- Notifications Dropdown -->
                         <div x-data="{ 
                             open: false, 

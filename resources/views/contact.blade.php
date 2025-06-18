@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Contact Us - Jariah Fund')
+@section('title', __('app.contact_us') . ' - ' . __('app.site_title'))
 @section('description', 'Get in touch with our expert team. We provide professional guidance and assistance to help you make a meaningful impact in your community.')
 
 @push('styles')
@@ -231,20 +231,20 @@
 
         @include('components.hero-section', [
             'badge' => [
-                'text' => 'Contact Us',
+                'text' => __('app.contact_us'),
                 'icon' => '<svg class="w-4 h-4 text-primary-600 mr-2 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>'
             ],
-            'title' => 'Get in Touch with',
-            'subtitle' => 'Our Expert Team',
-            'description' => 'We\'re here to support your <strong>Islamic crowdfunding journey</strong>. Our dedicated team provides',
+            'title' => __('app.get_in_touch_with'),
+            'subtitle' => __('app.our_expert_team'),
+            'description' => __('app.we_are_here_to_support'),
             'highlights' => [
-                ['text' => 'professional guidance', 'delay' => '0.6s'],
-                ['text' => 'meaningful impact', 'delay' => '0.8s']
+                ['text' => __('app.professional_guidance'), 'delay' => '0.6s'],
+                ['text' => __('app.meaningful_impact'), 'delay' => '0.8s']
             ],
             'pills' => [
-                ['text' => '24/7 Support', 'delay' => '0.6s'],
-                ['text' => 'Expert Guidance', 'delay' => '0.7s'],
-                ['text' => 'Quick Response', 'delay' => '0.8s']
+                ['text' => __('app.24_7_support'), 'delay' => '0.6s'],
+                ['text' => __('app.expert_guidance'), 'delay' => '0.7s'],
+                ['text' => __('app.quick_response'), 'delay' => '0.8s']
             ]
         ])
 
@@ -267,14 +267,14 @@
                                             </svg>
                                         </div>
                                         <div class="flex-1">
-                                            <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors duration-300">Visit Our Office</h3>
+                                            <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors duration-300">{{ __('app.visit_our_office') }}</h3>
                                             <p class="text-gray-600 text-sm leading-relaxed mb-4 group-hover:text-gray-700 transition-colors duration-300">
                                                 Menara Muamalat<br>
                                                 No. 22, Jalan Melaka<br>
                                                 50100 Kuala Lumpur, Malaysia
                                             </p>
                                             <span class="inline-block text-primary-500 font-medium hover:text-primary-600 transition-colors animate-bounce-gentle">
-                                                View on Map
+                                                {{ __('app.view_on_map') }}
                                             </span>
                                         </div>
                                     </div>
@@ -291,13 +291,13 @@
                                             </svg>
                                         </div>
                                         <div class="flex-1">
-                                            <h3 class="text-xl font-bold text-gray-900 mb-3">Call Us</h3>
+                                            <h3 class="text-xl font-bold text-gray-900 mb-3">{{ __('app.call_us') }}</h3>
                                             <p class="text-gray-600 text-sm leading-relaxed mb-4">
                                                 +60 3-2161 2000<br>
                                                 +60 3-2161 2001
                                             </p>
                                             <span class="inline-block text-primary-500 font-medium hover:text-primary-600 transition-colors">
-                                                Call Now
+                                                {{ __('app.call_now') }}
                                             </span>
                                         </div>
                                     </div>
@@ -314,13 +314,13 @@
                                             </svg>
                                         </div>
                                         <div class="flex-1">
-                                            <h3 class="text-xl font-bold text-gray-900 mb-3">Email Us</h3>
+                                            <h3 class="text-xl font-bold text-gray-900 mb-3">{{ __('app.email_us') }}</h3>
                                             <p class="text-gray-600 text-sm leading-relaxed mb-4">
                                                 jariahfund@muamalat.com.my<br>
                                                 support@jariahfund.com
                                             </p>
                                             <span class="inline-block text-primary-500 font-medium hover:text-primary-600 transition-colors">
-                                                Send Email
+                                                {{ __('app.send_email') }}
                                             </span>
                                         </div>
                                     </div>
@@ -337,7 +337,7 @@
                                             </svg>
                                         </div>
                                         <div class="flex-1">
-                                            <h3 class="text-xl font-bold text-gray-900 mb-3">Business Hours</h3>
+                                            <h3 class="text-xl font-bold text-gray-900 mb-3">{{ __('app.business_hours') }}</h3>
                                             <p class="text-gray-600 text-sm leading-relaxed mb-4">
                                                 Monday - Friday: 9:00 AM - 6:00 PM<br>
                                                 Saturday: 9:00 AM - 1:00 PM<br>
@@ -359,9 +359,9 @@
                                             </svg>
                                         </div>
                                         <div class="flex-1">
-                                            <h3 class="text-xl font-bold text-gray-900 mb-3">Follow Us</h3>
+                                            <h3 class="text-xl font-bold text-gray-900 mb-3">{{ __('app.follow_us_on_social_media') }}</h3>
                                             <p class="text-gray-600 text-sm leading-relaxed mb-4">
-                                                Stay connected with us on social media for the latest updates and community stories.
+                                                {{ __('app.social_media_description') }}
                                             </p>
                                             <div class="flex space-x-3">
                                                 <a href="#" class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">
@@ -400,69 +400,69 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                                 </svg>
                             </div>
-                            <h2 class="text-2xl font-bold text-gray-900 mb-2 animate-fade-in-up" style="animation-delay: 0.2s;">Send us a Message</h2>
+                            <h2 class="text-2xl font-bold text-gray-900 mb-2 animate-fade-in-up" style="animation-delay: 0.2s;">{{ __('app.send_us_a_message') }}</h2>
                             <p class="text-gray-600 leading-relaxed animate-fade-in-up" style="animation-delay: 0.3s;">
-                                Fill out the form below and we'll get back to you within <span class="font-semibold text-primary-600 animate-highlight">24 hours</span>
+                                {{ __('app.fill_out_the_form_below_and_we_ll_get_back_to_you_within') }} <span class="font-semibold text-primary-600 animate-highlight">{{ __('app.24_hours') }}</span>
                             </p>
                         </div>
                         <form id="contact-form" class="space-y-6">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label for="first-name" class="block text-sm font-semibold text-gray-700 mb-2">
-                                        First Name <span class="text-red-500">*</span>
+                                        {{ __('app.first_name') }} <span class="text-red-500">*</span>
                                     </label>
                                     <input type="text" id="first-name" name="first-name" required
                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900 placeholder-gray-400 transition-all duration-200"
-                                           placeholder="Enter your first name">
+                                           placeholder="{{ __('app.enter_your_first_name') }}">
                                 </div>
                                 <div>
                                     <label for="last-name" class="block text-sm font-semibold text-gray-700 mb-2">
-                                        Last Name <span class="text-red-500">*</span>
+                                        {{ __('app.last_name') }} <span class="text-red-500">*</span>
                                     </label>
                                     <input type="text" id="last-name" name="last-name" required
                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900 placeholder-gray-400 transition-all duration-200"
-                                           placeholder="Enter your last name">
+                                           placeholder="{{ __('app.enter_your_last_name') }}">
                                 </div>
                             </div>
                             <div>
                                 <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
-                                    Email Address <span class="text-red-500">*</span>
+                                    {{ __('app.email') }} <span class="text-red-500">*</span>
                                 </label>
                                 <input type="email" id="email" name="email" required
                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900 placeholder-gray-400 transition-all duration-200"
-                                       placeholder="Enter your email address">
+                                       placeholder="{{ __('app.enter_your_email') }}">
                             </div>
                             <div>
                                 <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">
-                                    Phone Number <span class="text-gray-400">(Optional)</span>
+                                    {{ __('app.phone') }} <span class="text-gray-400">({{ __('app.optional') }})</span>
                                 </label>
                                 <input type="tel" id="phone" name="phone"
                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900 placeholder-gray-400 transition-all duration-200"
-                                       placeholder="+60 12-345 6789">
+                                       placeholder="{{ __('app.enter_your_phone') }}">
                             </div>
                             <div>
                                 <label for="subject" class="block text-sm font-semibold text-gray-700 mb-2">
-                                    Subject <span class="text-red-500">*</span>
+                                    {{ __('app.subject') }} <span class="text-red-500">*</span>
                                 </label>
                                 <select id="subject" name="subject" required
                                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900 transition-all duration-200">
-                                    <option value="">Select a subject</option>
-                                    <option value="campaign">Campaign Support</option>
-                                    <option value="donation">Donation Inquiry</option>
-                                    <option value="partnership">Partnership Opportunity</option>
-                                    <option value="technical">Technical Support</option>
-                                    <option value="media">Media & Press</option>
-                                    <option value="general">General Inquiry</option>
+                                    <option value="">{{ __('app.select_a_subject') }}</option>
+                                    <option value="campaign">{{ __('app.campaign_support') }}</option>
+                                    <option value="donation">{{ __('app.donation_inquiry') }}</option>
+                                    <option value="partnership">{{ __('app.partnership_opportunity') }}</option>
+                                    <option value="technical">{{ __('app.technical_support') }}</option>
+                                    <option value="media">{{ __('app.media_press') }}</option>
+                                    <option value="general">{{ __('app.general_inquiry') }}</option>
                                 </select>
                             </div>
                             <div>
                                 <label for="message" class="block text-sm font-semibold text-gray-700 mb-2">
-                                    Message <span class="text-red-500">*</span>
+                                    {{ __('app.message') }} <span class="text-red-500">*</span>
                                 </label>
                                 <textarea id="message" name="message" rows="5" required
                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900 placeholder-gray-400 resize-vertical transition-all duration-200"
-                                          placeholder="Please describe your inquiry in detail..."></textarea>
-                                <p class="text-xs text-gray-500 mt-1">Minimum 10 characters required</p>
+                                          placeholder="{{ __('app.please_describe_your_inquiry_in_detail') }}"></textarea>
+                                <p class="text-xs text-gray-500 mt-1">{{ __('app.minimum_10_characters_required') }}</p>
                             </div>
                             <!-- Privacy Notice -->
                             <div class="bg-gray-50 rounded-lg p-4 mb-6">
@@ -471,9 +471,9 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                                     </svg>
                                     <div>
-                                        <p class="text-sm text-gray-700 font-medium mb-1">Privacy & Security</p>
+                                        <p class="text-sm text-gray-700 font-medium mb-1">{{ __('app.privacy_security') }}</p>
                                         <p class="text-xs text-gray-600">
-                                            Your information is encrypted and secure. We respect your privacy and will only use your details to respond to your inquiry.
+                                            {{ __('app.your_information_is_encrypted_and_secure') }}
                                         </p>
                                     </div>
                                 </div>
@@ -484,14 +484,14 @@
                                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
                                     </svg>
-                                    Send Message
+                                    {{ __('app.send_message') }}
                                 </span>
                                 <span id="submit-loading" class="hidden items-center justify-center">
                                     <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                     </svg>
-                                    Sending...
+                                    {{ __('app.sending') }}...
                                 </span>
                             </button>
 
@@ -501,8 +501,8 @@
                             <!-- Form Footer -->
                             <div class="mt-6 text-center">
                                 <p class="text-gray-500 text-sm">
-                                    <span class="text-red-500">*</span> Required fields |
-                                    Response time: <span class="font-semibold text-primary-600">Within 24 hours</span>
+                                    <span class="text-red-500">*</span> {{ __('app.required_fields') }} |
+                                    {{ __('app.response_time') }}: <span class="font-semibold text-primary-600">{{ __('app.within_24_hours') }}</span>
                                 </p>
                             </div>
                         </form>
@@ -510,8 +510,6 @@
                 </div>
             </div>
         </section>
-
-
 
 @endsection
 
@@ -591,18 +589,18 @@
             const message = document.getElementById('message').value.trim();
 
             if (!firstName || !lastName || !email || !subject || !message) {
-                showMessage('Please fill in all required fields.', 'error');
+                showMessage('{{ __('app.please_fill_in_all_required_fields') }}', 'error');
                 return false;
             }
 
             if (message.length < 10) {
-                showMessage('Message must be at least 10 characters long.', 'error');
+                showMessage('{{ __('app.message_must_be_at_least_10_characters_long') }}', 'error');
                 return false;
             }
 
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
-                showMessage('Please enter a valid email address.', 'error');
+                showMessage('{{ __('app.please_enter_a_valid_email') }}', 'error');
                 return false;
             }
 
@@ -644,7 +642,7 @@
                 submitLoading.classList.remove('flex');
 
                 // Show success message
-                showMessage('Thank you for your message! We\'ll get back to you within 24 hours.', 'success');
+                showMessage('{{ __('app.thank_you_for_your_message') }} {{ __('app.we_ll_get_back_to_you_within_24_hours') }}', 'success');
 
                 // Reset form
                 form.reset();

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
-@section('title', 'News Article - Jariah Fund')
-@section('description', 'Read the latest news and updates about our initiatives, success stories, and community impact.')
+@section('title', __('app.news_article') . ' - Jariah Fund')
+@section('description', __('app.read_latest_news'))
 
 @section('content')
     <!-- News Article Header -->
@@ -12,7 +12,7 @@
                 <nav class="flex" aria-label="Breadcrumb">
                     <ol class="flex items-center space-x-2 text-sm text-gray-500">
                         <li>
-                            <a href="{{ url('/') }}" class="hover:text-primary-600 transition-colors">Home</a>
+                            <a href="{{ url('/') }}" class="hover:text-primary-600 transition-colors">{{ __('app.home') }}</a>
                         </li>
                         <li class="flex items-center">
                             <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -20,7 +20,7 @@
                             </svg>
                         </li>
                         <li>
-                            <a href="{{ url('/news') }}" class="hover:text-primary-600 transition-colors">News & Events</a>
+                            <a href="{{ url('/news') }}" class="hover:text-primary-600 transition-colors">{{ __('app.news_and_events') }}</a>
                         </li>
                         <li class="flex items-center">
                             <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -37,7 +37,7 @@
             <!-- Article Category Badge & Date -->
             <div class="flex items-center mb-4">
                 <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium mr-4">
-                    {{ $article->category ?? 'Impact Story' }}
+                    {{ $article->category ?? __('app.impact_story') }}
                 </span>
                 <span class="text-sm text-gray-600">
                     {{ $article->date ?? 'December 15, 2024' }}
@@ -55,13 +55,13 @@
                     <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <span>5 min read</span>
+                    <span>5 {{ __('app.min_read') }}</span>
                 </div>
                 <div class="flex items-center">
                     <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                     </svg>
-                    <span>1,000 families helped</span>
+                    <span>1,000 {{ __('app.families_helped') }}</span>
                 </div>
             </div>
         </div>
@@ -147,7 +147,7 @@
 
             <!-- Share Article -->
             <div class="border-t border-gray-200 pt-6 mb-12">
-                <h3 class="font-medium text-gray-900 mb-4">Share this article</h3>
+                <h3 class="font-medium text-gray-900 mb-4">{{ __('app.share_this_article') }}</h3>
                 <div class="flex space-x-4">
                     <a href="#" class="text-gray-400 hover:text-blue-500 transition-colors">
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -174,7 +174,7 @@
 
             <!-- Related Articles -->
             <div class="border-t border-gray-200 pt-8">
-                <h3 class="text-xl font-bold text-gray-900 mb-6">Related Articles</h3>
+                <h3 class="text-xl font-bold text-gray-900 mb-6">{{ __('app.related_articles') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <!-- Related Article 1 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
@@ -184,7 +184,7 @@
                             <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium mb-2 inline-block">News</span>
                             <h4 class="font-semibold text-gray-900 mb-2 line-clamp-2">New Education Initiative Launched</h4>
                             <p class="text-xs text-gray-600 mb-3 line-clamp-2">We're excited to announce our new education program providing scholarships and learning resources to underprivileged children.</p>
-                            <a href="#" class="text-primary-500 text-sm font-medium hover:text-primary-600 transition-colors">Read More →</a>
+                            <a href="#" class="text-primary-500 text-sm font-medium hover:text-primary-600 transition-colors">{{ __('app.read_more') }} →</a>
                         </div>
                     </div>
 
@@ -196,7 +196,7 @@
                             <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-medium mb-2 inline-block">Event</span>
                             <h4 class="font-semibold text-gray-900 mb-2 line-clamp-2">Annual Charity Gala 2024</h4>
                             <p class="text-xs text-gray-600 mb-3 line-clamp-2">Join us for an evening of inspiration and giving at our annual charity gala. All proceeds support our initiatives.</p>
-                            <a href="#" class="text-primary-500 text-sm font-medium hover:text-primary-600 transition-colors">Read More →</a>
+                            <a href="#" class="text-primary-500 text-sm font-medium hover:text-primary-600 transition-colors">{{ __('app.read_more') }} →</a>
                         </div>
                     </div>
 
@@ -208,7 +208,7 @@
                             <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium mb-2 inline-block">Impact</span>
                             <h4 class="font-semibold text-gray-900 mb-2 line-clamp-2">Healthcare Milestone Reached</h4>
                             <p class="text-xs text-gray-600 mb-3 line-clamp-2">Our mobile healthcare unit has successfully provided medical services to 500 patients in remote villages.</p>
-                            <a href="#" class="text-primary-500 text-sm font-medium hover:text-primary-600 transition-colors">Read More →</a>
+                            <a href="#" class="text-primary-500 text-sm font-medium hover:text-primary-600 transition-colors">{{ __('app.read_more') }} →</a>
                         </div>
                     </div>
                 </div>

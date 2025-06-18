@@ -1,31 +1,31 @@
 @extends('layouts.master')
 
-@section('title', 'About Us - Jariah Fund Raudhah Muamalat')
+@section('title', __('app.about_us') . ' - ' . __('app.site_title'))
 @section('description', 'Learn about Jariah Fund, Malaysia\'s trusted Islamic crowdfunding platform that empowers communities through education, healthcare, and economic assistance programs.')
 
 @section('content')
 
         @include('components.hero-section', [
             'badge' => [
-                'text' => 'About Us',
+                'text' => __('app.about_us'),
                 'icon' => '<svg class="w-4 h-4 text-primary-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
             ],
-            'title' => 'Building A Better World',
-            'subtitle' => 'Through Islamic Crowdfunding',
-            'description' => '<strong>Jariah Fund</strong> is Malaysia\'s premier Shariah-compliant crowdfunding platform that channels your donations to create lasting impact through',
+            'title' => __('app.building_better_world'),
+            'subtitle' => __('app.through_islamic_crowdfunding'),
+            'description' => '<strong>Jariah Fund</strong> ' . __('app.is_malaysias_premier_shariah_compliant_platform'),
             'highlights' => [
-                ['text' => 'social welfare programs', 'delay' => '0.6s'],
-                ['text' => 'educational initiatives', 'delay' => '0.8s'],
-                ['text' => 'humanitarian relief', 'delay' => '1.0s']
+                ['text' => __('app.social_welfare_programs'), 'delay' => '0.6s'],
+                ['text' => __('app.educational_initiatives'), 'delay' => '0.8s'],
+                ['text' => __('app.humanitarian_relief'), 'delay' => '1.0s']
             ],
             'cta_buttons' => [
-                ['text' => 'Support Our Causes', 'url' => url('/campaigns'), 'type' => 'primary'],
-                ['text' => 'Learn How It Works', 'url' => url('/how-it-works'), 'type' => 'secondary']
+                ['text' => __('app.support_our_causes'), 'url' => url('/campaigns'), 'type' => 'primary'],
+                ['text' => __('app.learn_how_it_works'), 'url' => url('/how-it-works'), 'type' => 'secondary']
             ],
             'pills' => [
-                ['text' => '100% Shariah-Compliant', 'delay' => '0.7s'],
-                ['text' => 'No Administrative Fees', 'delay' => '0.8s'],
-                ['text' => 'Full Transparency', 'delay' => '0.9s']
+                ['text' => __('app.shariah_compliant'), 'delay' => '0.7s'],
+                ['text' => __('app.no_admin_fees'), 'delay' => '0.8s'],
+                ['text' => __('app.full_transparency'), 'delay' => '0.9s']
             ]
         ])
 
@@ -39,27 +39,24 @@
                         <!-- Header -->
                         <div class="animate-fade-in-up" style="animation-delay: 0.1s;">
                             <div class="inline-flex items-center px-4 py-2 bg-primary-100 rounded-full mb-4 hover:bg-primary-200 transition-colors duration-300">
-                                <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">Our Mission</span>
+                                <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">{{ __('app.our_mission') }}</span>
                             </div>
                         </div>
 
                         <!-- Our Vision -->
                         <div class="space-y-6 animate-fade-in-up" style="animation-delay: 0.2s;">
-                            <h3 class="text-2xl font-bold text-gray-900 hover:text-primary-600 transition-colors duration-300">Our Vision</h3>
+                            <h3 class="text-2xl font-bold text-gray-900 hover:text-primary-600 transition-colors duration-300">{{ __('app.our_vision') }}</h3>
                             <p class="text-gray-600 leading-relaxed transform hover:scale-105 transition-transform duration-300 hover:text-gray-700">
-                                To be the leading Islamic crowdfunding platform in Malaysia that bridges compassionate 
-                                donors with meaningful causes, creating sustainable positive change through the principles 
-                                of Shariah and ethical financial practices.
+                                {{ __('app.vision_description') }}
                             </p>
                         </div>
 
                         <!-- Our Values -->
                         <div class="space-y-6 animate-fade-in-up" style="animation-delay: 0.3s;">
-                            <h3 class="text-2xl font-bold text-gray-900 hover:text-primary-600 transition-colors duration-300">Our Values</h3>
+                            <h3 class="text-2xl font-bold text-gray-900 hover:text-primary-600 transition-colors duration-300">{{ __('app.our_values') }}</h3>
                             <p class="text-gray-600 leading-relaxed transform hover:scale-105 transition-transform duration-300 hover:text-gray-700">
-                                Jariah Fund operates on the Islamic principles of <span class="font-semibold">sadaqah</span> (voluntary giving) and 
-                                <span class="font-semibold">amanah</span> (trust), ensuring that every ringgit donated is 
-                                managed with absolute integrity and directed to those most in need without administrative deductions.
+                                {{ __('app.values_description_part1') }} <span class="font-semibold">{{ __('app.sadaqah') }}</span> {{ __('app.values_description_part2') }} 
+                                <span class="font-semibold">{{ __('app.amanah') }}</span> {{ __('app.values_description_part3') }}
                             </p>
                         </div>
                     </div>
@@ -92,31 +89,25 @@
                         <!-- Header -->
                         <div class="animate-fade-in-up" style="animation-delay: 0.1s;">
                             <div class="inline-flex items-center px-3 py-2 md:px-4 md:py-2 bg-primary-100 rounded-full mb-3 md:mb-4 hover:bg-primary-200 transition-colors duration-300 animate-pulse-gentle">
-                                <span class="text-primary-600 font-semibold text-xs md:text-sm tracking-wide uppercase">Islamic Banking Partner</span>
+                                <span class="text-primary-600 font-semibold text-xs md:text-sm tracking-wide uppercase">{{ __('app.islamic_banking_partner') }}</span>
                             </div>
                             <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 md:mb-4 hover:text-primary-600 transition-colors duration-300">
-                                Bank Muamalat Malaysia – Powering Ethical Finance
+                                {{ __('app.bank_muamalat_title') }}
                             </h2>
                         </div>
 
                         <!-- Content Paragraphs -->
                         <div class="space-y-4 md:space-y-6 text-gray-600 leading-relaxed">
                             <p class="text-sm md:text-base">
-                                Since <strong>October 1, 1999</strong>, Bank Muamalat has been at the forefront of Islamic finance in Malaysia, 
-                                upholding the principles of <span class="italic">Shariah</span> while delivering modern financial solutions. As Jariah Fund's banking partner,
-                                they ensure every donation is handled with the highest ethical standards.
+                                {!! __('app.bank_muamalat_description_part1') !!}
                             </p>
 
                             <p class="text-sm md:text-base">
-                                As the <strong>second full-fledged Islamic bank</strong> established under the Islamic Banking Act 1983,
-                                Bank Muamalat provides the trusted infrastructure that enables Jariah Fund to operate with complete transparency
-                                and accountability, ensuring your contributions create maximum impact.
+                                {!! __('app.bank_muamalat_description_part2') !!}
                             </p>
 
                             <p class="text-sm md:text-base">
-                                Our partnership ensures that <strong>100% of every donation</strong> goes directly to the causes you care about.
-                                Together, we're pioneering a new approach to charitable giving that combines Islamic values with
-                                modern technology to make giving easy, impactful, and rewarding.
+                                {!! __('app.bank_muamalat_description_part3') !!}
                             </p>
                         </div>
 
@@ -130,8 +121,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h4 class="font-semibold text-gray-900 text-sm md:text-base">Riba-Free</h4>
-                                        <p class="text-xs md:text-sm text-gray-600">Interest-free transactions</p>
+                                        <h4 class="font-semibold text-gray-900 text-sm md:text-base">{{ __('app.riba_free') }}</h4>
+                                        <p class="text-xs md:text-sm text-gray-600">{{ __('app.interest_free_transactions') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -144,8 +135,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h4 class="font-semibold text-gray-900 text-sm md:text-base">Amanah</h4>
-                                        <p class="text-xs md:text-sm text-gray-600">Trustworthy management</p>
+                                        <h4 class="font-semibold text-gray-900 text-sm md:text-base">{{ __('app.amanah') }}</h4>
+                                        <p class="text-xs md:text-sm text-gray-600">{{ __('app.trustworthy_management') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -158,8 +149,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h4 class="font-semibold text-gray-900 text-sm md:text-base">Zakat Integration</h4>
-                                        <p class="text-xs md:text-sm text-gray-600">Tax-efficient giving</p>
+                                        <h4 class="font-semibold text-gray-900 text-sm md:text-base">{{ __('app.zakat_integration') }}</h4>
+                                        <p class="text-xs md:text-sm text-gray-600">{{ __('app.tax_efficient_giving') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -172,8 +163,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h4 class="font-semibold text-gray-900 text-sm md:text-base">Shariah Board</h4>
-                                        <p class="text-xs md:text-sm text-gray-600">Expert religious oversight</p>
+                                        <h4 class="font-semibold text-gray-900 text-sm md:text-base">{{ __('app.shariah_board') }}</h4>
+                                        <p class="text-xs md:text-sm text-gray-600">{{ __('app.expert_religious_oversight') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -191,14 +182,13 @@
                         <svg class="w-5 h-5 text-primary-600 mr-3 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                         </svg>
-                        <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">Donate with Confidence</span>
+                        <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">{{ __('app.donate_with_confidence') }}</span>
                     </div>
                     <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 animate-fade-in-up" style="animation-delay: 0.2s;">
-                        <span class="text-primary-500 animate-highlight">Simple & Secure</span> Donation Methods
+                        <span class="text-primary-500 animate-highlight">{{ __('app.simple_secure_donation') }}</span>
                     </h2>
                     <p class="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed animate-fade-in-up" style="animation-delay: 0.3s;">
-                        Choose from Malaysia's most trusted and convenient payment options.
-                        Your generosity is just a few clicks away with bank-grade security.
+                        {{ __('app.choose_from_malaysias_most_trusted') }}
                     </p>
                 </div>
 
@@ -216,12 +206,12 @@
                         <div class="p-8">
                             <div class="flex items-center mb-4">
                                 <span class="text-2xl mr-2">🏦</span>
-                                <h3 class="text-2xl font-bold text-gray-900">FPX Online Banking</h3>
+                                <h3 class="text-2xl font-bold text-gray-900">{{ __('app.fpx_online_banking') }}</h3>
                             </div>
 
                             <p class="text-gray-600 leading-relaxed mb-6 text-base">
-                                Connect directly to your bank account for instant donations.
-                                <span class="text-blue-600 font-semibold">Quick, secure, and hassle-free!</span>
+                                {{ __('app.fpx_description') }}
+                                <span class="text-blue-600 font-semibold">{{ __('app.quick_secure_hassle_free') }}</span>
                             </p>
 
                             <!-- Features List -->
@@ -233,8 +223,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h4 class="font-semibold text-gray-900 text-sm">Works with Your Bank</h4>
-                                        <p class="text-xs text-gray-600">All major Malaysian banks supported</p>
+                                        <h4 class="font-semibold text-gray-900 text-sm">{{ __('app.works_with_your_bank') }}</h4>
+                                        <p class="text-xs text-gray-600">{{ __('app.all_major_malaysian_banks') }}</p>
                                     </div>
                                 </div>
 
@@ -245,8 +235,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h4 class="font-semibold text-gray-900 text-sm">No Extra Fees</h4>
-                                        <p class="text-xs text-gray-600">100% of your donation reaches the cause</p>
+                                        <h4 class="font-semibold text-gray-900 text-sm">{{ __('app.no_extra_fees') }}</h4>
+                                        <p class="text-xs text-gray-600">{{ __('app.donation_reaches_cause') }}</p>
                                     </div>
                                 </div>
 
@@ -257,8 +247,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h4 class="font-semibold text-gray-900 text-sm">Instant Confirmation</h4>
-                                        <p class="text-xs text-gray-600">Get immediate receipt and confirmation</p>
+                                        <h4 class="font-semibold text-gray-900 text-sm">{{ __('app.instant_confirmation') }}</h4>
+                                        <p class="text-xs text-gray-600">{{ __('app.immediate_receipt') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -266,7 +256,7 @@
                             <!-- Call to Action -->
                             <div class="p-3 bg-blue-50 rounded-lg text-center">
                                 <p class="text-sm text-blue-700 font-medium">
-                                    🚀 Most popular choice among donors
+                                    {{ __('app.most_popular_choice') }}
                                 </p>
                             </div>
                         </div>
@@ -285,12 +275,12 @@
                         <div class="p-8">
                             <div class="flex items-center mb-4">
                                 <span class="text-2xl mr-2">⚡</span>
-                                <h3 class="text-2xl font-bold text-gray-900">DuitNow Transfer</h3>
+                                <h3 class="text-2xl font-bold text-gray-900">{{ __('app.duitnow_transfer') }}</h3>
                             </div>
 
                             <p class="text-gray-600 leading-relaxed mb-6 text-base">
-                                Malaysia's instant transfer system by Bank Negara.
-                                <span class="text-pink-600 font-semibold">Available 24/7 for immediate impact!</span>
+                                {{ __('app.duitnow_description') }}
+                                <span class="text-pink-600 font-semibold">{{ __('app.available_24_7') }}</span>
                             </p>
 
                             <!-- Features List -->
@@ -302,8 +292,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h4 class="font-semibold text-gray-900 text-sm">Lightning Fast</h4>
-                                        <p class="text-xs text-gray-600">Real-time transfers 24/7, even on weekends</p>
+                                        <h4 class="font-semibold text-gray-900 text-sm">{{ __('app.lightning_fast') }}</h4>
+                                        <p class="text-xs text-gray-600">{{ __('app.real_time_transfers') }}</p>
                                     </div>
                                 </div>
 
@@ -314,8 +304,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h4 class="font-semibold text-gray-900 text-sm">Super Convenient</h4>
-                                        <p class="text-xs text-gray-600">Use your phone number or IC number</p>
+                                        <h4 class="font-semibold text-gray-900 text-sm">{{ __('app.super_convenient') }}</h4>
+                                        <p class="text-xs text-gray-600">{{ __('app.use_phone_ic_number') }}</p>
                                     </div>
                                 </div>
 
@@ -326,8 +316,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h4 class="font-semibold text-gray-900 text-sm">Government Backed</h4>
-                                        <p class="text-xs text-gray-600">Regulated by Bank Negara Malaysia</p>
+                                        <h4 class="font-semibold text-gray-900 text-sm">{{ __('app.government_backed') }}</h4>
+                                        <p class="text-xs text-gray-600">{{ __('app.regulated_by_bnm') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -335,7 +325,7 @@
                             <!-- Call to Action -->
                             <div class="p-3 bg-pink-50 rounded-lg text-center">
                                 <p class="text-sm text-pink-700 font-medium">
-                                    ⚡ Perfect for urgent donations
+                                    {{ __('app.perfect_for_urgent') }}
                                 </p>
                             </div>
                         </div>
@@ -366,7 +356,7 @@
                     <div class="flex-1 flex items-center justify-center space-x-8 md:space-x-12 lg:space-x-16">
                         <!-- Title -->
                         <h2 class="text-lg md:text-xl font-semibold text-white whitespace-nowrap animate-fade-in-up" style="animation-delay: 0.2s;">
-                            Our Charity Partners
+                            {{ __('app.our_charity_partners') }}
                         </h2>
 
                         <!-- Partner Logos -->

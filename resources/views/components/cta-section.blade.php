@@ -4,18 +4,18 @@
     Usage:
     @include('components.cta-section', [
         'type' => 'primary', // 'primary', 'secondary', 'contact', 'partner'
-        'title' => 'Ready to Make a Difference?',
+        'title' => __('app.ready_to_make_difference'),
         'subtitle' => null, // Optional subtitle
-        'description' => 'Join our community and start creating positive impact today.',
+        'description' => __('app.join_our_community'),
         'buttons' => [
             [
-                'text' => 'Get Started',
+                'text' => __('app.get_started'),
                 'url' => '/campaigns',
                 'type' => 'primary', // 'primary', 'secondary'
                 'icon' => '<svg>...</svg>' // Optional
             ],
             [
-                'text' => 'Learn More',
+                'text' => __('app.learn_more'),
                 'url' => '/about',
                 'type' => 'secondary'
             ]

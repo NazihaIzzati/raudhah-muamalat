@@ -1,26 +1,26 @@
 @extends('layouts.master')
 
-@section('title', 'News & Events - Jariah Fund')
-@section('description', 'Stay updated with our latest initiatives, success stories, and upcoming events. Discover how your contributions are making a real difference.')
+@section('title', __('app.news_and_events') . ' - ' . __('app.site_title'))
+@section('description', __('app.news_page_description_meta'))
 
 @section('content')
 
         @include('components.hero-section', [
             'badge' => [
-                'text' => 'News & Events',
+                'text' => __('app.news_and_events'),
                 'icon' => '<svg class="w-4 h-4 text-primary-600 mr-2 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>'
             ],
-            'title' => 'Stay Connected with',
-            'subtitle' => 'Our Mission',
-            'description' => 'Stay updated with our <strong>latest initiatives, success stories, and upcoming events</strong>. Discover how your contributions are making a',
+            'title' => __('app.stay_connected_with'),
+            'subtitle' => __('app.our_mission'),
+            'description' => __('app.news_page_description'),
             'highlights' => [
-                ['text' => 'real difference', 'delay' => '0.6s'],
-                ['text' => 'communities across Malaysia', 'delay' => '0.8s']
+                ['text' => __('app.real_difference'), 'delay' => '0.6s'],
+                ['text' => __('app.communities_across_malaysia'), 'delay' => '0.8s']
             ],
             'pills' => [
-                ['text' => 'Latest Updates', 'delay' => '0.6s'],
-                ['text' => 'Impact Stories', 'delay' => '0.7s'],
-                ['text' => 'Community Events', 'delay' => '0.8s']
+                ['text' => __('app.latest_updates'), 'delay' => '0.6s'],
+                ['text' => __('app.impact_stories'), 'delay' => '0.7s'],
+                ['text' => __('app.community_events'), 'delay' => '0.8s']
             ]
         ])
 
@@ -28,29 +28,28 @@
         <section id="news" class="py-12 md:py-16 bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 md:mb-8 gap-3 animate-on-scroll" data-animation="fade-in-up">
-                    <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Featured News</h2>
-                    <a href="#" class="text-primary-500 font-medium hover:text-primary-600 text-sm md:text-base hover:scale-105 transition-all duration-300">View all</a>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-900">{{ __('app.featured_news') }}</h2>
+                    <a href="#" class="text-primary-500 font-medium hover:text-primary-600 text-sm md:text-base hover:scale-105 transition-all duration-300">{{ __('app.view_all') }}</a>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 animate-on-scroll" data-animation="stagger-up">
                     <!-- Featured News Card 1 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                         <img src="{{ asset('assets/images/news/success.jpg') }}"
-                             alt="Emergency Food Relief" class="w-full h-40 md:h-48 object-cover">
+                             alt="{{ __('app.emergency_food_relief') }}" class="w-full h-40 md:h-48 object-cover">
                         <div class="p-4 md:p-6">
                             <div class="flex items-center mb-3">
-                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium mr-3">Impact Story</span>
-                                <span class="text-xs md:text-sm text-gray-600">Dec 15, 2024</span>
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium mr-3">{{ __('app.impact_story') }}</span>
+                                <span class="text-xs md:text-sm text-gray-600">{{ __('app.december_15_2024') }}</span>
                             </div>
-                            <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">1,000 Families Receive Emergency Food Aid</h3>
+                            <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">{{ __('app.food_aid_headline') }}</h3>
                             <p class="text-sm md:text-base text-gray-600 mb-3 md:mb-4 leading-relaxed line-clamp-3">
-                                Thanks to generous donations, we successfully distributed emergency food packages
-                                to families affected by recent floods in Kelantan.
+                                {{ __('app.food_aid_description') }}
                             </p>
                             <div class="flex justify-between items-center">
-                                <span class="text-xs md:text-sm text-gray-500">1,000 families helped</span>
+                                <span class="text-xs md:text-sm text-gray-500">{{ __('app.families_helped', ['count' => '1,000']) }}</span>
                                 <a href="#" class="bg-primary-500 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-xs md:text-sm">
-                                    Read More
+                                    {{ __('app.read_more') }}
                                 </a>
                             </div>
                         </div>
@@ -59,21 +58,20 @@
                     <!-- Featured News Card 2 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
                         <img src="{{ asset('assets/images/news/success_02.jpg') }}"
-                             alt="Education Initiative" class="w-full h-48 object-cover">
+                             alt="{{ __('app.education_initiative') }}" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <div class="flex items-center mb-3">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium mr-3">News</span>
-                                <span class="text-sm text-gray-600">Dec 12, 2024</span>
+                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium mr-3">{{ __('app.news') }}</span>
+                                <span class="text-sm text-gray-600">{{ __('app.december_12_2024') }}</span>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">New Education Initiative Launched</h3>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">{{ __('app.education_initiative_headline') }}</h3>
                             <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                                We're excited to announce our new education program providing scholarships
-                                and learning resources to underprivileged children in rural areas.
+                                {{ __('app.education_initiative_description') }}
                             </p>
                             <div class="flex justify-between items-center">
-                                <span class="text-sm text-gray-500">500 students</span>
+                                <span class="text-sm text-gray-500">{{ __('app.students_count', ['count' => '500']) }}</span>
                                 <a href="#" class="bg-primary-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-600 transition-colors">
-                                    Read More
+                                    {{ __('app.read_more') }}
                                 </a>
                             </div>
                         </div>
@@ -82,21 +80,20 @@
                     <!-- Featured News Card 3 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
                         <img src="{{ asset('assets/images/news/success_03.jpg') }}"
-                             alt="Charity Gala" class="w-full h-48 object-cover">
+                             alt="{{ __('app.charity_gala') }}" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <div class="flex items-center mb-3">
-                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-medium mr-3">Event</span>
-                                <span class="text-sm text-gray-600">Dec 20, 2024</span>
+                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-medium mr-3">{{ __('app.event') }}</span>
+                                <span class="text-sm text-gray-600">{{ __('app.december_20_2024') }}</span>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">Annual Charity Gala 2024</h3>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">{{ __('app.charity_gala_headline') }}</h3>
                             <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                                Join us for an evening of inspiration and giving at our annual charity gala.
-                                All proceeds support our education and healthcare initiatives.
+                                {{ __('app.charity_gala_description') }}
                             </p>
                             <div class="flex justify-between items-center">
-                                <span class="text-sm text-gray-500">Kuala Lumpur</span>
+                                <span class="text-sm text-gray-500">{{ __('app.kuala_lumpur') }}</span>
                                 <a href="#" class="bg-primary-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-600 transition-colors">
-                                    Learn More
+                                    {{ __('app.learn_more') }}
                                 </a>
                             </div>
                         </div>
@@ -108,32 +105,32 @@
         <!-- Recent Updates Section -->
         <section class="py-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8">Recent Updates</h2>
+                <h2 class="text-3xl font-bold text-gray-900 mb-8">{{ __('app.recent_updates') }}</h2>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <!-- Update Spotlight 1 -->
                     <div class="bg-gray-50 rounded-lg p-6">
                         <div class="flex items-center mb-4">
-                            <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium mr-4">Announcement</span>
-                            <span class="text-sm text-gray-600">Dec 8, 2024</span>
+                            <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium mr-4">{{ __('app.announcement') }}</span>
+                            <span class="text-sm text-gray-600">{{ __('app.december_8_2024') }}</span>
                         </div>
-                        <h3 class="font-bold text-gray-900 mb-4">Platform Security Enhancement</h3>
+                        <h3 class="font-bold text-gray-900 mb-4">{{ __('app.platform_security_enhancement') }}</h3>
                         <p class="text-gray-600 text-sm mb-4">
-                            We've implemented enhanced security measures and added new features to improve your donation experience.
+                            {{ __('app.platform_security_description') }}
                         </p>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <a href="#" class="block">
                                 <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
-                                     alt="Security Update" class="w-full h-32 object-cover rounded-lg mb-2">
-                                <h4 class="font-semibold text-gray-900 text-sm mb-1">Enhanced Security Features</h4>
-                                <p class="text-xs text-gray-600">Two-factor authentication now available</p>
+                                     alt="{{ __('app.security_update') }}" class="w-full h-32 object-cover rounded-lg mb-2">
+                                <h4 class="font-semibold text-gray-900 text-sm mb-1">{{ __('app.enhanced_security_features') }}</h4>
+                                <p class="text-xs text-gray-600">{{ __('app.two_factor_authentication') }}</p>
                             </a>
                             <a href="#" class="block">
                                 <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
-                                     alt="New Features" class="w-full h-32 object-cover rounded-lg mb-2">
-                                <h4 class="font-semibold text-gray-900 text-sm mb-1">Improved User Interface</h4>
-                                <p class="text-xs text-gray-600">Better mobile experience and navigation</p>
+                                     alt="{{ __('app.new_features') }}" class="w-full h-32 object-cover rounded-lg mb-2">
+                                <h4 class="font-semibold text-gray-900 text-sm mb-1">{{ __('app.improved_user_interface') }}</h4>
+                                <p class="text-xs text-gray-600">{{ __('app.better_mobile_experience') }}</p>
                             </a>
                         </div>
                     </div>
@@ -141,26 +138,26 @@
                     <!-- Update Spotlight 2 -->
                     <div class="bg-gray-50 rounded-lg p-6">
                         <div class="flex items-center mb-4">
-                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium mr-4">Impact</span>
-                            <span class="text-sm text-gray-600">Dec 5, 2024</span>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium mr-4">{{ __('app.impact') }}</span>
+                            <span class="text-sm text-gray-600">{{ __('app.december_5_2024') }}</span>
                         </div>
-                        <h3 class="font-bold text-gray-900 mb-4">Healthcare Milestone Reached</h3>
+                        <h3 class="font-bold text-gray-900 mb-4">{{ __('app.healthcare_milestone_reached') }}</h3>
                         <p class="text-gray-600 text-sm mb-4">
-                            Our mobile healthcare unit has successfully provided medical services to 500 patients in remote villages.
+                            {{ __('app.healthcare_milestone_description') }}
                         </p>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <a href="#" class="block">
                                 <img src="{{ asset('assets/images/campaigns/medical-mission.svg') }}"
-                                     alt="Mobile Clinic" class="w-full h-32 object-cover rounded-lg mb-2">
-                                <h4 class="font-semibold text-gray-900 text-sm mb-1">Mobile Clinic Success</h4>
-                                <p class="text-xs text-gray-600">500 patients treated in rural areas</p>
+                                     alt="{{ __('app.mobile_clinic') }}" class="w-full h-32 object-cover rounded-lg mb-2">
+                                <h4 class="font-semibold text-gray-900 text-sm mb-1">{{ __('app.mobile_clinic_success') }}</h4>
+                                <p class="text-xs text-gray-600">{{ __('app.patients_treated', ['count' => '500']) }}</p>
                             </a>
                             <a href="#" class="block">
                                 <img src="{{ asset('assets/images/campaigns/medical-mission.svg') }}"
-                                     alt="Medical Equipment" class="w-full h-32 object-cover rounded-lg mb-2">
-                                <h4 class="font-semibold text-gray-900 text-sm mb-1">New Medical Equipment</h4>
-                                <p class="text-xs text-gray-600">Advanced diagnostic tools acquired</p>
+                                     alt="{{ __('app.medical_equipment') }}" class="w-full h-32 object-cover rounded-lg mb-2">
+                                <h4 class="font-semibold text-gray-900 text-sm mb-1">{{ __('app.new_medical_equipment') }}</h4>
+                                <p class="text-xs text-gray-600">{{ __('app.advanced_diagnostic_tools') }}</p>
                             </a>
                         </div>
                     </div>
@@ -170,20 +167,20 @@
         <!-- More News Section -->
         <section class="py-16 bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8">More News & Events</h2>
+                <h2 class="text-3xl font-bold text-gray-900 mb-8">{{ __('app.more_news_and_events') }}</h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Small News Card 1 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
                         <img src="{{ asset('assets/images/news/workshop.svg') }}"
-                             alt="Workshop" class="w-full h-32 object-cover">
+                             alt="{{ __('app.workshop') }}" class="w-full h-32 object-cover">
                         <div class="p-4">
-                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-medium mb-2 inline-block">Event</span>
-                            <h4 class="font-semibold text-gray-900 text-sm mb-2">Financial Literacy Workshop</h4>
-                            <p class="text-xs text-gray-600 mb-3">Free workshop for young adults</p>
+                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-medium mb-2 inline-block">{{ __('app.event') }}</span>
+                            <h4 class="font-semibold text-gray-900 text-sm mb-2">{{ __('app.financial_literacy_workshop') }}</h4>
+                            <p class="text-xs text-gray-600 mb-3">{{ __('app.free_workshop_young_adults') }}</p>
                             <div class="flex justify-between items-center">
-                                <span class="text-xs text-gray-500">Dec 18, 2024</span>
-                                <span class="text-xs text-primary-500 font-medium">Online</span>
+                                <span class="text-xs text-gray-500">{{ __('app.december_18_2024') }}</span>
+                                <span class="text-xs text-primary-500 font-medium">{{ __('app.online') }}</span>
                             </div>
                         </div>
                     </div>
@@ -191,14 +188,14 @@
                     <!-- Small News Card 2 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
                         <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
-                             alt="Partnership" class="w-full h-32 object-cover">
+                             alt="{{ __('app.partnership') }}" class="w-full h-32 object-cover">
                         <div class="p-4">
-                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium mb-2 inline-block">News</span>
-                            <h4 class="font-semibold text-gray-900 text-sm mb-2">New Partnership Announced</h4>
-                            <p class="text-xs text-gray-600 mb-3">Expanding our reach with local NGOs</p>
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium mb-2 inline-block">{{ __('app.news') }}</span>
+                            <h4 class="font-semibold text-gray-900 text-sm mb-2">{{ __('app.partnership_title') }}</h4>
+                            <p class="text-xs text-gray-600 mb-3">{{ __('app.partnership_description') }}</p>
                             <div class="flex justify-between items-center">
-                                <span class="text-xs text-gray-500">Dec 5, 2024</span>
-                                <span class="text-xs text-primary-500 font-medium">5 NGOs</span>
+                                <span class="text-xs text-gray-500">{{ __('app.december_5_2024') }}</span>
+                                <span class="text-xs text-primary-500 font-medium">{{ __('app.five_ngos') }}</span>
                             </div>
                         </div>
                     </div>
@@ -206,14 +203,14 @@
                     <!-- Small News Card 3 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
                         <img src="https://images.unsplash.com/photo-1541544181051-e46607bc22a4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
-                             alt="Water Project" class="w-full h-32 object-cover">
+                             alt="{{ __('app.water_project') }}" class="w-full h-32 object-cover">
                         <div class="p-4">
-                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium mb-2 inline-block">Impact</span>
-                            <h4 class="font-semibold text-gray-900 text-sm mb-2">Clean Water Project Complete</h4>
-                            <p class="text-xs text-gray-600 mb-3">500 families now have clean water</p>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium mb-2 inline-block">{{ __('app.impact') }}</span>
+                            <h4 class="font-semibold text-gray-900 text-sm mb-2">{{ __('app.clean_water_project_complete') }}</h4>
+                            <p class="text-xs text-gray-600 mb-3">{{ __('app.families_clean_water', ['count' => '500']) }}</p>
                             <div class="flex justify-between items-center">
-                                <span class="text-xs text-gray-500">Dec 1, 2024</span>
-                                <span class="text-xs text-primary-500 font-medium">Rural Areas</span>
+                                <span class="text-xs text-gray-500">{{ __('app.december_1_2024') }}</span>
+                                <span class="text-xs text-primary-500 font-medium">{{ __('app.rural_areas') }}</span>
                             </div>
                         </div>
                     </div>
@@ -221,14 +218,14 @@
                     <!-- Small News Card 4 -->
                     <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
                         <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
-                             alt="Emergency Relief" class="w-full h-32 object-cover">
+                             alt="{{ __('app.emergency_relief') }}" class="w-full h-32 object-cover">
                         <div class="p-4">
-                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium mb-2 inline-block">Urgent</span>
-                            <h4 class="font-semibold text-gray-900 text-sm mb-2">Emergency Relief Fund</h4>
-                            <p class="text-xs text-gray-600 mb-3">Disaster response activated</p>
+                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium mb-2 inline-block">{{ __('app.urgent') }}</span>
+                            <h4 class="font-semibold text-gray-900 text-sm mb-2">{{ __('app.emergency_relief_fund') }}</h4>
+                            <p class="text-xs text-gray-600 mb-3">{{ __('app.disaster_response_activated') }}</p>
                             <div class="flex justify-between items-center">
-                                <span class="text-xs text-gray-500">Nov 28, 2024</span>
-                                <span class="text-xs text-primary-500 font-medium">Active</span>
+                                <span class="text-xs text-gray-500">{{ __('app.november_28_2024') }}</span>
+                                <span class="text-xs text-primary-500 font-medium">{{ __('app.active') }}</span>
                             </div>
                         </div>
                     </div>
@@ -246,18 +243,17 @@
 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 animate-on-scroll" data-animation="fade-in-up">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 animate-fade-in-up" style="animation-delay: 0.1s;">
-                    Stay Connected with Our Mission
+                    {{ __('app.stay_connected_with_our_mission') }}
                 </h2>
                 <p class="text-xl text-primary-100 mb-8 max-w-3xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s;">
-                    Subscribe to our newsletter to receive the latest updates on our campaigns, success stories,
-                    and upcoming events. Be part of our community making a difference.
+                    {{ __('app.subscribe_newsletter_description') }}
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style="animation-delay: 0.3s;">
                     <a href="#" class="bg-white text-primary-500 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg animate-pulse-button">
-                        Subscribe Newsletter
+                        {{ __('app.subscribe_newsletter') }}
                     </a>
                     <a href="{{ url('/campaigns') }}" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary-500 transition-all duration-300 transform hover:scale-105">
-                        View Campaigns
+                        {{ __('app.view_campaigns') }}
                     </a>
                 </div>
             </div>

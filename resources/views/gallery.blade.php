@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Photo Gallery - Jariah Fund')
+@section('title', __('app.photo_gallery') . ' - Jariah Fund')
 @section('meta_description', 'Browse our collection of impact photos showing how Jariah Fund is making a difference in communities across Malaysia through Islamic crowdfunding initiatives.')
 
 @section('content')
@@ -9,9 +9,9 @@
     <div class="bg-primary-500 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
             <div class="text-center">
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Impact Gallery</h1>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">{{ __('app.impact_gallery') }}</h1>
                 <p class="text-lg md:text-xl text-primary-100 max-w-3xl mx-auto">
-                    Visual stories of change, hope, and community transformation through your generous contributions
+                    {{ __('app.visual_stories') }}
                 </p>
             </div>
         </div>
@@ -21,22 +21,22 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div class="flex flex-wrap justify-center gap-4 mb-12">
             <button class="category-filter px-6 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-primary-600 font-medium border border-primary-100 active" data-category="all">
-                All Photos
+                {{ __('app.all_photos') }}
             </button>
             <button class="category-filter px-6 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-gray-700 font-medium border border-gray-200" data-category="community">
-                Community
+                {{ __('app.community') }}
             </button>
             <button class="category-filter px-6 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-gray-700 font-medium border border-gray-200" data-category="education">
-                Education
+                {{ __('app.education') }}
             </button>
             <button class="category-filter px-6 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-gray-700 font-medium border border-gray-200" data-category="healthcare">
-                Healthcare
+                {{ __('app.healthcare') }}
             </button>
             <button class="category-filter px-6 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-gray-700 font-medium border border-gray-200" data-category="infrastructure">
-                Infrastructure
+                {{ __('app.infrastructure') }}
             </button>
             <button class="category-filter px-6 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-gray-700 font-medium border border-gray-200" data-category="events">
-                Events
+                {{ __('app.events') }}
             </button>
         </div>
         

@@ -1,78 +1,43 @@
 @extends('layouts.master')
 
-@section('title', 'JariahFund - Islamic Crowdfunding Platform')
-@section('description', 'Malaysia\'s leading Islamic crowdfunding platform. Empowering communities through Shariah-compliant giving and transparent charitable initiatives.')
+@section('title', __('app.site_name') . ' - ' . __('app.islamic_crowdfunding_platform'))
+@section('description', __('app.site_description'))
 
 @section('content')
 
-        <!-- Hero Section -->
-        <section id="home" class="bg-gradient-to-br from-primary-50 to-white py-12 md:py-16 lg:py-20">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                    
-                    <!-- Hero Content -->
-                    <div class="space-y-6 md:space-y-8 text-center lg:text-left">
-                        <div class="space-y-3 md:space-y-4">
-                            <h1 class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight animate-fade-in-up" style="animation-delay: 0.1s;">
-                                Support Worthy Causes Through
-                                <span class="text-primary-500 relative animate-fade-in-up" style="animation-delay: 0.2s;">
-                                    Shariah-Compliant Giving
-                                    <svg class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-64 h-3 text-primary-200 animate-draw-line" viewBox="0 0 100 12" fill="currentColor" style="animation-delay: 0.6s;">
-                                        <path d="M0 8c30-4 70-4 100 0v4H0z"/>
-                                    </svg>
-                                </span>
-                            </h1>
-                            <p class="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0 animate-fade-in-up" style="animation-delay: 0.3s;">
-                                Every contribution makes a difference. Join our community of <strong>3,500+ donors</strong> who have helped transform lives through <span class="text-primary-600 font-medium animate-highlight">transparent and impactful campaigns</span>. 100% of your donation goes directly to the cause you choose.
-                            </p>
-                        </div>
-
-                        <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start animate-fade-in-up" style="animation-delay: 0.4s;">
-                            <a href="{{ url('/donate') }}" class="bg-primary-500 text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold hover:bg-primary-600 transition-all duration-300 text-center transform hover:scale-105 shadow-lg hover:shadow-xl animate-pulse-button">
-                                Donate Now
-                            </a>
-                            <a href="{{ url('/campaigns') }}" class="border-2 border-primary-500 text-primary-500 px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold hover:bg-primary-50 transition-all duration-300 text-center transform hover:scale-105 hover:rotate-1">
-                                View Campaigns
-                            </a>
-                        </div>
-
-                        <!-- Impact Stats -->
-                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-6 lg:space-x-8 pt-4 md:pt-8 animate-fade-in-up" style="animation-delay: 0.5s;">
-                            <div class="text-center animate-bounce-in" style="animation-delay: 0.6s;">
-                                <div class="text-xl md:text-2xl font-bold text-primary-600">RM 167K+</div>
-                                <div class="text-xs md:text-sm text-gray-600">Total Raised</div>
-                            </div>
-                            <div class="text-center animate-bounce-in" style="animation-delay: 0.7s;">
-                                <div class="text-xl md:text-2xl font-bold text-primary-600">2,564</div>
-                                <div class="text-xs md:text-sm text-gray-600">Beneficiaries</div>
-                            </div>
-                            <div class="text-center animate-bounce-in" style="animation-delay: 0.8s;">
-                                <div class="text-xl md:text-2xl font-bold text-primary-600">20</div>
-                                <div class="text-xs md:text-sm text-gray-600">Completed Campaigns</div>
-                            </div>
-                        </div>
-                    </div>
-
-                   <!-- Platform Quote -->
-                        <div class="bg-primary-50 rounded-lg p-4 md:p-6 border-l-4 border-primary-500 animate-fade-in-up" style="animation-delay: 0.6s;">
-                            <p class="text-sm md:text-base text-gray-700 italic leading-relaxed">
-                                "Every act of giving creates a ripple effect of positive change. Your generosity today becomes someone's hope for tomorrow."
-                            </p>
-                            <p class="text-xs md:text-sm text-primary-600 font-medium mt-2">— Jariah Fund Mission</p>
-                        </div>
-                </div>
-            </div>
-        </section>
+        @include('components.hero-section', [
+            'badge' => [
+                'text' => __('app.welcome_to_jariah_fund'),
+                'icon' => '<svg class="w-4 h-4 text-primary-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
+            ],
+            'title' => __('app.making_a_difference'),
+            'subtitle' => __('app.in_every_donation'),
+            'description' => __('app.making_a_difference_description'),
+            'highlights' => [
+                ['text' => __('app.every_donation_counts'), 'delay' => '0.6s'],
+                ['text' => __('app.changing_lives_together'), 'delay' => '0.8s'],
+                ['text' => __('app.helping_communities_thrive'), 'delay' => '1.0s']
+            ],
+            'pills' => [
+                ['text' => __('app.shariah_compliant'), 'delay' => '0.7s'],
+                ['text' => __('app.no_admin_fees'), 'delay' => '0.8s'],
+                ['text' => __('app.full_transparency'), 'delay' => '0.9s']
+            ],
+            'cta_buttons' => [
+                ['text' => __('app.support_a_cause'), 'url' => url('/donate'), 'type' => 'primary'],
+                ['text' => __('app.learn_more'), 'url' => url('/about'), 'type' => 'secondary']
+            ]
+        ])
 
         <!-- Featured Campaigns Section -->
         <section id="campaigns" class="py-12 md:py-16 lg:py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12 md:mb-16">
                     <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
-                        Featured <span class="text-primary-500">Campaigns</span>
+                        {{ __('app.featured') }} <span class="text-primary-500">{{ __('app.campaigns') }}</span>
                     </h2>
                     <p class="text-base md:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto">
-                        Support verified campaigns that are making a real difference in communities worldwide. Every donation is tracked and transparent.
+                        {{ __('app.support_verified_campaigns') }}
                     </p>
                 </div>
 
@@ -84,18 +49,18 @@
                             <div class="flex items-center mb-3">
                                 <img src="{{ asset('assets/images/charity/yayasanmuslim.png') }}"
                                      alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
-                                <span class="text-xs md:text-sm text-gray-600">Yayasan Muslimin</span>
+                                <span class="text-xs md:text-sm text-gray-600">{{ __('app.yayasan_muslimin') }}</span>
                             </div>
-                            <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Vision for Education Program</h3>
+                            <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">{{ __('app.vision_for_education_program') }}</h3>
                             <p class="text-sm md:text-base text-gray-600 mb-3 md:mb-4 leading-relaxed">
-                                The Vision for Education Program is an initiative under PruBSN Prihatin that aims to help school students from asnaf and B40 groups who face vision problems.
+                                {{ __('app.vision_program_short_description') }}
                             </p>
 
                             <!-- Progress Bar -->
                             <div class="mb-3 md:mb-4">
                                 <div class="flex justify-between text-xs md:text-sm text-gray-600 mb-2">
-                                    <span>RM 45,230 raised</span>
-                                    <span>73% of RM 62,000</span>
+                                    <span>{{ __('app.amount_raised', ['amount' => 'RM 45,230']) }}</span>
+                                    <span>{{ __('app.percent_of_goal', ['percent' => '73', 'goal' => 'RM 62,000']) }}</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
                                     <div class="bg-primary-500 h-2 rounded-full transition-all duration-500 w-[73%]"></div>
@@ -103,9 +68,9 @@
                             </div>
 
                             <div class="flex justify-between items-center">
-                                <span class="text-xs md:text-sm text-gray-500">234 donors</span>
+                                <span class="text-xs md:text-sm text-gray-500">{{ __('app.donor_count', ['count' => '234']) }}</span>
                                 <a href="{{ url('/donate') }}" class="bg-primary-500 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-xs md:text-sm">
-                                    Donate Now
+                                    {{ __('app.donate_now') }}
                                 </a>
                             </div>
                         </div>
@@ -119,18 +84,18 @@
                             <div class="flex items-center mb-3">
                                 <img src="{{ asset('assets/images/charity/yayasanikhlas.png') }}"
                                      alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
-                                <span class="text-xs md:text-sm text-gray-600">Yayasan Ikhlas</span>
+                                <span class="text-xs md:text-sm text-gray-600">{{ __('app.yayasan_ikhlas') }}</span>
                             </div>
-                            <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Clean Water Wells for Rural Communities</h3>
+                            <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">{{ __('app.clean_water_wells') }}</h3>
                             <p class="text-sm md:text-base text-gray-600 mb-3 md:mb-4 leading-relaxed">
-                                Build sustainable water wells in remote villages to provide clean, safe drinking water for families who currently walk hours to access water.
+                                {{ __('app.clean_water_short_description') }}
                             </p>
 
                             <!-- Progress Bar -->
                             <div class="mb-3 md:mb-4">
                                 <div class="flex justify-between text-xs md:text-sm text-gray-600 mb-2">
-                                    <span>RM 28,450 raised</span>
-                                    <span>57% of RM 50,000</span>
+                                    <span>{{ __('app.amount_raised', ['amount' => 'RM 28,450']) }}</span>
+                                    <span>{{ __('app.percent_of_goal', ['percent' => '57', 'goal' => 'RM 50,000']) }}</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
                                     <div class="bg-primary-500 h-2 rounded-full transition-all duration-500 w-[57%]"></div>
@@ -138,9 +103,9 @@
                             </div>
 
                             <div class="flex justify-between items-center">
-                                <span class="text-xs md:text-sm text-gray-500">156 donors</span>
+                                <span class="text-xs md:text-sm text-gray-500">{{ __('app.donor_count', ['count' => '156']) }}</span>
                                 <a href="{{ url('/donate') }}" class="bg-primary-500 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-xs md:text-sm">
-                                    Donate Now
+                                    {{ __('app.donate_now') }}
                                 </a>
                             </div>
                         </div>
@@ -154,18 +119,18 @@
                             <div class="flex items-center mb-3">
                                 <img src="{{ asset('assets/images/charity/nasom.png') }}"
                                      alt="Organization" class="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3">
-                                <span class="text-xs md:text-sm text-gray-600">NASOM</span>
+                                <span class="text-xs md:text-sm text-gray-600">{{ __('app.nasom') }}</span>
                             </div>
-                            <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">Education Support for Orphaned Children</h3>
+                            <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight">{{ __('app.education_for_orphans') }}</h3>
                             <p class="text-sm md:text-base text-gray-600 mb-3 md:mb-4 leading-relaxed">
-                                Sponsor the education of orphaned children by providing school supplies, uniforms, and tuition fees to ensure they have access to quality education.
+                                {{ __('app.education_orphans_short_description') }}
                             </p>
 
                             <!-- Progress Bar -->
                             <div class="mb-3 md:mb-4">
                                 <div class="flex justify-between text-xs md:text-sm text-gray-600 mb-2">
-                                    <span>RM 18,750 raised</span>
-                                    <span>62% of RM 30,000</span>
+                                    <span>{{ __('app.amount_raised', ['amount' => 'RM 18,750']) }}</span>
+                                    <span>{{ __('app.percent_of_goal', ['percent' => '62', 'goal' => 'RM 30,000']) }}</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
                                     <div class="bg-primary-500 h-2 rounded-full transition-all duration-500 w-[62%]"></div>
@@ -173,9 +138,9 @@
                             </div>
 
                             <div class="flex justify-between items-center">
-                                <span class="text-xs md:text-sm text-gray-500">89 donors</span>
+                                <span class="text-xs md:text-sm text-gray-500">{{ __('app.donor_count', ['count' => '89']) }}</span>
                                 <a href="{{ url('/donate') }}" class="bg-primary-500 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-xs md:text-sm">
-                                    Donate Now
+                                    {{ __('app.donate_now') }}
                                 </a>
                             </div>
                         </div>
@@ -186,7 +151,7 @@
                 <!-- View All Campaigns Button -->
                 <div class="text-center mt-8 md:mt-12">
                     <a href="{{ url('/all-campaigns') }}" class="inline-flex items-center px-6 py-3 md:px-8 md:py-4 bg-white border-2 border-primary-500 text-primary-500 font-semibold rounded-lg hover:bg-primary-500 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                        View All Campaigns
+                        {{ __('app.view_all') }} {{ __('app.campaigns') }}
                         <svg class="w-4 h-4 md:w-5 md:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                         </svg>
@@ -200,10 +165,10 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12 md:mb-16">
                     <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
-                        News & <span class="text-primary-500">Events</span>
+                        {{ __('app.news') }} & <span class="text-primary-500">{{ __('app.events') }}</span>
                     </h2>
                     <p class="text-base md:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto">
-                        Stay updated with the latest news, events, and success stories from our Islamic crowdfunding community.
+                        {{ __('app.stay_updated_with_latest') }}
                     </p>
                 </div>
 
@@ -215,16 +180,15 @@
                              alt="Community Event" class="w-full h-48 md:h-64 object-cover">
                         <div class="p-6 md:p-8">
                             <div class="flex items-center mb-3">
-                                <span class="bg-primary-100 text-primary-600 px-3 py-1 rounded-full text-xs md:text-sm font-medium">Latest News</span>
-                                <span class="text-gray-500 text-xs md:text-sm ml-3">December 15, 2024</span>
+                                <span class="bg-primary-100 text-primary-600 px-3 py-1 rounded-full text-xs md:text-sm font-medium">{{ __('app.latest_news') }}</span>
+                                <span class="text-gray-500 text-xs md:text-sm ml-3">{{ __('app.december_15_2024') }}</span>
                             </div>
-                            <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">Jariah Fund Reaches RM 3 Million Milestone</h3>
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">{{ __('app.jariah_fund_milestone') }}</h3>
                             <p class="text-sm md:text-base text-gray-600 mb-4 md:mb-6 leading-relaxed">
-                                We're proud to announce that our platform has successfully raised over RM 3 million for various charitable causes,
-                                impacting thousands of lives across Malaysia and beyond.
+                                {{ __('app.milestone_description') }}
                             </p>
                             <a href="{{ url('/news') }}" class="inline-flex items-center text-primary-500 font-medium hover:text-primary-600 transition-colors text-sm md:text-base">
-                                Read More
+                                {{ __('app.read_more') }}
                                 <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                                 </svg>
@@ -238,13 +202,19 @@
                             <div class="flex items-start space-x-4">
                                 <img src="{{ asset('assets/images/news/success.jpg') }}"
                                      alt="Workshop" class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
-                                <div class="flex-1">
+                                <div>
                                     <div class="flex items-center mb-2">
-                                        <span class="bg-green-100 text-green-600 px-2 py-1 rounded-full text-xs font-medium">Upcoming Event</span>
+                                        <span class="bg-purple-100 text-purple-600 px-2 py-1 rounded-full text-xs font-medium">{{ __('app.event') }}</span>
+                                        <span class="text-gray-500 text-xs ml-2">{{ __('app.january_10_2025') }}</span>
                                     </div>
-                                    <h4 class="text-base md:text-lg font-semibold text-gray-900 mb-2">Islamic Finance Workshop</h4>
-                                    <p class="text-xs md:text-sm text-gray-600 mb-2">Learn about Shariah-compliant investment and crowdfunding principles.</p>
-                                    <p class="text-xs text-gray-500">January 20, 2025 • Kuala Lumpur</p>
+                                    <h4 class="font-semibold text-gray-900 text-base mb-1">{{ __('app.financial_literacy_workshop') }}</h4>
+                                    <p class="text-xs text-gray-600 mb-2">{{ __('app.workshop_description') }}</p>
+                                    <a href="{{ url('/news') }}" class="inline-flex items-center text-primary-500 hover:text-primary-600 text-xs font-medium">
+                                        {{ __('app.learn_more') }}
+                                        <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -252,14 +222,20 @@
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
                             <div class="flex items-start space-x-4">
                                 <img src="{{ asset('assets/images/news/success_02.jpg') }}"
-                                     alt="Medical Mission" class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
-                                <div class="flex-1">
+                                     alt="Annual Gala" class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
+                                <div>
                                     <div class="flex items-center mb-2">
-                                        <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs font-medium">Success Story</span>
+                                        <span class="bg-purple-100 text-purple-600 px-2 py-1 rounded-full text-xs font-medium">{{ __('app.event') }}</span>
+                                        <span class="text-gray-500 text-xs ml-2">{{ __('app.december_20_2024') }}</span>
                                     </div>
-                                    <h4 class="text-base md:text-lg font-semibold text-gray-900 mb-2">Medical Mission Completed</h4>
-                                    <p class="text-xs md:text-sm text-gray-600 mb-2">Mobile clinic successfully served 500+ patients in rural areas.</p>
-                                    <p class="text-xs text-gray-500">December 10, 2024 • Pahang</p>
+                                    <h4 class="font-semibold text-gray-900 text-base mb-1">{{ __('app.annual_charity_gala_title') }}</h4>
+                                    <p class="text-xs text-gray-600 mb-2">{{ __('app.gala_description') }}</p>
+                                    <a href="{{ url('/news') }}" class="inline-flex items-center text-primary-500 hover:text-primary-600 text-xs font-medium">
+                                        {{ __('app.learn_more') }}
+                                        <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -267,101 +243,30 @@
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
                             <div class="flex items-start space-x-4">
                                 <img src="{{ asset('assets/images/news/success_03.jpg') }}"
-                                     alt="School Opening" class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
-                                <div class="flex-1">
+                                     alt="Partnership" class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
+                                <div>
                                     <div class="flex items-center mb-2">
-                                        <span class="bg-purple-100 text-purple-600 px-2 py-1 rounded-full text-xs font-medium">Achievement</span>
+                                        <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs font-medium">{{ __('app.news') }}</span>
+                                        <span class="text-gray-500 text-xs ml-2">{{ __('app.december_5_2024') }}</span>
                                     </div>
-                                    <h4 class="text-base md:text-lg font-semibold text-gray-900 mb-2">New School Opens</h4>
-                                    <p class="text-xs md:text-sm text-gray-600 mb-2">Islamic school in rural Kelantan welcomes first 200 students.</p>
-                                    <p class="text-xs text-gray-500">November 25, 2024 • Kelantan</p>
+                                    <h4 class="font-semibold text-gray-900 text-base mb-1">{{ __('app.partnership_title') }}</h4>
+                                    <p class="text-xs text-gray-600 mb-2">{{ __('app.partnership_description') }}</p>
+                                    <a href="{{ url('/news') }}" class="inline-flex items-center text-primary-500 hover:text-primary-600 text-xs font-medium">
+                                        {{ __('app.learn_more') }}
+                                        <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                </div>
 
-                <!-- Photo Gallery Slider -->
-                <div class="mb-8 md:mb-12">
-                    <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-6 md:mb-8 text-center">Photo Gallery</h3>
-
-                    <!-- Gallery Slider Container -->
-                    <div class="relative">
-                        <!-- Slider Wrapper -->
-                        <div class="overflow-hidden rounded-xl">
-                            <div id="gallery-slider" class="flex transition-transform duration-500 ease-in-out">
-                                <!-- Slide 1 -->
-                                <div class="w-full flex-shrink-0">
-                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Community Gathering" data-description="Local community members coming together for a charity event">
-                                            <img src="{{ asset('assets/images/campaigns/map_01.jpg') }}"
-                                                 alt="Community gathering" class="w-full h-32 md:h-40 object-cover">
-                                        </div>
-                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="{{ asset('assets/images/gallery/food-distribution.svg') }}" data-title="Food Distribution" data-description="Volunteers distributing food packages to families in need">
-                                            <img src="{{ asset('assets/images/campaigns/map_02.jpg') }}"
-                                                 alt="Food distribution" class="w-full h-32 md:h-40 object-cover">
-                                        </div>
-                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="{{ asset('assets/images/campaigns/education-initiative.svg') }}" data-title="Education Program" data-description="Children attending classes in our newly built school">
-                                            <img src="{{ asset('assets/images/campaigns/mab_01.jpg') }}"
-                                                 alt="Education program" class="w-full h-32 md:h-40 object-cover">
-                                        </div>
-                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Healthcare Service" data-description="Mobile clinic providing medical care to remote communities">
-                                            <img src="{{ asset('assets/images/campaigns/mab_02.jpg') }}"
-                                                 alt="Healthcare service" class="w-full h-32 md:h-40 object-cover">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Slide 2 -->
-                                <div class="w-full flex-shrink-0">
-                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Water Well Project" data-description="New water well providing clean water to rural village">
-                                            <img src="{{ asset('assets/images/campaigns/mab_03.jpg') }}"
-                                                 alt="Water well project" class="w-full h-32 md:h-40 object-cover">
-                                        </div>
-                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Skills Training" data-description="Vocational training program for young adults">
-                                            <img src="{{ asset('assets/images/campaigns/02.jpg') }}"
-                                                 alt="Skills training" class="w-full h-32 md:h-40 object-cover">
-                                        </div>
-                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Orphan Support" data-description="Supporting orphaned children with education and care">
-                                            <img src="{{ asset('assets/images/campaigns/03.jpg') }}"
-                                                 alt="Orphan support" class="w-full h-32 md:h-40 object-cover">
-                                        </div>
-                                        <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Mosque Construction" data-description="Building new mosque for the local community">
-                                            <img src="{{ asset('assets/images/campaigns/04.jpg') }}"
-                                            <img src="{{ asset('assets/images/campaigns/04.jpg') }}') }}"
-                                                 alt="Mosque construction" class="w-full h-32 md:h-40 object-cover">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Navigation Arrows -->
-                        <button id="gallery-prev" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-90 hover:bg-opacity-100 text-gray-800 p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                            </svg>
-                        </button>
-                        <button id="gallery-next" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-90 hover:bg-opacity-100 text-gray-800 p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
-                        </button>
-
-                        <!-- Slide Indicators -->
-                        <div class="flex justify-center mt-6 space-x-2">
-                            <button class="gallery-indicator w-3 h-3 rounded-full bg-primary-500 transition-all duration-300" data-slide="0"></button>
-                            <button class="gallery-indicator w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-300" data-slide="1"></button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- View More Button -->
+                <!-- View All News Button -->
                 <div class="text-center">
                     <a href="{{ url('/news') }}" class="inline-flex items-center px-6 py-3 md:px-8 md:py-4 bg-white border-2 border-primary-500 text-primary-500 font-semibold rounded-lg hover:bg-primary-500 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                        View All News & Events
+                        {{ __('app.view_all') }} {{ __('app.news') }}
                         <svg class="w-4 h-4 md:w-5 md:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                         </svg>
@@ -369,6 +274,82 @@
                 </div>
             </div>
         </section>
+
+        <!-- Photo Gallery Slider -->
+        <div class="mb-8 md:mb-12">
+            <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-6 md:mb-8 text-center">Photo Gallery</h3>
+
+            <!-- Gallery Slider Container -->
+            <div class="relative max-w-4xl mx-auto">
+                <!-- Slider Wrapper -->
+                <div class="overflow-hidden rounded-xl">
+                    <div id="gallery-slider" class="flex transition-transform duration-500 ease-in-out">
+                        <!-- Slide 1 -->
+                        <div class="w-full flex-shrink-0">
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                                <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Community Gathering" data-description="Local community members coming together for a charity event">
+                                    <img src="{{ asset('assets/images/campaigns/map_01.jpg') }}"
+                                         alt="Community gathering" class="w-full h-32 md:h-40 object-cover">
+                                </div>
+                                <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="{{ asset('assets/images/gallery/food-distribution.svg') }}" data-title="Food Distribution" data-description="Volunteers distributing food packages to families in need">
+                                    <img src="{{ asset('assets/images/campaigns/map_02.jpg') }}"
+                                         alt="Food distribution" class="w-full h-32 md:h-40 object-cover">
+                                </div>
+                                <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="{{ asset('assets/images/campaigns/education-initiative.svg') }}" data-title="Education Program" data-description="Children attending classes in our newly built school">
+                                    <img src="{{ asset('assets/images/campaigns/mab_01.jpg') }}"
+                                         alt="Education program" class="w-full h-32 md:h-40 object-cover">
+                                </div>
+                                <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Healthcare Service" data-description="Mobile clinic providing medical care to remote communities">
+                                    <img src="{{ asset('assets/images/campaigns/mab_02.jpg') }}"
+                                         alt="Healthcare service" class="w-full h-32 md:h-40 object-cover">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 2 -->
+                        <div class="w-full flex-shrink-0">
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                                <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Water Well Project" data-description="New water well providing clean water to rural village">
+                                    <img src="{{ asset('assets/images/campaigns/mab_03.jpg') }}"
+                                         alt="Water well project" class="w-full h-32 md:h-40 object-cover">
+                                </div>
+                                <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Skills Training" data-description="Vocational training program for young adults">
+                                    <img src="{{ asset('assets/images/campaigns/02.jpg') }}"
+                                         alt="Skills training" class="w-full h-32 md:h-40 object-cover">
+                                </div>
+                                <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Orphan Support" data-description="Supporting orphaned children with education and care">
+                                    <img src="{{ asset('assets/images/campaigns/03.jpg') }}"
+                                         alt="Orphan support" class="w-full h-32 md:h-40 object-cover">
+                                </div>
+                                <div class="gallery-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105" data-image="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" data-title="Mosque Construction" data-description="Building new mosque for the local community">
+                                    <img src="{{ asset('assets/images/campaigns/04.jpg') }}"
+                                    <img src="{{ asset('assets/images/campaigns/04.jpg') }}') }}"
+                                         alt="Mosque construction" class="w-full h-32 md:h-40 object-cover">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Arrows -->
+                <button id="gallery-prev" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-90 hover:bg-opacity-100 text-gray-800 p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                <button id="gallery-next" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-90 hover:bg-opacity-100 text-gray-800 p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+
+                <!-- Slide Indicators -->
+                <div class="flex justify-center mt-6 space-x-2">
+                    <button class="gallery-indicator w-3 h-3 rounded-full bg-primary-500 transition-all duration-300" data-slide="0"></button>
+                    <button class="gallery-indicator w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-300" data-slide="1"></button>
+                </div>
+            </div>
+        </div>
 
         <!-- About Section -->
         <section id="about" class="py-12 md:py-16 lg:py-20 bg-white">
@@ -378,22 +359,19 @@
                     <div class="space-y-6">
                         <div class="space-y-4">
                             <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900">
-                                About <span class="text-primary-500">Jariah Fund</span>
+                                {{ __('app.about_jariah_fund') }}
                             </h2>
                             <p class="text-base md:text-lg text-gray-600 leading-relaxed">
-                                Jariah Fund is Malaysia's leading Islamic crowdfunding platform, empowering communities
-                                through Shariah-compliant giving and transparent charitable initiatives.
+                                {{ __('app.about_jariah_fund_description') }}
                             </p>
                             <p class="text-base md:text-lg text-gray-600 leading-relaxed">
-                                Backed by Bank Muamalat Malaysia, we provide a trusted platform where donors can
-                                support verified campaigns that create lasting positive impact in education, healthcare,
-                                and community development.
+                                {{ __('app.about_jariah_fund_description_2') }}
                             </p>
                         </div>
 
                         <!-- Key Features -->
                         <div class="space-y-4">
-                            <h3 class="text-lg md:text-xl font-semibold text-gray-900">Why Choose Jariah Fund?</h3>
+                            <h3 class="text-lg md:text-xl font-semibold text-gray-900">{{ __('app.why_choose_jariah_fund') }}</h3>
                             <div class="space-y-3">
                                 <div class="flex items-start space-x-3">
                                     <div class="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -402,8 +380,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h4 class="text-sm md:text-base font-medium text-gray-900">100% Transparent & Verified</h4>
-                                        <p class="text-xs md:text-sm text-gray-600">All campaigns are thoroughly vetted and progress is tracked in real-time</p>
+                                        <h4 class="text-sm md:text-base font-medium text-gray-900">{{ __('app.100_transparent_verified') }}</h4>
+                                        <p class="text-xs md:text-sm text-gray-600">{{ __('app.all_campaigns_vetted') }}</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start space-x-3">
@@ -413,8 +391,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h4 class="text-sm md:text-base font-medium text-gray-900">Shariah-Compliant Giving</h4>
-                                        <p class="text-xs md:text-sm text-gray-600">All donations follow Islamic principles and guidelines</p>
+                                        <h4 class="text-sm md:text-base font-medium text-gray-900">{{ __('app.shariah_compliant_giving') }}</h4>
+                                        <p class="text-xs md:text-sm text-gray-600">{{ __('app.all_donations_follow_islamic') }}</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start space-x-3">
@@ -424,8 +402,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h4 class="text-sm md:text-base font-medium text-gray-900">Trusted by Bank Muamalat</h4>
-                                        <p class="text-xs md:text-sm text-gray-600">Backed by Malaysia's leading Islamic banking institution</p>
+                                        <h4 class="text-sm md:text-base font-medium text-gray-900">{{ __('app.trusted_by_bank_muamalat') }}</h4>
+                                        <p class="text-xs md:text-sm text-gray-600">{{ __('app.backed_by_malaysias_leading') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -434,7 +412,7 @@
                         <!-- CTA Button -->
                         <div class="pt-4">
                             <a href="{{ url('/about') }}" class="inline-flex items-center px-6 py-3 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm md:text-base">
-                                Learn More About Us
+                                {{ __('app.learn_more_about_us') }}
                                 <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                                 </svg>
@@ -446,30 +424,27 @@
                     <div class="relative">
                         <div class="rounded-2xl p-6 md:p-8 text-white bg-primary-500">
                             <div class="space-y-4 md:space-y-6">
-                                <h3 class="text-xl md:text-2xl font-bold">Our Mission</h3>
+                                <h3 class="text-xl md:text-2xl font-bold">{{ __('app.our_mission_heading') }}</h3>
                                 <p class="text-primary-100 leading-relaxed text-sm md:text-base">
-                                    To create a transparent, trusted platform that connects generous hearts with
-                                    meaningful causes, enabling communities to support each other through
-                                    Shariah-compliant crowdfunding.
+                                    {{ __('app.our_mission_description') }}
                                 </p>
                                 <div class="grid grid-cols-2 gap-3 md:gap-4 pt-2 md:pt-4">
                                     <div class="text-center">
                                         <div class="text-2xl md:text-3xl font-bold">RM 167K+</div>
-                                        <div class="text-primary-200 text-xs md:text-sm">Total Raised</div>
+                                        <div class="text-primary-200 text-xs md:text-sm">{{ __('app.total_raised_label') }}</div>
                                     </div>
                                     <div class="text-center">
                                         <div class="text-2xl md:text-3xl font-bold">2,564</div>
-                                        <div class="text-primary-200 text-xs md:text-sm">Beneficiaries</div>
+                                        <div class="text-primary-200 text-xs md:text-sm">{{ __('app.beneficiaries_label') }}</div>
                                     </div>
                                 </div>
 
                                 <!-- Islamic Quote -->
                                 <div class="bg-primary-600 rounded-lg p-3 md:p-4 border-l-4 border-white">
                                     <p class="text-xs md:text-sm text-primary-100 italic leading-relaxed">
-                                        "Whoever relieves a believer's distress of the distressful aspects of this world,
-                                        Allah will rescue him from a difficulty of the difficulties of the Hereafter."
+                                        "{{ __('app.islamic_quote') }}"
                                     </p>
-                                    <p class="text-xs text-primary-200 font-medium mt-2">— Prophet Muhammad (PBUH)</p>
+                                    <p class="text-xs text-primary-200 font-medium mt-2">{{ __('app.prophet_muhammad') }}</p>
                                 </div>
                             </div>
                         </div>

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
-@section('title', 'Donate Now - Jariah Fund')
-@section('description', 'Make a secure donation to support meaningful campaigns that create lasting impact in communities across Malaysia. Every donation makes a difference.')
+@section('title', __('app.donate_now') . ' - Jariah Fund')
+@section('description', __('app.make_a_secure_donation'))
 
 @push('styles')
 <style>
@@ -281,21 +281,20 @@
                         <svg class="w-4 h-4 text-primary-600 mr-2 animate-heartbeat" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                         </svg>
-                        <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">Secure Donation</span>
+                        <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">{{ __('app.secure_donation') }}</span>
                     </div>
                     <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6 animate-fade-in-up delay-200">
-                        Make a Difference
+                        {{ __('app.make_a_difference') }}
                         <span class="text-primary-500 relative block">
-                            Today
+                            {{ __('app.today') }}
                             <svg class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-64 h-3 text-primary-200" viewBox="0 0 100 12" fill="currentColor">
                                 <path d="M0 8c30-4 70-4 100 0v4H0z"/>
                             </svg>
                         </span>
                     </h1>
                     <p class="text-xl text-gray-600 leading-relaxed mb-8 animate-fade-in-up delay-400">
-                        Support <strong>verified campaigns</strong> that make a real difference in communities worldwide.
-                        Each donation is secured with <span class="text-primary-600 font-medium">complete transparency</span> and
-                        <span class="text-primary-600 font-medium">effective impact</span>.
+                        {{ __('app.support_verified_campaigns') }} <span class="text-primary-600 font-medium">{{ __('app.complete_transparency') }}</span> and
+                        <span class="text-primary-600 font-medium">{{ __('app.effective_impact') }}</span>.
                     </p>
                 </div>
             </div>
@@ -321,10 +320,10 @@
                                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent flex items-end">
                                             <div class="p-8 text-white w-full">
                                                 <div class="inline-flex items-center px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full mb-4">
-                                                    <span class="text-white font-medium text-sm">Featured Campaign</span>
+                                                    <span class="text-white font-medium text-sm">{{ __('app.featured_campaign') }}</span>
                                                 </div>
-                                                <h1 class="text-3xl font-bold mb-2">Vision for Education Program</h1>
-                                                <p class="text-white/90 text-base">Providing free eye care and glasses for underprivileged students</p>
+                                                <h1 class="text-3xl font-bold mb-2">{{ __('app.vision_for_education') }}</h1>
+                                                <p class="text-white/90 text-base">{{ __('app.providing_eye_care') }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -338,10 +337,10 @@
                                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent flex items-end">
                                             <div class="p-8 text-white w-full">
                                                 <div class="inline-flex items-center px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full mb-4">
-                                                    <span class="text-white font-medium text-sm">Impact Story</span>
+                                                    <span class="text-white font-medium text-sm">{{ __('app.impact_story') }}</span>
                                                 </div>
-                                                <h1 class="text-3xl font-bold mb-2">Improved Learning Experience</h1>
-                                                <p class="text-white/90 text-base">Students can now see clearly and participate fully in their education</p>
+                                                <h1 class="text-3xl font-bold mb-2">{{ __('app.improved_learning_experience') }}</h1>
+                                                <p class="text-white/90 text-base">{{ __('app.students_can_see_clearly') }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -355,10 +354,10 @@
                                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent flex items-end">
                                             <div class="p-8 text-white w-full">
                                                 <div class="inline-flex items-center px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full mb-4">
-                                                    <span class="text-white font-medium text-sm">Professional Care</span>
+                                                    <span class="text-white font-medium text-sm">{{ __('app.professional_care') }}</span>
                                                 </div>
-                                                <h1 class="text-3xl font-bold mb-2">Quality Eye Examinations</h1>
-                                                <p class="text-white/90 text-base">Professional equipment ensures accurate diagnosis and treatment</p>
+                                                <h1 class="text-3xl font-bold mb-2">{{ __('app.quality_eye_examinations') }}</h1>
+                                                <p class="text-white/90 text-base">{{ __('app.professional_equipment') }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -372,10 +371,10 @@
                                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent flex items-end">
                                             <div class="p-8 text-white w-full">
                                                 <div class="inline-flex items-center px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full mb-4">
-                                                    <span class="text-white font-medium text-sm">Community Impact</span>
+                                                    <span class="text-white font-medium text-sm">{{ __('app.community_impact') }}</span>
                                                 </div>
-                                                <h1 class="text-3xl font-bold mb-2">Supporting B40 Families</h1>
-                                                <p class="text-white/90 text-base">Reducing financial burden while improving children's quality of life</p>
+                                                <h1 class="text-3xl font-bold mb-2">{{ __('app.supporting_b40_families') }}</h1>
+                                                <p class="text-white/90 text-base">{{ __('app.reducing_financial_burden_quality') }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -408,11 +407,11 @@
                             <div class="flex justify-between items-baseline mb-4">
                                 <div>
                                     <div class="text-2xl font-bold text-gray-900 animate-pulse-gentle">RM 45,230</div>
-                                    <div class="text-sm text-gray-500">raised of RM 62,000 goal</div>
+                                    <div class="text-sm text-gray-500">{{ __('app.raised_of_goal', ['62,000']) }}</div>
                                 </div>
                                 <div class="text-right">
                                     <div class="text-lg font-semibold text-primary-600 animate-pulse-gentle">73%</div>
-                                    <div class="text-sm text-gray-500">funded</div>
+                                    <div class="text-sm text-gray-500">{{ __('app.funded') }}</div>
                                 </div>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
@@ -421,9 +420,9 @@
                             <div class="flex items-center justify-between text-sm text-gray-600 mb-4">
                                 <div class="flex items-center">
                                     @include('components.uxwing-icon', ['name' => 'people', 'class' => 'w-4 h-4 mr-2'])
-                                    <span>234 donors</span>
+                                    <span>234 {{ __('app.donors') }}</span>
                                 </div>
-                                <div class="animate-pulse-gentle">15 days left</div>
+                                <div class="animate-pulse-gentle">15 {{ __('app.days_left') }}</div>
                             </div>
 
                             <!-- Audit Trail Toggle -->
@@ -431,11 +430,11 @@
                                 <button onclick="toggleAuditTrail()"
                                         class="flex items-center justify-between w-full text-left text-sm font-medium text-gray-700 hover:text-primary-600 transition-colors"
                                         id="audit-trail-toggle">
-                                    <span class="flex items-center">
+                                                                            <span class="flex items-center">
                                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                                         </svg>
-                                        Progress History & Milestones
+                                        {{ __('app.progress_history') }}
                                     </span>
                                     <svg class="w-4 h-4 transform transition-transform duration-200" id="audit-trail-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -593,7 +592,7 @@
                             <div class="space-y-6">
                                 <!-- Background Section -->
                                 <div>
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Background</h3>
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-3">{{ __('app.background') }}</h3>
                                     <p class="text-gray-600 leading-relaxed">
                                         The Vision for Education Program is an initiative under PruBSN Prihatin that aims to help school students from asnaf and B40 groups who face vision problems. Beneficiaries will undergo free eye examinations, and if they require glasses or further examination, full assistance will be provided at no cost to them.
                                     </p>
@@ -601,7 +600,7 @@
 
                                 <!-- Brief Info Section -->
                                 <div>
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Program Overview</h3>
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-3">{{ __('app.program_overview') }}</h3>
                                     <div class="space-y-4">
                                         <p class="text-gray-600 leading-relaxed">
                                             This contribution helps reduce inequality in access to eye healthcare. Rural or underprivileged communities are often overlooked in terms of eye care. This program provides them with equal opportunities to receive proper care.
@@ -617,7 +616,7 @@
 
                                 <!-- Key Benefits -->
                                 <div>
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Why Support This Campaign?</h3>
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('app.why_support_this_campaign') }}</h3>
                                     <div class="space-y-3">
                                         <div class="flex items-start space-x-3">
                                             <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -626,8 +625,8 @@
                                                 </svg>
                                             </div>
                                             <div>
-                                                <h4 class="font-medium text-gray-900 text-sm">Equal Access to Healthcare</h4>
-                                                <p class="text-gray-600 text-sm">Reduces inequality in eye healthcare access for rural and underprivileged communities.</p>
+                                                <h4 class="font-medium text-gray-900 text-sm">{{ __('app.equal_access_to_healthcare') }}</h4>
+                                                <p class="text-gray-600 text-sm">{{ __('app.reduces_inequality') }}</p>
                                             </div>
                                         </div>
 
@@ -638,8 +637,8 @@
                                                 </svg>
                                             </div>
                                             <div>
-                                                <h4 class="font-medium text-gray-900 text-sm">Improved Learning Outcomes</h4>
-                                                <p class="text-gray-600 text-sm">Students can perform better in class without vision-related disruptions.</p>
+                                                <h4 class="font-medium text-gray-900 text-sm">{{ __('app.improved_learning_outcomes') }}</h4>
+                                                <p class="text-gray-600 text-sm">{{ __('app.students_perform_better') }}</p>
                                             </div>
                                         </div>
 
@@ -650,8 +649,8 @@
                                                 </svg>
                                             </div>
                                             <div>
-                                                <h4 class="font-medium text-gray-900 text-sm">Financial Relief for Families</h4>
-                                                <p class="text-gray-600 text-sm">Reduces financial burden on families, allowing resources for other essential needs.</p>
+                                                <h4 class="font-medium text-gray-900 text-sm">{{ __('app.financial_relief') }}</h4>
+                                                <p class="text-gray-600 text-sm">{{ __('app.reduces_financial_burden') }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -659,9 +658,9 @@
 
                                 <!-- Required Assistance Section -->
                                 <div>
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Required Assistance</h3>
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-3">{{ __('app.required_assistance') }}</h3>
                                     <p class="text-gray-600 leading-relaxed mb-4">
-                                        The breakdown of required assistance includes essential items for the Vision for Education Campaign.
+                                        {{ __('app.assistance_breakdown') }}
                                     </p>
 
                                     <!-- PDF Download Link -->
@@ -674,17 +673,17 @@
                                                     </svg>
                                                 </div>
                                                 <div>
-                                                    <h4 class="font-medium text-gray-900 text-sm">Campaign Requirements Document</h4>
-                                                    <p class="text-gray-600 text-xs">Detailed breakdown of assistance needed</p>
+                                                    <h4 class="font-medium text-gray-900 text-sm">{{ __('app.campaign_requirements') }}</h4>
+                                                    <p class="text-gray-600 text-xs">{{ __('app.detailed_breakdown') }}</p>
                                                 </div>
                                             </div>
-                                            <a href="https://jariahfund.muamalat.com.my/docs/15/QUO-2025-0001.pdf"
+                                                                                            <a href="https://jariahfund.muamalat.com.my/docs/15/QUO-2025-0001.pdf"
                                                target="_blank"
                                                class="inline-flex items-center px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white text-sm font-medium rounded-lg transition-colors hover:shadow-md">
                                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                                 </svg>
-                                                Download PDF
+                                                {{ __('app.download_pdf') }}
                                             </a>
                                         </div>
                                     </div>
@@ -695,8 +694,8 @@
                             <div class="border-t border-gray-100 pt-6 mt-8">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <h4 class="font-medium text-gray-900 mb-1">Share this campaign</h4>
-                                        <p class="text-sm text-gray-600">Help us reach more people</p>
+                                        <h4 class="font-medium text-gray-900 mb-1">{{ __('app.share_campaign') }}</h4>
+                                        <p class="text-sm text-gray-600">{{ __('app.help_reach_more') }}</p>
                                     </div>
                                     <div class="flex gap-2">
                                         <button onclick="shareOnFacebook()" class="w-9 h-9 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center justify-center transition-colors" title="Share on Facebook">
@@ -722,8 +721,8 @@
                         <div class="bg-white rounded-xl border border-gray-200 sticky top-6 hover-glow">
                             <!-- Form Header -->
                             <div class="px-8 py-6 border-b border-gray-100">
-                                <h2 class="text-xl font-semibold text-gray-900 mb-2 animate-fade-in-up">Make Your Donation</h2>
-                                <p class="text-gray-600 animate-fade-in-up delay-100">Every contribution makes a difference</p>
+                                <h2 class="text-xl font-semibold text-gray-900 mb-2 animate-fade-in-up">{{ __('app.make_your_donation') }}</h2>
+                                <p class="text-gray-600 animate-fade-in-up delay-100">{{ __('app.every_contribution') }}</p>
                             </div>
 
                             <!-- Professional Form -->
@@ -735,13 +734,13 @@
 
                                     <!-- Donation Type -->
                                     <div>
-                                        <label class="block text-base font-medium text-gray-900 mb-4">Donation Type</label>
+                                        <label class="block text-base font-medium text-gray-900 mb-4">{{ __('app.donation_type') }}</label>
                                         <div class="grid grid-cols-2 gap-3">
                                             <button type="button" id="single-btn" class="py-3 px-4 border-2 border-primary-500 bg-primary-500 text-white rounded-lg text-sm font-medium transition-colors hover:bg-primary-600 hover:border-primary-600">
-                                                One-Time
+                                                {{ __('app.one_time') }}
                                             </button>
                                             <button type="button" id="monthly-btn" class="py-3 px-4 border-2 border-gray-200 bg-white text-gray-700 rounded-lg text-sm font-medium transition-colors hover:border-gray-300 hover:bg-gray-50">
-                                                Monthly
+                                                {{ __('app.monthly') }}
                                             </button>
                                         </div>
                                     </div>
@@ -750,7 +749,7 @@
 
                                     <!-- Amount Selection -->
                                     <div class="animate-on-scroll delay-300">
-                                        <label class="block text-base font-medium text-gray-900 mb-4">Select Amount (MYR)</label>
+                                        <label class="block text-base font-medium text-gray-900 mb-4">{{ __('app.select_amount') }}</label>
                                         <div class="grid grid-cols-2 gap-3">
                                             <label class="cursor-pointer amount-option hover-scale">
                                                 <input type="radio" name="amount" value="50" class="sr-only">
@@ -781,19 +780,19 @@
 
                                     <!-- Custom Amount -->
                                     <div>
-                                        <label class="block text-base font-medium text-gray-900 mb-4">Custom Amount</label>
+                                        <label class="block text-base font-medium text-gray-900 mb-4">{{ __('app.custom_amount') }}</label>
                                         <div class="relative">
                                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                                 <span class="text-sm font-medium text-gray-500">MYR</span>
                                             </div>
-                                            <input type="number" name="custom_amount" id="custom-amount" placeholder="Enter amount" min="1" step="1"
+                                            <input type="number" name="custom_amount" id="custom-amount" placeholder="{{ __('app.enter_amount') }}" min="1" step="1"
                                                    class="w-full pl-16 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                                         </div>
                                     </div>
 
                                     <!-- Payment Methods -->
                                     <div>
-                                        <label class="block text-base font-medium text-gray-900 mb-4">Payment Method</label>
+                                        <label class="block text-base font-medium text-gray-900 mb-4">{{ __('app.payment_method') }}</label>
                                         <div class="space-y-3">
                                             <!-- FPX Option -->
                                             <label class="cursor-pointer payment-option">
@@ -801,8 +800,8 @@
                                                 <div class="payment-card flex items-center p-4 border-2 border-primary-500 bg-primary-50 rounded-lg transition-colors">
                                                     <div class="w-10 h-8 bg-blue-600 rounded text-white text-xs flex items-center justify-center font-semibold mr-4">FPX</div>
                                                     <div class="flex-1">
-                                                        <div class="font-medium text-gray-900">FPX Online Banking</div>
-                                                        <div class="text-sm text-gray-600">Direct bank transfer</div>
+                                                        <div class="font-medium text-gray-900">{{ __('app.fpx_online_banking') }}</div>
+                                                        <div class="text-sm text-gray-600">{{ __('app.direct_bank_transfer') }}</div>
                                                     </div>
                                                     <div class="w-5 h-5 border-2 border-primary-500 rounded-full flex items-center justify-center">
                                                         <div class="w-2 h-2 bg-primary-500 rounded-full"></div>
@@ -816,8 +815,8 @@
                                                 <div class="payment-card flex items-center p-4 border-2 border-gray-200 rounded-lg transition-colors hover:border-gray-300">
                                                     <div class="w-10 h-8 bg-green-600 rounded text-white text-xs flex items-center justify-center font-semibold mr-4">QR</div>
                                                     <div class="flex-1">
-                                                        <div class="font-medium text-gray-900">DuitNow QR</div>
-                                                        <div class="text-sm text-gray-600">Scan with banking app</div>
+                                                        <div class="font-medium text-gray-900">{{ __('app.duitnow_qr') }}</div>
+                                                        <div class="text-sm text-gray-600">{{ __('app.scan_with_banking_app') }}</div>
                                                     </div>
                                                     <div class="payment-radio w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center">
                                                         <div class="w-2 h-2 bg-primary-500 rounded-full hidden"></div>
@@ -834,7 +833,7 @@
                                                         <div class="w-6 h-4 bg-red-500 rounded text-white text-xs flex items-center justify-center font-semibold">M</div>
                                                     </div>
                                                     <div class="flex-1">
-                                                        <div class="font-medium text-gray-900">Credit/Debit Card</div>
+                                                        <div class="font-medium text-gray-900">{{ __('app.credit_debit_card') }}</div>
                                                         <div class="text-sm text-gray-600">Visa, Mastercard</div>
                                                     </div>
                                                     <div class="payment-radio w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center">
@@ -848,27 +847,27 @@
                                     <!-- Donate Button -->
                                     <div class="pt-8 border-t border-gray-100 animate-on-scroll delay-600">
                                         <button type="submit" class="w-full bg-primary-500 hover:bg-primary-600 text-white py-4 px-6 rounded-lg text-lg font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 animate-pulse-gentle">
-                                            Donate Now
+                                            {{ __('app.donate_now') }}
                                         </button>
 
                                         <!-- Trust Indicators -->
                                         <div class="mt-6 text-center">
                                             <div class="flex items-center justify-center text-sm text-gray-600 mb-4 animate-fade-in-up delay-700">
                                                 @include('components.uxwing-icon', ['name' => 'security', 'class' => 'w-4 h-4 text-green-600 mr-2 animate-pulse-gentle'])
-                                                <span>Secure & encrypted payment</span>
+                                                <span>{{ __('app.secure_encrypted_payment') }}</span>
                                             </div>
                                             <div class="flex justify-center gap-6 text-xs text-gray-500 animate-fade-in-up delay-800">
                                                 <div class="flex items-center hover-scale">
                                                     <span class="mr-1">🔒</span>
-                                                    <span>SSL Secured</span>
+                                                    <span>{{ __('app.ssl_secured') }}</span>
                                                 </div>
                                                 <div class="flex items-center hover-scale">
                                                     <span class="mr-1">⚡</span>
-                                                    <span>Instant</span>
+                                                    <span>{{ __('app.instant') }}</span>
                                                 </div>
                                                 <div class="flex items-center hover-scale">
                                                     <span class="mr-1">🏆</span>
-                                                    <span>Tax Receipt</span>
+                                                    <span>{{ __('app.tax_receipt') }}</span>
                                                 </div>
                                             </div>
                                         </div>

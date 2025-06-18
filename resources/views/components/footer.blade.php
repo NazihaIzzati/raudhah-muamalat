@@ -8,20 +8,19 @@
                     Jariah Fund
                 </div>
                 <p class="text-gray-300 leading-relaxed">
-                    Malaysia's leading Islamic crowdfunding platform.
-                    Empowering communities through transparent, Shariah-compliant giving.
+                    {{ __('app.footer_description') }}
                 </p>
                 <div class="flex space-x-4">
-                    <a href="#" class="w-8 h-8 bg-primary-500 text-white rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors" title="Follow us on Twitter">
+                    <a href="#" class="w-8 h-8 bg-primary-500 text-white rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors" title="{{ __('app.follow_us_on_twitter') }}">
                         @include('components.uxwing-icon', ['name' => 'twitter', 'class' => 'w-4 h-4'])
                     </a>
-                    <a href="#" class="w-8 h-8 bg-primary-500 text-white rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors" title="Follow us on Facebook">
+                    <a href="#" class="w-8 h-8 bg-primary-500 text-white rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors" title="{{ __('app.follow_us_on_facebook') }}">
                         @include('components.uxwing-icon', ['name' => 'facebook', 'class' => 'w-4 h-4'])
                     </a>
-                    <a href="#" class="w-8 h-8 bg-primary-500 text-white rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors" title="Contact us on WhatsApp">
+                    <a href="#" class="w-8 h-8 bg-primary-500 text-white rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors" title="{{ __('app.contact_us_on_whatsapp') }}">
                         @include('components.uxwing-icon', ['name' => 'whatsapp', 'class' => 'w-4 h-4'])
                     </a>
-                    <a href="#" class="w-8 h-8 bg-primary-500 text-white rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors" title="Join our Telegram">
+                    <a href="#" class="w-8 h-8 bg-primary-500 text-white rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors" title="{{ __('app.join_our_telegram') }}">
                         @include('components.uxwing-icon', ['name' => 'telegram', 'class' => 'w-4 h-4'])
                     </a>
                 </div>
@@ -29,34 +28,34 @@
 
             <!-- Campaign Categories -->
             <div class="space-y-4">
-                <h3 class="text-lg font-semibold">Campaign Categories</h3>
+                <h3 class="text-lg font-semibold">{{ __('app.campaign_categories') }}</h3>
                 <ul class="space-y-2 text-gray-300">
-                    <li><a href="#" class="hover:text-primary-500 transition-colors">Education</a></li>
-                    <li><a href="#" class="hover:text-primary-500 transition-colors">Healthcare</a></li>
-                    <li><a href="#" class="hover:text-primary-500 transition-colors">Emergency Relief</a></li>
-                    <li><a href="#" class="hover:text-primary-500 transition-colors">Community Development</a></li>
-                    <li><a href="#" class="hover:text-primary-500 transition-colors">Orphan Support</a></li>
-                    <li><a href="#" class="hover:text-primary-500 transition-colors">Mosque & Masjid</a></li>
+                    <li><a href="#" class="hover:text-primary-500 transition-colors">{{ __('app.education') }}</a></li>
+                    <li><a href="#" class="hover:text-primary-500 transition-colors">{{ __('app.healthcare') }}</a></li>
+                    <li><a href="#" class="hover:text-primary-500 transition-colors">{{ __('app.emergency_relief') }}</a></li>
+                    <li><a href="#" class="hover:text-primary-500 transition-colors">{{ __('app.community_development') }}</a></li>
+                    <li><a href="#" class="hover:text-primary-500 transition-colors">{{ __('app.orphan_support') }}</a></li>
+                    <li><a href="#" class="hover:text-primary-500 transition-colors">{{ __('app.mosque_masjid') }}</a></li>
                 </ul>
             </div>
 
             <!-- Quick Links -->
             <div class="space-y-4">
-                <h3 class="text-lg font-semibold">Quick Links</h3>
+                <h3 class="text-lg font-semibold">{{ __('app.quick_links') }}</h3>
                 <ul class="space-y-2 text-gray-300">
-                    <li><a href="{{ url('/about') }}" class="hover:text-primary-500 transition-colors">About Us</a></li>
-                    <li><a href="{{ url('/partners') }}" class="hover:text-primary-500 transition-colors">Partners</a></li>
-                    <li><a href="{{ url('/campaigns') }}" class="hover:text-primary-500 transition-colors">Campaigns</a></li>
-                    <li><a href="{{ url('/news') }}" class="hover:text-primary-500 transition-colors">News & Events</a></li>
-                    <li><a href="#contact" class="hover:text-primary-500 transition-colors">Contact</a></li>
-                    <li><a href="#" class="hover:text-primary-500 transition-colors">Privacy Policy</a></li>
-                    <li><a href="#" class="hover:text-primary-500 transition-colors">Terms of Service</a></li>
+                    <li><a href="{{ url('/about') }}" class="hover:text-primary-500 transition-colors">{{ __('app.about_us') }}</a></li>
+                    <li><a href="{{ url('/partners') }}" class="hover:text-primary-500 transition-colors">{{ __('app.partners') }}</a></li>
+                    <li><a href="{{ url('/campaigns') }}" class="hover:text-primary-500 transition-colors">{{ __('app.campaigns') }}</a></li>
+                    <li><a href="{{ url('/news') }}" class="hover:text-primary-500 transition-colors">{{ __('app.news_and_events') }}</a></li>
+                    <li><a href="#contact" class="hover:text-primary-500 transition-colors">{{ __('app.contact') }}</a></li>
+                    <li><a href="#" class="hover:text-primary-500 transition-colors">{{ __('app.privacy_policy') }}</a></li>
+                    <li><a href="#" class="hover:text-primary-500 transition-colors">{{ __('app.terms_of_service') }}</a></li>
                 </ul>
             </div>
 
             <!-- Contact Info -->
             <div class="space-y-4">
-                <h3 class="text-lg font-semibold">Contact Info</h3>
+                <h3 class="text-lg font-semibold">{{ __('app.contact_info') }}</h3>
                 <div class="space-y-3 text-gray-300">
                     <div class="flex items-start space-x-3">
                         @include('components.uxwing-icon', ['name' => 'location', 'class' => 'w-5 h-5 text-primary-500 mt-0.5 flex-shrink-0'])
@@ -78,12 +77,12 @@
         <div class="border-t border-gray-800 mt-12 pt-8">
             <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
                 <div class="text-gray-400 text-sm">
-                    © {{ date('Y') }} Jariah Fund by Bank Muamalat Malaysia. All rights reserved.
+                    © {{ date('Y') }} Jariah Fund by Bank Muamalat Malaysia. {{ __('app.all_rights_reserved') }}
                 </div>
                 <div class="flex space-x-6 text-sm text-gray-400">
-                    <a href="#" class="hover:text-primary-500 transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-primary-500 transition-colors">Terms of Service</a>
-                    <a href="#" class="hover:text-primary-500 transition-colors">Cookie Policy</a>
+                    <a href="#" class="hover:text-primary-500 transition-colors">{{ __('app.privacy_policy') }}</a>
+                    <a href="#" class="hover:text-primary-500 transition-colors">{{ __('app.terms_of_service') }}</a>
+                    <a href="#" class="hover:text-primary-500 transition-colors">{{ __('app.cookie_policy') }}</a>
                 </div>
             </div>
         </div>

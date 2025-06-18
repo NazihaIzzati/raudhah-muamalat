@@ -63,7 +63,7 @@
                 @if(isset($highlights))
                     @foreach($highlights as $highlight)
                         <span class="text-primary-600 font-medium animate-highlight" style="animation-delay: {{ $highlight['delay'] }};">{{ $highlight['text'] }}</span>
-                        @if(!$loop->last) and @endif
+                        @if(!$loop->last) {{ __('app.and') }} @endif
                     @endforeach
                 @endif
             </p>
@@ -86,16 +86,18 @@
             @endif
 
             <!-- Feature Pills -->
-            <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-600 animate-fade-in-up" style="animation-delay: {{ isset($cta_buttons) ? '0.6s' : '0.5s' }};">
-                @foreach($pills as $index => $pill)
-                    <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer animate-bounce-in" style="animation-delay: {{ $pill['delay'] }};">
-                        <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                        </svg>
-                        {{ $pill['text'] }}
-                    </div>
-                @endforeach
-            </div>
+            @if(isset($pills) && !empty($pills))
+                <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-600 animate-fade-in-up" style="animation-delay: {{ isset($cta_buttons) ? '0.6s' : '0.5s' }};">
+                    @foreach($pills as $index => $pill)
+                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer animate-bounce-in" style="animation-delay: {{ $pill['delay'] }};">
+                            <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                            </svg>
+                            {{ $pill['text'] }}
+                        </div>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </div>
 </section>
