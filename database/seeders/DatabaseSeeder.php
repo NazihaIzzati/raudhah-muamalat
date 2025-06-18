@@ -37,6 +37,9 @@ class DatabaseSeeder extends Seeder
             
             // FAQs (depends on users)
             FaqSeeder::class,
+            
+            // Contacts (independent)
+            ContactSeeder::class,
         ]);
         
         $this->command->info('✅ Database seeding completed successfully!');
@@ -49,6 +52,7 @@ class DatabaseSeeder extends Seeder
         $this->command->info('📅 Events: ' . \App\Models\Event::count());
         $this->command->info('🤝 Partners: ' . \App\Models\Partner::count());
         $this->command->info('❓ FAQs: ' . \App\Models\Faq::count());
+        $this->command->info('📧 Contacts: ' . \App\Models\Contact::count());
         $this->command->info('');
         $this->command->info('🔑 Admin Login:');
         $this->command->info('Email: admin@raudhahmuamalat.com');
