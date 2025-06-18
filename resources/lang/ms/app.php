@@ -43,6 +43,7 @@ return [
     
     // Admin
     'admin' => 'Admin',
+    'member' => 'Ahli',
     'users' => 'Pengguna',
     'donations' => 'Derma',
     'events' => 'Acara',

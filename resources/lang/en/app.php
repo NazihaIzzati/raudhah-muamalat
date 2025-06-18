@@ -43,6 +43,7 @@ return [
     
     // Admin
     'admin' => 'Admin',
+    'member' => 'Member',
     'users' => 'Users',
     'donations' => 'Donations',
     'events' => 'Events',

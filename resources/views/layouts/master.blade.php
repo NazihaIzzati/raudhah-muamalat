@@ -113,29 +113,112 @@
                         @include('components.language-switcher')
 
                         @auth
-                            <span class="text-gray-700 text-sm">Welcome, {{ Auth::user()->name }}</span>
-                            @if(Auth::user()->isAdmin())
-                                <a href="{{ route('admin.dashboard') }}" class="text-gray-700 hover:text-primary-500 transition-colors text-sm lg:text-base">
-                                    Admin
-                                </a>
-                            @else
-                                <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-primary-500 transition-colors text-sm lg:text-base">
-                                    Dashboard
-                                </a>
-                            @endif
-                            <form action="{{ route('logout') }}" method="POST" class="inline">
-                                @csrf
-                                <button type="submit" class="text-gray-700 hover:text-primary-500 transition-colors text-sm lg:text-base">
-                                    {{ __('app.logout') }}
+                            <!-- User Profile Dropdown -->
+                            <div class="relative" id="user-dropdown-container">
+                                <button type="button" class="flex items-center space-x-2 bg-gradient-to-r from-emerald-50 to-emerald-100 hover:from-emerald-100 hover:to-emerald-200 rounded-xl px-4 py-2 transition-all duration-300 hover:shadow-md border border-emerald-200" id="user-dropdown-button">
+                                    <!-- User Avatar -->
+                                    <div class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-sm">
+                                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="flex flex-col items-start">
+                                        <span class="text-sm font-medium text-emerald-900">{{ Str::limit(Auth::user()->name, 15) }}</span>
+                                        <span class="text-xs text-emerald-600">
+                                            @if(Auth::user()->isAdmin())
+                                                {{ __('app.admin') }}
+                                            @else
+                                                {{ __('app.member') }}
+                                            @endif
+                                        </span>
+                                    </div>
+                                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                    </svg>
                                 </button>
-                            </form>
+                                
+                                <!-- Dropdown Menu -->
+                                <div id="user-dropdown" class="hidden absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-2xl bg-white shadow-xl ring-1 ring-black ring-opacity-5 border border-gray-100 overflow-hidden">
+                                    <div class="py-2">
+                                        <!-- User Info Header -->
+                                        <div class="px-4 py-3 bg-gradient-to-r from-emerald-50 to-emerald-100 border-b border-emerald-200">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-sm">
+                                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-semibold text-emerald-900">{{ Auth::user()->name }}</p>
+                                                    <p class="text-xs text-emerald-600">{{ Auth::user()->email }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Menu Items -->
+                                        @if(Auth::user()->isAdmin())
+                                            <a href="{{ route('admin.dashboard') }}" class="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors duration-200">
+                                                <svg class="w-5 h-5 mr-3 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                                </svg>
+                                                {{ __('app.admin_dashboard') }}
+                                            </a>
+                                        @else
+                                            <a href="{{ route('dashboard') }}" class="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200">
+                                                <svg class="w-5 h-5 mr-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2V7"/>
+                                                </svg>
+                                                {{ __('app.dashboard') }}
+                                            </a>
+                                        @endif
+                                        
+                                        <a href="#" class="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200">
+                                            <svg class="w-5 h-5 mr-3 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                            </svg>
+                                            {{ __('app.profile') }}
+                                        </a>
+                                        
+                                        <a href="{{ url('/my-donations') }}" class="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors duration-200">
+                                            <svg class="w-5 h-5 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                            </svg>
+                                            {{ __('app.my_donations') }}
+                                        </a>
+                                        
+                                        <div class="border-t border-gray-100 my-1"></div>
+                                        
+                                        <form action="{{ route('logout') }}" method="POST" class="block">
+                                            @csrf
+                                            <button type="submit" class="flex items-center w-full px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors duration-200">
+                                                <svg class="w-5 h-5 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                                </svg>
+                                                {{ __('app.logout') }}
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         @else
-                            <a href="{{ route('login') }}" class="text-gray-700 hover:text-primary-500 transition-colors text-sm lg:text-base">
-                                {{ __('app.login') }}
-                            </a>
-                            <a href="{{ route('register') }}" class="bg-primary-500 text-white px-3 py-2 lg:px-4 lg:py-2 rounded-lg hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 text-sm lg:text-base">
-                                {{ __('app.register') }}
-                            </a>
+                            <!-- Guest Auth Links -->
+                            <div class="flex items-center space-x-3">
+                                <!-- Login Button -->
+                                <a href="{{ route('login') }}" class="group inline-flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-all duration-300 text-sm lg:text-base font-medium px-4 py-2 rounded-xl hover:bg-primary-50 border border-transparent hover:border-primary-200">
+                                    <svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                                    </svg>
+                                    <span>{{ __('app.login') }}</span>
+                                </a>
+                                
+                                <!-- Register Button -->
+                                <a href="{{ route('register') }}" class="group inline-flex items-center space-x-2 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white px-5 py-2.5 lg:px-6 lg:py-3 rounded-xl font-semibold text-sm lg:text-base transition-all duration-300 transform hover:scale-105 hover:shadow-lg shadow-primary-500/25 border border-primary-600">
+                                    <svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                                    </svg>
+                                    <span>{{ __('app.register') }}</span>
+                                </a>
+                            </div>
                         @endauth
                     </div>
 
@@ -160,8 +243,95 @@
                         <a href="{{ url('/faq') }}" class="@if(request()->is('faq')) text-primary-500 font-medium bg-primary-50 @else text-gray-700 hover:text-primary-500 hover:bg-primary-50 @endif block px-3 py-2 transition-all duration-300 rounded-lg text-sm">{{ __('app.faq') }}</a>
                         <a href="{{ url('/contact') }}" class="@if(request()->is('contact')) text-primary-500 font-medium bg-primary-50 @else text-gray-700 hover:text-primary-500 hover:bg-primary-50 @endif block px-3 py-2 transition-all duration-300 rounded-lg text-sm">{{ __('app.contact') }}</a>
                         
+                        <!-- Mobile Auth Section -->
+                        @auth
+                            <div class="border-t border-gray-200 pt-4 mt-4">
+                                <!-- User Info -->
+                                <div class="px-3 py-3 bg-gradient-to-r from-emerald-50 to-emerald-100 rounded-lg mx-2 mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-sm">
+                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-semibold text-emerald-900">{{ Auth::user()->name }}</p>
+                                            <p class="text-xs text-emerald-600">
+                                                @if(Auth::user()->isAdmin())
+                                                    {{ __('app.admin') }}
+                                                @else
+                                                    {{ __('app.member') }}
+                                                @endif
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- User Menu Items -->
+                                @if(Auth::user()->isAdmin())
+                                    <a href="{{ route('admin.dashboard') }}" class="flex items-center px-3 py-3 text-sm font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-lg mx-2 mb-1 transition-all duration-300">
+                                        <svg class="w-5 h-5 mr-3 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                        </svg>
+                                        {{ __('app.admin_dashboard') }}
+                                    </a>
+                                @else
+                                    <a href="{{ route('dashboard') }}" class="flex items-center px-3 py-3 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg mx-2 mb-1 transition-all duration-300">
+                                        <svg class="w-5 h-5 mr-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2V7"/>
+                                        </svg>
+                                        {{ __('app.dashboard') }}
+                                    </a>
+                                @endif
+                                
+                                <a href="#" class="flex items-center px-3 py-3 text-sm font-medium text-gray-700 hover:text-purple-600 hover:bg-purple-50 rounded-lg mx-2 mb-1 transition-all duration-300">
+                                    <svg class="w-5 h-5 mr-3 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                    </svg>
+                                    {{ __('app.profile') }}
+                                </a>
+                                
+                                <a href="{{ url('/my-donations') }}" class="flex items-center px-3 py-3 text-sm font-medium text-gray-700 hover:text-green-600 hover:bg-green-50 rounded-lg mx-2 mb-1 transition-all duration-300">
+                                    <svg class="w-5 h-5 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                    </svg>
+                                    {{ __('app.my_donations') }}
+                                </a>
+                                
+                                <form action="{{ route('logout') }}" method="POST" class="mx-2 mt-2">
+                                    @csrf
+                                    <button type="submit" class="flex items-center w-full px-3 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-all duration-300">
+                                        <svg class="w-5 h-5 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                        </svg>
+                                        {{ __('app.logout') }}
+                                    </button>
+                                </form>
+                            </div>
+                        @else
+                            <div class="border-t border-gray-200 pt-4 mt-4">
+                                <div class="px-2 space-y-2">
+                                    <!-- Mobile Login Button -->
+                                    <a href="{{ route('login') }}" class="flex items-center justify-center space-x-2 w-full text-gray-700 hover:text-primary-600 hover:bg-primary-50 px-4 py-3 rounded-xl border border-gray-200 hover:border-primary-200 transition-all duration-300 font-medium">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                                        </svg>
+                                        <span>{{ __('app.login') }}</span>
+                                    </a>
+                                    
+                                    <!-- Mobile Register Button -->
+                                    <a href="{{ route('register') }}" class="flex items-center justify-center space-x-2 w-full bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white px-4 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-lg shadow-primary-500/25">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                                        </svg>
+                                        <span>{{ __('app.register') }}</span>
+                                    </a>
+                                </div>
+                            </div>
+                        @endauth
+                        
                         <!-- Language Switcher Mobile -->
-                        <div class="py-2">
+                        <div class="py-2 mt-4 border-t border-gray-200">
                             <div class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                                 {{ __('app.language') }}
                             </div>
@@ -288,15 +458,44 @@
             </div>
         </footer>
 
-        <!-- Mobile Menu Script -->
+        <!-- Mobile Menu & User Dropdown Script -->
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                const button = document.getElementById('mobile-menu-button');
-                const menu = document.getElementById('mobile-menu');
+                // Mobile menu toggle
+                const mobileButton = document.getElementById('mobile-menu-button');
+                const mobileMenu = document.getElementById('mobile-menu');
 
-                button.addEventListener('click', function() {
-                    menu.classList.toggle('hidden');
-                });
+                if (mobileButton && mobileMenu) {
+                    mobileButton.addEventListener('click', function() {
+                        mobileMenu.classList.toggle('hidden');
+                    });
+                }
+
+                // User dropdown toggle
+                const userButton = document.getElementById('user-dropdown-button');
+                const userDropdown = document.getElementById('user-dropdown');
+                const userContainer = document.getElementById('user-dropdown-container');
+
+                if (userButton && userDropdown && userContainer) {
+                    userButton.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        userDropdown.classList.toggle('hidden');
+                    });
+
+                    // Close dropdown when clicking outside
+                    document.addEventListener('click', function(e) {
+                        if (!userContainer.contains(e.target)) {
+                            userDropdown.classList.add('hidden');
+                        }
+                    });
+
+                    // Close dropdown when pressing Escape
+                    document.addEventListener('keydown', function(e) {
+                        if (e.key === 'Escape') {
+                            userDropdown.classList.add('hidden');
+                        }
+                    });
+                }
             });
         </script>
 
