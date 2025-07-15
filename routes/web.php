@@ -5,7 +5,9 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\DonationController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\DonationController as AdminDonationController;
 use App\Http\Controllers\Admin\CampaignController as AdminCampaignController;
@@ -24,7 +26,7 @@ Route::get('/language/{locale}', [LanguageController::class, 'switchLanguage'])-
 // Public routes
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/about', function () {
     return view('about');
@@ -50,8 +52,21 @@ Route::get('/faq', function () {
     return view('faq');
 });
 
-Route::get('/donate', function () {
-    return view('donate');
+// Donation routes
+Route::get('/donate/{campaignId?}', [DonationController::class, 'showForm'])->name('donate.form');
+Route::post('/donate', [DonationController::class, 'processDonation'])->name('donate.process');
+
+// Payment routes
+Route::prefix('payment')->group(function () {
+    // Cardzone payment routes
+    Route::get('/cardzone/process/{donationId}', [PaymentController::class, 'processCardzone'])->name('payment.cardzone.process');
+    Route::post('/cardzone/callback', [PaymentController::class, 'cardzoneCallback'])->name('payment.cardzone.callback');
+    Route::get('/cardzone/return', [PaymentController::class, 'cardzoneReturn'])->name('payment.cardzone.return');
+    
+    // Payment status pages
+    Route::get('/success/{id}', [PaymentController::class, 'success'])->name('donation.success');
+    Route::get('/pending/{id}', [PaymentController::class, 'pending'])->name('donation.pending');
+    Route::get('/failed/{id}', [PaymentController::class, 'failed'])->name('donation.failed');
 });
 
 Route::get('/contact', function () {
