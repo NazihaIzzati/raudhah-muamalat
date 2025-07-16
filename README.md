@@ -1,61 +1,290 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Raudhah Muamalat - Islamic Charity Platform
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<img src="https://img.shields.io/badge/Laravel-10.x-red.svg" alt="Laravel Version">
+<img src="https://img.shields.io/badge/PHP-8.1+-blue.svg" alt="PHP Version">
+<img src="https://img.shields.io/badge/MySQL-8.0+-green.svg" alt="Database">
+<img src="https://img.shields.io/badge/TailwindCSS-3.x-38B2AC.svg" alt="TailwindCSS">
+<img src="https://img.shields.io/badge/Cardzone-3DS-orange.svg" alt="Payment Gateway">
 </p>
 
-## About Laravel
+## 🕌 About Raudhah Muamalat
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Raudhah Muamalat is a comprehensive Islamic charity platform that enables secure online donations and fundraising campaigns. The platform integrates with Cardzone 3DS payment gateway to provide secure, Shariah-compliant payment processing for charitable giving.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 🌟 Key Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Multi-language Support**: English and Bahasa Malaysia
+- **Campaign Management**: Create and manage fundraising campaigns
+- **Secure Donations**: Cardzone 3DS payment integration
+- **User Management**: Admin and donor user roles
+- **Real-time Notifications**: Email and system notifications
+- **Responsive Design**: Mobile-first approach with TailwindCSS
+- **Admin Dashboard**: Comprehensive management interface
+- **Event Management**: Islamic events and activities
+- **Partner Management**: Charity partner organizations
+- **FAQ System**: Help and support documentation
 
-## Learning Laravel
+## 🛠 Technology Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Backend
+- **Framework**: Laravel 10.x
+- **PHP**: 8.1+
+- **Database**: MySQL 8.0+
+- **Authentication**: Laravel Breeze
+- **Payment Gateway**: Cardzone 3DS
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Frontend
+- **CSS Framework**: TailwindCSS 3.x
+- **JavaScript**: Alpine.js
+- **Icons**: UXWing Icon System
+- **Responsive**: Mobile-first design
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Security
+- **RSA Encryption**: 4096-bit key pairs
+- **MAC Signing**: SHA256 algorithm
+- **3DS Authentication**: Cardzone integration
+- **Session Management**: Laravel sessions
 
-## Laravel Sponsors
+## 📁 Project Structure
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```
+raudhah-muamalat/
+├── app/
+│   ├── Http/Controllers/
+│   │   ├── Admin/           # Admin controllers
+│   │   ├── Auth/            # Authentication
+│   │   └── Payment/         # Payment processing
+│   ├── Models/              # Eloquent models
+│   ├── Services/            # Business logic
+│   └── Providers/           # Service providers
+├── database/
+│   ├── migrations/          # Database schema
+│   ├── seeders/             # Sample data
+│   └── factories/           # Model factories
+├── resources/
+│   ├── views/               # Blade templates
+│   ├── css/                 # Stylesheets
+│   └── js/                  # JavaScript
+├── ssh-keygen/              # RSA keys for Cardzone
+├── docs/                    # Documentation
+└── tests/                   # Test suites
+```
 
-### Premium Partners
+## 🚀 Quick Start
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Prerequisites
+- PHP 8.1 or higher
+- Composer
+- MySQL 8.0 or higher
+- Node.js and NPM
+- Git
 
-## Contributing
+### Installation
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/mralif93/raudhah-muamalat.git
+   cd raudhah-muamalat
+   ```
 
-## Code of Conduct
+2. **Install PHP dependencies**
+   ```bash
+   composer install
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+3. **Install Node.js dependencies**
+   ```bash
+   npm install
+   ```
 
-## Security Vulnerabilities
+4. **Environment setup**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+5. **Configure database**
+   ```bash
+   # Update .env with your database credentials
+   php artisan migrate
+   php artisan db:seed
+   ```
 
-## License
+6. **Configure Cardzone integration**
+   ```bash
+   # Add Cardzone environment variables to .env
+   CARDZONE_MERCHANT_ID=your_merchant_id
+   CARDZONE_UAT_KEY_EXCHANGE_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpikeyreq
+   CARDZONE_UAT_MPIREQ_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpireq
+   CARDZONE_UAT_OBW_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpireqobw
+   CARDZONE_UAT_QR_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpireqqr
+   CARDZONE_RESPONSE_URL=https://your-domain.com/payment/cardzone/callback
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+7. **Build assets**
+   ```bash
+   npm run build
+   ```
+
+8. **Start the development server**
+   ```bash
+   php artisan serve
+   ```
+
+## 🔐 Key Management
+
+### RSA Key Pair
+The project uses a persistent RSA key pair for Cardzone integration:
+
+- **Private Key**: `ssh-keygen/jariahfund-dev` (PEM format)
+- **Public Key**: `ssh-keygen/jariahfund-dev_public.pem` (PEM format)
+- **Key Size**: 4096-bit RSA
+- **Usage**: MAC signing and data encryption
+
+### Key Generation
+```bash
+# Convert OpenSSH format to PEM format
+ssh-keygen -p -f ssh-keygen/jariahfund-dev -m pem
+
+# Extract public key in PEM format
+openssl rsa -in ssh-keygen/jariahfund-dev -pubout -out ssh-keygen/jariahfund-dev_public.pem
+```
+
+## 💳 Payment Integration
+
+### Cardzone 3DS Integration
+The platform integrates with Cardzone 3DS payment gateway for secure payment processing:
+
+- **Supported Methods**: Credit/Debit Cards, Online Banking (OBW), QR Payments
+- **Security**: RSA encryption, MAC signing, 3DS authentication
+- **Compliance**: PCI DSS compliant payment processing
+
+### Payment Flow
+1. **Donation Creation**: User fills donation form
+2. **Payment Initiation**: System generates transaction and performs key exchange
+3. **3DS Authentication**: User completes authentication on Cardzone
+4. **Callback Processing**: System verifies payment and updates status
+5. **Completion**: User redirected to success/failure page
+
+## 🧪 Testing
+
+### Run Tests
+```bash
+# Run all tests
+php artisan test
+
+# Run specific test suite
+php artisan test --filter=PaymentTest
+
+# Run Cardzone integration test
+php test_cardzone_integration.php
+```
+
+### Test Scripts
+- `test_cardzone_integration.php` - Cardzone API verification
+- `test_payment.php` - Payment flow testing
+- `test_donation_redirect.php` - Donation redirect testing
+
+## 📚 Documentation
+
+### Project Documentation
+- [Cardzone Integration Guide](docs/cardzone-integration.md)
+- [Verification Report](docs/cardzone-verification-report.md)
+- [Authentication Setup](docs/AUTHENTICATION_SETUP.md)
+- [Seeders Guide](docs/SEEDERS-README.md)
+
+### API Documentation
+- **Payment API**: `/api/payment/process`
+- **Bank List API**: `/api/banks`
+- **Cardzone Callback**: `/payment/cardzone/callback`
+
+## 🔧 Development
+
+### Code Style
+- Follow PSR-12 coding standards
+- Use Laravel conventions
+- Write comprehensive tests
+- Document complex logic
+
+### Database Migrations
+```bash
+# Create new migration
+php artisan make:migration create_table_name
+
+# Run migrations
+php artisan migrate
+
+# Rollback migrations
+php artisan migrate:rollback
+```
+
+### Seeding Data
+```bash
+# Run all seeders
+php artisan db:seed
+
+# Run specific seeder
+php artisan db:seed --class=CampaignSeeder
+```
+
+## 🚀 Deployment
+
+### Production Checklist
+- [ ] Update environment variables for production
+- [ ] Configure SSL certificates
+- [ ] Set up monitoring and logging
+- [ ] Configure Cardzone production endpoints
+- [ ] Test payment flows thoroughly
+- [ ] Set up backup procedures
+- [ ] Configure error reporting
+
+### Environment Variables
+```bash
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://your-domain.com
+
+DB_CONNECTION=mysql
+DB_HOST=your_db_host
+DB_PORT=3306
+DB_DATABASE=your_database
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+
+# Cardzone Production URLs
+CARDZONE_PRODUCTION_KEY_EXCHANGE_URL=https://3dsecurecz.muamalat.com.my/3dss/mpikeyreq
+CARDZONE_PRODUCTION_MPIREQ_URL=https://3dsecurecz.muamalat.com.my/3dss/mpireq
+CARDZONE_PRODUCTION_OBW_URL=https://3dsecurecz.muamalat.com.my/3dss/mpireqobw
+CARDZONE_PRODUCTION_QR_URL=https://3dsecurecz.muamalat.com.my/3dss/mpireqqr
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+For support and questions:
+- **Documentation**: Check the [docs/](docs/) directory
+- **Issues**: Create an issue on GitHub
+- **Email**: Contact the development team
+
+## 🙏 Acknowledgments
+
+- **Laravel Framework** for the robust PHP framework
+- **Cardzone** for secure payment processing
+- **TailwindCSS** for the utility-first CSS framework
+- **UXWing** for the icon system
+
+---
+
+**Built with ❤️ for the Islamic community**

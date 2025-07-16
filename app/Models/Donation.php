@@ -25,6 +25,7 @@ class Donation extends Model
         'payment_method',
         'payment_status',
         'transaction_id',
+        'payment_response',
         'message',
         'is_anonymous',
         'paid_at',
@@ -55,5 +56,13 @@ class Donation extends Model
     public function campaign()
     {
         return $this->belongsTo(Campaign::class);
+    }
+
+    /**
+     * Get the transaction associated with this donation.
+     */
+    public function transaction()
+    {
+        return $this->hasOne(Transaction::class);
     }
 }

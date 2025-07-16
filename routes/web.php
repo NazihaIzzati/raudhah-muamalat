@@ -54,19 +54,30 @@ Route::get('/faq', function () {
 
 // Donation routes
 Route::get('/donate/{campaignId?}', [DonationController::class, 'showForm'])->name('donate.form');
+Route::post('/donate/confirm', [DonationController::class, 'showConfirmation'])->name('donate.confirm');
 Route::post('/donate', [DonationController::class, 'processDonation'])->name('donate.process');
 
 // Payment routes
 Route::prefix('payment')->group(function () {
-    // Cardzone payment routes
-    Route::get('/cardzone/process/{donationId}', [PaymentController::class, 'processCardzone'])->name('payment.cardzone.process');
-    Route::post('/cardzone/callback', [PaymentController::class, 'cardzoneCallback'])->name('payment.cardzone.callback');
-    Route::get('/cardzone/return', [PaymentController::class, 'cardzoneReturn'])->name('payment.cardzone.return');
+    // Cardzone 3DS payment routes
+    Route::get('/pay', [PaymentController::class, 'showPaymentPage'])->name('payment.show');
+    Route::get('/page', [PaymentController::class, 'showPaymentPage'])->name('payment.page');
+    Route::post('/api/initiate-payment', [PaymentController::class, 'initiatePayment'])->name('api.payment.initiate');
+    Route::post('/cardzone/callback', [PaymentController::class, 'handleCardzoneCallback'])->name('cardzone.callback');
+    Route::get('/success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
+    Route::get('/failure', [PaymentController::class, 'paymentFailure'])->name('payment.failure');
     
-    // Payment status pages
-    Route::get('/success/{id}', [PaymentController::class, 'success'])->name('donation.success');
-    Route::get('/pending/{id}', [PaymentController::class, 'pending'])->name('donation.pending');
-    Route::get('/failed/{id}', [PaymentController::class, 'failed'])->name('donation.failed');
+    // Test endpoint for Cardzone connectivity
+    Route::get('/test-cardzone', [PaymentController::class, 'testCardzoneConnection'])->name('payment.test-cardzone');
+});
+
+// API routes for frontend
+Route::prefix('api')->group(function () {
+    // Bank list API
+    Route::get('/banks', [PaymentController::class, 'getBankList'])->name('api.banks.list');
+    
+    // Payment processing API
+    Route::post('/payment/process', [PaymentController::class, 'processPayment'])->name('api.payment.process');
 });
 
 Route::get('/contact', function () {
@@ -178,3 +189,14 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::patch('/contacts/{contact}/remove-urgent', [AdminContactController::class, 'removeUrgent'])->name('admin.contacts.remove-urgent');
     Route::patch('/contacts/{contact}/mark-replied', [AdminContactController::class, 'markReplied'])->name('admin.contacts.mark-replied');
 });
+
+Route::get('/payment/success', function (\Illuminate\Http\Request $request) {
+    $donation = \App\Models\Donation::find($request->donation_id);
+    return view('payment_status', ['status' => 'success', 'donation' => $donation]);
+})->name('payment.success');
+
+Route::get('/payment/failure', function (\Illuminate\Http\Request $request) {
+    $donation = \App\Models\Donation::find($request->donation_id);
+    $message = $request->message;
+    return view('payment_status', ['status' => 'failure', 'donation' => $donation, 'message' => $message]);
+})->name('payment.failure');

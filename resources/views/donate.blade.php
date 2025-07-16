@@ -3,273 +3,7 @@
 @section('title', __('app.donate_now') . ' - Jariah Fund')
 @section('description', __('app.make_a_secure_donation'))
 
-@push('styles')
-<style>
-/* Donation Page Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-}
-
-@keyframes heartbeat {
-  0%, 100% {
-    transform: scale(1);
-  }
-  25% {
-    transform: scale(1.1);
-  }
-  50% {
-    transform: scale(1);
-  }
-  75% {
-    transform: scale(1.05);
-  }
-}
-
-@keyframes progressFill {
-  from {
-    width: 0%;
-  }
-  to {
-    width: 73%;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-/* Animation Classes */
-.animate-fade-in-up {
-  animation: fadeInUp 0.8s ease-out forwards;
-}
-
-.animate-slide-in-left {
-  animation: slideInLeft 0.8s ease-out forwards;
-}
-
-.animate-slide-in-right {
-  animation: slideInRight 0.8s ease-out forwards;
-}
-
-.animate-pulse-gentle {
-  animation: pulse 2s ease-in-out infinite;
-}
-
-.animate-heartbeat {
-  animation: heartbeat 1.5s ease-in-out infinite;
-}
-
-.animate-progress {
-  animation: progressFill 2s ease-out forwards;
-}
-
-.animate-shimmer {
-  background: linear-gradient(90deg, transparent, rgba(254, 81, 0, 0.1), transparent);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
-}
-
-/* Carousel Styles */
-.carousel-container {
-  position: relative;
-  overflow: hidden;
-  border-radius: 0.75rem;
-}
-
-.carousel-track {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-  will-change: transform;
-}
-
-.carousel-slide {
-  min-width: 100%;
-  flex-shrink: 0;
-  position: relative;
-}
-
-.carousel-slide img {
-  display: block;
-  width: 100%;
-  height: 320px;
-  object-fit: cover;
-  object-position: center;
-}
-
-.carousel-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(4px);
-  border: none;
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 20;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-.carousel-nav:hover {
-  background: rgba(254, 81, 0, 0.9);
-  color: white;
-  transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 4px 12px rgba(254, 81, 0, 0.3);
-}
-
-.carousel-nav:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(254, 81, 0, 0.3);
-}
-
-.carousel-nav.prev {
-  left: 16px;
-}
-
-.carousel-nav.next {
-  right: 16px;
-}
-
-.carousel-indicators {
-  position: absolute;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-  z-index: 20;
-}
-
-.carousel-indicator {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-}
-
-.carousel-indicator.active {
-  background: rgba(254, 81, 0, 0.9);
-  border-color: rgba(254, 81, 0, 0.9);
-  transform: scale(1.2);
-}
-
-.carousel-indicator:hover {
-  background: rgba(254, 81, 0, 0.7);
-  border-color: rgba(254, 81, 0, 0.7);
-}
-
-/* Fallback for missing images */
-.carousel-slide img[src*="campaigns/"]:not([src*="http"]) {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.carousel-slide img[src*="campaigns/"]:not([src*="http"])::before {
-  content: "📷";
-  font-size: 3rem;
-  color: white;
-}
-
-/* Hover Animations */
-.hover-lift {
-  transition: all 0.3s ease;
-}
-
-.hover-lift:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.hover-scale {
-  transition: transform 0.3s ease;
-}
-
-.hover-scale:hover {
-  transform: scale(1.05);
-}
-
-.hover-glow {
-  transition: all 0.3s ease;
-}
-
-.hover-glow:hover {
-  box-shadow: 0 0 20px rgba(254, 81, 0, 0.3);
-}
-
-/* Staggered Animation Delays */
-.delay-100 { animation-delay: 0.1s; }
-.delay-200 { animation-delay: 0.2s; }
-.delay-300 { animation-delay: 0.3s; }
-.delay-400 { animation-delay: 0.4s; }
-.delay-500 { animation-delay: 0.5s; }
-.delay-600 { animation-delay: 0.6s; }
-
-/* Initial hidden state for animations */
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.animate-on-scroll.animated {
-  opacity: 1;
-  transform: translateY(0);
-  transition: all 0.8s ease-out;
-}
-</style>
-@endpush
 
 @section('content')
 
@@ -277,13 +11,13 @@
         <section class="py-20 bg-gradient-to-br from-primary-50 to-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-4xl mx-auto">
-                    <div class="inline-flex items-center px-4 py-2 bg-primary-100 rounded-full mb-6 animate-fade-in-up">
+                                            <div class="inline-flex items-center px-4 py-2 bg-primary-100 rounded-full mb-6 animate-fade-in">
                         <svg class="w-4 h-4 text-primary-600 mr-2 animate-heartbeat" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                         </svg>
                         <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">{{ __('app.secure_donation') }}</span>
                     </div>
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6 animate-fade-in-up delay-200">
+                                            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6 animate-fade-in">
                         {{ __('app.make_a_difference') }}
                         <span class="text-primary-500 relative block">
                             {{ __('app.today') }}
@@ -292,7 +26,7 @@
                             </svg>
                         </span>
                     </h1>
-                    <p class="text-xl text-gray-600 leading-relaxed mb-8 animate-fade-in-up delay-400">
+                                            <p class="text-xl text-gray-600 leading-relaxed mb-8 animate-fade-in">
                         {{ __('app.support_verified_campaigns') }} <span class="text-primary-600 font-medium">{{ __('app.complete_transparency') }}</span> and
                         <span class="text-primary-600 font-medium">{{ __('app.effective_impact') }}</span>.
                     </p>
@@ -403,14 +137,14 @@
                         </div>
 
                         <!-- Progress Indicator -->
-                        <div class="bg-white rounded-xl p-6 mb-8 border border-gray-100 hover-lift animate-on-scroll delay-200">
+                        <div class="bg-white rounded-xl p-6 mb-8 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
                             <div class="flex justify-between items-baseline mb-4">
                                 <div>
-                                    <div class="text-2xl font-bold text-gray-900 animate-pulse-gentle">RM 45,230</div>
+                                    <div class="text-2xl font-bold text-gray-900 animate-pulse">RM 45,230</div>
                                     <div class="text-sm text-gray-500">{{ __('app.raised_of_goal', ['62,000']) }}</div>
                                 </div>
                                 <div class="text-right">
-                                    <div class="text-lg font-semibold text-primary-600 animate-pulse-gentle">73%</div>
+                                    <div class="text-lg font-semibold text-primary-600 animate-pulse">73%</div>
                                     <div class="text-sm text-gray-500">{{ __('app.funded') }}</div>
                                 </div>
                             </div>
@@ -422,7 +156,7 @@
                                     @include('components.uxwing-icon', ['name' => 'people', 'class' => 'w-4 h-4 mr-2'])
                                     <span>234 {{ __('app.donors') }}</span>
                                 </div>
-                                <div class="animate-pulse-gentle">15 {{ __('app.days_left') }}</div>
+                                <div class="animate-pulse">15 {{ __('app.days_left') }}</div>
                             </div>
 
                             <!-- Audit Trail Toggle -->
@@ -561,10 +295,10 @@
                         </div>
 
                         <!-- Campaign Content -->
-                        <div class="bg-white rounded-xl border border-gray-100 p-8 hover-lift animate-on-scroll delay-400">
+                        <div class="bg-white rounded-xl border border-gray-100 p-8 hover:shadow-lg transition-shadow duration-300">
                             <!-- Organization Info -->
                             <div class="flex items-center mb-8 pb-6 border-b border-gray-100">
-                                <div class="w-12 h-12 rounded-lg flex items-center justify-center mr-4 bg-primary-50 hover-scale">
+                                <div class="w-12 h-12 rounded-lg flex items-center justify-center mr-4 bg-primary-50 hover:scale-105 transition-transform duration-300">
                                     <img src="{{ asset('assets/images/charity/prubsn.png') }}"
                                          alt="PruBSN Prihatin"
                                          class="w-8 h-8 object-contain">
@@ -573,7 +307,7 @@
                                     <h3 class="text-lg font-semibold text-gray-900 mb-1">PruBSN Prihatin</h3>
                                     <div class="flex items-center">
                                         <span class="text-sm text-gray-600 mr-3">Verified Corporate Foundation</span>
-                                        <div class="flex items-center px-2 py-1 bg-green-50 rounded-full animate-pulse-gentle">
+                                        <div class="flex items-center px-2 py-1 bg-green-50 rounded-full animate-pulse">
                                             <svg class="w-3 h-3 text-green-600 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
                                             </svg>
@@ -721,55 +455,45 @@
                         <div class="bg-white rounded-xl border border-gray-200 sticky top-6 hover-glow">
                             <!-- Form Header -->
                             <div class="px-8 py-6 border-b border-gray-100">
-                                <h2 class="text-xl font-semibold text-gray-900 mb-2 animate-fade-in-up">{{ __('app.make_your_donation') }}</h2>
-                                <p class="text-gray-600 animate-fade-in-up delay-100">{{ __('app.every_contribution') }}</p>
+                                <h2 class="text-xl font-semibold text-gray-900 mb-2 animate-fade-in">{{ __('app.make_your_donation') }}</h2>
+                                <p class="text-gray-600 animate-fade-in">{{ __('app.every_contribution') }}</p>
                             </div>
 
                             <!-- Professional Form -->
                             <div class="px-8 py-8">
-                                <form action="#" method="POST" class="space-y-8" onsubmit="return handleDonationSubmit(event)">
+                                <form action="{{ route('donate.confirm') }}" method="POST" class="space-y-8">
                                     @csrf
                                     <input type="hidden" name="campaign_id" value="1">
-                                    <input type="hidden" name="donation_type" id="donation-type-input" value="single">
 
-                                    <!-- Donation Type -->
-                                    <div>
-                                        <label class="block text-base font-medium text-gray-900 mb-4">{{ __('app.donation_type') }}</label>
-                                        <div class="grid grid-cols-2 gap-3">
-                                            <button type="button" id="single-btn" class="py-3 px-4 border-2 border-primary-500 bg-primary-500 text-white rounded-lg text-sm font-medium transition-colors hover:bg-primary-600 hover:border-primary-600">
-                                                {{ __('app.one_time') }}
-                                            </button>
-                                            <button type="button" id="monthly-btn" class="py-3 px-4 border-2 border-gray-200 bg-white text-gray-700 rounded-lg text-sm font-medium transition-colors hover:border-gray-300 hover:bg-gray-50">
-                                                {{ __('app.monthly') }}
-                                            </button>
-                                        </div>
-                                    </div>
+                                    <input type="hidden" name="payment_method" value="card">
+
+
 
 
 
                                     <!-- Amount Selection -->
-                                    <div class="animate-on-scroll delay-300">
+                                    <div>
                                         <label class="block text-base font-medium text-gray-900 mb-4">{{ __('app.select_amount') }}</label>
                                         <div class="grid grid-cols-2 gap-3">
-                                            <label class="cursor-pointer amount-option hover-scale">
+                                            <label class="cursor-pointer amount-option hover:scale-105 transition-transform duration-300">
                                                 <input type="radio" name="amount" value="50" class="sr-only">
                                                 <div class="amount-button border-2 border-gray-200 py-4 px-4 rounded-lg text-center transition-all duration-300 hover:border-primary-300 hover:bg-primary-50 hover:shadow-lg">
                                                     <div class="text-lg font-semibold text-gray-900">RM 50</div>
                                                 </div>
                                             </label>
-                                            <label class="cursor-pointer amount-option hover-scale">
+                                            <label class="cursor-pointer amount-option hover:scale-105 transition-transform duration-300">
                                                 <input type="radio" name="amount" value="150" class="sr-only">
                                                 <div class="amount-button border-2 border-gray-200 py-4 px-4 rounded-lg text-center transition-all duration-300 hover:border-primary-300 hover:bg-primary-50 hover:shadow-lg">
                                                     <div class="text-lg font-semibold text-gray-900">RM 150</div>
                                                 </div>
                                             </label>
-                                            <label class="cursor-pointer amount-option hover-scale">
+                                            <label class="cursor-pointer amount-option hover:scale-105 transition-transform duration-300">
                                                 <input type="radio" name="amount" value="250" class="sr-only" checked>
-                                                <div class="amount-button border-2 border-primary-500 bg-primary-500 py-4 px-4 rounded-lg text-center transition-all duration-300 animate-pulse-gentle">
+                                                <div class="amount-button border-2 border-primary-500 bg-primary-500 py-4 px-4 rounded-lg text-center transition-all duration-300 animate-pulse">
                                                     <div class="text-lg font-semibold text-white">RM 250</div>
                                                 </div>
                                             </label>
-                                            <label class="cursor-pointer amount-option hover-scale">
+                                            <label class="cursor-pointer amount-option hover:scale-105 transition-transform duration-300">
                                                 <input type="radio" name="amount" value="500" class="sr-only">
                                                 <div class="amount-button border-2 border-gray-200 py-4 px-4 rounded-lg text-center transition-all duration-300 hover:border-primary-300 hover:bg-primary-50 hover:shadow-lg">
                                                     <div class="text-lg font-semibold text-gray-900">RM 500</div>
@@ -790,82 +514,76 @@
                                         </div>
                                     </div>
 
-                                    <!-- Payment Methods -->
+                                    <!-- Donor Information -->
                                     <div>
-                                        <label class="block text-base font-medium text-gray-900 mb-4">{{ __('app.payment_method') }}</label>
-                                        <div class="space-y-3">
-                                            <!-- FPX Option -->
-                                            <label class="cursor-pointer payment-option">
-                                                <input type="radio" name="payment_method" value="fpx" class="sr-only" checked>
-                                                <div class="payment-card flex items-center p-4 border-2 border-primary-500 bg-primary-50 rounded-lg transition-colors">
-                                                    <div class="w-10 h-8 bg-blue-600 rounded text-white text-xs flex items-center justify-center font-semibold mr-4">FPX</div>
-                                                    <div class="flex-1">
-                                                        <div class="font-medium text-gray-900">{{ __('app.fpx_online_banking') }}</div>
-                                                        <div class="text-sm text-gray-600">{{ __('app.direct_bank_transfer') }}</div>
-                                                    </div>
-                                                    <div class="w-5 h-5 border-2 border-primary-500 rounded-full flex items-center justify-center">
-                                                        <div class="w-2 h-2 bg-primary-500 rounded-full"></div>
-                                                    </div>
-                                                </div>
-                                            </label>
+                                        <label class="block text-base font-medium text-gray-900 mb-4">{{ __('app.donor_information') }}</label>
+                                        <div class="space-y-4">
+                                            <!-- Donor Name -->
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('app.donor_name') }} *</label>
+                                                <input type="text" name="donor_name" required
+                                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                                       placeholder="{{ __('app.enter_your_full_name') }}">
+                                            </div>
 
-                                            <!-- DuitNow QR Option -->
-                                            <label class="cursor-pointer payment-option">
-                                                <input type="radio" name="payment_method" value="duitnow_qr" class="sr-only">
-                                                <div class="payment-card flex items-center p-4 border-2 border-gray-200 rounded-lg transition-colors hover:border-gray-300">
-                                                    <div class="w-10 h-8 bg-green-600 rounded text-white text-xs flex items-center justify-center font-semibold mr-4">QR</div>
-                                                    <div class="flex-1">
-                                                        <div class="font-medium text-gray-900">{{ __('app.duitnow_qr') }}</div>
-                                                        <div class="text-sm text-gray-600">{{ __('app.scan_with_banking_app') }}</div>
-                                                    </div>
-                                                    <div class="payment-radio w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center">
-                                                        <div class="w-2 h-2 bg-primary-500 rounded-full hidden"></div>
-                                                    </div>
-                                                </div>
-                                            </label>
+                                            <!-- Donor Email -->
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('app.donor_email') }} *</label>
+                                                <input type="email" name="donor_email" required
+                                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                                       placeholder="{{ __('app.enter_your_email') }}">
+                                            </div>
 
-                                            <!-- Credit/Debit Card Option -->
-                                            <label class="cursor-pointer payment-option">
-                                                <input type="radio" name="payment_method" value="card" class="sr-only">
-                                                <div class="payment-card flex items-center p-4 border-2 border-gray-200 rounded-lg transition-colors hover:border-gray-300">
-                                                    <div class="flex space-x-1 mr-4">
-                                                        <div class="w-6 h-4 bg-blue-700 rounded text-white text-xs flex items-center justify-center font-semibold">V</div>
-                                                        <div class="w-6 h-4 bg-red-500 rounded text-white text-xs flex items-center justify-center font-semibold">M</div>
-                                                    </div>
-                                                    <div class="flex-1">
-                                                        <div class="font-medium text-gray-900">{{ __('app.credit_debit_card') }}</div>
-                                                        <div class="text-sm text-gray-600">Visa, Mastercard</div>
-                                                    </div>
-                                                    <div class="payment-radio w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center">
-                                                        <div class="w-2 h-2 bg-primary-500 rounded-full hidden"></div>
-                                                    </div>
-                                                </div>
-                                            </label>
+                                            <!-- Donor Phone -->
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('app.donor_phone') }}</label>
+                                                <input type="tel" name="donor_phone"
+                                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                                       placeholder="{{ __('app.enter_your_phone') }}">
+                                            </div>
+
+                                            <!-- Donation Message -->
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('app.donation_message') }}</label>
+                                                <textarea name="message" rows="3"
+                                                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                                          placeholder="{{ __('app.optional_message') }}"></textarea>
+                                            </div>
+
+                                            <!-- Anonymous Donation -->
+                                            <div class="flex items-center">
+                                                <input type="checkbox" name="is_anonymous" id="is_anonymous" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                                <label for="is_anonymous" class="ml-2 block text-sm text-gray-700">
+                                                    {{ __('app.anonymous_donation') }}
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <!-- Donate Button -->
-                                    <div class="pt-8 border-t border-gray-100 animate-on-scroll delay-600">
-                                        <button type="submit" class="w-full bg-primary-500 hover:bg-primary-600 text-white py-4 px-6 rounded-lg text-lg font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 animate-pulse-gentle">
-                                            {{ __('app.donate_now') }}
+
+
+                                    <!-- Continue Button -->
+                                    <div class="pt-8 border-t border-gray-100">
+                                        <button type="submit" class="w-full bg-primary-500 hover:bg-primary-600 text-white py-4 px-6 rounded-lg text-lg font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 animate-pulse">
+                                            {{ __('app.continue_to_review') }}
                                         </button>
 
                                         <!-- Trust Indicators -->
                                         <div class="mt-6 text-center">
-                                            <div class="flex items-center justify-center text-sm text-gray-600 mb-4 animate-fade-in-up delay-700">
-                                                @include('components.uxwing-icon', ['name' => 'security', 'class' => 'w-4 h-4 text-green-600 mr-2 animate-pulse-gentle'])
+                                            <div class="flex items-center justify-center text-sm text-gray-600 mb-4">
+                                                @include('components.uxwing-icon', ['name' => 'security', 'class' => 'w-4 h-4 text-green-600 mr-2 animate-pulse'])
                                                 <span>{{ __('app.secure_encrypted_payment') }}</span>
                                             </div>
-                                            <div class="flex justify-center gap-6 text-xs text-gray-500 animate-fade-in-up delay-800">
-                                                <div class="flex items-center hover-scale">
+                                            <div class="flex justify-center gap-6 text-xs text-gray-500">
+                                                <div class="flex items-center hover:scale-105 transition-transform duration-300">
                                                     <span class="mr-1">🔒</span>
                                                     <span>{{ __('app.ssl_secured') }}</span>
                                                 </div>
-                                                <div class="flex items-center hover-scale">
+                                                <div class="flex items-center hover:scale-105 transition-transform duration-300">
                                                     <span class="mr-1">⚡</span>
                                                     <span>{{ __('app.instant') }}</span>
                                                 </div>
-                                                <div class="flex items-center hover-scale">
+                                                <div class="flex items-center hover:scale-105 transition-transform duration-300">
                                                     <span class="mr-1">🏆</span>
                                                     <span>{{ __('app.tax_receipt') }}</span>
                                                 </div>
@@ -891,35 +609,6 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Toggle buttons functionality
-    const singleBtn = document.getElementById('single-btn');
-    const monthlyBtn = document.getElementById('monthly-btn');
-    const donationTypeInput = document.getElementById('donation-type-input');
-
-    function setActiveButton(activeBtn, inactiveBtn, type) {
-        // Reset buttons
-        activeBtn.classList.remove('text-gray-700', 'bg-white', 'border-gray-200');
-        activeBtn.classList.add('text-white', 'border-primary-500', 'bg-primary-500');
-
-        inactiveBtn.classList.remove('text-white', 'border-primary-500', 'bg-primary-500');
-        inactiveBtn.classList.add('text-gray-700', 'bg-white', 'border-gray-200');
-
-        // Update hidden input
-        if (donationTypeInput) {
-            donationTypeInput.value = type;
-        }
-    }
-
-    // Button events
-    if (singleBtn && monthlyBtn) {
-        singleBtn.addEventListener('click', function() {
-            setActiveButton(singleBtn, monthlyBtn, 'single');
-        });
-
-        monthlyBtn.addEventListener('click', function() {
-            setActiveButton(monthlyBtn, singleBtn, 'monthly');
-        });
-    }
 
     // Amount selection functionality
     const amountInputs = document.querySelectorAll('input[name="amount"]');
@@ -972,162 +661,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Handle payment method selection
-    const paymentInputs = document.querySelectorAll('input[name="payment_method"]');
-    paymentInputs.forEach(input => {
-        input.addEventListener('change', function() {
-            paymentInputs.forEach(otherInput => {
-                const card = otherInput.closest('label').querySelector('.payment-card');
-                const radio = otherInput.closest('label').querySelector('.payment-radio');
-                const radioInner = radio ? radio.querySelector('div') : null;
 
-                if (otherInput === this) {
-                    // Selected state
-                    card.classList.remove('border-gray-200', 'hover:border-gray-300');
-                    card.classList.add('border-primary-500', 'bg-primary-50');
-                    if (radio) {
-                        radio.classList.remove('border-gray-300');
-                        radio.classList.add('border-primary-500');
-                        // Show inner dot
-                        if (radioInner) {
-                            radioInner.classList.remove('hidden');
-                            radioInner.classList.add('block');
-                        }
-                    }
-                } else {
-                    // Unselected state
-                    card.classList.remove('border-primary-500', 'bg-primary-50');
-                    card.classList.add('border-gray-200', 'hover:border-gray-300');
-                    if (radio) {
-                        radio.classList.remove('border-primary-500');
-                        radio.classList.add('border-gray-300');
-                        // Hide inner dot
-                        if (radioInner) {
-                            radioInner.classList.remove('block');
-                            radioInner.classList.add('hidden');
-                        }
-                    }
-                }
-            });
-        });
-    });
 
-    // Form validation and submission handler
-    window.handleDonationSubmit = function(e) {
-        e.preventDefault();
 
-        const selectedAmount = document.querySelector('input[name="amount"]:checked');
-        const customAmount = customAmountInput ? customAmountInput.value : '';
-        const selectedPayment = document.querySelector('input[name="payment_method"]:checked');
-
-        // Validate amount
-        if (!selectedAmount && !customAmount) {
-            showNotification('Please select or enter a donation amount.', 'error');
-            return false;
-        }
-
-        if (customAmount && parseFloat(customAmount) < 1) {
-            showNotification('Please enter a valid donation amount (minimum RM 1).', 'error');
-            return false;
-        }
-
-        // Validate payment method
-        if (!selectedPayment) {
-            showNotification('Please select a payment method.', 'error');
-            return false;
-        }
-
-        // Get donation details
-        const amount = selectedAmount ? selectedAmount.value : customAmount;
-        const donationType = donationTypeInput ? donationTypeInput.value : 'single';
-        const paymentMethod = selectedPayment.value;
-
-        // Show success message
-        showNotification(`Thank you! Your ${donationType} donation of RM ${amount} via ${getPaymentMethodName(paymentMethod)} has been processed successfully.`, 'success');
-
-        // Reset form after successful submission
-        setTimeout(() => {
-            document.querySelector('form').reset();
-            // Reset visual states
-            resetFormStates();
-        }, 2000);
-
-        return false;
-    };
-
-    function getPaymentMethodName(method) {
-        switch(method) {
-            case 'fpx': return 'FPX Online Banking';
-            case 'duitnow_qr': return 'DuitNow QR';
-            case 'card': return 'Credit/Debit Card';
-            default: return method;
-        }
-    }
-
-    function resetFormStates() {
-        // Reset donation type buttons
-        if (singleBtn && monthlyBtn) {
-            setActiveButton(singleBtn, monthlyBtn, 'single');
-        }
-
-        // Reset amount buttons
-        amountInputs.forEach(input => {
-            const button = input.closest('label').querySelector('.amount-button');
-            const textElement = button.querySelector('div');
-            button.classList.remove('border-primary-500', 'bg-primary-500');
-            button.classList.add('border-gray-200', 'hover:border-primary-300', 'hover:bg-primary-50');
-            textElement.classList.remove('text-white');
-            textElement.classList.add('text-gray-900');
-        });
-
-        // Reset payment method buttons
-        const paymentInputs = document.querySelectorAll('input[name="payment_method"]');
-        paymentInputs.forEach(input => {
-            const card = input.closest('label').querySelector('.payment-card');
-            const radio = input.closest('label').querySelector('.payment-radio');
-            const radioInner = radio ? radio.querySelector('div') : null;
-
-            if (input.value === 'fpx') {
-                // Set FPX as default
-                input.checked = true;
-                card.classList.add('border-primary-500', 'bg-primary-50');
-                if (radio) {
-                    radio.classList.add('border-primary-500');
-                    if (radioInner) radioInner.style.display = 'block';
-                }
-            } else {
-                card.classList.remove('border-primary-500', 'bg-primary-50');
-                card.classList.add('border-gray-200', 'hover:border-gray-300');
-                if (radio) {
-                    radio.classList.remove('border-primary-500');
-                    radio.classList.add('border-gray-300');
-                    if (radioInner) {
-                        radioInner.classList.remove('block');
-                        radioInner.classList.add('hidden');
-                    }
-                }
-            }
-        });
-    }
-
-    function showNotification(message, type = 'success') {
-        const notification = document.createElement('div');
-        notification.textContent = message;
-
-        const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
-        notification.className = `fixed top-4 right-4 ${bgColor} text-white px-6 py-4 rounded-lg shadow-lg z-50 transition-all duration-300 max-w-md`;
-
-        document.body.appendChild(notification);
-
-        setTimeout(() => {
-            notification.classList.add('opacity-0');
-            setTimeout(() => {
-                if (document.body.contains(notification)) {
-                    document.body.removeChild(notification);
-                }
-            }, 300);
-        }, type === 'success' ? 4000 : 3000);
-    }
 
     // Accessibility improvements
     const amountLabels = document.querySelectorAll('label[class*="cursor-pointer"]');
@@ -1229,48 +765,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
 
-    // Observe all elements with animate-on-scroll class
-    document.querySelectorAll('.animate-on-scroll').forEach(el => {
-        observer.observe(el);
-    });
 
-    // Enhanced button interactions
-    document.querySelectorAll('.amount-option').forEach(option => {
-        option.addEventListener('mouseenter', function() {
-            this.style.transform = 'scale(1.02)';
-        });
-
-        option.addEventListener('mouseleave', function() {
-            this.style.transform = 'scale(1)';
-        });
-    });
-
-    // Donation button pulse effect on hover
-    const donateButton = document.querySelector('button[type="submit"]');
-    if (donateButton) {
-        donateButton.addEventListener('mouseenter', function() {
-            this.classList.add('animate-heartbeat');
-        });
-
-        donateButton.addEventListener('mouseleave', function() {
-            this.classList.remove('animate-heartbeat');
-        });
-    }
-
-    // Progress bar animation trigger
-    const progressBar = document.querySelector('.animate-progress');
-    if (progressBar) {
-        const progressObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animationPlayState = 'running';
-                    progressObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        progressObserver.observe(progressBar);
-    }
 
     // Carousel functionality
     let currentSlide = 0;
@@ -1509,12 +1004,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 progressBar.style.width = `${newPercentage}%`;
 
                 // Add pulse effect
-                amountElement.classList.add('animate-pulse-gentle');
-                percentageElement.classList.add('animate-pulse-gentle');
+                amountElement.classList.add('animate-pulse');
+                percentageElement.classList.add('animate-pulse');
 
                 setTimeout(() => {
-                    amountElement.classList.remove('animate-pulse-gentle');
-                    percentageElement.classList.remove('animate-pulse-gentle');
+                    amountElement.classList.remove('animate-pulse');
+                    percentageElement.classList.remove('animate-pulse');
                 }, 1000);
             }
         }, 30000); // Update every 30 seconds

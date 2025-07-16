@@ -35,4 +35,15 @@ return [
         ],
     ],
 
+    'cardzone' => [
+        'production' => env('CARDZONE_PRODUCTION', false),
+        'uat' => env('CARDZONE_UAT', false),
+        'sandbox_url' => env('CARDZONE_SANDBOX_URL', 'https://3dsecureczuat.muamalat.com.my/3dss/'),
+        'uat_url' => env('CARDZONE_UAT_URL', 'https://3dsecureczuat.muamalat.com.my/3dss/'),
+        'production_url' => env('CARDZONE_PRODUCTION_URL', 'https://3dsecurecz.muamalat.com.my/3dss/'),
+        'merchant_id' => env('CARDZONE_MERCHANT_ID', '400000000000005'),
+        'merchant_password' => env('CARDZONE_MERCHANT_PASSWORD'),
+        'terminal_id' => env('CARDZONE_TERMINAL_ID'),
+    ],
+
 ];

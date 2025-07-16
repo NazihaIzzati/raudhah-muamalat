@@ -1,112 +1,187 @@
-# Cardzone Payment Integration
-
-This document outlines the integration of Cardzone payment gateway with the Raudhah Muamalat donation system.
+# Cardzone 3DS Integration Documentation
 
 ## Overview
+This document outlines the Cardzone 3DS (3D Secure) payment integration for the Raudhah Muamalat donation system.
 
-Cardzone is a payment gateway that allows secure processing of credit card and other payment methods. This integration enables the platform to accept donations through the Cardzone payment gateway.
+## Environment Configuration
 
-## Implementation Details
+### Required Environment Variables
+Add these to your `.env` file:
 
-The integration consists of the following components:
-
-1. **CardZoneService** - A service class that handles communication with the Cardzone API
-2. **PaymentController** - Controller that processes payment requests and handles callbacks
-3. **Donation flow** - Updated to include Cardzone as a payment option
-
-## Configuration
-
-Add the following variables to your `.env` file:
-
-```
-# Cardzone Payment Gateway
-CARDZONE_PRODUCTION=false
-CARDZONE_UAT=false
-CARDZONE_SANDBOX_URL=https://3dsecureczuat.muamalat.com.my/3dss/
-CARDZONE_UAT_URL=https://3dsecureczuat.muamalat.com.my/3dss/
-CARDZONE_PRODUCTION_URL=https://3dsecurecz.muamalat.com.my/3dss/
+```bash
+# Cardzone Configuration
 CARDZONE_MERCHANT_ID=400000000000005
-CARDZONE_MERCHANT_PASSWORD=your_merchant_password
-CARDZONE_TERMINAL_ID=your_terminal_id
+CARDZONE_UAT_KEY_EXCHANGE_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpikeyreq
+CARDZONE_UAT_MPIREQ_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpireq
+CARDZONE_UAT_OBW_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpireqobw
+CARDZONE_UAT_QR_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpireqqr
+CARDZONE_RESPONSE_URL=https://your-domain.com/payment/cardzone/callback
+
+# Optional: Production URLs (when ready for production)
+CARDZONE_PRODUCTION_KEY_EXCHANGE_URL=https://3dsecurecz.muamalat.com.my/3dss/mpikeyreq
+CARDZONE_PRODUCTION_MPIREQ_URL=https://3dsecurecz.muamalat.com.my/3dss/mpireq
+CARDZONE_PRODUCTION_OBW_URL=https://3dsecurecz.muamalat.com.my/3dss/mpireqobw
+CARDZONE_PRODUCTION_QR_URL=https://3dsecurecz.muamalat.com.my/3dss/mpireqqr
 ```
 
-### Environment Selection
+## Key Management
 
-The system supports three environments:
+### Persistent RSA Key Pair
+The integration uses a persistent RSA key pair stored in the `ssh-keygen/` directory:
 
-1. **Sandbox** - Used for initial development and testing (default)
-2. **UAT** - User Acceptance Testing environment for pre-production testing
-3. **Production** - Live environment for real transactions
+- **Private Key**: `ssh-keygen/jariahfund-dev` (PEM format)
+- **Public Key**: `ssh-keygen/jariahfund-dev_public.pem` (PEM format)
+- **Key Size**: 4096-bit RSA
+- **Format**: PEM (compatible with OpenSSL)
 
-To use the UAT environment, set the following in your `.env` file:
+### Key Usage
+- **Private Key**: Used for MAC signing of payment requests and data encryption
+- **Public Key**: Used for key exchange with Cardzone (converted to Base64Url)
+- **Loading**: Automatically loaded by CardzoneService
+
+### Key Generation
+The keys were generated using:
+```bash
+# Convert OpenSSH format to PEM format
+ssh-keygen -p -f ssh-keygen/jariahfund-dev -m pem
+
+# Extract public key in PEM format
+openssl rsa -in ssh-keygen/jariahfund-dev -pubout -out ssh-keygen/jariahfund-dev_public.pem
 ```
-CARDZONE_UAT=true
-CARDZONE_PRODUCTION=false
-```
 
-To use the Production environment, set:
-```
-CARDZONE_PRODUCTION=true
-```
+## Integration Flow
 
-## Payment Flow
+### 1. Donation Creation
+- User fills donation form
+- System creates donation record with `pending` status
+- Redirects to payment page with donation data in session
 
-1. User selects Cardzone as payment method on the donation form
-2. User submits the donation form
-3. System creates a donation record with 'pending' status
-4. User is redirected to the Cardzone payment page
-5. User completes payment on Cardzone
-6. Cardzone sends a callback to our system
-7. System processes the callback and updates the donation status
-8. User is redirected to success/pending/failed page based on payment status
+### 2. Payment Initiation
+- System generates unique 10-digit transaction ID
+- Loads persistent RSA key pair from `ssh-keygen/` directory
+- Performs key exchange with Cardzone (MPIKeyReq)
+- Creates transaction record in database
+- Prepares payment form data with MAC signature
+- Redirects user to Cardzone payment gateway
 
-## Callback Handling
+### 3. Cardzone Processing
+- User completes 3DS authentication on Cardzone
+- Cardzone sends callback to your response URL
+- System verifies MAC signature using persistent keys
+- Updates transaction and donation status
 
-The system handles two types of callbacks from Cardzone:
+### 4. Payment Completion
+- User redirected to success/failure page
+- Donation status updated accordingly
 
-1. **Server-to-Server Callback** - Cardzone sends a POST request to our callback URL with payment status
-2. **Return URL** - User is redirected back to our return URL after completing payment
+## API Endpoints
+
+### Payment Routes
+- `GET /payment/page` - Payment page
+- `POST /payment/api/initiate-payment` - Initiate payment
+- `POST /payment/cardzone/callback` - Cardzone callback
+- `GET /payment/success` - Success page
+- `GET /payment/failure` - Failure page
+
+### API Routes
+- `GET /api/banks` - Get bank list for OBW
+- `POST /api/payment/process` - Process payment (donation + payment)
+
+## Database Tables
+
+### transactions
+- `transaction_id` - Unique 10-digit Cardzone transaction ID
+- `merchant_id` - Cardzone merchant ID
+- `amount` - Payment amount
+- `currency` - Payment currency
+- `payment_method` - card/obw/qr
+- `status` - pending/authenticated/authorized/failed
+- `cardzone_response_data` - Raw Cardzone response
+
+### cardzone_keys
+- `merchant_id` - Merchant identifier
+- `merchant_private_key` - Your RSA private key (PEM format)
+- `cardzone_public_key` - Cardzone's public key (Base64Url)
+
+## Security Features
+
+### RSA Key Management
+- Persistent 4096-bit RSA key pair stored in `ssh-keygen/` directory
+- Automatic key loading by CardzoneService
+- Secure private key storage with proper file permissions
+- Public key exchange with Cardzone for verification
+
+### MAC Signing
+- All requests signed with persistent merchant private key
+- MAC verification for all callbacks using Cardzone's public key
+- Field order critical for MAC generation
+- SHA256 signing algorithm
+
+### Data Encryption
+- Sensitive card data encrypted with Cardzone's public key
+- RSA-OAEP padding for encryption
+- Base64 encoding for encrypted data
 
 ## Testing
 
-To test the integration:
-
-1. Set `CARDZONE_PRODUCTION=false` in your `.env` file
-2. For sandbox testing, set `CARDZONE_UAT=false`
-3. For UAT testing, set `CARDZONE_UAT=true`
-4. Use the appropriate credentials provided by Cardzone for each environment
-5. Make test donations using the test cards provided by Cardzone
+### Test Transaction IDs
+- Must be 10-digit numeric values
+- Example: `7108409818` (from Cardzone documentation)
 
 ### Test Cards
+- Use test card numbers provided by Cardzone
+- Test CVV and expiry dates
 
-#### Sandbox Environment
-- **Successful Payment**: 4111 1111 1111 1111
-- **Failed Payment**: 4000 0000 0000 0002
-- **Expired Card**: 4000 0000 0000 0069
-
-#### UAT Environment
-- **Successful Payment**: 5555 5555 5555 4444
-- **Failed Payment**: 4111 1111 1111 1113
-- **3D Secure Testing**: 4212 3456 7890 1237
+### Error Handling
+- Key exchange failures fall back to demo mode
+- Comprehensive logging for debugging
+- Graceful error responses to users
 
 ## Troubleshooting
 
-Common issues:
+### Common Issues
 
-1. **Callback not received** - Check firewall settings and ensure the callback URL is accessible
-2. **Invalid signature** - Verify merchant credentials and signature calculation
-3. **Payment stuck in pending** - Check logs for callback errors
-4. **Environment mismatch** - Ensure you're using the correct URL and credentials for your selected environment
+1. **Key Exchange Fails (Error 404)**
+   - Verify merchant ID is correct
+   - Check UAT environment availability
+   - Contact Cardzone support
 
-## Security Considerations
+2. **MAC Verification Fails**
+   - Ensure field order matches Cardzone specification
+   - Verify public key is correctly stored
+   - Check MAC generation algorithm
 
-1. Always verify the signature in callbacks
-2. Never log sensitive payment information
-3. Use HTTPS for all payment-related communications
-4. Store merchant credentials securely
-5. Use different credentials for each environment
+3. **Transaction ID Invalid**
+   - Must be exactly 10 digits
+   - Must be numeric only
+   - Cannot be reused
 
-## References
+4. **Key Loading Issues**
+   - Verify `ssh-keygen/jariahfund-dev` exists and is readable
+   - Check file permissions (should be 600)
+   - Ensure PEM format is correct
 
-- [Cardzone API Documentation](https://docs.cardzone.com)
-- [BMMB-Cardzone 3DS Merchant Interface v2.9](docs/BMMB-Cardzone%203DS%20Merchant%20Interface_v2.9.pdf) 
+### Debug Endpoints
+- `GET /payment/test-cardzone` - Test Cardzone connectivity
+- Check Laravel logs for detailed error information
+
+## Production Checklist
+
+- [ ] Update environment variables to production URLs
+- [ ] Verify merchant credentials with Cardzone
+- [ ] Test with real card data (if available)
+- [ ] Configure proper SSL certificates
+- [ ] Set up monitoring and alerting
+- [ ] Review security audit findings
+- [ ] Update callback URL to production domain
+- [ ] Consider using dedicated production key pair
+- [ ] Implement key rotation policies
+
+## Support
+
+For technical support:
+1. Check Laravel logs in `storage/logs/laravel.log`
+2. Review Cardzone documentation
+3. Contact Cardzone merchant support
+4. Check network connectivity to Cardzone endpoints
+5. Verify key files in `ssh-keygen/` directory 

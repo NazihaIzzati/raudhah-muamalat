@@ -6,6 +6,7 @@
 
         <title>@yield('title', 'Jariah Fund - Islamic Financial Solutions')</title>
         <meta name="description" content="@yield('description', 'A trusted crowdfunding platform helping the underprivileged access education, healthcare, and economic support through Islamic values.')">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -80,8 +81,9 @@
     <body class="bg-gray-50 text-gray-900 font-sans">
         <!-- Header -->
         <header class="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center h-14 md:h-16">
+            <div class="@yield('header-container', 'w-full') px-4 sm:px-6 lg:px-8">
+                <div class="max-w-8xl mx-auto">
+                    <div class="flex justify-between items-center h-14 md:h-16">
                     <!-- Logo -->
                     <div class="flex items-center space-x-4">
                         <a href="{{ url('/') }}" class="text-xl md:text-2xl font-bold text-primary-500">
@@ -364,6 +366,7 @@
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
         </header>
 
@@ -374,8 +377,9 @@
 
         <!-- Footer -->
         <footer class="bg-gray-900 text-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="@yield('footer-container', 'w-full') px-4 sm:px-6 lg:px-8 py-12">
+                <div class="max-w-7xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <!-- Company Info -->
                     <div class="space-y-4">
                         <div class="flex items-center space-x-4">
@@ -476,6 +480,7 @@
                             <a href="#" class="hover:text-primary-500 transition-colors">{{ __('app.cookie_policy') }}</a>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </footer>

@@ -20,6 +20,13 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,
         ]);
+        
+        // Exclude CSRF for API routes
+        $middleware->validateCsrfTokens(except: [
+            'api/*',
+            'payment/api/*',
+            'payment/cardzone/*'
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
