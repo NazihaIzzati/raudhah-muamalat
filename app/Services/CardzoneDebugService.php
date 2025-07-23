@@ -284,33 +284,33 @@ class CardzoneDebugService
     /**
      * Get debug log content
      */
-    public function getDebugLog($lines = 100)
+    public function getDebugLog($entries = 100)
     {
         if (!File::exists($this->debugLogPath)) {
-            return "Debug log file not found.";
+            return ["Debug log file not found."];
         }
-
         $content = File::get($this->debugLogPath);
-        $logLines = explode("\n", $content);
-        $logLines = array_filter($logLines); // Remove empty lines
-        
-        return array_slice($logLines, -$lines);
+        // Split by log entry: lines starting with [YYYY-MM-DD HH:MM:SS.uuuuuu]
+        $pattern = '/(?=\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+\])/m';
+        $logEntries = preg_split($pattern, $content, -1, PREG_SPLIT_NO_EMPTY);
+        $logEntries = array_map('trim', $logEntries);
+        return array_slice($logEntries, -$entries);
     }
 
     /**
      * Get transaction log content
      */
-    public function getTransactionLog($lines = 100)
+    public function getTransactionLog($entries = 100)
     {
         if (!File::exists($this->transactionLogPath)) {
-            return "Transaction log file not found.";
+            return ["Transaction log file not found."];
         }
-
         $content = File::get($this->transactionLogPath);
-        $logLines = explode("\n", $content);
-        $logLines = array_filter($logLines); // Remove empty lines
-        
-        return array_slice($logLines, -$lines);
+        // Split by log entry: lines starting with [YYYY-MM-DD HH:MM:SS.uuuuuu]
+        $pattern = '/(?=\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+\])/m';
+        $logEntries = preg_split($pattern, $content, -1, PREG_SPLIT_NO_EMPTY);
+        $logEntries = array_map('trim', $logEntries);
+        return array_slice($logEntries, -$entries);
     }
 
     /**

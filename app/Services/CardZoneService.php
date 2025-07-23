@@ -91,6 +91,34 @@ class CardzoneService
     }
 
     /**
+     * Converts a Base64Url or Base64 public key to PEM format and saves it for Cardzone encryption.
+     * Call this after a successful key exchange.
+     *
+     * @param string $base64urlKey The pubKey from Cardzone key exchange response.
+     * @param string|null $pemPath The path to save the PEM file (default: ssh-keygen/cardzone_public.pem).
+     * @return string The PEM-formatted public key.
+     */
+    public function saveCardzonePublicKeyPem($base64urlKey, $pemPath = null)
+    {
+        // Convert Base64Url to Base64 if needed
+        $base64 = strtr($base64urlKey, '-_', '+/');
+        $pad = strlen($base64) % 4;
+        if ($pad > 0) {
+            $base64 .= str_repeat('=', 4 - $pad);
+        }
+        // Convert to PEM format
+        $pem = "-----BEGIN PUBLIC KEY-----\n";
+        $pem .= chunk_split($base64, 64, "\n");
+        $pem .= "-----END PUBLIC KEY-----\n";
+        // Save to file
+        if (!$pemPath) {
+            $pemPath = base_path('ssh-keygen/cardzone_public.pem');
+        }
+        file_put_contents($pemPath, $pem);
+        return $pem;
+    }
+
+    /**
      * Generates a transaction ID matching the sample request format.
      * 
      * Sample Request Format:
@@ -102,9 +130,10 @@ class CardzoneService
      */
     public function generateTransactionId($donationId = null)
     {
-        // Generate random 10 digits to match sample request format
-        $transactionId = str_pad(mt_rand(0, 9999999999), 10, '0', STR_PAD_LEFT);
-        
+        // Combine current timestamp (last 7 digits) and 3 random digits for 10-digit unique ID
+        $timestampPart = substr(strval(time()), -7); // last 7 digits of timestamp
+        $randomPart = str_pad(mt_rand(0, 999), 3, '0', STR_PAD_LEFT); // 3 random digits
+        $transactionId = $timestampPart . $randomPart;
         return $transactionId;
     }
 
@@ -264,6 +293,7 @@ class CardzoneService
             }
             if ($isSuccess && isset($result['pubKey'])) {
                 $this->updateCardzonePublicKey($result['pubKey']);
+                $this->saveCardzonePublicKeyPem($result['pubKey']); // Save the key after successful exchange
                 $this->debugService->logSuccess($purchaseId, 'KEY_EXCHANGE_SUCCESS', [
                     'cardzone_public_key_length' => strlen($result['pubKey'])
                 ]);

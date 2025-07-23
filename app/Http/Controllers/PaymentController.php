@@ -185,19 +185,16 @@ class PaymentController extends Controller
     {
         $paymentMethod = $request->input('payment_method');
         $merchantId = env('CARDZONE_MERCHANT_ID');
-        $purchaseAmount = $request->input('purchase_amount'); // Already in minor units (e.g., 15000)
-        $purchaseCurrency = $request->input('purchase_currency'); // e.g., 458
-        $donationId = $request->input('donation_id'); // Get donation ID if this is a donation
+        $purchaseAmount = $request->input('purchase_amount');
+        $purchaseCurrency = $request->input('purchase_currency');
+        $donationId = $request->input('donation_id');
 
-        // Get donation data if available
         $donation = null;
         if ($donationId) {
             $donation = \App\Models\Donation::find($donationId);
         }
 
-        // Generate a unique transaction ID for Cardzone using donation ID if available
         $transactionId = $this->cardzoneService->generateTransactionId($donationId);
-        
         Log::info('Payment transaction initiated', [
             'transactionId' => $transactionId,
             'paymentMethod' => $paymentMethod,
@@ -206,20 +203,17 @@ class PaymentController extends Controller
             'donationId' => $donationId
         ]);
 
-        // --- Store initial transaction details in database ---
         $transaction = Transaction::create([
             'transaction_id' => $transactionId,
             'merchant_id' => $merchantId,
-            'amount' => $purchaseAmount / 100, // Store as major units
+            'amount' => $purchaseAmount / 100,
             'currency' => $purchaseCurrency,
             'payment_method' => $paymentMethod,
             'status' => 'pending',
-            // Store sensitive data masked or encrypted if needed
-            'card_number_masked' => $paymentMethod === 'card' ? Str::mask($request->input('card_number'), '*', 6, 4) : null,
+            'card_number_masked' => $paymentMethod === 'card' ? \Illuminate\Support\Str::mask($request->input('card_number'), '*', 6, 4) : null,
             'card_expiry' => $paymentMethod === 'card' ? $request->input('card_expiry') : null,
             'card_holder_name' => $paymentMethod === 'card' ? $request->input('card_holder_name') : null,
             'obw_bank_code' => $paymentMethod === 'obw' ? $request->input('obw_bank') : null,
-            // Store donation reference if this is a donation
             'donation_id' => $donationId,
         ]);
 
@@ -229,9 +223,7 @@ class PaymentController extends Controller
             'merchantId' => $merchantId,
             'keyExchangeUrl' => env('CARDZONE_UAT_KEY_EXCHANGE_URL')
         ]);
-        
         $keyExchangeResult = $this->cardzoneService->performKeyExchange($transactionId);
-        
         Log::info('Key Exchange Result', [
             'transactionId' => $transactionId,
             'success' => $keyExchangeResult['success'] ?? false,
@@ -239,148 +231,134 @@ class PaymentController extends Controller
             'errorCode' => $keyExchangeResult['errorCode'] ?? null
         ]);
 
-        // Initialize variables
-        $cardzonePublicKey = 'DEMO_PUBLIC_KEY';
-        $merchantPrivateKey = 'DEMO_PRIVATE_KEY';
-
-        if (!$keyExchangeResult['success']) {
-            $errorMessage = $keyExchangeResult['error'] ?? 'Unknown key exchange error';
-            $errorCode = $keyExchangeResult['errorCode'] ?? 'N/A';
-            
-            Log::warning('Payment initiation - Key exchange failed, using demo mode', [
-                'transactionId' => $transactionId,
-                'error' => $errorMessage,
-                'errorCode' => $errorCode,
-                'paymentMethod' => $paymentMethod
-            ]);
-            
-            // Update transaction status to indicate demo mode
-            $transaction->update([
-                'status' => 'demo_mode',
-                'cardzone_response_data' => [
-                    'error' => $errorMessage,
-                    'errorCode' => $errorCode,
-                    'demo_mode' => true
-                ]
-            ]);
+        $cardzonePublicKey = null;
+        $merchantPrivateKey = null;
+        if ($keyExchangeResult['success'] && isset($keyExchangeResult['cardzonePublicKey'])) {
+            $this->cardzoneService->saveCardzonePublicKeyPem($keyExchangeResult['cardzonePublicKey']);
+            $cardzonePublicKey = file_get_contents(base_path('ssh-keygen/cardzone_public.pem'));
+            $merchantPrivateKey = $this->cardzoneService->getMerchantPrivateKey();
         } else {
-            $cardzonePublicKey = $keyExchangeResult['cardzonePublicKey'];
-            $merchantPrivateKey = $keyExchangeResult['merchantPrivateKey'];
+            Log::error('Key exchange failed, cannot proceed with card payment.', [
+                'transactionId' => $transactionId,
+                'error' => $keyExchangeResult['error'] ?? 'Unknown error',
+                'errorCode' => $keyExchangeResult['errorCode'] ?? null
+            ]);
+            $transaction->update(['status' => 'failed_key_exchange']);
+            return response()->json(['success' => false, 'message' => 'Key exchange failed.'], 500);
         }
 
-        // Update CardzoneKey model with Cardzone's public key (already done in service, but ensure it's there)
-        $this->cardzoneService->updateCardzonePublicKey($cardzonePublicKey);
+        // Prepare MPIReq data strictly following Cardzone spec
+        $cardNumber = $request->input('card_number');
+        $cardExpiry = $request->input('card_expiry');
+        $cardCVV = $request->input('card_cvv');
+        $cardHolderName = $request->input('card_holder_name');
+        $now = now()->format('YmdHis');
+        // Use purchaseAmount directly as it is already in minor units
+        $amountMinor = $purchaseAmount;
+        $exp = preg_replace('/\D/', '', $cardExpiry);
+        if (strlen($exp) === 4) {
+            $exp = substr($exp, 2, 2) . substr($exp, 0, 2); // YYMM
+        } elseif (strlen($exp) === 6) {
+            $exp = substr($exp, 4, 2) . substr($exp, 2, 2); // YYMM
+        }
+        $encryptedPan = $this->cardzoneService->encryptData($cardNumber, $cardzonePublicKey);
+        $encryptedCvv = $this->cardzoneService->encryptData($cardCVV, $cardzonePublicKey);
+        $encryptedExp = $this->cardzoneService->encryptData($exp, $cardzonePublicKey);
 
-        // Use donation data if available, otherwise use default values
-        $customerEmail = $donation ? $donation->donor_email : 'customer@example.com';
-        $customerPhone = $donation ? $donation->donor_phone : '123456789';
-        $customerName = $donation ? $donation->donor_name : 'Test Customer';
-        $paymentDescription = $donation ? "Donation to " . $donation->campaign->title : 'Payment';
+        // --- Dynamic MPI_TRANS_TYPE support ---
+        $allowedTransTypes = ['INQ', 'SALES', 'VSALES', 'REFUND'];
+        $mpiTransType = strtoupper($request->input('mpi_trans_type', 'SALES'));
+        if (!in_array($mpiTransType, $allowedTransTypes)) {
+            $mpiTransType = 'SALES';
+        }
 
-        $mpiReqData = [
+        $mpiReq = [
+            'MPI_TRANS_TYPE' => $mpiTransType,
             'MPI_MERC_ID' => $merchantId,
-            'MPI_PURCH_AMT' => $purchaseAmount,
+            'MPI_PAN' => $encryptedPan,
+            'MPI_PAN_EXP' => $encryptedExp,
+            'MPI_CVV2' => $encryptedCvv,
+            'MPI_CARD_HOLDER_NAME' => $cardHolderName,
+            'MPI_PURCH_AMT' => $amountMinor,
             'MPI_PURCH_CURR' => $purchaseCurrency,
             'MPI_TRXN_ID' => $transactionId,
-            'MPI_PURCH_DATE' => now()->format('YmdHis'),
-            'MPI_EMAIL' => $customerEmail,
-            'MPI_MOBILE_PHONE_CC' => '60', // Malaysia country code
-            'MPI_MOBILE_PHONE' => $customerPhone,
-            // ... common fields for all payment types
+            'MPI_PURCH_DATE' => $now,
         ];
+        // Only add optional/conditional fields if present
+        if ($request->filled('MPI_ADDR_MATCH')) $mpiReq['MPI_ADDR_MATCH'] = $request->input('MPI_ADDR_MATCH');
+        if ($request->filled('MPI_BILL_ADDR_CITY')) $mpiReq['MPI_BILL_ADDR_CITY'] = $request->input('MPI_BILL_ADDR_CITY');
+        if ($request->filled('MPI_BILL_ADDR_STATE')) $mpiReq['MPI_BILL_ADDR_STATE'] = $request->input('MPI_BILL_ADDR_STATE');
+        if ($request->filled('MPI_BILL_ADDR_CNTRY')) $mpiReq['MPI_BILL_ADDR_CNTRY'] = $request->input('MPI_BILL_ADDR_CNTRY');
+        if ($request->filled('MPI_BILL_ADDR_POSTCODE')) $mpiReq['MPI_BILL_ADDR_POSTCODE'] = $request->input('MPI_BILL_ADDR_POSTCODE');
+        if ($request->filled('MPI_BILL_ADDR_LINE1')) $mpiReq['MPI_BILL_ADDR_LINE1'] = $request->input('MPI_BILL_ADDR_LINE1');
+        if ($request->filled('MPI_BILL_ADDR_LINE2')) $mpiReq['MPI_BILL_ADDR_LINE2'] = $request->input('MPI_BILL_ADDR_LINE2');
+        if ($request->filled('MPI_BILL_ADDR_LINE3')) $mpiReq['MPI_BILL_ADDR_LINE3'] = $request->input('MPI_BILL_ADDR_LINE3');
+        if ($request->filled('MPI_SHIP_ADDR_CITY')) $mpiReq['MPI_SHIP_ADDR_CITY'] = $request->input('MPI_SHIP_ADDR_CITY');
+        if ($request->filled('MPI_SHIP_ADDR_STATE')) $mpiReq['MPI_SHIP_ADDR_STATE'] = $request->input('MPI_SHIP_ADDR_STATE');
+        if ($request->filled('MPI_SHIP_ADDR_CNTRY')) $mpiReq['MPI_SHIP_ADDR_CNTRY'] = $request->input('MPI_SHIP_ADDR_CNTRY');
+        if ($request->filled('MPI_SHIP_ADDR_POSTCODE')) $mpiReq['MPI_SHIP_ADDR_POSTCODE'] = $request->input('MPI_SHIP_ADDR_POSTCODE');
+        if ($request->filled('MPI_SHIP_ADDR_LINE1')) $mpiReq['MPI_SHIP_ADDR_LINE1'] = $request->input('MPI_SHIP_ADDR_LINE1');
+        if ($request->filled('MPI_SHIP_ADDR_LINE2')) $mpiReq['MPI_SHIP_ADDR_LINE2'] = $request->input('MPI_SHIP_ADDR_LINE2');
+        if ($request->filled('MPI_SHIP_ADDR_LINE3')) $mpiReq['MPI_SHIP_ADDR_LINE3'] = $request->input('MPI_SHIP_ADDR_LINE3');
+        if ($request->filled('MPI_EMAIL')) $mpiReq['MPI_EMAIL'] = $request->input('MPI_EMAIL');
+        if ($request->filled('MPI_HOME_PHONE')) $mpiReq['MPI_HOME_PHONE'] = $request->input('MPI_HOME_PHONE');
+        if ($request->filled('MPI_HOME_PHONE_CC')) $mpiReq['MPI_HOME_PHONE_CC'] = $request->input('MPI_HOME_PHONE_CC');
+        if ($request->filled('MPI_WORK_PHONE')) $mpiReq['MPI_WORK_PHONE'] = $request->input('MPI_WORK_PHONE');
+        if ($request->filled('MPI_WORK_PHONE_CC')) $mpiReq['MPI_WORK_PHONE_CC'] = $request->input('MPI_WORK_PHONE_CC');
+        if ($request->filled('MPI_MOBILE_PHONE')) $mpiReq['MPI_MOBILE_PHONE'] = $request->input('MPI_MOBILE_PHONE');
+        if ($request->filled('MPI_MOBILE_PHONE_CC')) $mpiReq['MPI_MOBILE_PHONE_CC'] = $request->input('MPI_MOBILE_PHONE_CC');
+        if ($request->filled('MPI_LINE_ITEM')) $mpiReq['MPI_LINE_ITEM'] = $request->input('MPI_LINE_ITEM');
+        if ($request->filled('MPI_RESPONSE_TYPE')) $mpiReq['MPI_RESPONSE_TYPE'] = $request->input('MPI_RESPONSE_TYPE');
 
-        $formFields = [];
-        switch ($paymentMethod) {
-            case 'card':
-                $cardNumber = $request->input('card_number');
-                $cardExpiry = $request->input('card_expiry');
-                $cardCVV = $request->input('card_cvv');
-                $cardHolderName = $request->input('card_holder_name');
+        // MAC must be generated using only the fields present in the POST, in the correct order
+        $mpiReq['MPI_MAC'] = $this->cardzoneService->generateMacForMPIReq($mpiReq, $merchantPrivateKey);
 
-                // Encrypt sensitive fields using Cardzone's public key
-                $encryptedPan = null;
-                $encryptedCvv = null;
-                
-                if ($transaction->status !== 'demo_mode' && $cardzonePublicKey !== 'DEMO_PUBLIC_KEY') {
-                    try {
-                        $encryptedPan = $this->cardzoneService->encryptData($cardNumber, $cardzonePublicKey);
-                        $encryptedCvv = $this->cardzoneService->encryptData($cardCVV, $cardzonePublicKey);
-                    } catch (\Exception $e) {
-                        Log::error('Failed to encrypt card data', ['error' => $e->getMessage()]);
-                        // Fall back to demo mode if encryption fails
-                        $transaction->update(['status' => 'demo_mode']);
-                    }
-                }
+        // Log the request (both Laravel and debug log)
+        $mpireqUrl = env('CARDZONE_UAT_MPIREQ_URL');
+        $requestLog = [
+            'url' => $mpireqUrl,
+            'payload' => $mpiReq,
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json'
+            ]
+        ];
+        Log::info('Cardzone Card Payment Request', $requestLog);
+        file_put_contents(storage_path('logs/cardzone_debug.log'), "[" . date('Y-m-d H:i:s') . "] Cardzone Card Payment Request: " . print_r($requestLog, true) . "\n", FILE_APPEND);
 
-                $mpiReqData['MPI_TRANS_TYPE'] = 'SALES';
-                $mpiReqData['MPI_PAN'] = $encryptedPan ?: $cardNumber; // Use encrypted PAN if available
-                $mpiReqData['MPI_PAN_EXP'] = $cardExpiry;
-                $mpiReqData['MPI_CVV2'] = $encryptedCvv ?: $cardCVV; // Use encrypted CVV if available
-                $mpiReqData['MPI_CARD_HOLDER_NAME'] = $cardHolderName;
-                $mpiReqData['MPI_ADDR_MATCH'] = 'Y';
-                $mpiReqData['MPI_BILL_ADDR_CITY'] = 'KUL';
-                $mpiReqData['MPI_BILL_ADDR_POSTCODE'] = '59200';
-                $mpiReqData['MPI_BILL_ADDR_LINE1'] = 'ADR LINE 1';
-                $mpiReqData['MPI_BILL_ADDR_LINE2'] = 'ADR LINE 2';
-                $mpiReqData['MPI_BILL_ADDR_LINE3'] = 'ADR LINE 3';
-                $mpiReqData['MPI_SHIP_ADDR_CITY'] = 'KUL';
-                $mpiReqData['MPI_SHIP_ADDR_STATE'] = '14';
-                $mpiReqData['MPI_SHIP_ADDR_CNTRY'] = '458';
-                $formFields['action'] = env('CARDZONE_UAT_MPIREQ_URL');
+        // Submit payment
+        $response = \Illuminate\Support\Facades\Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ])->timeout(30)->post($mpireqUrl, $mpiReq);
 
-                if ($transaction->status === 'demo_mode') {
-                    $mpiReqData['MPI_MAC'] = 'DEMO_MAC_SIGNATURE';
-                } else {
-                    $mpiReqData['MPI_MAC'] = $this->cardzoneService->generateMacForMPIReq($mpiReqData, $merchantPrivateKey);
-                }
-                break;
-            case 'obw':
-                $selectedBank = $request->input('obw_bank');
-                $mpiReqData['MPI_TRANS_TYPE'] = 'OBWTXN';
-                $mpiReqData['MPI_CHANNEL_CODE'] = 'BW';
-                $mpiReqData['MPI_SELECTED_BANK'] = $selectedBank;
-                $mpiReqData['MPI_CUST_BANK_TYPE'] = 'RET';
-                $mpiReqData['MPI_CUST_NAME'] = $customerName;
-                $mpiReqData['MPI_MER_IP'] = '127.0.0.1';
-                $mpiReqData['MPI_MER_NAME'] = 'Test Merchant';
-                $mpiReqData['MPI_PYMT_DESC'] = $paymentDescription;
-                $mpiReqData['MPI_RCP_REF'] = 'OBWRef' . substr($transactionId, -6); // Use last 6 chars for reference
-                $formFields['action'] = env('CARDZONE_UAT_OBW_URL');
+        // Log the response (both Laravel and debug log)
+        $responseLog = [
+            'status' => $response->status(),
+            'headers' => $response->headers(),
+            'body' => $response->body()
+        ];
+        Log::info('Cardzone Card Payment Response', $responseLog);
+        file_put_contents(storage_path('logs/cardzone_debug.log'), "[" . date('Y-m-d H:i:s') . "] Cardzone Card Payment Response: " . print_r($responseLog, true) . "\n", FILE_APPEND);
 
-                if ($transaction->status === 'demo_mode') {
-                    $mpiReqData['MPI_MAC'] = 'DEMO_MAC_SIGNATURE';
-                } else {
-                    $mpiReqData['MPI_MAC'] = $this->cardzoneService->generateMacForMPIReqOBW($mpiReqData, $merchantPrivateKey);
-                }
-                break;
-            case 'qr':
-                $mpiReqData['MPI_TRANS_TYPE'] = 'QRTXN';
-                $mpiReqData['MPI_CHANNEL_CODE'] = 'BW';
-                $mpiReqData['MPI_MER_IP'] = '127.0.0.1';
-                $mpiReqData['MPI_MER_NAME'] = 'Test Merchant';
-                $mpiReqData['MPI_PYMT_DESC'] = $paymentDescription;
-                $mpiReqData['MPI_QR_TYPE'] = 'STRING'; // Request QR as string
-                // If you need a hosted QR page from Cardzone, the URL would be different
-                $formFields['action'] = env('CARDZONE_UAT_QR_URL');
-
-                if ($transaction->status === 'demo_mode') {
-                    $mpiReqData['MPI_MAC'] = 'DEMO_MAC_SIGNATURE';
-                } else {
-                    $mpiReqData['MPI_MAC'] = $this->cardzoneService->generateMacForMPIReqQr($mpiReqData, $merchantPrivateKey);
-                }
-                break;
-            default:
-                $transaction->update(['status' => 'failed']);
-                return response()->json(['success' => false, 'message' => 'Invalid payment method.'], 400);
+        // Update transaction status based on response
+        $responseData = $response->json();
+        if ($response->status() === 200 && isset($responseData['errorCode']) && $responseData['errorCode'] === '000') {
+            $transaction->update(['status' => 'completed', 'cardzone_response_data' => $responseData]);
+        } else {
+            $transaction->update(['status' => 'failed', 'cardzone_response_data' => $responseData]);
         }
 
-        $formFields['fields'] = $mpiReqData;
-        $formFields['target'] = 'cardzone_iframe'; // Target the iframe
-
-        // Update transaction status to indicate redirection
-        $transaction->update(['status' => 'redirected_to_3ds']);
-
-        return response()->json(['success' => true, 'form' => $formFields]);
+        // Return the API response directly
+        return response()->json([
+            'success' => true,
+            'form' => [
+                'fields' => $mpiReq,
+                'target' => 'cardzone_iframe'
+            ],
+            'cardzone_response' => $responseData,
+            'status_code' => $response->status()
+        ]);
     }
 
     /**

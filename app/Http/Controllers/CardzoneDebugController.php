@@ -47,17 +47,81 @@ class CardzoneDebugController extends Controller
     public function logs(Request $request)
     {
         $type = $request->get('type', 'debug');
-        $lines = $request->get('lines', 100);
+        $limit = (int) $request->get('limit', 10);
+        $page = (int) $request->get('page', 1);
+        $limit = $limit > 0 ? $limit : 10;
+        $page = $page > 0 ? $page : 1;
 
         if ($type === 'transaction') {
-            $logs = $this->debugService->getTransactionLog($lines);
+            $allLogs = $this->debugService->getTransactionLog(1000); // get enough for pagination
             $title = 'Transaction Logs';
         } else {
-            $logs = $this->debugService->getDebugLog($lines);
+            $allLogs = $this->debugService->getDebugLog(1000);
             $title = 'Debug Logs';
         }
+        $filter = $request->get('filter');
+        if ($filter) {
+            $filterLower = strtolower($filter);
+            $allLogs = array_filter($allLogs, function($log) use ($filterLower) {
+                $datetime = '';
+                $level = '';
+                $transactionId = '';
+                $action = '';
+                $message = '';
+                $data = '';
+                $jsonTransactionId = '';
+                if (preg_match('/\[(.*?)\]\s*\[(.*?)\]\s*TXN:([^\s]+)\s*\|\s*([^|]+)\s*\|?(.*)$/s', $log, $m)) {
+                    $datetime = $m[1];
+                    $level = $m[2];
+                    $transactionId = $m[3];
+                    $action = trim($m[4]);
+                    $data = trim($m[5]);
+                } elseif (preg_match('/\[(.*?)\]\s*\[(.*?)\]\s*([^|]+)\|?\s*Data:?\s*(.*)$/s', $log, $m)) {
+                    $datetime = $m[1];
+                    $level = $m[2];
+                    $message = trim($m[3]);
+                    $data = trim($m[4]);
+                } else {
+                    $message = strip_tags($log);
+                }
+                if (preg_match('/\{[\s\S]*\}/', $data, $jsonMatch)) {
+                    $json = json_decode($jsonMatch[0], true);
+                    if (is_array($json) && isset($json['transaction_id'])) {
+                        $jsonTransactionId = $json['transaction_id'];
+                    }
+                }
+                // Format datetime as displayed in the table (dd/mm/yyyy)
+                $formattedDatetime = $datetime;
+                $formattedDatetimeShort = $datetime;
+                if ($datetime) {
+                    try {
+                        $formattedDatetime = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $datetime)->format('d/m/y h:i A');
+                        $formattedDatetimeShort = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $datetime)->format('d/m/Y');
+                    } catch (\Exception $e) {
+                        $formattedDatetime = $datetime;
+                        $formattedDatetimeShort = $datetime;
+                    }
+                }
+                // Check filter in any column, including raw, previous, and new formatted datetime
+                return (
+                    stripos($datetime, $filterLower) !== false ||
+                    stripos(strtolower($formattedDatetime), $filterLower) !== false ||
+                    stripos(strtolower($formattedDatetimeShort), $filterLower) !== false ||
+                    stripos($level, $filterLower) !== false ||
+                    stripos($transactionId, $filterLower) !== false ||
+                    stripos($jsonTransactionId, $filterLower) !== false ||
+                    stripos($action, $filterLower) !== false ||
+                    stripos($message, $filterLower) !== false
+                );
+            });
+            $allLogs = array_values($allLogs); // reindex
+        }
+        $total = count($allLogs);
+        $logs = array_slice($allLogs, ($page-1)*$limit, $limit);
+        // Show latest first
+        $logs = array_reverse($logs);
 
-        return view('admin.cardzone.logs', compact('logs', 'title', 'type', 'lines'));
+        return view('admin.cardzone.logs', compact('logs', 'title', 'type', 'limit', 'page', 'total', 'filter'));
     }
 
     /**
@@ -122,7 +186,19 @@ class CardzoneDebugController extends Controller
         ];
 
         try {
-            // Record payment initiation in database
+            // 1. Perform Key Exchange and get latest Cardzone public key
+            $keyExchange = $this->cardzoneService->performKeyExchange($transactionId);
+            if (!$keyExchange['success']) {
+                throw new \Exception('Key exchange failed: ' . ($keyExchange['error'] ?? 'Unknown error'));
+            }
+            $cardzonePublicKey = file_exists(base_path('ssh-keygen/cardzone_public.pem'))
+                ? file_get_contents(base_path('ssh-keygen/cardzone_public.pem'))
+                : null;
+            if (!$cardzonePublicKey) {
+                throw new \Exception('Cardzone public key PEM not found after key exchange.');
+            }
+
+            // 2. Record payment initiation in database
             $transactionData = [
                 'transaction_id' => $transactionId,
                 'merchant_id' => env('CARDZONE_MERCHANT_ID'),
@@ -133,12 +209,28 @@ class CardzoneDebugController extends Controller
                 'card_expiry' => $cardDetails['card_expiry'],
                 'card_holder_name' => $cardDetails['card_holder_name'],
             ];
-
             $transaction = $this->paymentTransactionService->recordPaymentInitiation($transactionData);
 
-            // Prepare MPI Request Data
+            // 3. Encrypt sensitive fields
+            $encryptedPan = $this->cardzoneService->encryptData($cardDetails['card_number'], $cardzonePublicKey);
+            $encryptedCvv = $this->cardzoneService->encryptData($cardDetails['card_cvv'], $cardzonePublicKey);
+            // Format expiry as YYMM
+            $exp = preg_replace('/\D/', '', $cardDetails['card_expiry']);
+            if (strlen($exp) === 4) {
+                $exp = substr($exp, 2, 2) . substr($exp, 0, 2); // YYMM
+            } elseif (strlen($exp) === 6) {
+                $exp = substr($exp, 4, 2) . substr($exp, 2, 2); // YYMM
+            }
+            $encryptedExp = $this->cardzoneService->encryptData($exp, $cardzonePublicKey);
+
+            // 4. Prepare MPI Request Data
             $mpiReqData = [
+                'MPI_TRANS_TYPE' => 'SALES',
                 'MPI_MERC_ID' => env('CARDZONE_MERCHANT_ID'),
+                'MPI_PAN' => $encryptedPan,
+                'MPI_PAN_EXP' => $encryptedExp,
+                'MPI_CVV2' => $encryptedCvv,
+                'MPI_CARD_HOLDER_NAME' => $cardDetails['card_holder_name'],
                 'MPI_PURCH_AMT' => $amount,
                 'MPI_PURCH_CURR' => $currency,
                 'MPI_TRXN_ID' => $transactionId,
@@ -146,29 +238,43 @@ class CardzoneDebugController extends Controller
                 'MPI_EMAIL' => 'test@example.com',
                 'MPI_MOBILE_PHONE_CC' => '60',
                 'MPI_MOBILE_PHONE' => '123456789',
-                'MPI_TRANS_TYPE' => 'SALES',
-                'MPI_PAN' => $cardDetails['card_number'],
-                'MPI_PAN_EXP' => $cardDetails['card_expiry'],
-                'MPI_CVV2' => $cardDetails['card_cvv'],
-                'MPI_CARD_HOLDER_NAME' => $cardDetails['card_holder_name'],
             ];
 
-            // Generate MAC
+            // 5. Generate MAC
             $privateKey = $this->cardzoneService->getMerchantPrivateKey();
             $mac = $this->cardzoneService->generateMacForMPIReq($mpiReqData, $privateKey);
             $mpiReqData['MPI_MAC'] = $mac;
 
-            // Submit payment
-            $response = Http::asForm()->timeout(30)->post(env('CARDZONE_UAT_MPIREQ_URL'), $mpiReqData);
-            
-            $responseData = [
-                'status' => $response->status(),
-                'body' => $response->body(),
-                'content_type' => $response->header('Content-Type'),
+            // 6. Log the request (same format as sample log)
+            $mpireqUrl = env('CARDZONE_UAT_MPIREQ_URL');
+            $requestLog = [
+                'url' => $mpireqUrl,
+                'payload' => $mpiReqData,
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json'
+                ]
             ];
+            \Log::info('Cardzone Card Payment Request', $requestLog);
+            file_put_contents(storage_path('logs/cardzone_debug.log'), "[" . date('Y-m-d H:i:s') . "] Cardzone Card Payment Request: " . print_r($requestLog, true) . "\n", FILE_APPEND);
 
-            // Record payment submission in database
-            $this->paymentTransactionService->recordPaymentSubmission($transactionId, $mpiReqData, $responseData);
+            // 7. Submit payment
+            $response = \Illuminate\Support\Facades\Http::withHeaders([
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ])->timeout(30)->post($mpireqUrl, $mpiReqData);
+
+            // 8. Log the response (same format as sample log)
+            $responseLog = [
+                'status' => $response->status(),
+                'headers' => $response->headers(),
+                'body' => $response->body()
+            ];
+            \Log::info('Cardzone Card Payment Response', $responseLog);
+            file_put_contents(storage_path('logs/cardzone_debug.log'), "[" . date('Y-m-d H:i:s') . "] Cardzone Card Payment Response: " . print_r($responseLog, true) . "\n", FILE_APPEND);
+
+            // 9. Record payment submission in database
+            $this->paymentTransactionService->recordPaymentSubmission($transactionId, $mpiReqData, $responseLog);
 
             $success = $response->status() === 200;
             $message = $success ? 'Payment form submitted successfully' : 'Payment submission failed';
@@ -184,7 +290,7 @@ class CardzoneDebugController extends Controller
                 'db_transaction_id' => $transaction->id,
             ]);
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // Record error in database
             $this->paymentTransactionService->recordPaymentError($transactionId, 'Payment submission exception', ['error' => $e->getMessage()]);
             

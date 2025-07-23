@@ -7,6 +7,7 @@ $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
 $kernel->bootstrap();
 
 use App\Services\CardzoneService;
+use Illuminate\Support\Facades\Log;
 
 // Helper to load PEM public key
 function getCardzonePemKey() {
@@ -16,6 +17,13 @@ function getCardzonePemKey() {
         exit(1);
     }
     return file_get_contents($pemPath);
+}
+
+// Helper to log to cardzone_debug.log
+function log_cardzone_debug($label, $data) {
+    $logPath = __DIR__ . '/storage/logs/cardzone_debug.log';
+    $entry = "[" . date('Y-m-d H:i:s') . "] $label: " . print_r($data, true) . "\n";
+    file_put_contents($logPath, $entry, FILE_APPEND);
 }
 
 // Hardcoded test values
@@ -75,7 +83,8 @@ $mpiReq = [
     'MPI_ORI_TRXN_ID' => '',
     'MPI_PURCH_DATE' => $now,
     'MPI_PURCH_CURR' => $currency,
-    'MPI_PURCH_AMT' => number_format((float)$amount, 2, '.', ''),
+    // Use minor units for MPI_PURCH_AMT
+    'MPI_PURCH_AMT' => (string) ((int) round(((float)$amount) * 100)),
     'MPI_ADDR_MATCH' => '',
     'MPI_BILL_ADDR_CITY' => '',
     'MPI_BILL_ADDR_STATE' => '',
@@ -105,15 +114,35 @@ $mpiReq = [
 // 4. Generate MAC (strict Cardzone order)
 $mpiReq['MPI_MAC'] = $service->generateMacForMPIReq($mpiReq, $merchantPrivateKey);
 
-// 5. Submit payment
+// 5. Log the request (both Laravel and debug log)
 $mpireqUrl = env('CARDZONE_UAT_MPIREQ_URL');
+$requestLog = [
+    'url' => $mpireqUrl,
+    'payload' => $mpiReq,
+    'headers' => [
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json'
+    ]
+];
+Log::info('Cardzone Card Payment Request', $requestLog);
+log_cardzone_debug('Cardzone Card Payment Request', $requestLog);
+
 echo "\nSubmitting card payment to: $mpireqUrl\n";
 $response = Illuminate\Support\Facades\Http::withHeaders([
     'Content-Type' => 'application/json',
     'Accept' => 'application/json',
 ])->timeout(30)->post($mpireqUrl, $mpiReq);
 
-// 6. Print/log request and response
+// 6. Log the response (both Laravel and debug log)
+$responseLog = [
+    'status' => $response->status(),
+    'headers' => $response->headers(),
+    'body' => $response->body()
+];
+Log::info('Cardzone Card Payment Response', $responseLog);
+log_cardzone_debug('Cardzone Card Payment Response', $responseLog);
+
+// 7. Print/log request and response
 echo "\n=== REQUEST PAYLOAD ===\n";
 print_r($mpiReq);
 echo "\n=== RESPONSE ===\n";
