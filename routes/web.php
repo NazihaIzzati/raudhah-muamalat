@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\NotificationController as AdminNotificationContro
 use App\Http\Controllers\Admin\PartnerController as AdminPartnerController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
+use App\Http\Controllers\CardzoneDebugController;
 use App\Http\Controllers\AdminTestController;
 
 // Language switcher route
@@ -188,6 +189,29 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::patch('/contacts/{contact}/mark-urgent', [AdminContactController::class, 'markUrgent'])->name('admin.contacts.mark-urgent');
     Route::patch('/contacts/{contact}/remove-urgent', [AdminContactController::class, 'removeUrgent'])->name('admin.contacts.remove-urgent');
     Route::patch('/contacts/{contact}/mark-replied', [AdminContactController::class, 'markReplied'])->name('admin.contacts.mark-replied');
+    
+    // Cardzone Debug routes
+                Route::prefix('cardzone')->group(function () {
+                Route::get('/debug', [CardzoneDebugController::class, 'index'])->name('admin.cardzone.debug');
+                Route::get('/debug/logs', [CardzoneDebugController::class, 'logs'])->name('admin.cardzone.debug.logs');
+                Route::post('/debug/clear-logs', [CardzoneDebugController::class, 'clearLogs'])->name('admin.cardzone.debug.clear-logs');
+                Route::post('/debug/test-payment', [CardzoneDebugController::class, 'testPayment'])->name('admin.cardzone.debug.test-payment');
+                Route::post('/debug/test-key-exchange', [CardzoneDebugController::class, 'testKeyExchange'])->name('admin.cardzone.debug.test-key-exchange');
+                Route::post('/debug/test-environment', [CardzoneDebugController::class, 'testEnvironment'])->name('admin.cardzone.debug.test-environment');
+                Route::post('/debug/test-mac-verification', [CardzoneDebugController::class, 'testMACVerification'])->name('admin.cardzone.debug.test-mac-verification');
+                Route::get('/debug/transactions', [CardzoneDebugController::class, 'transactions'])->name('admin.cardzone.debug.transactions');
+                Route::get('/debug/transactions/{transaction}', [CardzoneDebugController::class, 'showTransaction'])->name('admin.cardzone.debug.transaction.show');
+                Route::get('/debug/get-stats', [CardzoneDebugController::class, 'getStats'])->name('admin.cardzone.debug.get-stats');
+                Route::get('/debug/download', [CardzoneDebugController::class, 'downloadLogs'])->name('admin.cardzone.debug.download');
+            });
+    
+    // Temporary test route without admin middleware
+    Route::get('/cardzone-test', [CardzoneDebugController::class, 'index'])->name('cardzone.test');
+    
+    // Payment flow test route
+    Route::get('/cardzone-payment-test', function() {
+        include base_path('test_payment_form_display.php');
+    })->name('cardzone.payment-test');
 });
 
 Route::get('/payment/success', function (\Illuminate\Http\Request $request) {

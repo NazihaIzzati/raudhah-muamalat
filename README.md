@@ -115,10 +115,10 @@ raudhah-muamalat/
    ```bash
    # Add Cardzone environment variables to .env
    CARDZONE_MERCHANT_ID=your_merchant_id
-   CARDZONE_UAT_KEY_EXCHANGE_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpikeyreq
-   CARDZONE_UAT_MPIREQ_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpireq
-   CARDZONE_UAT_OBW_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpireqobw
-   CARDZONE_UAT_QR_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpireqqr
+   CARDZONE_UAT_KEY_EXCHANGE_URL=https://3dsecureczuat.muamalat.com.my/3dss/mkReq
+CARDZONE_UAT_MPIREQ_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpReq
+CARDZONE_UAT_OBW_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpReqObw
+CARDZONE_UAT_QR_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpQrReq
    CARDZONE_RESPONSE_URL=https://your-domain.com/payment/cardzone/callback
    ```
 
@@ -139,13 +139,13 @@ The project uses a persistent RSA key pair for Cardzone integration:
 
 - **Private Key**: `ssh-keygen/jariahfund-dev` (PEM format)
 - **Public Key**: `ssh-keygen/jariahfund-dev_public.pem` (PEM format)
-- **Key Size**: 4096-bit RSA
+- **Key Size**: 2048-bit RSA (Cardzone requirement)
 - **Usage**: MAC signing and data encryption
 
 ### Key Generation
 ```bash
-# Convert OpenSSH format to PEM format
-ssh-keygen -p -f ssh-keygen/jariahfund-dev -m pem
+# Generate 2048-bit RSA private key (Cardzone requirement)
+openssl genrsa -out ssh-keygen/jariahfund-dev 2048
 
 # Extract public key in PEM format
 openssl rsa -in ssh-keygen/jariahfund-dev -pubout -out ssh-keygen/jariahfund-dev_public.pem
@@ -253,10 +253,10 @@ DB_USERNAME=your_username
 DB_PASSWORD=your_password
 
 # Cardzone Production URLs
-CARDZONE_PRODUCTION_KEY_EXCHANGE_URL=https://3dsecurecz.muamalat.com.my/3dss/mpikeyreq
-CARDZONE_PRODUCTION_MPIREQ_URL=https://3dsecurecz.muamalat.com.my/3dss/mpireq
-CARDZONE_PRODUCTION_OBW_URL=https://3dsecurecz.muamalat.com.my/3dss/mpireqobw
-CARDZONE_PRODUCTION_QR_URL=https://3dsecurecz.muamalat.com.my/3dss/mpireqqr
+CARDZONE_PRODUCTION_KEY_EXCHANGE_URL=https://3dsecurecz.muamalat.com.my/3dss/mkReq
+CARDZONE_PRODUCTION_MPIREQ_URL=https://3dsecurecz.muamalat.com.my/3dss/mpReq
+CARDZONE_PRODUCTION_OBW_URL=https://3dsecurecz.muamalat.com.my/3dss/mpReqObw
+CARDZONE_PRODUCTION_QR_URL=https://3dsecurecz.muamalat.com.my/3dss/mpQrReq
 ```
 
 ## 🤝 Contributing

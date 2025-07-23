@@ -105,6 +105,13 @@ return [
             'processors' => [PsrLogMessageProcessor::class],
         ],
 
+        'cardzone' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/cardzone.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'replace_placeholders' => true,
+        ],
+
         'syslog' => [
             'driver' => 'syslog',
             'level' => env('LOG_LEVEL', 'debug'),

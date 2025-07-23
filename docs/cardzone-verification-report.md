@@ -18,7 +18,7 @@ The Cardzone 3DS payment integration has been thoroughly verified and is properl
 ### 2. Key Management
 - **Status:** ✅ Complete
 - Persistent RSA key pair: `ssh-keygen/jariahfund-dev` (private) and `ssh-keygen/jariahfund-dev_public.pem` (public)
-- 4096-bit RSA keys in PEM format
+- 2048-bit RSA keys in PEM format (Cardzone requirement)
 - Automatic key loading by CardzoneService
 - Proper file permissions and security
 
@@ -70,7 +70,7 @@ The Cardzone 3DS payment integration has been thoroughly verified and is properl
 
 ### 1. Persistent Key Management
 **Before:** Dynamic key generation for each transaction  
-**After:** Persistent RSA key pair from `ssh-keygen/` directory
+**After:** Persistent 2048-bit RSA key pair from `ssh-keygen/` directory (Cardzone compliant)
 ```php
 // Now loads keys from files
 $this->privateKeyPath = base_path('ssh-keygen/jariahfund-dev');
@@ -184,7 +184,7 @@ Status update → Donation update → Redirect to success/failure page
 
 ### ✅ Implemented Security Measures
 1. **RSA Key Management**
-   - 4096-bit RSA key pair in PEM format
+   - 2048-bit RSA key pair in PEM format (Cardzone requirement)
    - Persistent key storage in `ssh-keygen/` directory
    - Secure file permissions (600 for private key)
    - Public key exchange with Cardzone

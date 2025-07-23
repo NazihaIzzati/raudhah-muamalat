@@ -11,17 +11,17 @@ Add these to your `.env` file:
 ```bash
 # Cardzone Configuration
 CARDZONE_MERCHANT_ID=400000000000005
-CARDZONE_UAT_KEY_EXCHANGE_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpikeyreq
-CARDZONE_UAT_MPIREQ_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpireq
-CARDZONE_UAT_OBW_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpireqobw
-CARDZONE_UAT_QR_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpireqqr
+CARDZONE_UAT_KEY_EXCHANGE_URL=https://3dsecureczuat.muamalat.com.my/3dss/mkReq
+CARDZONE_UAT_MPIREQ_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpReq
+CARDZONE_UAT_OBW_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpReqObw
+CARDZONE_UAT_QR_URL=https://3dsecureczuat.muamalat.com.my/3dss/mpQrReq
 CARDZONE_RESPONSE_URL=https://your-domain.com/payment/cardzone/callback
 
 # Optional: Production URLs (when ready for production)
-CARDZONE_PRODUCTION_KEY_EXCHANGE_URL=https://3dsecurecz.muamalat.com.my/3dss/mpikeyreq
-CARDZONE_PRODUCTION_MPIREQ_URL=https://3dsecurecz.muamalat.com.my/3dss/mpireq
-CARDZONE_PRODUCTION_OBW_URL=https://3dsecurecz.muamalat.com.my/3dss/mpireqobw
-CARDZONE_PRODUCTION_QR_URL=https://3dsecurecz.muamalat.com.my/3dss/mpireqqr
+CARDZONE_PRODUCTION_KEY_EXCHANGE_URL=https://3dsecurecz.muamalat.com.my/3dss/mkReq
+CARDZONE_PRODUCTION_MPIREQ_URL=https://3dsecurecz.muamalat.com.my/3dss/mpReq
+CARDZONE_PRODUCTION_OBW_URL=https://3dsecurecz.muamalat.com.my/3dss/mpReqObw
+CARDZONE_PRODUCTION_QR_URL=https://3dsecurecz.muamalat.com.my/3dss/mpQrReq
 ```
 
 ## Key Management
@@ -31,7 +31,7 @@ The integration uses a persistent RSA key pair stored in the `ssh-keygen/` direc
 
 - **Private Key**: `ssh-keygen/jariahfund-dev` (PEM format)
 - **Public Key**: `ssh-keygen/jariahfund-dev_public.pem` (PEM format)
-- **Key Size**: 4096-bit RSA
+- **Key Size**: 2048-bit RSA (Cardzone requirement)
 - **Format**: PEM (compatible with OpenSSL)
 
 ### Key Usage
@@ -42,8 +42,8 @@ The integration uses a persistent RSA key pair stored in the `ssh-keygen/` direc
 ### Key Generation
 The keys were generated using:
 ```bash
-# Convert OpenSSH format to PEM format
-ssh-keygen -p -f ssh-keygen/jariahfund-dev -m pem
+# Generate 2048-bit RSA private key (Cardzone requirement)
+openssl genrsa -out ssh-keygen/jariahfund-dev 2048
 
 # Extract public key in PEM format
 openssl rsa -in ssh-keygen/jariahfund-dev -pubout -out ssh-keygen/jariahfund-dev_public.pem
@@ -106,7 +106,7 @@ openssl rsa -in ssh-keygen/jariahfund-dev -pubout -out ssh-keygen/jariahfund-dev
 ## Security Features
 
 ### RSA Key Management
-- Persistent 4096-bit RSA key pair stored in `ssh-keygen/` directory
+- Persistent 2048-bit RSA key pair stored in `ssh-keygen/` directory (Cardzone requirement)
 - Automatic key loading by CardzoneService
 - Secure private key storage with proper file permissions
 - Public key exchange with Cardzone for verification
