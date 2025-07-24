@@ -4,7 +4,7 @@
 @section('page-title', 'Dashboard')
 
 @section('content')
-<div class="space-y-6">
+<div class="space-y-6 font-sans">
     <!-- Main Content with Enhanced Design -->
     <div class="bg-white overflow-hidden shadow-lg sm:rounded-xl border border-gray-200">
         <!-- Enhanced Header Section -->

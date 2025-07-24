@@ -4,7 +4,7 @@
 @section('page-title', 'Donations')
 
 @section('content')
-<div class="space-y-6">
+<div class="space-y-6 font-sans">
     <!-- Main Content with Enhanced Design -->
     <div class="bg-white overflow-hidden shadow-lg sm:rounded-xl border border-gray-200">
         <!-- Enhanced Header Section -->
@@ -99,13 +99,13 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Donor</th>
-                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Campaign</th>
-                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Amount</th>
-                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Payment Method</th>
-                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Status</th>
-                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Date</th>
-                            <th scope="col" class="px-6 py-4 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">Actions</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 tracking-wider">Donor</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 tracking-wider">Campaign</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 tracking-wider">Amount</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 tracking-wider">Payment Method</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 tracking-wider">Status</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 tracking-wider">Date</th>
+                            <th scope="col" class="px-6 py-4 text-right text-xs font-bold text-gray-700 tracking-wider">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -121,10 +121,10 @@
                                             </div>
                                         </div>
                                         <div class="ml-4">
-                                            <div class="text-sm font-semibold text-gray-900">
+                                            <div class="text-xs font-semibold text-gray-900">
                                                 {{ $donation->donor_name ?? 'Anonymous' }}
                                             </div>
-                                            <div class="text-sm text-gray-500">{{ $donation->donor_email ?? 'No email' }}</div>
+                                            <div class="text-xs text-gray-500">{{ $donation->donor_email ?? 'No email' }}</div>
                                             @if($donation->is_anonymous)
                                                 <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800 mt-1">
                                                     Anonymous
@@ -147,7 +147,7 @@
                                             @endif
                                         </div>
                                         <div class="ml-3">
-                                            <div class="text-sm font-semibold text-gray-900">
+                                            <div class="text-xs font-semibold text-gray-900">
                                                 @if($donation->campaign)
                                                     <a href="{{ route('admin.campaigns.show', $donation->campaign) }}" class="hover:text-[#fe5000] transition-colors duration-200">
                                                         {{ Str::limit($donation->campaign->title, 30) }}
@@ -165,11 +165,11 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-semibold text-[#fe5000]">{{ number_format($donation->amount, 2) }}</div>
-                                    <div class="text-sm text-gray-500">{{ $donation->currency ?? 'MYR' }}</div>
+                                    <div class="text-xs font-semibold text-[#fe5000]">{{ number_format($donation->amount, 2) }}</div>
+                                    <div class="text-xs text-gray-500">{{ $donation->currency ?? 'MYR' }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900">{{ ucfirst($donation->payment_method ?? 'N/A') }}</div>
+                                    <div class="text-xs font-semibold text-gray-900">{{ ucfirst($donation->payment_method ?? 'N/A') }}</div>
                                     @if($donation->transaction_id)
                                         <div class="text-xs text-gray-500">{{ Str::limit($donation->transaction_id, 15) }}</div>
                                     @endif
@@ -189,7 +189,7 @@
                                         {{ ucfirst($donation->payment_status ?? 'Unknown') }}
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
                                     <div>{{ $donation->created_at->format('M d, Y') }}</div>
                                     <div class="text-xs text-gray-400">{{ $donation->created_at->diffForHumans() }}</div>
                                 </td>
