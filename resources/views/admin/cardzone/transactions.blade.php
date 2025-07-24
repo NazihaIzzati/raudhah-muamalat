@@ -100,7 +100,7 @@
         </div>
 
         <!-- Filter/Search Bar -->
-        <div class="p-6 border-b border-gray-200 bg-gray-50">
+        <div class="p-6 border-gray-200 bg-gray-50">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
                 <!-- Search Bar -->
                 <div class="relative flex-1">
@@ -132,77 +132,77 @@
                     @endforeach
                 </div>
             </div>
+            <div class="overflow-x-auto rounded-xl shadow border border-gray-200 bg-white">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50 sticky top-0 z-10 shadow-sm">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 tracking-wider">
+                                <span class="inline-flex items-center gap-1">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7a2 2 0 002 2z"/></svg>
+                                    Date/Time
+                                </span>
+                            </th>
+                            <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 tracking-wider">Status</th>
+                            <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 tracking-wider">Transaction ID</th>
+                            <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 tracking-wider">Amount</th>
+                            <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 tracking-wider">Method</th>
+                            <th class="px-4 py-3"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @forelse($transactions as $transaction)
+                        <tr class="group hover:bg-orange-50 transition cursor-pointer even:bg-gray-50">
+                            <td class="px-4 py-3 text-xs font-mono text-gray-700">
+                                <span title="{{ $transaction->created_at }}">
+                                    <svg class="inline w-4 h-4 text-gray-400 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7a2 2 0 002 2z"/></svg>
+                                    {{ $transaction->created_at->format('d/m/Y h:i A') }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3">
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold
+                                    @if($transaction->status === 'authorized' || $transaction->status === 'authenticated') bg-green-100 text-green-700
+                                    @elseif($transaction->status === 'pending') bg-yellow-100 text-yellow-700
+                                    @elseif($transaction->status === 'failed') bg-red-100 text-red-700
+                                    @else bg-blue-100 text-blue-700
+                                    @endif">
+                                    {{ strtoupper($transaction->status) }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 font-mono text-xs text-gray-600 truncate max-w-[120px]" title="{{ $transaction->transaction_id }}">
+                                {{ Str::limit($transaction->transaction_id, 12) }}
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="text-xs font-semibold text-gray-900">RM {{ number_format($transaction->amount, 2) }}</div>
+                                <div class="text-xs text-gray-500">{{ $transaction->currency }}</div>
+                            </td>
+                            <td class="px-4 py-3">
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold
+                                    @if($transaction->payment_method === 'card') bg-blue-100 text-blue-800
+                                    @elseif($transaction->payment_method === 'obw') bg-green-100 text-green-800
+                                    @else bg-purple-100 text-purple-800
+                                    @endif">
+                                    {{ strtoupper($transaction->payment_method) }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-right">
+                                <i onclick="viewTransactionDetails('{{ $transaction->id }}')" class="bx bx-detail text-gray-400 group-hover:text-[#fe5000] transition-colors text-lg cursor-pointer" aria-label="View Details" title="View Details"></i>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="6" class="text-center py-12 text-gray-400 text-sm">
+                                <div class="flex flex-col items-center justify-center gap-2">
+                                    <svg class="mx-auto h-12 w-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    <span>No transactions found.</span>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
-
-        <!-- Transactions Table -->
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50 sticky top-0 z-10 shadow-sm">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 tracking-wider">Transaction ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 tracking-wider">Amount</th>
-                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 tracking-wider">Method</th>
-                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 tracking-wider">Status</th>
-                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 tracking-wider">Date</th>
-                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 tracking-wider">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-100 font-sans">
-                    @forelse($transactions as $transaction)
-                    <tr class="hover:bg-orange-50 even:bg-gray-50 transition group">
-                        <td class="px-6 py-4 whitespace-nowrap font-sans text-xs text-gray-700 truncate max-w-[140px]" title="{{ $transaction->transaction_id }}">
-                            {{ Str::limit($transaction->transaction_id, 16) }}
-                            <div class="text-xs text-gray-400">ID: {{ $transaction->id }}</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">RM {{ number_format($transaction->amount, 2) }}</div>
-                            <div class="text-xs text-gray-500">{{ $transaction->currency }}</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold
-                                @if($transaction->payment_method === 'card') bg-blue-100 text-blue-800
-                                @elseif($transaction->payment_method === 'obw') bg-green-100 text-green-800
-                                @else bg-purple-100 text-purple-800
-                                @endif">
-                                {{ strtoupper($transaction->payment_method) }}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold
-                                @if($transaction->status === 'authorized' || $transaction->status === 'authenticated') bg-green-100 text-green-800
-                                @elseif($transaction->status === 'pending') bg-yellow-100 text-yellow-800
-                                @elseif($transaction->status === 'failed') bg-red-100 text-red-800
-                                @else bg-gray-100 text-gray-800
-                                @endif">
-                                {{ ucfirst($transaction->status) }}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
-                            {{ $transaction->created_at->format('d/m/Y h:i A') }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <button onclick="viewTransactionDetails('{{ $transaction->id }}')" class="text-orange-600 hover:text-orange-900 inline-flex items-center gap-1" title="View Details">
-                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
-                                View Details
-                            </button>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="6" class="px-6 py-12 text-center">
-                            <div class="text-gray-500 flex flex-col items-center gap-2">
-                                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                                </svg>
-                                <h3 class="mt-2 text-sm font-medium text-gray-900">No transactions found</h3>
-                                <p class="mt-1 text-sm text-gray-500">Get started by testing a payment.</p>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+        
         <!-- Pagination -->
         @if($transactions->hasPages())
         <div class="px-6 py-4 border-t border-gray-200">

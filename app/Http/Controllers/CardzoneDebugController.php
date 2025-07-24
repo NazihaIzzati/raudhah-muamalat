@@ -47,9 +47,8 @@ class CardzoneDebugController extends Controller
     public function logs(Request $request)
     {
         $type = $request->get('type', 'debug');
-        $limit = (int) $request->get('limit', 10);
+        $perPage = 20; // Match transactions pagination
         $page = (int) $request->get('page', 1);
-        $limit = $limit > 0 ? $limit : 10;
         $page = $page > 0 ? $page : 1;
 
         if ($type === 'transaction') {
@@ -59,6 +58,7 @@ class CardzoneDebugController extends Controller
             $allLogs = $this->debugService->getDebugLog(1000);
             $title = 'Debug Logs';
         }
+        
         $filter = $request->get('filter');
         if ($filter) {
             $filterLower = strtolower($filter);
@@ -116,12 +116,30 @@ class CardzoneDebugController extends Controller
             });
             $allLogs = array_values($allLogs); // reindex
         }
-        $total = count($allLogs);
-        $logs = array_slice($allLogs, ($page-1)*$limit, $limit);
+        
         // Show latest first
-        $logs = array_reverse($logs);
+        $allLogs = array_reverse($allLogs);
+        
+        $total = count($allLogs);
+        $offset = ($page - 1) * $perPage;
+        $logs = array_slice($allLogs, $offset, $perPage);
+        
+        // Create Laravel paginator
+        $logs = new \Illuminate\Pagination\LengthAwarePaginator(
+            $logs,
+            $total,
+            $perPage,
+            $page,
+            [
+                'path' => $request->url(),
+                'pageName' => 'page',
+            ]
+        );
+        
+        // Append query parameters
+        $logs->appends($request->query());
 
-        return view('admin.cardzone.logs', compact('logs', 'title', 'type', 'limit', 'page', 'total', 'filter'));
+        return view('admin.cardzone.logs', compact('logs', 'title', 'type', 'filter'));
     }
 
     /**

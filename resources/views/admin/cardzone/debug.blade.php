@@ -23,30 +23,32 @@
                     </div>
                 </div>
                 
-                <div class="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-3">
-                    <div class="text-sm text-gray-600 bg-gray-100 px-4 py-2 rounded-xl">
-                        <span class="text-[#fe5000] font-semibold">{{ now()->format('M d, Y H:i:s') }}</span>
-                    </div>
-                    <div class="flex space-x-2">
-                        <a href="{{ route('admin.cardzone.debug.transactions') }}" class="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-500/90 hover:to-indigo-600/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200">
-                            <svg class="-ml-1 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
-                            </svg>
-                            View Transactions
-                        </a>
-                        <button type="button" onclick="clearLogs()" class="inline-flex items-center justify-center px-4 py-2 border border-red-300 rounded-xl shadow-sm text-sm font-semibold text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-200">
-                            <svg class="-ml-1 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                <div class="flex items-center gap-3">
+                    <span class="text-xs text-[#fe5000] bg-gray-100 px-4 py-2 rounded-xl font-semibold">{{ now()->format('M d, Y H:i:s') }}</span>
+                    <a href="{{ route('admin.cardzone.debug.transactions') }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-gradient-to-r from-[#fe5000] to-orange-600 hover:from-[#fe5000]/90 hover:to-orange-600/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fe5000] transition-all duration-200">
+                        <!-- Boxicons bxs-bar-chart-alt-2 icon -->
+                        <svg class="-ml-1 mr-2 h-5 w-5 align-middle" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 13h4v8H3v-8zm7-6h4v14h-4V7zm7 4h4v10h-4V11z"/>
+                        </svg>
+                        View Transactions
+                    </a>
+                    <form action="{{ route('admin.cardzone.debug.clear-logs') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-gradient-to-r from-[#fe5000] to-orange-600 hover:from-[#fe5000]/90 hover:to-orange-600/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fe5000] transition-all duration-200">
+                            <!-- Boxicons bxs-trash icon -->
+                            <svg class="-ml-1 mr-2 h-5 w-5 align-middle" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M5 6h14v2H5V6zm2 3h10l-1.5 12.5A2 2 0 0113.5 23h-3a2 2 0 01-1.99-1.75L7 9zm3 2v7h2v-7h-2z"/>
                             </svg>
                             Clear Logs
                         </button>
-                        <a href="{{ route('admin.cardzone.debug.logs') }}" class="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-gradient-to-r from-[#fe5000] to-orange-600 hover:from-[#fe5000]/90 hover:to-orange-600/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fe5000] transition-all duration-200">
-                            <svg class="-ml-1 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
-                            View All Logs
-                        </a>
-                    </div>
+                    </form>
+                    <a href="{{ route('admin.cardzone.debug.logs') }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-gradient-to-r from-[#fe5000] to-orange-600 hover:from-[#fe5000]/90 hover:to-orange-600/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fe5000] transition-all duration-200">
+                        <!-- Boxicons bxs-file-doc icon -->
+                        <svg class="-ml-1 mr-2 h-5 w-5 align-middle" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 2H8c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V6l-5-4zm0 18H8V4h7.17L19 6.83V20zm-7-7h2v2h-2zm0-4h2v2h-2zm4 4h2v2h-2zm0-4h2v2h-2z"/>
+                        </svg>
+                        View All Logs
+                    </a>
                 </div>
             </div>
         </div>
@@ -328,8 +330,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
 

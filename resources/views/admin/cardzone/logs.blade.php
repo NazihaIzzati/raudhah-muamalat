@@ -3,7 +3,7 @@
 @section('title', 'Cardzone Debug Logs')
 
 @section('content')
-<div class="space-y-6">
+<div class="space-y-6 font-sans">
     <!-- Main Content with Enhanced Design -->
     <div class="bg-white overflow-hidden shadow-lg sm:rounded-xl border border-gray-200">
         <!-- Enhanced Header Section -->
@@ -37,7 +37,7 @@
         </div>
 
         <!-- Filters Section -->
-        <div class="p-6 border-b border-gray-200 bg-gray-50">
+        <div class="p-6 border-b">
             <div class="flex flex-col md:flex-row md:items-end md:space-x-4 space-y-4 md:space-y-0">
                 <div>
                     <label for="logType" class="block text-sm font-medium text-gray-700 mb-2">Log Type</label>
@@ -46,9 +46,6 @@
                         <option value="transaction" {{ request('type') == 'transaction' ? 'selected' : '' }}>Transaction Logs</option>
                     </select>
                 </div>
-                {{-- Remove logLines selector and related logic --}}
-                {{-- Remove the dropdown/select for number of lines --}}
-                {{-- Remove any references to logLines in JS and PHP --}}
                 <div class="flex items-end">
                     <button type="button" onclick="refreshLogs()" class="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-500/90 hover:to-indigo-600/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200">
                         <svg class="-ml-1 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,7 +58,7 @@
         </div>
 
         <!-- Log Content -->
-        <div class="p-6">
+        <div class="p-6 border-gray-200 bg-gray-50">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
                 <!-- Search Bar -->
                 <div class="relative flex-1">
@@ -158,7 +155,7 @@
                                         $formattedDatetime = $datetime;
                                         if ($datetime) {
                                             try {
-                                                $formattedDatetime = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $datetime)->format('d/m/Y');
+                                                $formattedDatetime = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $datetime)->format('d/m/Y h:i A');
                                             } catch (Exception $e) {
                                                 $formattedDatetime = $datetime;
                                             }
@@ -182,9 +179,7 @@
                             </td>
                             <td class="px-4 py-3 text-xs text-gray-900 font-semibold">{{ $displayAction }}</td>
                             <td class="px-4 py-3 text-right">
-                                <button class="rounded-full p-2 bg-gray-100 hover:bg-[#fe5000]/10 transition-colors" aria-label="View Details" title="View Details">
-                                    <svg class="h-5 w-5 text-gray-400 group-hover:text-[#fe5000] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-9 0a9 9 0 1118 0a9 9 0 01-18 0z"/></svg>
-                                </button>
+                                <i class="bx bx-detail text-gray-400 group-hover:text-[#fe5000] transition-colors text-lg cursor-pointer" aria-label="View Details" title="View Details"></i>
                             </td>
                         </tr>
                         <script>
@@ -208,19 +203,19 @@
                     </tbody>
                 </table>
             </div>
-            <div class="flex justify-between items-center mt-4">
-                <div class="text-xs text-gray-500">Showing {{ ($page-1)*$limit+1 }} to {{ min($page*$limit, $total) }} of {{ $total }} entries</div>
-                <div class="flex gap-1">
-                    <button onclick="changeLogPage({{ $page-1 }})" class="px-3 py-1 rounded-l-xl border border-gray-300 bg-white text-xs font-semibold text-gray-700 hover:bg-orange-50 disabled:opacity-50" @if($page <= 1) disabled @endif>&laquo; Prev</button>
-                    <button onclick="changeLogPage({{ $page+1 }})" class="px-3 py-1 rounded-r-xl border border-gray-300 bg-white text-xs font-semibold text-gray-700 hover:bg-orange-50 disabled:opacity-50" @if($page >= ceil($total/$limit)) disabled @endif>Next &raquo;</button>
-                </div>
-            </div>
         </div>
+
+        <!-- Pagination -->
+        @if($logs->hasPages())
+        <div class="px-6 py-4 border-t border-gray-200">
+            {{ $logs->appends(request()->query())->links() }}
+        </div>
+        @endif
     </div>
 </div>
 
 <!-- Tailwind Modal for Log Details -->
-<div id="logModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
+<div id="logModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center font-sans">
     <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full mx-4 p-8 relative overflow-y-auto max-h-[90vh]">
         <button onclick="closeLogModal()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 focus:outline-none">
             <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -260,19 +255,6 @@ function showLogModal(index) {
 }
 function closeLogModal() {
     document.getElementById('logModal').classList.add('hidden');
-}
-function changeLogLimit() {
-    const limit = document.getElementById('logLimit').value;
-    const params = new URLSearchParams(window.location.search);
-    params.set('limit', limit);
-    params.set('page', 1);
-    window.location.search = params.toString();
-}
-function changeLogPage(page) {
-    if (page < 1) return;
-    const params = new URLSearchParams(window.location.search);
-    params.set('page', page);
-    window.location.search = params.toString();
 }
 function changeLogFilter() {
     const filter = document.getElementById('logSearch').value;
