@@ -88,17 +88,33 @@
     </div>
 
     @if(isset($form))
-    <form id="cardzoneForm" method="POST" action="{{ $form['action'] }}" style="display: none;">
+    <form id="cardzoneForm" method="POST" action="{{ env('CARDZONE_UAT_MPIREQ_URL', 'https://uat.cardzone.com.my/mpireq') }}" style="display: none;">
         @foreach($form['fields'] as $key => $value)
             <input type="hidden" name="{{ $key }}" value="{{ $value }}">
         @endforeach
     </form>
 
     <script>
+        // Debug: Log form data before submission
+        console.log('Form data being submitted:', {
+            action: '{{ env("CARDZONE_UAT_MPIREQ_URL", "https://uat.cardzone.com.my/mpireq") }}',
+            fields: @json($form['fields'] ?? [])
+        });
+        
         // Auto-submit the form after a short delay
         setTimeout(function() {
-            document.getElementById('cardzoneForm').submit();
+            const form = document.getElementById('cardzoneForm');
+            if (form) {
+                console.log('Submitting form to Cardzone...');
+                form.submit();
+            } else {
+                console.error('Form not found!');
+            }
         }, 2000);
+    </script>
+    @else
+    <script>
+        console.error('No form data available for submission');
     </script>
     @endif
 </body>

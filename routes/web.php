@@ -63,7 +63,10 @@ Route::prefix('payment')->group(function () {
     // Cardzone 3DS payment routes
     Route::get('/pay', [PaymentController::class, 'showPaymentPage'])->name('payment.show');
     Route::get('/page', [PaymentController::class, 'showPaymentPage'])->name('payment.page');
+    Route::get('/debug', [PaymentController::class, 'showPaymentPage'])->name('payment.debug');
     Route::post('/api/initiate-payment', [PaymentController::class, 'initiatePayment'])->name('api.payment.initiate');
+    Route::post('/api/key-exchange', [PaymentController::class, 'performKeyExchange'])->name('api.payment.key-exchange');
+    Route::get('/redirect', [PaymentController::class, 'showRedirectPage'])->name('payment.redirect');
     Route::post('/cardzone/callback', [PaymentController::class, 'handleCardzoneCallback'])->name('cardzone.callback');
     Route::get('/success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
     Route::get('/failure', [PaymentController::class, 'paymentFailure'])->name('payment.failure');

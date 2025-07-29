@@ -91,20 +91,10 @@ class PaymentController extends Controller
                 'message' => session('message'),
                 'is_anonymous' => session('is_anonymous'),
                 'payment_method' => session('payment_method'),
-                'card_number' => session('card_number'),
-                'card_expiry' => session('card_expiry'),
-                'card_cvv' => session('card_cvv'),
-                'card_holder_name' => session('card_holder_name'),
-                'obw_bank' => session('obw_bank'),
             ];
-            
-            // If we have donation data, initiate payment and redirect to Cardzone
-            if ($donationData['donation_id']) {
-                return $this->initiateDonationPayment($donationData);
-            }
         }
         
-        // If no donation data, show regular payment page
+        // Get bank list for payment options
         $banks = $this->cardzoneService->getBankList();
         
         // If bank list API fails, use empty array instead of redirecting
@@ -113,67 +103,111 @@ class PaymentController extends Controller
             $banks = [];
         }
         
-        return view('payment', [
+        // Check if this is the debug route
+        $viewName = $request->route()->getName() === 'payment.debug' ? 'payment_debug' : 'payment';
+        
+        return view($viewName, [
             'banks' => $banks,
-            'donationData' => $donationData
+            'donationData' => $donationData,
+            'cardzoneMpiReqUrl' => env('CARDZONE_UAT_MPIREQ_URL', 'https://uat.cardzone.com.my/mpireq')
         ]);
     }
     
     /**
-     * Initiates donation payment and redirects to Cardzone
+     * Handles key exchange requests for card payments
      */
-    private function initiateDonationPayment($donationData)
+    public function performKeyExchange(Request $request)
     {
-        // Prepare payment data
-        $paymentData = [
-            'payment_method' => $donationData['payment_method'],
-            'merchant_id' => env('CARDZONE_MERCHANT_ID'),
-            'purchase_amount' => $donationData['amount'] * 100, // Convert to minor units
-            'purchase_currency' => '458', // MYR
-            'donation_id' => $donationData['donation_id'],
-            'campaign_id' => $donationData['campaign_id'],
-            'amount' => $donationData['amount'],
-            'donor_name' => $donationData['donor_name'],
-            'donor_email' => $donationData['donor_email'],
-            'donor_phone' => $donationData['donor_phone'],
-            'message' => $donationData['message'],
-            'is_anonymous' => $donationData['is_anonymous'],
-        ];
-        
-        // Add payment method specific data
-        if ($donationData['payment_method'] === 'card') {
-            $paymentData['card_number'] = $donationData['card_number'];
-            $paymentData['card_expiry'] = $donationData['card_expiry'];
-            $paymentData['card_cvv'] = $donationData['card_cvv'];
-            $paymentData['card_holder_name'] = $donationData['card_holder_name'];
-        } elseif ($donationData['payment_method'] === 'obw') {
-            $paymentData['obw_bank'] = $donationData['obw_bank'];
+        $paymentMethod = $request->input('payment_method');
+        $merchantId = env('CARDZONE_MERCHANT_ID');
+        $purchaseAmount = $request->input('purchase_amount');
+        $purchaseCurrency = $request->input('purchase_currency');
+        $donationId = $request->input('donation_id');
+
+        // Only allow key exchange for card payments
+        if ($paymentMethod !== 'card') {
+            return response()->json(['success' => false, 'message' => 'Key exchange is only required for card payments.'], 400);
         }
+
+        $donation = null;
+        if ($donationId) {
+            $donation = \App\Models\Donation::find($donationId);
+        }
+
+        $transactionId = $this->cardzoneService->generateTransactionId($donationId);
+        Log::info('Key exchange initiated', [
+            'transactionId' => $transactionId,
+            'paymentMethod' => $paymentMethod,
+            'amount' => $purchaseAmount / 100,
+            'currency' => $purchaseCurrency,
+            'donationId' => $donationId
+        ]);
+
+        // Create a temporary transaction record for key exchange
+        $transaction = Transaction::create([
+            'transaction_id' => $transactionId,
+            'merchant_id' => $merchantId,
+            'amount' => $purchaseAmount / 100,
+            'currency' => $purchaseCurrency,
+            'payment_method' => $paymentMethod,
+            'status' => 'key_exchange_pending',
+            'donation_id' => $donationId,
+        ]);
+
+        // --- Perform Key Exchange (MPIKeyReq) ---
+        Log::info('Starting Key Exchange with Cardzone', [
+            'transactionId' => $transactionId,
+            'merchantId' => $merchantId,
+            'keyExchangeUrl' => env('CARDZONE_UAT_KEY_EXCHANGE_URL')
+        ]);
         
-        // Call initiatePayment to get the form data
-        $paymentResponse = $this->initiatePayment(new \Illuminate\Http\Request($paymentData));
-        $result = json_decode($paymentResponse->getContent(), true);
+        $keyExchangeResult = $this->cardzoneService->performKeyExchange($transactionId);
         
-        if (isset($result['success']) && $result['success'] && isset($result['form'])) {
-            // Clear session data
-            session()->forget([
-                'donation_id', 'amount', 'campaign_id', 'donor_name', 'donor_email', 
-                'donor_phone', 'message', 'is_anonymous', 'payment_method',
-                'card_number', 'card_expiry', 'card_cvv', 'card_holder_name', 'obw_bank'
+        if ($keyExchangeResult['success']) {
+            // Get the purchaseId from Cardzone response
+            $cardzonePurchaseId = $keyExchangeResult['purchaseId'] ?? $transactionId;
+            
+            // Update transaction with Cardzone's purchaseId
+            $transaction->update([
+                'transaction_id' => $cardzonePurchaseId,
+                'status' => 'key_exchange_completed',
+                'cardzone_response_data' => $keyExchangeResult
             ]);
             
-            // Return the payment form view that will redirect to Cardzone
-            return view('payment_redirect', [
-                'form' => $result['form'],
-                'donationData' => $donationData
+            Log::info('Key exchange completed successfully', [
+                'originalTransactionId' => $transactionId,
+                'cardzonePurchaseId' => $cardzonePurchaseId,
+                'donationId' => $donationId
+            ]);
+            
+            return response()->json([
+                'success' => true,
+                'transaction_id' => $cardzonePurchaseId,
+                'message' => 'Key exchange completed successfully'
             ]);
         } else {
-            // Payment initiation failed
-            $errorMsg = $result['message'] ?? 'Payment initiation failed.';
-            return redirect()->route('payment.failure', [
-                'donation_id' => $donationData['donation_id'], 
-                'message' => $errorMsg
+            // Get the purchaseId from Cardzone response if available
+            $cardzonePurchaseId = $keyExchangeResult['purchaseId'] ?? $transactionId;
+            
+            // Update transaction status to failed
+            $transaction->update([
+                'transaction_id' => $cardzonePurchaseId,
+                'status' => 'key_exchange_failed',
+                'cardzone_response_data' => $keyExchangeResult
             ]);
+            
+            Log::error('Key exchange failed', [
+                'originalTransactionId' => $transactionId,
+                'cardzonePurchaseId' => $cardzonePurchaseId,
+                'error' => $keyExchangeResult['error'] ?? 'Unknown error',
+                'donationId' => $donationId
+            ]);
+            
+            return response()->json([
+                'success' => false, 
+                'message' => 'Key exchange failed: ' . ($keyExchangeResult['error'] ?? 'Unknown error'),
+                'error_code' => $keyExchangeResult['errorCode'] ?? null
+            ], 400);
         }
     }
 
@@ -183,6 +217,11 @@ class PaymentController extends Controller
      */
     public function initiatePayment(Request $request)
     {
+        // Check if this is a key exchange request
+        if ($request->input('action') === 'key_exchange') {
+            return $this->performKeyExchange($request);
+        }
+
         $paymentMethod = $request->input('payment_method');
         $merchantId = env('CARDZONE_MERCHANT_ID');
         $purchaseAmount = $request->input('purchase_amount');
@@ -194,7 +233,7 @@ class PaymentController extends Controller
             $donation = \App\Models\Donation::find($donationId);
         }
 
-        $transactionId = $this->cardzoneService->generateTransactionId($donationId);
+        $transactionId = $request->input('transaction_id') ?? $this->cardzoneService->generateTransactionId($donationId);
         Log::info('Payment transaction initiated', [
             'transactionId' => $transactionId,
             'paymentMethod' => $paymentMethod,
@@ -203,68 +242,166 @@ class PaymentController extends Controller
             'donationId' => $donationId
         ]);
 
-        $transaction = Transaction::create([
-            'transaction_id' => $transactionId,
-            'merchant_id' => $merchantId,
-            'amount' => $purchaseAmount / 100,
-            'currency' => $purchaseCurrency,
-            'payment_method' => $paymentMethod,
-            'status' => 'pending',
-            'card_number_masked' => $paymentMethod === 'card' ? \Illuminate\Support\Str::mask($request->input('card_number'), '*', 6, 4) : null,
-            'card_expiry' => $paymentMethod === 'card' ? $request->input('card_expiry') : null,
-            'card_holder_name' => $paymentMethod === 'card' ? $request->input('card_holder_name') : null,
-            'obw_bank_code' => $paymentMethod === 'obw' ? $request->input('obw_bank') : null,
-            'donation_id' => $donationId,
-        ]);
-
-        // --- Perform Key Exchange (MPIKeyReq) ---
-        Log::info('Starting Key Exchange with Cardzone', [
-            'transactionId' => $transactionId,
-            'merchantId' => $merchantId,
-            'keyExchangeUrl' => env('CARDZONE_UAT_KEY_EXCHANGE_URL')
-        ]);
-        $keyExchangeResult = $this->cardzoneService->performKeyExchange($transactionId);
-        Log::info('Key Exchange Result', [
-            'transactionId' => $transactionId,
-            'success' => $keyExchangeResult['success'] ?? false,
-            'error' => $keyExchangeResult['error'] ?? null,
-            'errorCode' => $keyExchangeResult['errorCode'] ?? null
-        ]);
-
-        $cardzonePublicKey = null;
-        $merchantPrivateKey = null;
-        if ($keyExchangeResult['success'] && isset($keyExchangeResult['cardzonePublicKey'])) {
-            $this->cardzoneService->saveCardzonePublicKeyPem($keyExchangeResult['cardzonePublicKey']);
-            $cardzonePublicKey = file_get_contents(base_path('ssh-keygen/cardzone_public.pem'));
-            $merchantPrivateKey = $this->cardzoneService->getMerchantPrivateKey();
-        } else {
-            Log::error('Key exchange failed, cannot proceed with card payment.', [
-                'transactionId' => $transactionId,
-                'error' => $keyExchangeResult['error'] ?? 'Unknown error',
-                'errorCode' => $keyExchangeResult['errorCode'] ?? null
+        // For card payments, we need to find the existing transaction from key exchange
+        if ($paymentMethod === 'card') {
+            // Look for the transaction created during key exchange
+            $existingTransaction = Transaction::where('transaction_id', $transactionId)
+                ->where('status', 'key_exchange_completed')
+                ->first();
+            
+            if (!$existingTransaction) {
+                Log::error('Key exchange not completed for card payment', [
+                    'transactionId' => $transactionId,
+                    'donationId' => $donationId
+                ]);
+                return response()->json(['success' => false, 'message' => 'Key exchange must be completed before payment.'], 400);
+            }
+            
+            // Use the existing transaction from key exchange
+            $transaction = $existingTransaction;
+            
+            // Update the transaction with payment details
+            $transaction->update([
+                'card_number_masked' => \Illuminate\Support\Str::mask($request->input('card_number'), '*', 6, 4),
+                'card_expiry' => $request->input('card_expiry'),
+                'card_holder_name' => $request->input('card_holder_name'),
+                'amount' => $purchaseAmount / 100, // Add amount field
+                'currency' => $purchaseCurrency, // Add currency field
+                'status' => 'pending',
             ]);
-            $transaction->update(['status' => 'failed_key_exchange']);
-            return response()->json(['success' => false, 'message' => 'Key exchange failed.'], 500);
+            
+            Log::info('Updated key exchange transaction for payment', [
+                'transactionId' => $transactionId,
+                'previousStatus' => $existingTransaction->status
+            ]);
+        } else {
+            // For non-card payments, create or update transaction
+            $existingTransaction = Transaction::where('transaction_id', $transactionId)->first();
+            
+            if ($existingTransaction) {
+                // Update existing transaction with payment details
+                $transaction = $existingTransaction;
+                $transaction->update([
+                    'merchant_id' => $merchantId,
+                    'amount' => $purchaseAmount / 100,
+                    'currency' => $purchaseCurrency,
+                    'payment_method' => $paymentMethod,
+                    'obw_bank_code' => $paymentMethod === 'obw' ? $request->input('obw_bank') : null,
+                    'donation_id' => $donationId,
+                    'status' => 'pending',
+                ]);
+                Log::info('Updated existing transaction for payment', [
+                    'transactionId' => $transactionId,
+                    'previousStatus' => $existingTransaction->status
+                ]);
+            } else {
+                // Create new transaction
+                $transaction = Transaction::create([
+                    'transaction_id' => $transactionId,
+                    'merchant_id' => $merchantId,
+                    'amount' => $purchaseAmount / 100,
+                    'currency' => $purchaseCurrency,
+                    'payment_method' => $paymentMethod,
+                    'status' => 'pending',
+                    'obw_bank_code' => $paymentMethod === 'obw' ? $request->input('obw_bank') : null,
+                    'donation_id' => $donationId,
+                ]);
+                Log::info('Created new transaction for payment', [
+                    'transactionId' => $transactionId
+                ]);
+            }
         }
 
+        // For card payments, we need to use the key exchange result
+        if ($paymentMethod === 'card') {
+            // Use the Cardzone public key from file
+            $cardzonePublicKeyPath = base_path('ssh-keygen/cardzone_public.pem');
+            if (!file_exists($cardzonePublicKeyPath)) {
+                Log::error('Cardzone public key file not found', [
+                    'transactionId' => $transactionId,
+                    'path' => $cardzonePublicKeyPath
+                ]);
+                $transaction->update(['status' => 'failed_validation']);
+                return response()->json(['success' => false, 'message' => 'Cardzone public key not found. Please perform key exchange first.'], 400);
+            }
+            $cardzonePublicKey = file_get_contents($cardzonePublicKeyPath);
+            $merchantPrivateKey = $this->cardzoneService->getMerchantPrivateKey();
+        } else {
+            // For non-card payments, we don't need key exchange
+            $cardzonePublicKey = null;
+            $merchantPrivateKey = null;
+        }
+        
         // Prepare MPIReq data strictly following Cardzone spec
         $cardNumber = $request->input('card_number');
         $cardExpiry = $request->input('card_expiry');
         $cardCVV = $request->input('card_cvv');
         $cardHolderName = $request->input('card_holder_name');
+        
+        // Validate card holder name
+        if (empty($cardHolderName) || strlen(trim($cardHolderName)) < 2) {
+            Log::error('Invalid card holder name', [
+                'transactionId' => $transactionId,
+                'cardHolderName' => $cardHolderName
+            ]);
+            $transaction->update(['status' => 'failed_validation']);
+            return response()->json(['success' => false, 'message' => 'Card holder name is required and must be at least 2 characters long.'], 400);
+        }
+        
+        // Clean and format card holder name (remove extra spaces, special characters)
+        $cardHolderName = trim(preg_replace('/[^a-zA-Z\s]/', '', $cardHolderName));
+        if (empty($cardHolderName)) {
+            Log::error('Card holder name contains no valid characters', [
+                'transactionId' => $transactionId,
+                'originalName' => $request->input('card_holder_name')
+            ]);
+            $transaction->update(['status' => 'failed_validation']);
+            return response()->json(['success' => false, 'message' => 'Card holder name must contain only letters and spaces.'], 400);
+        }
+        
+        // Ensure card holder name is not too long (Cardzone typically has limits)
+        if (strlen($cardHolderName) > 50) {
+            $cardHolderName = substr($cardHolderName, 0, 50);
+        }
+        
+        // Convert to uppercase as per Cardzone requirements
+        $cardHolderName = strtoupper($cardHolderName);
+        
+        Log::info('Card holder name processed', [
+            'transactionId' => $transactionId,
+            'originalName' => $request->input('card_holder_name'),
+            'processedName' => $cardHolderName
+        ]);
+        
         $now = now()->format('YmdHis');
         // Use purchaseAmount directly as it is already in minor units
         $amountMinor = $purchaseAmount;
+        
+        // Fix card expiry date format according to Cardzone docs: YYMM (4 digits)
         $exp = preg_replace('/\D/', '', $cardExpiry);
         if (strlen($exp) === 4) {
+            // Already in MMYY format, convert to YYMM
             $exp = substr($exp, 2, 2) . substr($exp, 0, 2); // YYMM
         } elseif (strlen($exp) === 6) {
+            // MMYYYY format, extract YYMM
             $exp = substr($exp, 4, 2) . substr($exp, 2, 2); // YYMM
+        } elseif (strlen($exp) === 5) {
+            // M/YY format, convert to YYMM
+            $exp = substr($exp, 3, 2) . substr($exp, 0, 1) . '0'; // YYMM
         }
-        $encryptedPan = $this->cardzoneService->encryptData($cardNumber, $cardzonePublicKey);
-        $encryptedCvv = $this->cardzoneService->encryptData($cardCVV, $cardzonePublicKey);
-        $encryptedExp = $this->cardzoneService->encryptData($exp, $cardzonePublicKey);
-
+        
+        // Validate card number format and clean it
+        $cardNumber = preg_replace('/\D/', '', $cardNumber); // Remove non-digits
+        
+        // Log card data processing for debugging
+        Log::info('Card data processing', [
+            'transactionId' => $transactionId,
+            'originalExpiry' => $cardExpiry,
+            'processedExpiry' => $exp,
+            'cardNumberLength' => strlen($cardNumber),
+            'cardNumberMasked' => substr($cardNumber, 0, 4) . '****' . substr($cardNumber, -4)
+        ]);
+        
         // --- Dynamic MPI_TRANS_TYPE support ---
         $allowedTransTypes = ['INQ', 'SALES', 'VSALES', 'REFUND'];
         $mpiTransType = strtoupper($request->input('mpi_trans_type', 'SALES'));
@@ -272,19 +409,37 @@ class PaymentController extends Controller
             $mpiTransType = 'SALES';
         }
 
+        // Handle MPI_ORI_TRXN_ID based on transaction type
+        $oriTrxnId = '';
+        if (in_array($mpiTransType, ['VSALES', 'INQ', 'REFUND'])) {
+            // For these transaction types, MPI_ORI_TRXN_ID is mandatory
+            $oriTrxnId = $request->input('mpi_ori_trxn_id', '');
+            if (empty($oriTrxnId)) {
+                Log::warning('MPI_ORI_TRXN_ID is required for transaction type: ' . $mpiTransType, [
+                    'transactionId' => $transactionId,
+                    'transactionType' => $mpiTransType
+                ]);
+            }
+        }
+        
+        // Start with mandatory fields only
         $mpiReq = [
+            // Mandatory Fields (7)
             'MPI_TRANS_TYPE' => $mpiTransType,
             'MPI_MERC_ID' => $merchantId,
-            'MPI_PAN' => $encryptedPan,
-            'MPI_PAN_EXP' => $encryptedExp,
-            'MPI_CVV2' => $encryptedCvv,
-            'MPI_CARD_HOLDER_NAME' => $cardHolderName,
             'MPI_PURCH_AMT' => $amountMinor,
             'MPI_PURCH_CURR' => $purchaseCurrency,
             'MPI_TRXN_ID' => $transactionId,
             'MPI_PURCH_DATE' => $now,
+            
+            // Card Data Fields (Plain Text) - 4 fields
+            'MPI_PAN' => $cardNumber, // Plain text card number
+            'MPI_CARD_HOLDER_NAME' => $cardHolderName,
+            'MPI_PAN_EXP' => $exp, // Plain text expiry date
+            'MPI_CVV2' => $cardCVV, // Plain text CVV
         ];
-        // Only add optional/conditional fields if present
+        
+        // Add optional fields only if they have values
         if ($request->filled('MPI_ADDR_MATCH')) $mpiReq['MPI_ADDR_MATCH'] = $request->input('MPI_ADDR_MATCH');
         if ($request->filled('MPI_BILL_ADDR_CITY')) $mpiReq['MPI_BILL_ADDR_CITY'] = $request->input('MPI_BILL_ADDR_CITY');
         if ($request->filled('MPI_BILL_ADDR_STATE')) $mpiReq['MPI_BILL_ADDR_STATE'] = $request->input('MPI_BILL_ADDR_STATE');
@@ -309,28 +464,112 @@ class PaymentController extends Controller
         if ($request->filled('MPI_MOBILE_PHONE_CC')) $mpiReq['MPI_MOBILE_PHONE_CC'] = $request->input('MPI_MOBILE_PHONE_CC');
         if ($request->filled('MPI_LINE_ITEM')) $mpiReq['MPI_LINE_ITEM'] = $request->input('MPI_LINE_ITEM');
         if ($request->filled('MPI_RESPONSE_TYPE')) $mpiReq['MPI_RESPONSE_TYPE'] = $request->input('MPI_RESPONSE_TYPE');
+        
+        // Map new form fields to Cardzone payload
+        // Billing Address
+        if ($request->filled('billing_address_line1')) $mpiReq['MPI_BILL_ADDR_LINE1'] = $request->input('billing_address_line1');
+        if ($request->filled('billing_address_line2')) $mpiReq['MPI_BILL_ADDR_LINE2'] = $request->input('billing_address_line2');
+        if ($request->filled('billing_address_line3')) $mpiReq['MPI_BILL_ADDR_LINE3'] = $request->input('billing_address_line3');
+        if ($request->filled('billing_city')) $mpiReq['MPI_BILL_ADDR_CITY'] = $request->input('billing_city');
+        if ($request->filled('billing_state')) $mpiReq['MPI_BILL_ADDR_STATE'] = $request->input('billing_state');
+        if ($request->filled('billing_country')) $mpiReq['MPI_BILL_ADDR_CNTRY'] = $request->input('billing_country');
+        if ($request->filled('billing_postcode')) $mpiReq['MPI_BILL_ADDR_POSTCODE'] = $request->input('billing_postcode');
+        
+        // Shipping Address
+        if ($request->filled('shipping_address_line1')) $mpiReq['MPI_SHIP_ADDR_LINE1'] = $request->input('shipping_address_line1');
+        if ($request->filled('shipping_address_line2')) $mpiReq['MPI_SHIP_ADDR_LINE2'] = $request->input('shipping_address_line2');
+        if ($request->filled('shipping_address_line3')) $mpiReq['MPI_SHIP_ADDR_LINE3'] = $request->input('shipping_address_line3');
+        if ($request->filled('shipping_city')) $mpiReq['MPI_SHIP_ADDR_CITY'] = $request->input('shipping_city');
+        if ($request->filled('shipping_state')) $mpiReq['MPI_SHIP_ADDR_STATE'] = $request->input('shipping_state');
+        if ($request->filled('shipping_country')) $mpiReq['MPI_SHIP_ADDR_CNTRY'] = $request->input('shipping_country');
+        if ($request->filled('shipping_postcode')) $mpiReq['MPI_SHIP_ADDR_POSTCODE'] = $request->input('shipping_postcode');
+        
+        // Address Match
+        if ($request->filled('MPI_ADDR_MATCH')) {
+            $mpiReq['MPI_ADDR_MATCH'] = $request->input('MPI_ADDR_MATCH');
+        } elseif ($request->filled('addr_match_backup')) {
+            $mpiReq['MPI_ADDR_MATCH'] = $request->input('addr_match_backup');
+        } else {
+            // Default to 'N' if not provided
+            $mpiReq['MPI_ADDR_MATCH'] = 'N';
+        }
+        
+        // Contact Information
+        if ($request->filled('email')) {
+            $email = trim(str_replace(["\n", "\r", "\t"], '', $request->input('email')));
+            $mpiReq['MPI_EMAIL'] = $email;
+            
+            // Log email cleaning for debugging
+            Log::info('Email field cleaned in initiatePayment', [
+                'original' => $request->input('email'),
+                'cleaned' => $email,
+                'has_newlines' => strpos($request->input('email'), "\n") !== false,
+                'has_carriage_returns' => strpos($request->input('email'), "\r") !== false
+            ]);
+        }
+        if ($request->filled('home_phone')) $mpiReq['MPI_HOME_PHONE'] = $request->input('home_phone');
+        if ($request->filled('work_phone')) $mpiReq['MPI_WORK_PHONE'] = $request->input('work_phone');
+        if ($request->filled('mobile_phone')) $mpiReq['MPI_MOBILE_PHONE'] = $request->input('mobile_phone');
+        
+        // Card Details
+        if ($request->filled('card_number')) {
+            // Remove all spaces from card number
+            $cardNumber = preg_replace('/\s+/', '', $request->input('card_number'));
+            $mpiReq['MPI_PAN'] = $cardNumber;
+        }
+        if ($request->filled('card_expiry')) {
+            // Format expiry date properly (remove any formatting and use YYMM format)
+            $expiry = preg_replace('/\D/', '', $request->input('card_expiry')); // Remove non-digits
+            if (strlen($expiry) === 4) {
+                $expiry = substr($expiry, 2, 2) . substr($expiry, 0, 2); // Convert MMYY to YYMM
+            }
+            $mpiReq['MPI_PAN_EXP'] = $expiry;
+        }
+        if ($request->filled('card_cvv')) $mpiReq['MPI_CVV2'] = $request->input('card_cvv');
+        if ($request->filled('card_holder_name')) $mpiReq['MPI_CARD_HOLDER_NAME'] = strtoupper($request->input('card_holder_name'));
+        
+        // Set default country code for Malaysia if not provided
+        if (empty($mpiReq['MPI_HOME_PHONE_CC']) && !empty($mpiReq['MPI_HOME_PHONE'])) $mpiReq['MPI_HOME_PHONE_CC'] = '60';
+        if (empty($mpiReq['MPI_WORK_PHONE_CC']) && !empty($mpiReq['MPI_WORK_PHONE'])) $mpiReq['MPI_WORK_PHONE_CC'] = '60';
+        if (empty($mpiReq['MPI_MOBILE_PHONE_CC']) && !empty($mpiReq['MPI_MOBILE_PHONE'])) $mpiReq['MPI_MOBILE_PHONE_CC'] = '60';
+        
+        // Remove empty/null fields from payload
+        $mpiReq = $this->removeEmptyFields($mpiReq);
+        
+        // Override plain text fields if provided (these are NOT part of MAC generation)
+        // if ($request->filled('panRef')) $mpiReq['panRef'] = $request->input('panRef');
+        // if ($request->filled('cardNo')) $mpiReq['cardNo'] = $request->input('cardNo');
+        // if ($request->filled('cardExpiryDate')) $mpiReq['cardExpiryDate'] = $request->input('cardExpiryDate');
 
-        // MAC must be generated using only the fields present in the POST, in the correct order
-        $mpiReq['MPI_MAC'] = $this->cardzoneService->generateMacForMPIReq($mpiReq, $merchantPrivateKey);
+        // Format the payload for Cardzone with proper padding (same as MAC generation)
+        $formattedMpiReq = $this->cardzoneService->formatPayloadForCardzoneWithProperPadding($mpiReq);
+        
+        // MAC must be generated using the same properly padded data
+        // Set $testWithoutMac = true to test without MAC generation
+        $testWithoutMac = false; // Set to true to test without MAC
+        if (!$testWithoutMac) {
+            $formattedMpiReq['MPI_MAC'] = $this->cardzoneService->generateMacForMPIReq($formattedMpiReq, $merchantPrivateKey);
+        } else {
+            // Test without MAC - remove MAC field if it exists
+            unset($formattedMpiReq['MPI_MAC']);
+            Log::info('Testing without MAC - MAC field removed from payload');
+        }
 
         // Log the request (both Laravel and debug log)
         $mpireqUrl = env('CARDZONE_UAT_MPIREQ_URL');
         $requestLog = [
             'url' => $mpireqUrl,
-            'payload' => $mpiReq,
+            'payload' => $formattedMpiReq,
             'headers' => [
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json'
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
             ]
         ];
         Log::info('Cardzone Card Payment Request', $requestLog);
         file_put_contents(storage_path('logs/cardzone_debug.log'), "[" . date('Y-m-d H:i:s') . "] Cardzone Card Payment Request: " . print_r($requestLog, true) . "\n", FILE_APPEND);
 
-        // Submit payment
-        $response = \Illuminate\Support\Facades\Http::withHeaders([
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
-        ])->timeout(30)->post($mpireqUrl, $mpiReq);
+        // Submit payment - Cardzone expects form data, not JSON
+        $response = \Illuminate\Support\Facades\Http::asForm()->timeout(30)->post($mpireqUrl, $formattedMpiReq);
 
         // Log the response (both Laravel and debug log)
         $responseLog = [
@@ -349,15 +588,72 @@ class PaymentController extends Controller
             $transaction->update(['status' => 'failed', 'cardzone_response_data' => $responseData]);
         }
 
-        // Return the API response directly
-        return response()->json([
-            'success' => true,
-            'form' => [
-                'fields' => $mpiReq,
-                'target' => 'cardzone_iframe'
-            ],
-            'cardzone_response' => $responseData,
-            'status_code' => $response->status()
+        // For card payments, we need to redirect to Cardzone for 3DS authentication
+        if ($paymentMethod === 'card') {
+            // Store transaction data in session for callback processing
+            session([
+                'pending_transaction_id' => $transactionId,
+                'pending_donation_id' => $donationId,
+                'pending_amount' => $purchaseAmount / 100,
+                'pending_currency' => $purchaseCurrency
+            ]);
+            
+            // Check if this is a direct form submission (JavaScript disabled)
+            if ($request->isMethod('POST') && !$request->expectsJson()) {
+                // Redirect to our redirect page for form submission
+                return redirect()->route('payment.redirect', [
+                    'transaction_id' => $transactionId,
+                    'redirect_url' => env('CARDZONE_UAT_MPIREQ_URL'),
+                    'form_data' => json_encode($mpiReq)
+                ]);
+            }
+            
+            // Return JSON response for AJAX requests
+            return response()->json([
+                'success' => true,
+                'redirect_url' => env('CARDZONE_UAT_MPIREQ_URL'),
+                'form_data' => $mpiReq,
+                'transaction_id' => $transactionId
+            ]);
+        } else {
+            // For non-card payments, return the API response directly
+            return response()->json([
+                'success' => true,
+                'form' => [
+                    'fields' => $mpiReq,
+                    'target' => 'cardzone_iframe'
+                ],
+                'cardzone_response' => $responseData,
+                'status_code' => $response->status()
+            ]);
+        }
+    }
+
+    /**
+     * Shows the redirect page for Cardzone payment processing
+     */
+    public function showRedirectPage(Request $request)
+    {
+        $transactionId = $request->query('transaction_id');
+        $redirectUrl = $request->query('redirect_url');
+        $formData = $request->query('form_data');
+        
+        if (!$transactionId || !$redirectUrl || !$formData) {
+            return redirect()->route('payment.failure', ['message' => 'Invalid redirect parameters']);
+        }
+        
+        // Get transaction details
+        $transaction = Transaction::where('transaction_id', $transactionId)->first();
+        if (!$transaction) {
+            return redirect()->route('payment.failure', ['message' => 'Transaction not found']);
+        }
+        
+        return view('payment.redirect', [
+            'transaction_id' => $transactionId,
+            'redirect_url' => $redirectUrl,
+            'form_data' => json_decode($formData, true),
+            'amount' => $transaction->amount,
+            'payment_method' => $transaction->payment_method
         ]);
     }
 
@@ -552,6 +848,7 @@ class PaymentController extends Controller
         try {
             // Validate the request
             $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+                'donation_id' => 'nullable|exists:donations,id',
                 'campaign_id' => 'required|exists:campaigns,id',
                 'amount' => 'required|numeric|min:1',
                 'donor_name' => 'required|string|max:255',
@@ -560,37 +857,67 @@ class PaymentController extends Controller
                 'message' => 'nullable|string',
                 'is_anonymous' => 'boolean',
                 'payment_method' => 'required|string|in:card,obw,qr',
+                'transaction_id' => 'nullable|string|max:50',
                 
                 // Payment method specific validation
-                'card_number' => 'required_if:payment_method,card|string',
-                'card_expiry' => 'required_if:payment_method,card|string',
-                'card_cvv' => 'required_if:payment_method,card|string',
-                'card_holder_name' => 'required_if:payment_method,card|string',
                 'obw_bank' => 'required_if:payment_method,obw|string',
+                
+                // Secure payment page fields (optional for card payments)
+                'billing_address_line1' => 'nullable|string|max:50',
+                'billing_address_line2' => 'nullable|string|max:50',
+                'billing_address_line3' => 'nullable|string|max:50',
+                'billing_city' => 'nullable|string|max:50',
+                                        'billing_state' => 'nullable|string|max:2',
+                                        'billing_country' => 'nullable|string|max:3',
+                'billing_postcode' => 'nullable|string|max:16',
+                'shipping_address_line1' => 'nullable|string|max:50',
+                'shipping_address_line2' => 'nullable|string|max:50',
+                'shipping_address_line3' => 'nullable|string|max:50',
+                'shipping_city' => 'nullable|string|max:50',
+                                        'shipping_state' => 'nullable|string|max:2',
+                                        'shipping_country' => 'nullable|string|max:3',
+                'shipping_postcode' => 'nullable|string|max:16',
+                'email' => 'nullable|email|max:254',
+                'home_phone' => 'nullable|string|max:15',
+                'work_phone' => 'nullable|string|max:15',
+                'mobile_phone' => 'nullable|string|max:15',
+                'MPI_ADDR_MATCH' => 'nullable|string|in:Y,N',
+                
+                // Card Details (required for card payments)
+                'card_number' => 'required_if:payment_method,card|string|max:19',
+                'card_expiry' => 'required_if:payment_method,card|string|max:5',
+                'card_cvv' => 'required_if:payment_method,card|string|max:4',
+                'card_holder_name' => 'required_if:payment_method,card|string|max:45',
             ]);
 
             if ($validator->fails()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Validation failed',
+                    'message' => 'Validation failed: Please check your input data',
                     'errors' => $validator->errors()
                 ], 422);
             }
 
-            // Create donation first
-            $donation = new Donation();
-            $donation->user_id = auth()->id();
-            $donation->campaign_id = $request->campaign_id;
-            $donation->donor_name = $request->donor_name;
-            $donation->donor_email = $request->donor_email;
-            $donation->donor_phone = $request->donor_phone;
-            $donation->amount = $request->amount;
-            $donation->currency = 'MYR';
-            $donation->payment_method = $request->payment_method;
-            $donation->payment_status = 'pending';
-            $donation->message = $request->message;
-            $donation->is_anonymous = $request->is_anonymous;
-            $donation->save();
+            // Use existing donation if donation_id is provided
+            $donation = null;
+            if ($request->filled('donation_id')) {
+                $donation = \App\Models\Donation::find($request->donation_id);
+            }
+            if (!$donation) {
+                $donation = new Donation();
+                $donation->user_id = auth()->id();
+                $donation->campaign_id = $request->campaign_id;
+                $donation->donor_name = $request->donor_name;
+                $donation->donor_email = $request->donor_email;
+                $donation->donor_phone = $request->donor_phone;
+                $donation->amount = $request->amount;
+                $donation->currency = 'MYR';
+                $donation->payment_method = $request->payment_method;
+                $donation->payment_status = 'pending';
+                $donation->message = $request->message;
+                $donation->is_anonymous = $request->is_anonymous ?? false;
+                $donation->save();
+            }
 
             // Prepare payment data
             $paymentData = [
@@ -608,12 +935,54 @@ class PaymentController extends Controller
                 'is_anonymous' => $request->is_anonymous,
             ];
 
+            // Add transaction_id if provided (for card payments)
+            if ($request->filled('transaction_id')) {
+                $paymentData['transaction_id'] = $request->transaction_id;
+            }
+
             // Add payment method specific data
             if ($request->payment_method === 'card') {
                 $paymentData['card_number'] = $request->card_number;
                 $paymentData['card_expiry'] = $request->card_expiry;
                 $paymentData['card_cvv'] = $request->card_cvv;
                 $paymentData['card_holder_name'] = $request->card_holder_name;
+                
+                // Add all secure payment page details for card payments
+                $paymentData['billing_address_line1'] = $request->input('billing_address_line1');
+                $paymentData['billing_address_line2'] = $request->input('billing_address_line2');
+                $paymentData['billing_address_line3'] = $request->input('billing_address_line3');
+                $paymentData['billing_city'] = $request->input('billing_city');
+                $paymentData['billing_state'] = $request->input('billing_state');
+                $paymentData['billing_country'] = $request->input('billing_country');
+                $paymentData['billing_postcode'] = $request->input('billing_postcode');
+                
+                $paymentData['shipping_address_line1'] = $request->input('shipping_address_line1');
+                $paymentData['shipping_address_line2'] = $request->input('shipping_address_line2');
+                $paymentData['shipping_address_line3'] = $request->input('shipping_address_line3');
+                $paymentData['shipping_city'] = $request->input('shipping_city');
+                $paymentData['shipping_state'] = $request->input('shipping_state');
+                $paymentData['shipping_country'] = $request->input('shipping_country');
+                $paymentData['shipping_postcode'] = $request->input('shipping_postcode');
+                
+                $paymentData['email'] = $request->input('email');
+                $paymentData['home_phone'] = $request->input('home_phone');
+                $paymentData['work_phone'] = $request->input('work_phone');
+                $paymentData['mobile_phone'] = $request->input('mobile_phone');
+                $paymentData['MPI_ADDR_MATCH'] = $request->input('MPI_ADDR_MATCH');
+                
+                // Clean email value - remove any newlines, extra spaces, and trim
+                if (!empty($paymentData['email'])) {
+                    $originalEmail = $paymentData['email'];
+                    $paymentData['email'] = trim(str_replace(["\n", "\r", "\t"], '', $originalEmail));
+                    
+                    // Log email cleaning for debugging
+                    Log::info('Email field cleaned', [
+                        'original' => $originalEmail,
+                        'cleaned' => $paymentData['email'],
+                        'has_newlines' => strpos($originalEmail, "\n") !== false,
+                        'has_carriage_returns' => strpos($originalEmail, "\r") !== false
+                    ]);
+                }
             } elseif ($request->payment_method === 'obw') {
                 $paymentData['obw_bank'] = $request->obw_bank;
             }
@@ -636,5 +1005,39 @@ class PaymentController extends Controller
                 'error' => config('app.debug') ? $e->getMessage() : null
             ], 500);
         }
+    }
+    
+    /**
+     * Remove empty/null fields from payload
+     * @param array $payload
+     * @return array
+     */
+    private function removeEmptyFields(array $payload): array
+    {
+        $cleanedPayload = [];
+        
+        foreach ($payload as $key => $value) {
+            // Skip null values
+            if ($value === null) {
+                continue;
+            }
+            
+            // Skip empty strings
+            if ($value === '') {
+                continue;
+            }
+            
+            // Skip arrays with only empty values
+            if (is_array($value) && empty(array_filter($value, function($item) {
+                return $item !== null && $item !== '';
+            }))) {
+                continue;
+            }
+            
+            // Include the field if it has a value
+            $cleanedPayload[$key] = $value;
+        }
+        
+        return $cleanedPayload;
     }
 } 

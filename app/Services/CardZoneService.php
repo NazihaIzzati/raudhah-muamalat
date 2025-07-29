@@ -130,10 +130,11 @@ class CardzoneService
      */
     public function generateTransactionId($donationId = null)
     {
-        // Combine current timestamp (last 7 digits) and 3 random digits for 10-digit unique ID
-        $timestampPart = substr(strval(time()), -7); // last 7 digits of timestamp
-        $randomPart = str_pad(mt_rand(0, 999), 3, '0', STR_PAD_LEFT); // 3 random digits
-        $transactionId = $timestampPart . $randomPart;
+        // Generate 20-digit transaction ID as per Cardzone documentation
+        $timestampPart = substr(strval(time()), -10); // last 10 digits of timestamp
+        $randomPart = str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT); // 6 random digits
+        $donationPart = str_pad($donationId ?? mt_rand(100, 999), 4, '0', STR_PAD_LEFT); // 4 digits for donation ID
+        $transactionId = $timestampPart . $randomPart . $donationPart;
         return $transactionId;
     }
 
@@ -147,6 +148,184 @@ class CardzoneService
         
         // Return the raw key data (not Base64 encoded) to meet the 392 character limit
         return $key;
+    }
+
+    /**
+     * Format the entire payload according to Cardzone specifications
+     * This ensures the payload sent to Cardzone matches the MAC generation
+     * 
+     * @param array $payload The payload to format
+     * @return array Formatted payload
+     */
+    public function formatPayloadForCardzone(array $payload)
+    {
+        // Cardzone field specifications with proper formatting
+        $fieldSpecs = [
+            'MPI_TRANS_TYPE' => 'AN(10)',
+            'MPI_MERC_ID' => 'N(15)',
+            'MPI_PAN' => 'N(19)',
+            'MPI_CARD_HOLDER_NAME' => 'A(45)',
+            'MPI_PAN_EXP' => 'N(4)',
+            'MPI_CVV2' => 'N(3)',
+            'MPI_TRXN_ID' => 'N(20)',
+            'MPI_ORI_TRXN_ID' => 'N(20)',
+            'MPI_PURCH_DATE' => 'N(14)',
+            'MPI_PURCH_CURR' => 'N(3)',
+            'MPI_PURCH_AMT' => 'N(12)',
+            'MPI_ADDR_MATCH' => 'A(1)',
+            'MPI_BILL_ADDR_CITY' => 'AN(50)',
+            'MPI_BILL_ADDR_STATE' => 'AN(3)',
+            'MPI_BILL_ADDR_CNTRY' => 'AN(3)',
+            'MPI_BILL_ADDR_POSTCODE' => 'AN(16)',
+            'MPI_BILL_ADDR_LINE1' => 'AN(50)',
+            'MPI_BILL_ADDR_LINE2' => 'AN(50)',
+            'MPI_BILL_ADDR_LINE3' => 'AN(50)',
+            'MPI_SHIP_ADDR_CITY' => 'AN(50)',
+            'MPI_SHIP_ADDR_STATE' => 'AN(3)',
+            'MPI_SHIP_ADDR_CNTRY' => 'AN(3)',
+            'MPI_SHIP_ADDR_POSTCODE' => 'AN(16)',
+            'MPI_SHIP_ADDR_LINE1' => 'AN(50)',
+            'MPI_SHIP_ADDR_LINE2' => 'AN(50)',
+            'MPI_SHIP_ADDR_LINE3' => 'AN(50)',
+            'MPI_EMAIL' => 'AN(254)',
+            'MPI_HOME_PHONE' => 'AN(15)',
+            'MPI_HOME_PHONE_CC' => 'N(3)',
+            'MPI_WORK_PHONE' => 'AN(15)',
+            'MPI_WORK_PHONE_CC' => 'N(3)',
+            'MPI_MOBILE_PHONE' => 'AN(15)',
+            'MPI_MOBILE_PHONE_CC' => 'N(3)',
+            'MPI_LINE_ITEM' => 'AN',
+            'MPI_RESPONSE_TYPE' => 'AN',
+        ];
+
+        $formattedPayload = [];
+        
+        // Format each field according to its specification
+        foreach ($fieldSpecs as $field => $type) {
+            $value = $payload[$field] ?? '';
+            $formattedPayload[$field] = $this->formatFieldValue($value, $type, $field);
+        }
+        
+        // Note: panRef, cardNo, cardExpiryDate are NOT included in payload to avoid MAC verification issues
+        
+        return $formattedPayload;
+    }
+
+    /**
+     * Formats the payload for Cardzone with proper field padding (same as MAC generation).
+     * This ensures the payload sent to Cardzone matches the MAC generation string.
+     */
+    public function formatPayloadForCardzoneWithProperPadding(array $payload)
+    {
+        // Cardzone field specifications with proper formatting - Official order
+        // Based on documentation: MPIReq – Request Form Fields
+        $fieldSpecs = [
+            'MPI_TRANS_TYPE' => 'AN(10)',
+            'MPI_MERC_ID' => 'N(15)',
+            'MPI_PAN' => 'N(19)',
+            'MPI_CARD_HOLDER_NAME' => 'A(45)',
+            'MPI_PAN_EXP' => 'N(4)',
+            'MPI_CVV2' => 'N(3)',
+            'MPI_TRXN_ID' => 'N(20)',
+            'MPI_ORI_TRXN_ID' => 'N(20)',
+            'MPI_PURCH_DATE' => 'N(14)',
+            'MPI_PURCH_CURR' => 'N(3)',
+            'MPI_PURCH_AMT' => 'N(12)',
+            'MPI_ADDR_MATCH' => 'A(1)',
+            'MPI_BILL_ADDR_CITY' => 'AN(50)',
+            'MPI_BILL_ADDR_STATE' => 'AN(3)',
+            'MPI_BILL_ADDR_CNTRY' => 'N(3)',
+            'MPI_BILL_ADDR_POSTCODE' => 'N(16)',
+            'MPI_BILL_ADDR_LINE1' => 'AN(50)',
+            'MPI_BILL_ADDR_LINE2' => 'AN(50)',
+            'MPI_BILL_ADDR_LINE3' => 'AN(50)',
+            'MPI_SHIP_ADDR_CITY' => 'AN(50)',
+            'MPI_SHIP_ADDR_STATE' => 'AN(3)',
+            'MPI_SHIP_ADDR_CNTRY' => 'AN(3)',
+            'MPI_SHIP_ADDR_POSTCODE' => 'AN(16)',
+            'MPI_SHIP_ADDR_LINE1' => 'AN(50)',
+            'MPI_SHIP_ADDR_LINE2' => 'AN(50)',
+            'MPI_SHIP_ADDR_LINE3' => 'AN(50)',
+            'MPI_EMAIL' => 'AN(254)',
+            'MPI_HOME_PHONE' => 'AN(15)',
+            'MPI_HOME_PHONE_CC' => 'N(3)',
+            'MPI_WORK_PHONE' => 'AN(15)',
+            'MPI_WORK_PHONE_CC' => 'N(3)',
+            'MPI_MOBILE_PHONE' => 'AN(15)',
+            'MPI_MOBILE_PHONE_CC' => 'N(3)',
+            'MPI_LINE_ITEM' => 'AN',
+            'MPI_RESPONSE_TYPE' => 'AN',
+        ];
+        
+        $formattedPayload = [];
+        
+        // Format each field according to Cardzone specifications
+        foreach ($fieldSpecs as $field => $type) {
+            // Only process fields that exist in the input payload
+            if (!array_key_exists($field, $payload)) {
+                continue;
+            }
+            
+            $value = $payload[$field];
+            
+            // Extract type and length from format like 'N(12)' or 'A(45)' or 'AN(10)'
+            if (preg_match('/^([AN]+)(?:\((\d+)\))?$/', $type, $matches)) {
+                $dataType = $matches[1];
+                $length = isset($matches[2]) ? (int)$matches[2] : 0;
+            } else {
+                $formattedPayload[$field] = $value;
+                continue;
+            }
+            
+            // Handle empty values - return empty string for all empty fields
+            if (empty($value)) {
+                $formattedValue = ''; // Return empty string for all empty fields
+            } else {
+                // Special handling for email field - no padding
+                if ($field === 'MPI_EMAIL') {
+                    $formattedValue = $value; // Use plain value without padding for email
+                } else {
+                    // Format based on data type with proper padding as per requirement document
+                    switch ($dataType) {
+                        case 'N': // Numeric - pad with leading zeros to full length
+                            $cleanValue = ltrim($value, '0');
+                            if (empty($cleanValue)) {
+                                $cleanValue = '0'; // Keep at least one zero if original was all zeros
+                            }
+                            // Pad with leading zeros to full length
+                            $formattedValue = str_pad($cleanValue, $length, '0', STR_PAD_LEFT);
+                            break;
+                        case 'A': // Alphabetic - pad with spaces to full length
+                            $formattedValue = str_pad($value, $length, ' ', STR_PAD_RIGHT);
+                            break;
+                        case 'AN': // Alphanumeric - pad with spaces to full length
+                            $formattedValue = str_pad($value, $length, ' ', STR_PAD_RIGHT);
+                            break;
+                        default:
+                            $formattedValue = $value;
+                    }
+                }
+            }
+            
+            $formattedPayload[$field] = $formattedValue;
+        }
+        
+        // Add any additional fields that are not in the specs (like plain text fields)
+        foreach ($payload as $field => $value) {
+            if (!isset($fieldSpecs[$field])) {
+                $formattedPayload[$field] = $value;
+            }
+        }
+        
+        // Ensure all fields from fieldSpecs are present in the formatted payload
+        // This is crucial for MAC generation consistency
+        foreach ($fieldSpecs as $field => $type) {
+            if (!isset($formattedPayload[$field])) {
+                $formattedPayload[$field] = '';
+            }
+        }
+        
+        return $formattedPayload;
     }
 
     /**
@@ -298,7 +477,12 @@ class CardzoneService
                     'cardzone_public_key_length' => strlen($result['pubKey'])
                 ]);
                 Log::info('Cardzone Key Exchange successful.', ['purchaseId' => $purchaseId]);
-                return ['success' => true, 'cardzonePublicKey' => $result['pubKey'], 'merchantPrivateKey' => $privateKey];
+                return [
+                    'success' => true, 
+                    'cardzonePublicKey' => $result['pubKey'], 
+                    'merchantPrivateKey' => $privateKey,
+                    'purchaseId' => $result['purchaseId'] ?? $purchaseId // Return the purchase ID from Cardzone response
+                ];
             } else {
                 $errorMessage = $result['errorDesc'] ?? $result['errorMessage'] ?? $result['message'] ?? 'Unknown error';
                 $errorCode = $result['errorCode'] ?? $result['responseCode'] ?? 'N/A';
@@ -334,8 +518,48 @@ class CardzoneService
             throw new \Exception('Key exchange MAC signing failed.');
         }
 
-        // Base64Url encode the signature
-        return rtrim(strtr(base64_encode($signature), '+/', '-_'), '=');
+        // Base64 encode the signature (Cardzone requires standard Base64)
+        return base64_encode($signature);
+    }
+
+    /**
+     * Format field value according to Cardzone specifications
+     * 
+     * @param string $value The field value
+     * @param string $type The field type (A, N, AN) with length
+     * @return string Formatted field value
+     */
+    private function formatFieldValue($value, $type, $fieldName = '')
+    {
+        // Extract type and length from format like 'N(12)' or 'A(45)' or 'AN(10)'
+        if (preg_match('/^([AN]+)(?:\((\d+)\))?$/', $type, $matches)) {
+            $dataType = $matches[1];
+            $length = isset($matches[2]) ? (int)$matches[2] : 0;
+        } else {
+            // Default to string if type is not recognized
+            return $value;
+        }
+        
+        // Special handling for amount field - return original value without padding
+        if ($fieldName === 'MPI_PURCH_AMT') {
+            return $value; // Return amount as-is without padding
+        }
+        
+        // Handle empty values - return empty string for all empty fields
+        if (empty($value)) {
+            return ''; // Return empty string for all empty fields
+        }
+        
+        // Format based on data type with minimal padding
+        switch ($dataType) {
+            case 'N': // Numeric - right justified with minimal leading zeros
+                return str_pad($value, $length, '0', STR_PAD_LEFT);
+            case 'A': // Alphabetic - left justified with minimal trailing spaces
+            case 'AN': // Alphanumeric - left justified with minimal trailing spaces
+                return str_pad($value, $length, ' ', STR_PAD_RIGHT);
+            default:
+                return $value;
+        }
     }
 
     /**
@@ -345,68 +569,57 @@ class CardzoneService
      */
     public function generateMacForMPIReq(array $data, $privateKey)
     {
-        // Strict Cardzone field order for MPI_MAC (35 fields)
-        $fields = [
-            'MPI_TRANS_TYPE',
-            'MPI_MERC_ID',
-            'MPI_PAN',
-            'MPI_CARD_HOLDER_NAME',
-            'MPI_PAN_EXP',
-            'MPI_CVV2',
-            'MPI_TRXN_ID',
-            'MPI_ORI_TRXN_ID',
-            'MPI_PURCH_DATE',
-            'MPI_PURCH_CURR',
-            'MPI_PURCH_AMT',
-            'MPI_ADDR_MATCH',
-            'MPI_BILL_ADDR_CITY',
-            'MPI_BILL_ADDR_STATE',
-            'MPI_BILL_ADDR_CNTRY',
-            'MPI_BILL_ADDR_POSTCODE',
-            'MPI_BILL_ADDR_LINE1',
-            'MPI_BILL_ADDR_LINE2',
-            'MPI_BILL_ADDR_LINE3',
-            'MPI_SHIP_ADDR_CITY',
-            'MPI_SHIP_ADDR_STATE',
-            'MPI_SHIP_ADDR_CNTRY',
-            'MPI_SHIP_ADDR_POSTCODE',
-            'MPI_SHIP_ADDR_LINE1',
-            'MPI_SHIP_ADDR_LINE2',
-            'MPI_SHIP_ADDR_LINE3',
-            'MPI_EMAIL',
-            'MPI_HOME_PHONE',
-            'MPI_HOME_PHONE_CC',
-            'MPI_WORK_PHONE',
-            'MPI_WORK_PHONE_CC',
-            'MPI_MOBILE_PHONE',
-            'MPI_MOBILE_PHONE_CC',
-            // MPI_LINE_ITEM (repeat subfields as necessary)
-            // For simplicity, concatenate all line items in order (if present)
-            'MPI_LINE_ITEM',
-            'MPI_RESPONSE_TYPE',
-        ];
+        // IMPORTANT: The order of concatenation for MAC generation MUST precisely match
+        // the specification provided by Cardzone for MPIReq.
+        // Based on documentation: 5.6.2 MPI_MAC (MPIReq) - 35 fields in exact order
         $macString = '';
-        foreach ($fields as $field) {
-            if ($field === 'MPI_LINE_ITEM' && isset($data['MPI_LINE_ITEM']) && is_array($data['MPI_LINE_ITEM'])) {
-                foreach ($data['MPI_LINE_ITEM'] as $item) {
-                    $macString .= $item['MPI_ITEM_ID'] ?? '';
-                    $macString .= $item['MPI_ITEM_REMARK'] ?? '';
-                    $macString .= $item['MPI_ITEM_QUANTITY'] ?? '';
-                    $macString .= $item['MPI_ITEM_AMOUNT'] ?? '';
-                    $macString .= $item['MPI_ITEM_CURRENC'] ?? '';
-                }
-            } else {
-                $macString .= $data[$field] ?? '';
-            }
-        }
-        // Sign the string with your private key
+        
+        // Build MAC string in exact order as per documentation
+        $macString .= $data['MPI_TRANS_TYPE'] ?? '';
+        $macString .= $data['MPI_MERC_ID'] ?? '';
+        $macString .= $data['MPI_PAN'] ?? '';
+        $macString .= $data['MPI_CARD_HOLDER_NAME'] ?? '';
+        $macString .= $data['MPI_PAN_EXP'] ?? '';
+        $macString .= $data['MPI_CVV2'] ?? '';
+        $macString .= $data['MPI_TRXN_ID'] ?? '';
+        $macString .= $data['MPI_ORI_TRXN_ID'] ?? '';
+        $macString .= $data['MPI_PURCH_DATE'] ?? '';
+        $macString .= $data['MPI_PURCH_CURR'] ?? '';
+        $macString .= $data['MPI_PURCH_AMT'] ?? '';
+        $macString .= $data['MPI_ADDR_MATCH'] ?? '';
+        $macString .= $data['MPI_BILL_ADDR_CITY'] ?? '';
+        $macString .= $data['MPI_BILL_ADDR_STATE'] ?? '';
+        $macString .= $data['MPI_BILL_ADDR_CNTRY'] ?? '';
+        $macString .= $data['MPI_BILL_ADDR_POSTCODE'] ?? '';
+        $macString .= $data['MPI_BILL_ADDR_LINE1'] ?? '';
+        $macString .= $data['MPI_BILL_ADDR_LINE2'] ?? '';
+        $macString .= $data['MPI_BILL_ADDR_LINE3'] ?? '';
+        $macString .= $data['MPI_SHIP_ADDR_CITY'] ?? '';
+        $macString .= $data['MPI_SHIP_ADDR_STATE'] ?? '';
+        $macString .= $data['MPI_SHIP_ADDR_CNTRY'] ?? '';
+        $macString .= $data['MPI_SHIP_ADDR_POSTCODE'] ?? '';
+        $macString .= $data['MPI_SHIP_ADDR_LINE1'] ?? '';
+        $macString .= $data['MPI_SHIP_ADDR_LINE2'] ?? '';
+        $macString .= $data['MPI_SHIP_ADDR_LINE3'] ?? '';
+        $macString .= $data['MPI_EMAIL'] ?? '';
+        $macString .= $data['MPI_HOME_PHONE'] ?? '';
+        $macString .= $data['MPI_HOME_PHONE_CC'] ?? '';
+        $macString .= $data['MPI_WORK_PHONE'] ?? '';
+        $macString .= $data['MPI_WORK_PHONE_CC'] ?? '';
+        $macString .= $data['MPI_MOBILE_PHONE'] ?? '';
+        $macString .= $data['MPI_MOBILE_PHONE_CC'] ?? '';
+        $macString .= $data['MPI_LINE_ITEM'] ?? '';
+        $macString .= $data['MPI_RESPONSE_TYPE'] ?? '';
+        
+        // Generate MAC using RSA-SHA256
         $signature = '';
         if (!openssl_sign($macString, $signature, $privateKey, OPENSSL_ALGO_SHA256)) {
-            Log::error('Failed to sign MAC string.', ['macString' => $macString, 'error' => openssl_error_string()]);
-            throw new \Exception('MAC signing failed.');
+            Log::error('Failed to generate MAC signature.', ['error' => openssl_error_string()]);
+            throw new \Exception('MAC generation failed.');
         }
-        // Base64Url encode the signature
-        return rtrim(strtr(base64_encode($signature), '+/', '-_'), '=');
+        
+        // Convert to Base64 format (Cardzone requires standard Base64, not Base64URL)
+        return base64_encode($signature);
     }
 
     /**
@@ -440,7 +653,7 @@ class CardzoneService
             Log::error('Failed to sign OBW MAC string.', ['macString' => $macString, 'error' => openssl_error_string()]);
             throw new \Exception('OBW MAC signing failed.');
         }
-        return rtrim(strtr(base64_encode($signature), '+/', '-_'), '=');
+        return base64_encode($signature);
     }
 
     /**
@@ -472,7 +685,7 @@ class CardzoneService
             Log::error('Failed to sign QR MAC string.', ['macString' => $macString, 'error' => openssl_error_string()]);
             throw new \Exception('QR MAC signing failed.');
         }
-        return rtrim(strtr(base64_encode($signature), '+/', '-_'), '=');
+        return base64_encode($signature);
     }
 
     /**
@@ -520,7 +733,8 @@ class CardzoneService
             Log::error('Failed to encrypt data.', ['error' => openssl_error_string()]);
             throw new \Exception('Data encryption failed.');
         }
-        return base64_encode($encrypted); // Cardzone expects Base64 for encrypted fields
+        // Convert to Base64URL format as expected by Cardzone
+        return rtrim(strtr(base64_encode($encrypted), '+/', '-_'), '=');
     }
 
     /**
@@ -597,5 +811,85 @@ class CardzoneService
             Log::error('Error fetching bank list from Cardzone', ['error' => $e->getMessage()]);
             return false;
         }
+    }
+
+    /**
+     * Generates the MPI_MAC for the MPIReq payload with proper field padding.
+     * This uses YOUR merchant's PRIVATE KEY.
+     * The field order for MAC generation is CRITICAL and must match Cardzone's spec.
+     */
+    public function generateMacForMPIReqWithProperPadding(array $data, $privateKey)
+    {
+        // Cardzone field specifications with proper formatting - Official order
+        // Transaction data first, then card data, then address data
+        $fieldSpecs = [
+            'MPI_TRANS_TYPE' => 'AN(10)',
+            'MPI_MERC_ID' => 'N(15)',
+            'MPI_PURCH_AMT' => 'N(12)',
+            'MPI_PURCH_CURR' => 'N(3)',
+            'MPI_TRXN_ID' => 'N(20)',
+            'MPI_PURCH_DATE' => 'N(14)',
+            'MPI_PAN' => 'N(19)',
+            'MPI_CARD_HOLDER_NAME' => 'A(45)',
+            'MPI_PAN_EXP' => 'N(4)',
+            'MPI_CVV2' => 'N(3)',
+            'MPI_ORI_TRXN_ID' => 'N(20)',
+            'MPI_ADDR_MATCH' => 'A(1)',
+            'MPI_BILL_ADDR_CITY' => 'AN(50)',
+            'MPI_BILL_ADDR_STATE' => 'AN(3)',
+            'MPI_BILL_ADDR_CNTRY' => 'N(3)',
+            'MPI_BILL_ADDR_POSTCODE' => 'N(16)',
+            'MPI_BILL_ADDR_LINE1' => 'AN(50)',
+            'MPI_BILL_ADDR_LINE2' => 'AN(50)',
+            'MPI_BILL_ADDR_LINE3' => 'AN(50)',
+            'MPI_SHIP_ADDR_CITY' => 'AN(50)',
+            'MPI_SHIP_ADDR_STATE' => 'AN(3)',
+            'MPI_SHIP_ADDR_CNTRY' => 'AN(3)',
+            'MPI_SHIP_ADDR_POSTCODE' => 'AN(16)',
+            'MPI_SHIP_ADDR_LINE1' => 'AN(50)',
+            'MPI_SHIP_ADDR_LINE2' => 'AN(50)',
+            'MPI_SHIP_ADDR_LINE3' => 'AN(50)',
+            'MPI_EMAIL' => 'AN(254)',
+            'MPI_HOME_PHONE' => 'AN(15)',
+            'MPI_HOME_PHONE_CC' => 'N(3)',
+            'MPI_WORK_PHONE' => 'AN(15)',
+            'MPI_WORK_PHONE_CC' => 'N(3)',
+            'MPI_MOBILE_PHONE' => 'AN(15)',
+            'MPI_MOBILE_PHONE_CC' => 'N(3)',
+            'MPI_LINE_ITEM' => 'AN',
+            'MPI_RESPONSE_TYPE' => 'AN',
+        ];
+        
+        $macString = '';
+        
+        // Build MAC string with already formatted fields (no double formatting)
+        foreach ($fieldSpecs as $field => $type) {
+            $value = $data[$field] ?? '';
+            // Use the value as-is since it's already formatted
+            $macString .= $value;
+        }
+        
+        // Log the MAC string for debugging (without sensitive data)
+        Log::info('MAC generation string', [
+            'macStringLength' => strlen($macString),
+            'macStringPreview' => substr($macString, 0, 100) . '...'
+        ]);
+        
+        // Generate MAC using RSA-SHA256
+        $signature = '';
+        if (!openssl_sign($macString, $signature, $privateKey, OPENSSL_ALGO_SHA256)) {
+            Log::error('Failed to generate MAC signature.', ['error' => openssl_error_string()]);
+            throw new \Exception('MAC generation failed.');
+        }
+        
+        // Convert to Base64 format (Cardzone requires standard Base64)
+        $mac = base64_encode($signature);
+        
+        Log::info('MAC generated successfully', [
+            'macLength' => strlen($mac),
+            'macPreview' => substr($mac, 0, 50) . '...'
+        ]);
+        
+        return $mac;
     }
 } 

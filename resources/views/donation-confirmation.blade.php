@@ -111,7 +111,9 @@
                                     </div>
                                     <div>
                                         <p class="text-sm font-medium text-gray-700">{{ __('app.payment_method') }}</p>
-                                        <p class="text-lg font-semibold text-gray-900" id="selected-payment-method">{{ __('app.select_payment_method') }}</p>
+                                        <p class="text-lg font-semibold text-gray-900" id="selected-payment-method">
+                                            {{ __('app.select_payment_method') }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -391,11 +393,35 @@
 
 @push('scripts')
 <script>
-// Set payment method in hidden input when selected
-window.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('input[name="payment_method_radio"]').forEach(input => {
-        input.addEventListener('change', function() {
-            document.getElementById('payment-method-input').value = this.value;
+// Payment method selection
+document.addEventListener('DOMContentLoaded', function() {
+    const paymentOptions = document.querySelectorAll('input[name="payment_method_radio"]');
+    const paymentCards = document.querySelectorAll('.payment-card');
+    const paymentMethodInput = document.getElementById('payment-method-input');
+
+    paymentOptions.forEach(option => {
+        option.addEventListener('change', function() {
+            // Reset all cards
+            paymentCards.forEach(card => {
+                card.classList.remove('border-blue-500', 'border-green-500', 'border-purple-500');
+                card.classList.add('border-gray-200');
+            });
+
+            // Style selected card
+            const selectedCard = this.closest('label').querySelector('.payment-card');
+            if (selectedCard) {
+                selectedCard.classList.remove('border-gray-200');
+                if (this.value === 'card') {
+                    selectedCard.classList.add('border-blue-500');
+                } else if (this.value === 'obw') {
+                    selectedCard.classList.add('border-green-500');
+                } else if (this.value === 'qr') {
+                    selectedCard.classList.add('border-purple-500');
+                }
+            }
+
+            // Update hidden input
+            paymentMethodInput.value = this.value;
         });
     });
 });

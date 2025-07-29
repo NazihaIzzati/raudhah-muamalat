@@ -50,8 +50,6 @@ class DonationController extends Controller
             'donor_phone' => 'nullable|string|max:20',
             'message' => 'nullable|string',
             'is_anonymous' => 'boolean',
-
-            'payment_method' => 'nullable|string|in:fpx,duitnow_qr,card,cardzone,obw,qr',
         ]);
         
         if ($validator->fails()) {
@@ -67,8 +65,6 @@ class DonationController extends Controller
         $confirmationData = [
             'campaign' => $campaign,
             'amount' => $request->custom_amount ?? $request->amount,
-
-            'payment_method' => $request->payment_method ?? 'card',
             'donor_name' => $request->donor_name,
             'donor_email' => $request->donor_email,
             'donor_phone' => $request->donor_phone,
@@ -138,11 +134,6 @@ class DonationController extends Controller
             'message' => $request->message,
             'is_anonymous' => $request->has('is_anonymous'),
             'payment_method' => $request->payment_method,
-            'card_number' => $request->card_number ?? null,
-            'card_expiry' => $request->card_expiry ?? null,
-            'card_cvv' => $request->card_cvv ?? null,
-            'card_holder_name' => $request->card_holder_name ?? null,
-            'obw_bank' => $request->obw_bank ?? null,
         ]);
     }
 }

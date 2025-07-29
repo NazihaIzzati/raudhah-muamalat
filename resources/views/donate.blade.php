@@ -3,607 +3,493 @@
 @section('title', __('app.donate_now') . ' - Jariah Fund')
 @section('description', __('app.make_a_secure_donation'))
 
-
-
 @section('content')
-
-        <!-- Hero Section -->
-        <section class="py-20 bg-gradient-to-br from-primary-50 to-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-4xl mx-auto">
-                                            <div class="inline-flex items-center px-4 py-2 bg-primary-100 rounded-full mb-6 animate-fade-in">
-                        <svg class="w-4 h-4 text-primary-600 mr-2 animate-heartbeat" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+    <!-- Hero Section -->
+    <section class="py-20 bg-gradient-to-br from-primary-50 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-4xl mx-auto">
+                <div class="inline-flex items-center px-4 py-2 bg-primary-100 rounded-full mb-6 animate-fade-in">
+                    <svg class="w-4 h-4 text-primary-600 mr-2 animate-heartbeat" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                    </svg>
+                    <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">{{ __('app.secure_donation') }}</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6 animate-fade-in">
+                    {{ __('app.make_a_difference') }}
+                    <span class="text-primary-500 relative block">
+                        {{ __('app.today') }}
+                        <svg class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-64 h-3 text-primary-200" viewBox="0 0 100 12" fill="currentColor">
+                            <path d="M0 8c30-4 70-4 100 0v4H0z"/>
                         </svg>
-                        <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">{{ __('app.secure_donation') }}</span>
-                    </div>
-                                            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6 animate-fade-in">
-                        {{ __('app.make_a_difference') }}
-                        <span class="text-primary-500 relative block">
-                            {{ __('app.today') }}
-                            <svg class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-64 h-3 text-primary-200" viewBox="0 0 100 12" fill="currentColor">
-                                <path d="M0 8c30-4 70-4 100 0v4H0z"/>
-                            </svg>
-                        </span>
-                    </h1>
-                                            <p class="text-xl text-gray-600 leading-relaxed mb-8 animate-fade-in">
-                        {{ __('app.support_verified_campaigns') }} <span class="text-primary-600 font-medium">{{ __('app.complete_transparency') }}</span> and
-                        <span class="text-primary-600 font-medium">{{ __('app.effective_impact') }}</span>.
-                    </p>
-                </div>
+                    </span>
+                </h1>
+                <p class="text-xl text-gray-600 leading-relaxed mb-8 animate-fade-in">
+                    {{ __('app.support_verified_campaigns') }} <span class="text-primary-600 font-medium">{{ __('app.complete_transparency') }}</span> and
+                    <span class="text-primary-600 font-medium">{{ __('app.effective_impact') }}</span>.
+                </p>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Campaign & Donation Section -->
-        <section class="py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-
-                    <!-- Campaign Information - Left Side -->
-                    <div class="order-2 lg:order-1 animate-slide-in-left">
-                        <!-- Campaign Image Carousel -->
-                        <div class="relative mb-8 hover-lift">
-                            <div class="carousel-container rounded-xl overflow-hidden">
-                                <div class="carousel-track" id="carouselTrack">
-                                    <!-- Slide 1 - Eye Examination -->
-                                    <div class="carousel-slide">
-                                        <img src="{{ asset('assets/images/campaigns/01.jpg') }}"
-                                             onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'"
-                                             alt="Eye examination for students"
-                                             class="w-full h-80 object-cover">
-                                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent flex items-end">
-                                            <div class="p-8 text-white w-full">
-                                                <div class="inline-flex items-center px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full mb-4">
-                                                    <span class="text-white font-medium text-sm">{{ __('app.featured_campaign') }}</span>
-                                                </div>
-                                                <h1 class="text-3xl font-bold mb-2">{{ __('app.vision_for_education') }}</h1>
-                                                <p class="text-white/90 text-base">{{ __('app.providing_eye_care') }}</p>
-                                            </div>
-                                        </div>
+    <!-- Image Slider Section -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="relative hover-lift">
+                <div class="carousel-container rounded-xl overflow-hidden">
+                    <div class="carousel-track" id="carouselTrack">
+                        <!-- Slide 1 - Eye Examination -->
+                        <div class="carousel-slide">
+                            <img src="{{ asset('assets/images/campaigns/01.jpg') }}"
+                                 onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'"
+                                 alt="Eye examination for students"
+                                 class="w-full h-96 object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent flex items-end">
+                                <div class="p-8 text-white w-full">
+                                    <div class="inline-flex items-center px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full mb-4">
+                                        <span class="text-white font-medium text-sm">{{ __('app.featured_campaign') }}</span>
                                     </div>
-
-                                    <!-- Slide 2 - Students with Glasses -->
-                                    <div class="carousel-slide">
-                                        <img src="{{ asset('assets/images/campaigns/02.jpg') }}"
-                                             onerror="this.src='https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'"
-                                             alt="Students wearing glasses in classroom"
-                                             class="w-full h-80 object-cover">
-                                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent flex items-end">
-                                            <div class="p-8 text-white w-full">
-                                                <div class="inline-flex items-center px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full mb-4">
-                                                    <span class="text-white font-medium text-sm">{{ __('app.impact_story') }}</span>
-                                                </div>
-                                                <h1 class="text-3xl font-bold mb-2">{{ __('app.improved_learning_experience') }}</h1>
-                                                <p class="text-white/90 text-base">{{ __('app.students_can_see_clearly') }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Slide 3 - Eye Care Equipment -->
-                                    <div class="carousel-slide">
-                                        <img src="{{ asset('assets/images/campaigns/03.jpg') }}"
-                                             onerror="this.src='https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'"
-                                             alt="Eye care equipment and examination tools"
-                                             class="w-full h-80 object-cover">
-                                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent flex items-end">
-                                            <div class="p-8 text-white w-full">
-                                                <div class="inline-flex items-center px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full mb-4">
-                                                    <span class="text-white font-medium text-sm">{{ __('app.professional_care') }}</span>
-                                                </div>
-                                                <h1 class="text-3xl font-bold mb-2">{{ __('app.quality_eye_examinations') }}</h1>
-                                                <p class="text-white/90 text-base">{{ __('app.professional_equipment') }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Slide 4 - Community Impact -->
-                                    <div class="carousel-slide">
-                                        <img src="{{ asset('assets/images/campaigns/04.jpg') }}"
-                                             onerror="this.src='https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'"
-                                             alt="Community children and families"
-                                             class="w-full h-80 object-cover">
-                                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent flex items-end">
-                                            <div class="p-8 text-white w-full">
-                                                <div class="inline-flex items-center px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full mb-4">
-                                                    <span class="text-white font-medium text-sm">{{ __('app.community_impact') }}</span>
-                                                </div>
-                                                <h1 class="text-3xl font-bold mb-2">{{ __('app.supporting_b40_families') }}</h1>
-                                                <p class="text-white/90 text-base">{{ __('app.reducing_financial_burden_quality') }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Navigation Buttons -->
-                                <button class="carousel-nav prev" onclick="previousSlide()">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                                    </svg>
-                                </button>
-                                <button class="carousel-nav next" onclick="nextSlide()">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                    </svg>
-                                </button>
-
-                                <!-- Indicators -->
-                                <div class="carousel-indicators">
-                                    <div class="carousel-indicator active" onclick="goToSlide(0)"></div>
-                                    <div class="carousel-indicator" onclick="goToSlide(1)"></div>
-                                    <div class="carousel-indicator" onclick="goToSlide(2)"></div>
-                                    <div class="carousel-indicator" onclick="goToSlide(3)"></div>
+                                    <h1 class="text-3xl font-bold mb-2">{{ __('app.vision_for_education') }}</h1>
+                                    <p class="text-white/90 text-base">{{ __('app.providing_eye_care') }}</p>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Progress Indicator -->
-                        <div class="bg-white rounded-xl p-6 mb-8 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
-                            <div class="flex justify-between items-baseline mb-4">
-                                <div>
-                                    <div class="text-2xl font-bold text-gray-900 animate-pulse">RM 45,230</div>
-                                    <div class="text-sm text-gray-500">{{ __('app.raised_of_goal', ['62,000']) }}</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="text-lg font-semibold text-primary-600 animate-pulse">73%</div>
-                                    <div class="text-sm text-gray-500">{{ __('app.funded') }}</div>
+                        <!-- Slide 2 - Students with Glasses -->
+                        <div class="carousel-slide">
+                            <img src="{{ asset('assets/images/campaigns/02.jpg') }}"
+                                 onerror="this.src='https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'"
+                                 alt="Students wearing glasses in classroom"
+                                 class="w-full h-96 object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent flex items-end">
+                                <div class="p-8 text-white w-full">
+                                    <div class="inline-flex items-center px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full mb-4">
+                                        <span class="text-white font-medium text-sm">{{ __('app.impact_story') }}</span>
+                                    </div>
+                                    <h1 class="text-3xl font-bold mb-2">{{ __('app.improved_learning_experience') }}</h1>
+                                    <p class="text-white/90 text-base">{{ __('app.students_can_see_clearly') }}</p>
                                 </div>
                             </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
-                                <div class="bg-primary-500 h-2 rounded-full animate-progress animate-shimmer" style="width: 73%"></div>
-                            </div>
-                            <div class="flex items-center justify-between text-sm text-gray-600 mb-4">
-                                <div class="flex items-center">
-                                    @include('components.uxwing-icon', ['name' => 'people', 'class' => 'w-4 h-4 mr-2'])
-                                    <span>234 {{ __('app.donors') }}</span>
-                                </div>
-                                <div class="animate-pulse">15 {{ __('app.days_left') }}</div>
-                            </div>
+                        </div>
 
-                            <!-- Audit Trail Toggle -->
-                            <div class="border-t border-gray-100 pt-4">
-                                <button onclick="toggleAuditTrail()"
-                                        class="flex items-center justify-between w-full text-left text-sm font-medium text-gray-700 hover:text-primary-600 transition-colors"
-                                        id="audit-trail-toggle">
-                                                                            <span class="flex items-center">
-                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        <!-- Slide 3 - Eye Care Equipment -->
+                        <div class="carousel-slide">
+                            <img src="{{ asset('assets/images/campaigns/03.jpg') }}"
+                                 onerror="this.src='https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'"
+                                 alt="Eye care equipment and examination tools"
+                                 class="w-full h-96 object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent flex items-end">
+                                <div class="p-8 text-white w-full">
+                                    <div class="inline-flex items-center px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full mb-4">
+                                        <span class="text-white font-medium text-sm">{{ __('app.professional_care') }}</span>
+                                    </div>
+                                    <h1 class="text-3xl font-bold mb-2">{{ __('app.quality_eye_examinations') }}</h1>
+                                    <p class="text-white/90 text-base">{{ __('app.professional_equipment') }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 4 - Community Impact -->
+                        <div class="carousel-slide">
+                            <img src="{{ asset('assets/images/campaigns/04.jpg') }}"
+                                 onerror="this.src='https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'"
+                                 alt="Community children and families"
+                                 class="w-full h-96 object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent flex items-end">
+                                <div class="p-8 text-white w-full">
+                                    <div class="inline-flex items-center px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full mb-4">
+                                        <span class="text-white font-medium text-sm">{{ __('app.community_impact') }}</span>
+                                    </div>
+                                    <h1 class="text-3xl font-bold mb-2">{{ __('app.supporting_b40_families') }}</h1>
+                                    <p class="text-white/90 text-base">{{ __('app.reducing_financial_burden_quality') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <button class="carousel-nav prev" onclick="previousSlide()">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                    </button>
+                    <button class="carousel-nav next" onclick="nextSlide()">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+
+                    <!-- Indicators -->
+                    <div class="carousel-indicators">
+                        <div class="carousel-indicator active" onclick="goToSlide(0)"></div>
+                        <div class="carousel-indicator" onclick="goToSlide(1)"></div>
+                        <div class="carousel-indicator" onclick="goToSlide(2)"></div>
+                        <div class="carousel-indicator" onclick="goToSlide(3)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campaign & Donation Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Campaign Information - Left Side -->
+                <div class="animate-slide-in-left">
+                    <!-- Progress Indicator -->
+                    <div class="bg-white rounded-xl p-6 mb-8 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+                        <div class="flex justify-between items-baseline mb-4">
+                            <div>
+                                <div class="text-2xl font-bold text-gray-900 animate-pulse">RM 45,230</div>
+                                <div class="text-sm text-gray-500">{{ __('app.raised_of_goal', ['62,000']) }}</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-lg font-semibold text-primary-600 animate-pulse">73%</div>
+                                <div class="text-sm text-gray-500">{{ __('app.funded') }}</div>
+                            </div>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
+                            <div class="bg-primary-500 h-2 rounded-full animate-progress animate-shimmer" style="width: 73%"></div>
+                        </div>
+                        <div class="flex items-center justify-between text-sm text-gray-600 mb-4">
+                            <div class="flex items-center">
+                                @include('components.uxwing-icon', ['name' => 'people', 'class' => 'w-4 h-4 mr-2'])
+                                <span>234 {{ __('app.donors') }}</span>
+                            </div>
+                            <div class="animate-pulse">15 {{ __('app.days_left') }}</div>
+                        </div>
+
+                        <!-- Audit Trail Toggle -->
+                        <div class="border-t border-gray-100 pt-4">
+                            <button onclick="toggleAuditTrail()"
+                                    class="flex items-center justify-between w-full text-left text-sm font-medium text-gray-700 hover:text-primary-600 transition-colors"
+                                    id="audit-trail-toggle">
+                                <span class="flex items-center">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                    </svg>
+                                    {{ __('app.progress_history') }}
+                                </span>
+                                <svg class="w-4 h-4 transform transition-transform duration-200" id="audit-trail-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+
+                            <!-- Audit Trail Content -->
+                            <div id="audit-trail-content" class="hidden mt-4 space-y-4">
+                                <!-- Milestones Section -->
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <h4 class="font-medium text-gray-900 mb-3 flex items-center">
+                                        <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
-                                        {{ __('app.progress_history') }}
-                                    </span>
-                                    <svg class="w-4 h-4 transform transition-transform duration-200" id="audit-trail-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                    </svg>
-                                </button>
-
-                                <!-- Audit Trail Content -->
-                                <div id="audit-trail-content" class="hidden mt-4 space-y-4">
-                                    <!-- Milestones Section -->
-                                    <div class="bg-gray-50 rounded-lg p-4">
-                                        <h4 class="font-medium text-gray-900 mb-3 flex items-center">
-                                            <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                            </svg>
-                                            Campaign Milestones
-                                        </h4>
-                                        <div class="space-y-2">
-                                            <div class="flex items-center justify-between text-sm">
-                                                <span class="flex items-center text-green-600">
-                                                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                                                    </svg>
-                                                    50% Goal Reached
-                                                </span>
-                                                <span class="text-gray-500">RM 31,000</span>
-                                            </div>
-                                            <div class="flex items-center justify-between text-sm">
-                                                <span class="flex items-center text-green-600">
-                                                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                                                    </svg>
-                                                    100 Donors Milestone
-                                                </span>
-                                                <span class="text-gray-500">RM 18,500</span>
-                                            </div>
-                                            <div class="flex items-center justify-between text-sm">
-                                                <span class="flex items-center text-orange-600">
-                                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                                    </svg>
-                                                    75% Goal (Upcoming)
-                                                </span>
-                                                <span class="text-gray-500">RM 46,500</span>
-                                            </div>
+                                        Campaign Milestones
+                                    </h4>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="flex items-center text-green-600">
+                                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                                </svg>
+                                                50% Goal Reached
+                                            </span>
+                                            <span class="text-gray-500">RM 31,000</span>
                                         </div>
-                                    </div>
-
-                                    <!-- Recent Progress Timeline -->
-                                    <div class="bg-gray-50 rounded-lg p-4">
-                                        <h4 class="font-medium text-gray-900 mb-3 flex items-center">
-                                            <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                            </svg>
-                                            Recent Progress
-                                        </h4>
-                                        <div class="space-y-3">
-                                            <!-- Progress Entry 1 -->
-                                            <div class="flex items-start space-x-3">
-                                                <div class="w-2 h-2 bg-primary-500 rounded-full mt-2 flex-shrink-0"></div>
-                                                <div class="flex-1 min-w-0">
-                                                    <div class="flex items-center justify-between">
-                                                        <p class="text-sm font-medium text-gray-900">Major donation received</p>
-                                                        <span class="text-xs text-gray-500">2 hours ago</span>
-                                                    </div>
-                                                    <p class="text-xs text-gray-600">+RM 2,500 • Progress: 69% → 73%</p>
-                                                </div>
-                                            </div>
-
-                                            <!-- Progress Entry 2 -->
-                                            <div class="flex items-start space-x-3">
-                                                <div class="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                                                <div class="flex-1 min-w-0">
-                                                    <div class="flex items-center justify-between">
-                                                        <p class="text-sm font-medium text-gray-900">50% milestone achieved</p>
-                                                        <span class="text-xs text-gray-500">1 day ago</span>
-                                                    </div>
-                                                    <p class="text-xs text-gray-600">Reached RM 31,000 • 150 donors contributed</p>
-                                                </div>
-                                            </div>
-
-                                            <!-- Progress Entry 3 -->
-                                            <div class="flex items-start space-x-3">
-                                                <div class="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                                                <div class="flex-1 min-w-0">
-                                                    <div class="flex items-center justify-between">
-                                                        <p class="text-sm font-medium text-gray-900">Campaign featured on social media</p>
-                                                        <span class="text-xs text-gray-500">3 days ago</span>
-                                                    </div>
-                                                    <p class="text-xs text-gray-600">Increased visibility • +45 new donors</p>
-                                                </div>
-                                            </div>
-
-                                            <!-- Progress Entry 4 -->
-                                            <div class="flex items-start space-x-3">
-                                                <div class="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                                                <div class="flex-1 min-w-0">
-                                                    <div class="flex items-center justify-between">
-                                                        <p class="text-sm font-medium text-gray-900">First 100 donors milestone</p>
-                                                        <span class="text-xs text-gray-500">1 week ago</span>
-                                                    </div>
-                                                    <p class="text-xs text-gray-600">RM 18,500 raised • 30% progress achieved</p>
-                                                </div>
-                                            </div>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="flex items-center text-green-600">
+                                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                                </svg>
+                                                100 Donors Milestone
+                                            </span>
+                                            <span class="text-gray-500">RM 25,000</span>
                                         </div>
-                                    </div>
-
-                                    <!-- Transparency Information -->
-                                    <div class="bg-blue-50 rounded-lg p-4">
-                                        <h4 class="font-medium text-gray-900 mb-2 flex items-center">
-                                            <svg class="w-4 h-4 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                                            </svg>
-                                            Transparency & Verification
-                                        </h4>
-                                        <div class="text-xs text-gray-600 space-y-1">
-                                            <p>• All donations are tracked and verified in real-time</p>
-                                            <p>• Progress updates are automatically recorded</p>
-                                            <p>• Audit trail maintained for full transparency</p>
-                                            <p>• Last verified: <span class="font-medium">Today, 3:45 PM</span></p>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="flex items-center text-blue-600">
+                                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"/>
+                                                </svg>
+                                                Next: 75% Goal
+                                            </span>
+                                            <span class="text-gray-500">RM 46,500</span>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <!-- Campaign Content -->
-                        <div class="bg-white rounded-xl border border-gray-100 p-8 hover:shadow-lg transition-shadow duration-300">
-                            <!-- Organization Info -->
-                            <div class="flex items-center mb-8 pb-6 border-b border-gray-100">
-                                <div class="w-12 h-12 rounded-lg flex items-center justify-center mr-4 bg-primary-50 hover:scale-105 transition-transform duration-300">
-                                    <img src="{{ asset('assets/images/charity/prubsn.png') }}"
-                                         alt="PruBSN Prihatin"
-                                         class="w-8 h-8 object-contain">
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-1">PruBSN Prihatin</h3>
-                                    <div class="flex items-center">
-                                        <span class="text-sm text-gray-600 mr-3">Verified Corporate Foundation</span>
-                                        <div class="flex items-center px-2 py-1 bg-green-50 rounded-full animate-pulse">
-                                            <svg class="w-3 h-3 text-green-600 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                                            </svg>
-                                            <span class="text-xs font-medium text-green-700">Verified</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Campaign Title -->
-                            <h1 class="text-2xl font-bold text-gray-900 mb-6 leading-tight">
-                                Vision for Education Program
-                            </h1>
-
-                            <!-- Campaign Description -->
-                            <div class="space-y-6">
-                                <!-- Background Section -->
-                                <div>
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-3">{{ __('app.background') }}</h3>
-                                    <p class="text-gray-600 leading-relaxed">
-                                        The Vision for Education Program is an initiative under PruBSN Prihatin that aims to help school students from asnaf and B40 groups who face vision problems. Beneficiaries will undergo free eye examinations, and if they require glasses or further examination, full assistance will be provided at no cost to them.
-                                    </p>
-                                </div>
-
-                                <!-- Brief Info Section -->
-                                <div>
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-3">{{ __('app.program_overview') }}</h3>
-                                    <div class="space-y-4">
-                                        <p class="text-gray-600 leading-relaxed">
-                                            This contribution helps reduce inequality in access to eye healthcare. Rural or underprivileged communities are often overlooked in terms of eye care. This program provides them with equal opportunities to receive proper care.
-                                        </p>
-                                        <p class="text-gray-600 leading-relaxed">
-                                            Assistance through this program can improve the overall productivity and quality of life for school students with vision problems. They can also perform daily tasks and classroom learning effectively without disruption due to vision issues.
-                                        </p>
-                                        <p class="text-gray-600 leading-relaxed">
-                                            This program also helps with cost savings for underprivileged families. Eye examinations and glasses often require high costs. With this assistance, it can reduce the financial burden on families and allow them to use money for other needs such as food, education, and family welfare.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <!-- Key Benefits -->
-                                <div>
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('app.why_support_this_campaign') }}</h3>
-                                    <div class="space-y-3">
+                                <!-- Recent Activity Section -->
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <h4 class="font-medium text-gray-900 mb-3 flex items-center">
+                                        <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        Recent Activity
+                                    </h4>
+                                    <div class="space-y-3" id="progress-section">
                                         <div class="flex items-start space-x-3">
-                                            <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                                <svg class="w-3 h-3 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <h4 class="font-medium text-gray-900 text-sm">{{ __('app.equal_access_to_healthcare') }}</h4>
-                                                <p class="text-gray-600 text-sm">{{ __('app.reduces_inequality') }}</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="flex items-start space-x-3">
-                                            <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                                <svg class="w-3 h-3 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <h4 class="font-medium text-gray-900 text-sm">{{ __('app.improved_learning_outcomes') }}</h4>
-                                                <p class="text-gray-600 text-sm">{{ __('app.students_perform_better') }}</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="flex items-start space-x-3">
-                                            <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                                <svg class="w-3 h-3 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <h4 class="font-medium text-gray-900 text-sm">{{ __('app.financial_relief') }}</h4>
-                                                <p class="text-gray-600 text-sm">{{ __('app.reduces_financial_burden') }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Required Assistance Section -->
-                                <div>
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-3">{{ __('app.required_assistance') }}</h3>
-                                    <p class="text-gray-600 leading-relaxed mb-4">
-                                        {{ __('app.assistance_breakdown') }}
-                                    </p>
-
-                                    <!-- PDF Download Link -->
-                                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 hover:border-primary-300 transition-colors">
-                                        <div class="flex items-center justify-between">
-                                            <div class="flex items-center">
-                                                <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mr-3">
-                                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                                                    </svg>
+                                            <div class="w-2 h-2 bg-primary-500 rounded-full mt-2 flex-shrink-0"></div>
+                                            <div class="flex-1 min-w-0">
+                                                <div class="flex items-center justify-between">
+                                                    <p class="text-sm font-medium text-gray-900">Anonymous donation received</p>
+                                                    <span class="text-xs text-gray-500">2 min ago</span>
                                                 </div>
-                                                <div>
-                                                    <h4 class="font-medium text-gray-900 text-sm">{{ __('app.campaign_requirements') }}</h4>
-                                                    <p class="text-gray-600 text-xs">{{ __('app.detailed_breakdown') }}</p>
-                                                </div>
+                                                <p class="text-xs text-gray-600">+RM 100 • Progress: 73%</p>
                                             </div>
-                                                                                            <a href="https://jariahfund.muamalat.com.my/docs/15/QUO-2025-0001.pdf"
-                                               target="_blank"
-                                               class="inline-flex items-center px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white text-sm font-medium rounded-lg transition-colors hover:shadow-md">
-                                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                                </svg>
-                                                {{ __('app.download_pdf') }}
-                                            </a>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Share Section -->
-                            <div class="border-t border-gray-100 pt-6 mt-8">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <h4 class="font-medium text-gray-900 mb-1">{{ __('app.share_campaign') }}</h4>
-                                        <p class="text-sm text-gray-600">{{ __('app.help_reach_more') }}</p>
-                                    </div>
-                                    <div class="flex gap-2">
-                                        <button onclick="shareOnFacebook()" class="w-9 h-9 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center justify-center transition-colors" title="Share on Facebook">
-                                            @include('components.uxwing-icon', ['name' => 'facebook', 'class' => 'w-4 h-4'])
-                                        </button>
-                                        <button onclick="shareOnTwitter()" class="w-9 h-9 bg-black hover:bg-gray-800 text-white rounded-lg flex items-center justify-center transition-colors" title="Share on X">
-                                            @include('components.uxwing-icon', ['name' => 'twitter', 'class' => 'w-4 h-4'])
-                                        </button>
-                                        <button onclick="shareOnWhatsApp()" class="w-9 h-9 bg-green-500 hover:bg-green-600 text-white rounded-lg flex items-center justify-center transition-colors" title="Share on WhatsApp">
-                                            @include('components.uxwing-icon', ['name' => 'whatsapp', 'class' => 'w-4 h-4'])
-                                        </button>
-                                        <button onclick="copyLink()" class="w-9 h-9 bg-gray-500 hover:bg-gray-600 text-white rounded-lg flex items-center justify-center transition-colors" title="Copy Link">
-                                            @include('components.uxwing-icon', ['name' => 'copy-link', 'class' => 'w-4 h-4'])
-                                        </button>
+                                        <div class="flex items-start space-x-3">
+                                            <div class="w-2 h-2 bg-primary-500 rounded-full mt-2 flex-shrink-0"></div>
+                                            <div class="flex-1 min-w-0">
+                                                <div class="flex items-center justify-between">
+                                                    <p class="text-sm font-medium text-gray-900">New donor joined the campaign</p>
+                                                    <span class="text-xs text-gray-500">5 min ago</span>
+                                                </div>
+                                                <p class="text-xs text-gray-600">+RM 250 • Progress: 72%</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start space-x-3">
+                                            <div class="w-2 h-2 bg-primary-500 rounded-full mt-2 flex-shrink-0"></div>
+                                            <div class="flex-1 min-w-0">
+                                                <div class="flex items-center justify-between">
+                                                    <p class="text-sm font-medium text-gray-900">Campaign milestone reached</p>
+                                                    <span class="text-xs text-gray-500">1 hour ago</span>
+                                                </div>
+                                                <p class="text-xs text-gray-600">50% goal achieved • RM 31,000</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Donation Form - Right Side -->
-                    <div class="order-1 lg:order-2 animate-slide-in-right">
-                        <div class="bg-white rounded-xl border border-gray-200 sticky top-6 hover-glow">
-                            <!-- Form Header -->
-                            <div class="px-8 py-6 border-b border-gray-100">
-                                <h2 class="text-xl font-semibold text-gray-900 mb-2 animate-fade-in">{{ __('app.make_your_donation') }}</h2>
-                                <p class="text-gray-600 animate-fade-in">{{ __('app.every_contribution') }}</p>
+                    <!-- Campaign Details -->
+                    <div class="bg-white rounded-xl p-6 mb-8 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">{{ __('app.campaign_details') }}</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">{{ __('app.campaign_impact') }}</h4>
+                                    <p class="text-sm text-gray-600">{{ __('app.providing_eye_care_services') }}</p>
+                                </div>
                             </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">{{ __('app.verified_campaign') }}</h4>
+                                    <p class="text-sm text-gray-600">{{ __('app.fully_verified_and_transparent') }}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">{{ __('app.tax_deductible') }}</h4>
+                                    <p class="text-sm text-gray-600">{{ __('app.receipt_provided_for_tax') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                            <!-- Professional Form -->
-                            <div class="px-8 py-8">
-                                <form action="{{ route('donate.confirm') }}" method="POST" class="space-y-8">
-                                    @csrf
-                                    <input type="hidden" name="campaign_id" value="1">
+                    <!-- PDF Download Link -->
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 hover:border-primary-300 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mr-3">
+                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900 text-sm">{{ __('app.campaign_requirements') }}</h4>
+                                    <p class="text-gray-600 text-xs">{{ __('app.detailed_breakdown') }}</p>
+                                </div>
+                            </div>
+                            <a href="https://jariahfund.muamalat.com.my/docs/15/QUO-2025-0001.pdf"
+                               target="_blank"
+                               class="inline-flex items-center px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white text-sm font-medium rounded-lg transition-colors hover:shadow-md">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                {{ __('app.download_pdf') }}
+                            </a>
+                        </div>
+                    </div>
 
-                                    <input type="hidden" name="payment_method" value="card">
-
-
-
-
-
-                                    <!-- Amount Selection -->
-                                    <div>
-                                        <label class="block text-base font-medium text-gray-900 mb-4">{{ __('app.select_amount') }}</label>
-                                        <div class="grid grid-cols-2 gap-3">
-                                            <label class="cursor-pointer amount-option hover:scale-105 transition-transform duration-300">
-                                                <input type="radio" name="amount" value="50" class="sr-only">
-                                                <div class="amount-button border-2 border-gray-200 py-4 px-4 rounded-lg text-center transition-all duration-300 hover:border-primary-300 hover:bg-primary-50 hover:shadow-lg">
-                                                    <div class="text-lg font-semibold text-gray-900">RM 50</div>
-                                                </div>
-                                            </label>
-                                            <label class="cursor-pointer amount-option hover:scale-105 transition-transform duration-300">
-                                                <input type="radio" name="amount" value="150" class="sr-only">
-                                                <div class="amount-button border-2 border-gray-200 py-4 px-4 rounded-lg text-center transition-all duration-300 hover:border-primary-300 hover:bg-primary-50 hover:shadow-lg">
-                                                    <div class="text-lg font-semibold text-gray-900">RM 150</div>
-                                                </div>
-                                            </label>
-                                            <label class="cursor-pointer amount-option hover:scale-105 transition-transform duration-300">
-                                                <input type="radio" name="amount" value="250" class="sr-only" checked>
-                                                <div class="amount-button border-2 border-primary-500 bg-primary-500 py-4 px-4 rounded-lg text-center transition-all duration-300 animate-pulse">
-                                                    <div class="text-lg font-semibold text-white">RM 250</div>
-                                                </div>
-                                            </label>
-                                            <label class="cursor-pointer amount-option hover:scale-105 transition-transform duration-300">
-                                                <input type="radio" name="amount" value="500" class="sr-only">
-                                                <div class="amount-button border-2 border-gray-200 py-4 px-4 rounded-lg text-center transition-all duration-300 hover:border-primary-300 hover:bg-primary-50 hover:shadow-lg">
-                                                    <div class="text-lg font-semibold text-gray-900">RM 500</div>
-                                                </div>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Custom Amount -->
-                                    <div>
-                                        <label class="block text-base font-medium text-gray-900 mb-4">{{ __('app.custom_amount') }}</label>
-                                        <div class="relative">
-                                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                                <span class="text-sm font-medium text-gray-500">MYR</span>
-                                            </div>
-                                            <input type="number" name="custom_amount" id="custom-amount" placeholder="{{ __('app.enter_amount') }}" min="1" step="1"
-                                                   class="w-full pl-16 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                                        </div>
-                                    </div>
-
-                                    <!-- Donor Information -->
-                                    <div>
-                                        <label class="block text-base font-medium text-gray-900 mb-4">{{ __('app.donor_information') }}</label>
-                                        <div class="space-y-4">
-                                            <!-- Donor Name -->
-                                            <div>
-                                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('app.donor_name') }} *</label>
-                                                <input type="text" name="donor_name" required
-                                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                                                       placeholder="{{ __('app.enter_your_full_name') }}">
-                                            </div>
-
-                                            <!-- Donor Email -->
-                                            <div>
-                                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('app.donor_email') }} *</label>
-                                                <input type="email" name="donor_email" required
-                                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                                                       placeholder="{{ __('app.enter_your_email') }}">
-                                            </div>
-
-                                            <!-- Donor Phone -->
-                                            <div>
-                                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('app.donor_phone') }}</label>
-                                                <input type="tel" name="donor_phone"
-                                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                                                       placeholder="{{ __('app.enter_your_phone') }}">
-                                            </div>
-
-                                            <!-- Donation Message -->
-                                            <div>
-                                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('app.donation_message') }}</label>
-                                                <textarea name="message" rows="3"
-                                                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                                                          placeholder="{{ __('app.optional_message') }}"></textarea>
-                                            </div>
-
-                                            <!-- Anonymous Donation -->
-                                            <div class="flex items-center">
-                                                <input type="checkbox" name="is_anonymous" id="is_anonymous" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
-                                                <label for="is_anonymous" class="ml-2 block text-sm text-gray-700">
-                                                    {{ __('app.anonymous_donation') }}
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-
-                                    <!-- Continue Button -->
-                                    <div class="pt-8 border-t border-gray-100">
-                                        <button type="submit" class="w-full bg-primary-500 hover:bg-primary-600 text-white py-4 px-6 rounded-lg text-lg font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 animate-pulse">
-                                            {{ __('app.continue_to_review') }}
-                                        </button>
-
-                                        <!-- Trust Indicators -->
-                                        <div class="mt-6 text-center">
-                                            <div class="flex items-center justify-center text-sm text-gray-600 mb-4">
-                                                @include('components.uxwing-icon', ['name' => 'security', 'class' => 'w-4 h-4 text-green-600 mr-2 animate-pulse'])
-                                                <span>{{ __('app.secure_encrypted_payment') }}</span>
-                                            </div>
-                                            <div class="flex justify-center gap-6 text-xs text-gray-500">
-                                                <div class="flex items-center hover:scale-105 transition-transform duration-300">
-                                                    <span class="mr-1">🔒</span>
-                                                    <span>{{ __('app.ssl_secured') }}</span>
-                                                </div>
-                                                <div class="flex items-center hover:scale-105 transition-transform duration-300">
-                                                    <span class="mr-1">⚡</span>
-                                                    <span>{{ __('app.instant') }}</span>
-                                                </div>
-                                                <div class="flex items-center hover:scale-105 transition-transform duration-300">
-                                                    <span class="mr-1">🏆</span>
-                                                    <span>{{ __('app.tax_receipt') }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </form>
+                    <!-- Share Section -->
+                    <div class="border-t border-gray-100 pt-6 mt-8">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-900 mb-1">{{ __('app.share_campaign') }}</h4>
+                                <p class="text-sm text-gray-600">{{ __('app.help_reach_more') }}</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="shareOnFacebook()" class="w-9 h-9 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center justify-center transition-colors" title="Share on Facebook">
+                                    @include('components.uxwing-icon', ['name' => 'facebook', 'class' => 'w-4 h-4'])
+                                </button>
+                                <button onclick="shareOnTwitter()" class="w-9 h-9 bg-black hover:bg-gray-800 text-white rounded-lg flex items-center justify-center transition-colors" title="Share on X">
+                                    @include('components.uxwing-icon', ['name' => 'twitter', 'class' => 'w-4 h-4'])
+                                </button>
+                                <button onclick="shareOnWhatsApp()" class="w-9 h-9 bg-green-500 hover:bg-green-600 text-white rounded-lg flex items-center justify-center transition-colors" title="Share on WhatsApp">
+                                    @include('components.uxwing-icon', ['name' => 'whatsapp', 'class' => 'w-4 h-4'])
+                                </button>
+                                <button onclick="copyLink()" class="w-9 h-9 bg-gray-500 hover:bg-gray-600 text-white rounded-lg flex items-center justify-center transition-colors" title="Copy Link">
+                                    @include('components.uxwing-icon', ['name' => 'copy-link', 'class' => 'w-4 h-4'])
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Donation Form - Right Side -->
+                <div class="animate-slide-in-right">
+                    <div class="bg-white rounded-xl border border-gray-200 sticky top-6 hover-glow">
+                        <!-- Form Header -->
+                        <div class="px-8 py-6 border-b border-gray-100">
+                            <h2 class="text-xl font-semibold text-gray-900 mb-2 animate-fade-in">{{ __('app.make_your_donation') }}</h2>
+                            <p class="text-gray-600 animate-fade-in">{{ __('app.every_contribution') }}</p>
+                        </div>
+
+                        <!-- Professional Form -->
+                        <div class="px-8 py-8">
+                            <form action="{{ route('donate.confirm') }}" method="POST" class="space-y-8">
+                                @csrf
+                                <input type="hidden" name="campaign_id" value="1">
+
+                                <!-- Amount Selection -->
+                                <div>
+                                    <label class="block text-base font-medium text-gray-900 mb-4">{{ __('app.select_amount') }}</label>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <label class="cursor-pointer amount-option hover:scale-105 transition-transform duration-300">
+                                            <input type="radio" name="amount" value="50" class="sr-only">
+                                            <div class="amount-button border-2 border-gray-200 py-4 px-4 rounded-lg text-center transition-all duration-300 hover:border-primary-300 hover:bg-primary-50 hover:shadow-lg">
+                                                <div class="text-lg font-semibold text-gray-900">RM 50</div>
+                                            </div>
+                                        </label>
+                                        <label class="cursor-pointer amount-option hover:scale-105 transition-transform duration-300">
+                                            <input type="radio" name="amount" value="150" class="sr-only">
+                                            <div class="amount-button border-2 border-gray-200 py-4 px-4 rounded-lg text-center transition-all duration-300 hover:border-primary-300 hover:bg-primary-50 hover:shadow-lg">
+                                                <div class="text-lg font-semibold text-gray-900">RM 150</div>
+                                            </div>
+                                        </label>
+                                        <label class="cursor-pointer amount-option hover:scale-105 transition-transform duration-300">
+                                            <input type="radio" name="amount" value="250" class="sr-only" checked>
+                                            <div class="amount-button border-2 border-primary-500 bg-primary-500 py-4 px-4 rounded-lg text-center transition-all duration-300 animate-pulse">
+                                                <div class="text-lg font-semibold text-white">RM 250</div>
+                                            </div>
+                                        </label>
+                                        <label class="cursor-pointer amount-option hover:scale-105 transition-transform duration-300">
+                                            <input type="radio" name="amount" value="500" class="sr-only">
+                                            <div class="amount-button border-2 border-gray-200 py-4 px-4 rounded-lg text-center transition-all duration-300 hover:border-primary-300 hover:bg-primary-50 hover:shadow-lg">
+                                                <div class="text-lg font-semibold text-gray-900">RM 500</div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Custom Amount -->
+                                <div>
+                                    <label class="block text-base font-medium text-gray-900 mb-4">{{ __('app.custom_amount') }}</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                            <span class="text-sm font-medium text-gray-500">MYR</span>
+                                        </div>
+                                        <input type="number" name="custom_amount" id="custom-amount" placeholder="{{ __('app.enter_amount') }}" min="1" step="1"
+                                               class="w-full pl-16 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                                    </div>
+                                </div>
+
+                                <!-- Donor Information -->
+                                <div>
+                                    <label class="block text-base font-medium text-gray-900 mb-4">{{ __('app.donor_information') }}</label>
+                                    <div class="space-y-4">
+                                        <!-- Donor Name -->
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('app.donor_name') }} *</label>
+                                            <input type="text" name="donor_name" required
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                                   placeholder="{{ __('app.enter_your_full_name') }}">
+                                        </div>
+
+                                        <!-- Donor Email -->
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('app.donor_email') }} *</label>
+                                            <input type="email" name="donor_email" required
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                                   placeholder="{{ __('app.enter_your_email') }}">
+                                        </div>
+
+                                        <!-- Donor Phone -->
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('app.donor_phone') }}</label>
+                                            <input type="tel" name="donor_phone"
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                                   placeholder="{{ __('app.enter_your_phone') }}">
+                                        </div>
+
+                                        <!-- Donation Message -->
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('app.donation_message') }}</label>
+                                            <textarea name="message" rows="3"
+                                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                                      placeholder="{{ __('app.optional_message') }}"></textarea>
+                                        </div>
+
+                                        <!-- Anonymous Donation -->
+                                        <div class="flex items-center">
+                                            <input type="checkbox" name="is_anonymous" id="is_anonymous" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                            <label for="is_anonymous" class="ml-2 block text-sm text-gray-700">
+                                                {{ __('app.anonymous_donation') }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Continue Button -->
+                                <div class="pt-8 border-t border-gray-100">
+                                    <button type="submit" class="w-full bg-primary-500 hover:bg-primary-600 text-white py-4 px-6 rounded-lg text-lg font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 animate-pulse">
+                                        {{ __('app.continue_to_review') }}
+                                    </button>
+
+                                    <!-- Trust Indicators -->
+                                    <div class="mt-6 text-center">
+                                        <div class="flex items-center justify-center text-sm text-gray-600 mb-4">
+                                            @include('components.uxwing-icon', ['name' => 'security', 'class' => 'w-4 h-4 text-green-600 mr-2 animate-pulse'])
+                                            <span>{{ __('app.secure_encrypted_payment') }}</span>
+                                        </div>
+                                        <div class="flex justify-center gap-6 text-xs text-gray-500">
+                                            <div class="flex items-center hover:scale-105 transition-transform duration-300">
+                                                <span class="mr-1">🔒</span>
+                                                <span>{{ __('app.ssl_secured') }}</span>
+                                            </div>
+                                            <div class="flex items-center hover:scale-105 transition-transform duration-300">
+                                                <span class="mr-1">⚡</span>
+                                                <span>{{ __('app.instant') }}</span>
+                                            </div>
+                                            <div class="flex items-center hover:scale-105 transition-transform duration-300">
+                                                <span class="mr-1">🏆</span>
+                                                <span>{{ __('app.tax_receipt') }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
-
-
-
-
-
+        </div>
+    </section>
 @endsection
 
 @push('scripts')
