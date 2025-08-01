@@ -41,11 +41,11 @@ class News extends Model
     ];
     
     /**
-     * Get the user who created this news.
+     * Get the staff member who created this news.
      */
     public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(Staff::class, 'created_by');
     }
     
     /**

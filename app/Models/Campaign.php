@@ -20,6 +20,7 @@ class Campaign extends Model
         'description',
         'content',
         'featured_image',
+        'qr_code_image',
         'goal_amount',
         'raised_amount',
         'currency',
@@ -42,11 +43,11 @@ class Campaign extends Model
     ];
     
     /**
-     * Get the user who created this campaign.
+     * Get the staff member who created this campaign.
      */
     public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(Staff::class, 'created_by');
     }
     
     /**
@@ -58,11 +59,27 @@ class Campaign extends Model
     }
     
     /**
-     * Get the posters for this campaign.
+     * Get the QR code image URL.
      */
-    public function posters()
+    public function getQrCodeImageUrlAttribute(): ?string
     {
-        return $this->hasMany(Poster::class);
+        if ($this->qr_code_image) {
+            return asset('storage/' . $this->qr_code_image);
+        }
+        
+        return null;
+    }
+
+    /**
+     * Get the featured image URL.
+     */
+    public function getFeaturedImageUrlAttribute(): ?string
+    {
+        if ($this->featured_image) {
+            return asset('storage/' . $this->featured_image);
+        }
+        
+        return null;
     }
     
     /**

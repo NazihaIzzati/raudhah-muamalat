@@ -21,13 +21,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'phone',
-        'role',
+        'email_verified_at',
         'password',
-        'profile_photo',
-        'address',
-        'status',
-        'bio',
+        'user_type', // 'staff', 'donor'
+        'is_active',
         'last_login_at',
     ];
 
@@ -51,24 +48,25 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',
             'last_login_at' => 'datetime',
         ];
     }
 
     /**
-     * Check if user is admin
+     * Check if user is staff
      */
-    public function isAdmin(): bool
+    public function isStaff(): bool
     {
-        return $this->role === 'admin';
+        return $this->user_type === 'staff';
     }
 
     /**
-     * Check if user is regular user
+     * Check if user is donor
      */
-    public function isUser(): bool
+    public function isDonor(): bool
     {
-        return $this->role === 'user' || $this->role === null;
+        return $this->user_type === 'donor';
     }
     
     /**
@@ -76,40 +74,36 @@ class User extends Authenticatable
      */
     public function isActive(): bool
     {
-        return $this->status === 'active';
+        return $this->is_active;
     }
 
     /**
-     * Get the donations associated with the user.
+     * Get the staff profile associated with this user.
      */
-    public function donations(): HasMany
+    public function staff()
     {
-        return $this->hasMany(Donation::class);
+        return $this->hasOne(Staff::class);
     }
 
     /**
-     * Get the campaigns created by the user.
+     * Get the donor profile associated with this user.
      */
-    public function campaigns(): HasMany
+    public function donor()
     {
-        return $this->hasMany(Campaign::class, 'created_by');
-    }
-
-    /**
-     * Get the posters created by the user.
-     */
-    public function posters(): HasMany
-    {
-        return $this->hasMany(Poster::class, 'created_by');
+        return $this->hasOne(Donor::class);
     }
     
     /**
-     * Get the profile photo URL
+     * Get the profile photo URL based on user type
      */
     public function getProfilePhotoUrlAttribute(): string
     {
-        if ($this->profile_photo) {
-            return asset('storage/' . $this->profile_photo);
+        if ($this->isStaff() && $this->staff && $this->staff->profile_picture) {
+            return asset('storage/' . $this->staff->profile_picture);
+        }
+        
+        if ($this->isDonor() && $this->donor && $this->donor->profile_picture) {
+            return asset('storage/' . $this->donor->profile_picture);
         }
         
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=fff&background=FB923C&size=150';

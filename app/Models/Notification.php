@@ -4,13 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 
 class Notification extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'user_id',
         'type',
         'title',
         'message',
@@ -71,18 +73,27 @@ class Notification extends Model
         $this->update(['read_at' => null]);
     }
 
+    /**
+     * Get the user who owns this notification.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     // Static methods for creating notifications
     public static function createDonationNotification($donation)
     {
         return self::create([
+            'user_id' => $donation->donor->user_id ?? null,
             'type' => 'donation',
             'title' => 'New Donation Received',
-            'message' => ($donation->user ? $donation->user->name : 'Anonymous') . 
-                        ' donated $' . number_format($donation->amount, 2) . 
+            'message' => ($donation->donor ? $donation->donor->user->name : 'Anonymous') . 
+                        ' donated RM ' . number_format($donation->amount, 2) . 
                         ' to ' . ($donation->campaign ? $donation->campaign->title : 'General Fund'),
             'data' => [
                 'donation_id' => $donation->id,
-                'user_id' => $donation->user_id,
+                'donor_id' => $donation->donor_id,
                 'campaign_id' => $donation->campaign_id,
                 'amount' => $donation->amount
             ],
@@ -95,6 +106,7 @@ class Notification extends Model
     public static function createUserRegistrationNotification($user)
     {
         return self::create([
+            'user_id' => $user->id,
             'type' => 'user_registration',
             'title' => 'New User Registration',
             'message' => $user->name . ' has registered as a new user',
@@ -112,12 +124,14 @@ class Notification extends Model
     public static function createCampaignNotification($campaign)
     {
         return self::create([
+            'user_id' => $campaign->creator->user_id ?? null,
             'type' => 'campaign_created',
             'title' => 'New Campaign Created',
             'message' => 'Campaign "' . $campaign->title . '" has been created',
             'data' => [
                 'campaign_id' => $campaign->id,
-                'goal_amount' => $campaign->goal_amount
+                'goal_amount' => $campaign->goal_amount,
+                'created_by' => $campaign->created_by
             ],
             'icon' => 'campaign',
             'color' => 'orange',

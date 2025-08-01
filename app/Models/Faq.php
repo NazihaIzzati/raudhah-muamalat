@@ -36,11 +36,11 @@ class Faq extends Model
     ];
     
     /**
-     * Get the user who created this FAQ.
+     * Get the staff member who created this FAQ.
      */
     public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(Staff::class, 'created_by');
     }
     
     /**

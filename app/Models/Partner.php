@@ -38,11 +38,11 @@ class Partner extends Model
     ];
     
     /**
-     * Get the user who created this partner.
+     * Get the staff member who created this partner.
      */
     public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(Staff::class, 'created_by');
     }
     
     /**

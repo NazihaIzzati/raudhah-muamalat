@@ -41,11 +41,11 @@ class Contact extends Model
     ];
     
     /**
-     * Get the user who replied to this contact.
+     * Get the staff member who replied to this contact.
      */
     public function repliedBy()
     {
-        return $this->belongsTo(User::class, 'replied_by');
+        return $this->belongsTo(Staff::class, 'replied_by');
     }
     
     /**

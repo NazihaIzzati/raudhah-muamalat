@@ -7,7 +7,12 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Create core Laravel authentication and session tables
+     * 
+     * This migration creates the foundational tables for user authentication:
+     * - users: Main user accounts table
+     * - password_reset_tokens: For password reset functionality
+     * - sessions: For session management
      */
     public function up(): void
     {

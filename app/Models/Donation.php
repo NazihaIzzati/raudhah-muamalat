@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Donation extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     
     /**
      * The attributes that are mass assignable.
@@ -15,7 +16,7 @@ class Donation extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
+        'donor_id',
         'campaign_id',
         'donor_name',
         'donor_email',
@@ -25,7 +26,6 @@ class Donation extends Model
         'payment_method',
         'payment_status',
         'transaction_id',
-        'payment_response',
         'message',
         'is_anonymous',
         'paid_at',
@@ -43,11 +43,11 @@ class Donation extends Model
     ];
     
     /**
-     * Get the user that made this donation.
+     * Get the donor that made this donation.
      */
-    public function user()
+    public function donor()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Donor::class);
     }
     
     /**
@@ -59,10 +59,18 @@ class Donation extends Model
     }
 
     /**
-     * Get the transaction associated with this donation.
+     * Get the cardzone transaction associated with this donation.
      */
-    public function transaction()
+    public function cardzoneTransaction()
     {
-        return $this->hasOne(Transaction::class);
+        return $this->hasOne(CardzoneTransaction::class, 'donation_id');
+    }
+
+    /**
+     * Get the paynet transaction associated with this donation.
+     */
+    public function paynetTransaction()
+    {
+        return $this->hasOne(PaynetTransaction::class, 'donation_id');
     }
 }

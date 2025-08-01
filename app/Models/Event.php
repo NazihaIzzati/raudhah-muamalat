@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class Event extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     
     /**
      * The attributes that are mass assignable.
@@ -84,11 +85,11 @@ class Event extends Model
     }
     
     /**
-     * Get the user who created this event.
+     * Get the staff member who created this event.
      */
     public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(Staff::class, 'created_by');
     }
     
     /**
