@@ -19,6 +19,9 @@ use App\Http\Controllers\Admin\PartnerController as AdminPartnerController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\PartnersController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\CardzoneDebugController;
 
 
@@ -34,9 +37,7 @@ Route::get('/about', function () {
     return view('about');
 });
 
-Route::get('/partners', function () {
-    return view('partners');
-});
+Route::get('/partners', [PartnersController::class, 'index'])->name('partners.index');
 
 Route::get('/campaigns', function () {
     return view('campaigns');
@@ -46,13 +47,9 @@ Route::get('/all-campaigns', function () {
     return view('all-campaigns');
 });
 
-Route::get('/news', function () {
-    return view('news');
-});
+Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 
-Route::get('/faq', function () {
-    return view('faq');
-});
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
 // Donation routes
 Route::get('/donate/{campaignId?}', [DonationController::class, 'showForm'])->name('donate.form');
