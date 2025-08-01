@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <!-- Background -->
+  <rect width="400" height="300" fill="#f8f9fa"/>
+  
+  <!-- Food Relief Illustration -->
+  <g transform="translate(50, 50)">
+    <!-- Food Boxes -->
+    <rect x="50" y="100" width="60" height="40" fill="#8B4513" stroke="#654321" stroke-width="2"/>
+    <rect x="120" y="100" width="60" height="40" fill="#8B4513" stroke="#654321" stroke-width="2"/>
+    <rect x="190" y="100" width="60" height="40" fill="#8B4513" stroke="#654321" stroke-width="2"/>
+    
+    <!-- Food Items -->
+    <circle cx="80" cy="120" r="8" fill="#FF6B35"/>
+    <circle cx="150" cy="120" r="8" fill="#4CAF50"/>
+    <circle cx="220" cy="120" r="8" fill="#FFC107"/>
+    
+    <!-- Helping Hands -->
+    <path d="M100 80 Q110 70 120 80 Q130 70 140 80 Q130 90 120 85 Q110 90 100 80" fill="#FE5100"/>
+    <path d="M160 80 Q170 70 180 80 Q190 70 200 80 Q190 90 180 85 Q170 90 160 80" fill="#FE5100"/>
+    
+    <!-- Hearts -->
+    <path d="M175 50 C175 45 180 40 185 40 C190 40 195 45 195 50 C195 55 185 65 185 65 S175 55 175 50" fill="#FF4444"/>
+  </g>
+  
+  <!-- Title -->
+  <text x="200" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#2D5A3D">Emergency Food Relief</text>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <!-- Background -->
+  <rect width="400" height="300" fill="#f0fff0"/>
+  
+  <!-- Medical Mission Illustration -->
+  <g transform="translate(50, 50)">
+    <!-- Medical Cross -->
+    <rect x="180" y="60" width="8" height="40" fill="#FF4444"/>
+    <rect x="164" y="76" width="40" height="8" fill="#FF4444"/>
+    
+    <!-- Ambulance/Medical Vehicle -->
+    <rect x="80" y="120" width="80" height="40" fill="#FFFFFF" stroke="#2E5C8A" stroke-width="2"/>
+    <rect x="85" y="125" width="15" height="10" fill="#87CEEB"/>
+    <rect x="105" y="125" width="15" height="10" fill="#87CEEB"/>
+    <rect x="125" y="125" width="15" height="10" fill="#87CEEB"/>
+    <rect x="145" y="125" width="10" height="10" fill="#87CEEB"/>
+    
+    <!-- Wheels -->
+    <circle cx="95" cy="170" r="8" fill="#2D5A3D"/>
+    <circle cx="145" cy="170" r="8" fill="#2D5A3D"/>
+    
+    <!-- Medical Bag -->
+    <rect x="200" y="130" width="25" height="20" fill="#8B4513"/>
+    <rect x="210" y="125" width="5" height="5" fill="#8B4513"/>
+    <rect x="208" y="135" width="4" height="8" fill="#FF4444"/>
+    <rect x="204" y="139" width="12" height="4" fill="#FF4444"/>
+    
+    <!-- Stethoscope -->
+    <path d="M250 120 Q260 110 270 120 Q280 130 270 140 Q260 150 250 140" stroke="#2E5C8A" stroke-width="3" fill="none"/>
+    <circle cx="250" cy="130" r="4" fill="#2E5C8A"/>
+    <circle cx="270" cy="130" r="4" fill="#2E5C8A"/>
+    
+    <!-- Heart -->
+    <path d="M120 80 C120 75 125 70 130 70 C135 70 140 75 140 80 C140 85 130 95 130 95 S120 85 120 80" fill="#FF4444"/>
+  </g>
+  
+  <!-- Title -->
+  <text x="200" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#2D5A3D">Medical Mission</text>
+</svg>
