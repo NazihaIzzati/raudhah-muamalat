@@ -348,6 +348,7 @@ return [
     'community_initiatives' => 'Inisiatif Komuniti',
     'islamic_programs' => 'Program Islam',
     'charitable_activities' => 'Aktiviti Amal',
+    'community_news' => 'Berita Komuniti',
     'no_news_available' => 'Tiada Berita Tersedia',
     'no_news_description' => 'Kami sedang bekerja untuk membawa berita dan kemas kini terbaru kepada anda. Sila periksa semula tidak lama lagi untuk kemas kini tentang inisiatif komuniti dan program kami.',
     

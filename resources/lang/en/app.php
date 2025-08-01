@@ -367,6 +367,7 @@ return [
     'community_initiatives' => 'Community Initiatives',
     'islamic_programs' => 'Islamic Programs',
     'charitable_activities' => 'Charitable Activities',
+    'community_news' => 'Community News',
     'no_news_available' => 'No News Available',
     'no_news_description' => 'We\'re currently working on bringing you the latest news and updates. Please check back soon for updates about our community initiatives and programs.',
     
