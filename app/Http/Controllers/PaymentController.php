@@ -7,24 +7,71 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use App\Services\CardzoneService; // Your custom service
-use App\Services\PaynetService; // Paynet service for FPX
-use App\Models\CardzoneTransaction;
-use App\Models\PaynetTransaction;
+use App\Models\Transaction; // Import your Transaction model
 use App\Models\CardzoneKey; // Import your CardzoneKey model
 use App\Models\Donation; // Import your Donation model
 
 class PaymentController extends Controller
 {
     protected $cardzoneService;
-    protected $paynetService;
 
-    public function __construct(CardzoneService $cardzoneService, PaynetService $paynetService)
+    public function __construct(CardzoneService $cardzoneService)
     {
         $this->cardzoneService = $cardzoneService;
-        $this->paynetService = $paynetService;
     }
 
-
+    /**
+     * Test endpoint to check Cardzone API connectivity
+     */
+    public function testCardzoneConnection()
+    {
+        try {
+            // Generate a proper test key pair
+            $config = [
+                "digest_alg" => "sha256",
+                "private_key_bits" => 2048,
+                "private_key_type" => OPENSSL_KEYTYPE_RSA,
+            ];
+            
+            $res = openssl_pkey_new($config);
+            openssl_pkey_export($res, $privateKey);
+            $publicKeyDetails = openssl_pkey_get_details($res);
+            $publicKey = $publicKeyDetails["key"];
+            
+            // Convert to Base64Url format as expected by Cardzone
+            $key = str_replace(['-----BEGIN PUBLIC KEY-----', '-----END PUBLIC KEY-----', "\n"], '', $publicKey);
+            $pubKeyBase64Url = rtrim(strtr(base64_encode($key), '+/', '-_'), '=');
+            
+            // Test with a proper POST request
+            $testPayload = [
+                'merchantId' => env('CARDZONE_MERCHANT_ID'),
+                'purchaseId' => 'TEST' . now()->format('YmdHis'),
+                'pubKey' => $pubKeyBase64Url,
+                'version' => '2.9'
+            ];
+            
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ])->timeout(10)->post(env('CARDZONE_UAT_KEY_EXCHANGE_URL'), $testPayload);
+            
+            return response()->json([
+                'success' => true,
+                'status' => $response->status(),
+                'body' => $response->body(),
+                'url' => env('CARDZONE_UAT_KEY_EXCHANGE_URL'),
+                'method' => 'POST',
+                'payload' => $testPayload,
+                'pubKeyLength' => strlen($pubKeyBase64Url)
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage(),
+                'url' => env('CARDZONE_UAT_KEY_EXCHANGE_URL')
+            ], 500);
+        }
+    }
 
     /**
      * Displays the payment wizard page and handles Cardzone redirect.
@@ -45,25 +92,19 @@ class PaymentController extends Controller
                 'is_anonymous' => session('is_anonymous'),
                 'payment_method' => session('payment_method'),
             ];
-            
-            // Debug: Log the donation data
-            Log::info('Payment page donation data', $donationData);
-        } else {
-            Log::info('No donation session data found');
         }
         
-        // Get bank list from Paynet for FPX payment options
-        $banks = $this->paynetService->getFpxBankList();
+        // Get bank list for payment options
+        $banks = $this->cardzoneService->getBankList();
         
-        // If Paynet bank list API fails, use static list as fallback
+        // If bank list API fails, use empty array instead of redirecting
         if ($banks === false) {
-            Log::warning('Paynet bank list API failed during payment page load, using static bank list');
-            $banks = $this->paynetService->getStaticFpxBankList();
+            Log::warning('Bank list API failed during payment page load, using empty bank list');
+            $banks = [];
         }
         
         // Check if this is the debug route
-        $route = $request->route();
-        $viewName = ($route && $route->getName() === 'payment.debug') ? 'payment_debug' : 'payment';
+        $viewName = $request->route()->getName() === 'payment.debug' ? 'payment_debug' : 'payment';
         
         return view($viewName, [
             'banks' => $banks,
@@ -103,13 +144,13 @@ class PaymentController extends Controller
         ]);
 
         // Create a temporary transaction record for key exchange
-        $transaction = CardzoneTransaction::create([
-            'cz_transaction_id' => $transactionId,
-            'cz_merchant_id' => $merchantId,
-            'cz_amount' => $purchaseAmount / 100,
-            'cz_currency' => $purchaseCurrency,
-            'cz_payment_method' => $paymentMethod,
-            'cz_status' => 'key_exchange_pending',
+        $transaction = Transaction::create([
+            'transaction_id' => $transactionId,
+            'merchant_id' => $merchantId,
+            'amount' => $purchaseAmount / 100,
+            'currency' => $purchaseCurrency,
+            'payment_method' => $paymentMethod,
+            'status' => 'key_exchange_pending',
             'donation_id' => $donationId,
         ]);
 
@@ -128,9 +169,9 @@ class PaymentController extends Controller
             
             // Update transaction with Cardzone's purchaseId
             $transaction->update([
-                'cz_transaction_id' => $cardzonePurchaseId,
-                'cz_status' => 'key_exchange_completed',
-                'cz_response_data' => $keyExchangeResult
+                'transaction_id' => $cardzonePurchaseId,
+                'status' => 'key_exchange_completed',
+                'cardzone_response_data' => $keyExchangeResult
             ]);
             
             Log::info('Key exchange completed successfully', [
@@ -150,9 +191,9 @@ class PaymentController extends Controller
             
             // Update transaction status to failed
             $transaction->update([
-                'cz_transaction_id' => $cardzonePurchaseId,
-                'cz_status' => 'key_exchange_failed',
-                'cz_response_data' => $keyExchangeResult
+                'transaction_id' => $cardzonePurchaseId,
+                'status' => 'key_exchange_failed',
+                'cardzone_response_data' => $keyExchangeResult
             ]);
             
             Log::error('Key exchange failed', [
@@ -204,8 +245,8 @@ class PaymentController extends Controller
         // For card payments, we need to find the existing transaction from key exchange
         if ($paymentMethod === 'card') {
             // Look for the transaction created during key exchange
-            $existingTransaction = CardzoneTransaction::where('cz_transaction_id', $transactionId)
-                ->where('cz_status', 'key_exchange_completed')
+            $existingTransaction = Transaction::where('transaction_id', $transactionId)
+                ->where('status', 'key_exchange_completed')
                 ->first();
             
             if (!$existingTransaction) {
@@ -221,12 +262,12 @@ class PaymentController extends Controller
             
             // Update the transaction with payment details
             $transaction->update([
-                'cz_card_number_masked' => \Illuminate\Support\Str::mask($request->input('card_number'), '*', 6, 4),
-                'cz_card_expiry' => $request->input('card_expiry'),
-                'cz_card_holder_name' => $request->input('card_holder_name'),
-                'cz_amount' => $purchaseAmount / 100, // Add amount field
-                'cz_currency' => $purchaseCurrency, // Add currency field
-                'cz_status' => 'pending',
+                'card_number_masked' => \Illuminate\Support\Str::mask($request->input('card_number'), '*', 6, 4),
+                'card_expiry' => $request->input('card_expiry'),
+                'card_holder_name' => $request->input('card_holder_name'),
+                'amount' => $purchaseAmount / 100, // Add amount field
+                'currency' => $purchaseCurrency, // Add currency field
+                'status' => 'pending',
             ]);
             
             Log::info('Updated key exchange transaction for payment', [
@@ -235,19 +276,19 @@ class PaymentController extends Controller
             ]);
         } else {
             // For non-card payments, create or update transaction
-            $existingTransaction = CardzoneTransaction::where('cz_transaction_id', $transactionId)->first();
+            $existingTransaction = Transaction::where('transaction_id', $transactionId)->first();
             
             if ($existingTransaction) {
                 // Update existing transaction with payment details
                 $transaction = $existingTransaction;
                 $transaction->update([
-                    'cz_merchant_id' => $merchantId,
-                    'cz_amount' => $purchaseAmount / 100,
-                    'cz_currency' => $purchaseCurrency,
-                    'cz_payment_method' => $paymentMethod,
-                    'cz_obw_bank_code' => $paymentMethod === 'obw' ? $request->input('obw_bank') : null,
+                    'merchant_id' => $merchantId,
+                    'amount' => $purchaseAmount / 100,
+                    'currency' => $purchaseCurrency,
+                    'payment_method' => $paymentMethod,
+                    'obw_bank_code' => $paymentMethod === 'obw' ? $request->input('obw_bank') : null,
                     'donation_id' => $donationId,
-                    'cz_status' => 'pending',
+                    'status' => 'pending',
                 ]);
                 Log::info('Updated existing transaction for payment', [
                     'transactionId' => $transactionId,
@@ -255,14 +296,14 @@ class PaymentController extends Controller
                 ]);
             } else {
                 // Create new transaction
-                $transaction = CardzoneTransaction::create([
-                    'cz_transaction_id' => $transactionId,
-                    'cz_merchant_id' => $merchantId,
-                    'cz_amount' => $purchaseAmount / 100,
-                    'cz_currency' => $purchaseCurrency,
-                    'cz_payment_method' => $paymentMethod,
-                    'cz_status' => 'pending',
-                    'cz_obw_bank_code' => $paymentMethod === 'obw' ? $request->input('obw_bank') : null,
+                $transaction = Transaction::create([
+                    'transaction_id' => $transactionId,
+                    'merchant_id' => $merchantId,
+                    'amount' => $purchaseAmount / 100,
+                    'currency' => $purchaseCurrency,
+                    'payment_method' => $paymentMethod,
+                    'status' => 'pending',
+                    'obw_bank_code' => $paymentMethod === 'obw' ? $request->input('obw_bank') : null,
                     'donation_id' => $donationId,
                 ]);
                 Log::info('Created new transaction for payment', [
@@ -280,7 +321,7 @@ class PaymentController extends Controller
                     'transactionId' => $transactionId,
                     'path' => $cardzonePublicKeyPath
                 ]);
-                $transaction->update(['cz_status' => 'failed_validation']);
+                $transaction->update(['status' => 'failed_validation']);
                 return response()->json(['success' => false, 'message' => 'Cardzone public key not found. Please perform key exchange first.'], 400);
             }
             $cardzonePublicKey = file_get_contents($cardzonePublicKeyPath);
@@ -504,7 +545,15 @@ class PaymentController extends Controller
         $formattedMpiReq = $this->cardzoneService->formatPayloadForCardzoneWithProperPadding($mpiReq);
         
         // MAC must be generated using the same properly padded data
-        $formattedMpiReq['MPI_MAC'] = $this->cardzoneService->generateMacForMPIReq($formattedMpiReq, $merchantPrivateKey);
+        // Set $testWithoutMac = true to test without MAC generation
+        $testWithoutMac = false; // Set to true to test without MAC
+        if (!$testWithoutMac) {
+            $formattedMpiReq['MPI_MAC'] = $this->cardzoneService->generateMacForMPIReq($formattedMpiReq, $merchantPrivateKey);
+        } else {
+            // Test without MAC - remove MAC field if it exists
+            unset($formattedMpiReq['MPI_MAC']);
+            Log::info('Testing without MAC - MAC field removed from payload');
+        }
 
         // Log the request (both Laravel and debug log)
         $mpireqUrl = env('CARDZONE_UAT_MPIREQ_URL');
@@ -594,7 +643,7 @@ class PaymentController extends Controller
         }
         
         // Get transaction details
-        $transaction = CardzoneTransaction::where('cz_transaction_id', $transactionId)->first();
+        $transaction = Transaction::where('transaction_id', $transactionId)->first();
         if (!$transaction) {
             return redirect()->route('payment.failure', ['message' => 'Transaction not found']);
         }
@@ -603,8 +652,8 @@ class PaymentController extends Controller
             'transaction_id' => $transactionId,
             'redirect_url' => $redirectUrl,
             'form_data' => json_decode($formData, true),
-            'amount' => $transaction->cz_amount,
-            'payment_method' => $transaction->cz_payment_method
+            'amount' => $transaction->amount,
+            'payment_method' => $transaction->payment_method
         ]);
     }
 
@@ -620,7 +669,7 @@ class PaymentController extends Controller
         $receivedMac = $receivedData['MPI_MAC'] ?? null;
         $transactionId = $receivedData['MPI_TRXN_ID'] ?? null;
 
-        $transaction = CardzoneTransaction::where('cz_transaction_id', $transactionId)->first();
+        $transaction = Transaction::where('transaction_id', $transactionId)->first();
 
         if (!$transaction) {
             Log::error('Transaction not found for callback.', ['transactionId' => $transactionId, 'callbackData' => $receivedData]);
@@ -628,12 +677,12 @@ class PaymentController extends Controller
         }
 
         // Retrieve Cardzone's public key for this merchant from your persistent storage
-        $cardzoneKey = CardzoneKey::where('merchant_id', $transaction->cz_merchant_id)->first();
+        $cardzoneKey = CardzoneKey::where('merchant_id', $transaction->merchant_id)->first();
         $cardzonePublicKey = $cardzoneKey ? $cardzoneKey->cardzone_public_key : null;
 
         if (!$cardzonePublicKey) {
-            Log::error('Cardzone Public Key not found for merchant during callback verification.', ['merchantId' => $transaction->cz_merchant_id]);
-            $transaction->update(['cz_status' => 'failed', 'cz_response_data' => $receivedData]);
+            Log::error('Cardzone Public Key not found for merchant during callback verification.', ['merchantId' => $transaction->merchant_id]);
+            $transaction->update(['status' => 'failed', 'cardzone_response_data' => $receivedData]);
             return response('Error: Public key missing for verification.', 400);
         }
 
@@ -642,7 +691,7 @@ class PaymentController extends Controller
 
         if (!$isMacValid) {
             Log::error('Cardzone Callback MAC verification failed.', ['transactionId' => $transactionId, 'receivedMac' => $receivedMac]);
-            $transaction->update(['cz_status' => 'failed', 'cz_response_data' => $receivedData]);
+            $transaction->update(['status' => 'failed', 'cardzone_response_data' => $receivedData]);
             return response('Error: MAC verification failed.', 401);
         }
 
@@ -650,9 +699,9 @@ class PaymentController extends Controller
         $transStatus = $receivedData['MPI_TRANS_STATUS'] ?? 'F'; // 'Y' for success, 'N' for failed, 'C' for challenge, 'F' for fraud/error
 
         $updateData = [
-            'cz_response_data' => $receivedData,
-            'cz_auth_value' => $receivedData['authenticationValue'] ?? null,
-            'cz_eci' => $receivedData['eci'] ?? null,
+            'cardzone_response_data' => $receivedData,
+            'auth_value' => $receivedData['authenticationValue'] ?? null,
+            'eci' => $receivedData['eci'] ?? null,
         ];
 
         if ($transStatus === 'Y' || $transStatus === 'C') {
@@ -717,27 +766,13 @@ class PaymentController extends Controller
 
     public function paymentSuccess(Request $request)
     {
-        $transactionId = $request->query('transaction_id');
-        
-        // Try to find transaction in both tables
-        $transaction = CardzoneTransaction::where('cz_transaction_id', $transactionId)->first();
-        if (!$transaction) {
-            $transaction = PaynetTransaction::where('pn_transaction_id', $transactionId)->first();
-        }
-        
+        $transaction = Transaction::where('transaction_id', $request->query('transaction_id'))->first();
         return view('payment_status', ['status' => 'success', 'transaction' => $transaction]);
     }
 
     public function paymentFailure(Request $request)
     {
-        $transactionId = $request->query('transaction_id');
-        
-        // Try to find transaction in both tables
-        $transaction = CardzoneTransaction::where('cz_transaction_id', $transactionId)->first();
-        if (!$transaction) {
-            $transaction = PaynetTransaction::where('pn_transaction_id', $transactionId)->first();
-        }
-        
+        $transaction = Transaction::where('transaction_id', $request->query('transaction_id'))->first();
         return view('payment_status', ['status' => 'failure', 'transaction' => $transaction, 'message' => $request->query('message')]);
     }
 
@@ -1004,616 +1039,5 @@ class PaymentController extends Controller
         }
         
         return $cleanedPayload;
-    }
-
-
-
-    /**
-     * Get FPX bank list with status from database
-     */
-    public function getFpxBankList()
-    {
-        try {
-            // First try to get from Paynet API
-            $apiBanks = $this->paynetService->getFpxBankList();
-            
-            if ($apiBanks) {
-                // Use API banks if available
-                $banks = collect($apiBanks)->map(function ($bank) {
-                    return [
-                        'code' => $bank['id'] ?? $bank['code'],
-                        'name' => $bank['name'],
-                        'status' => 'online'
-                    ];
-                })->toArray();
-            } else {
-                // Fallback to static list
-                $banks = $this->paynetService->getStaticFpxBankList();
-            }
-            
-            // Add test banks only in development/testing environment, but not when using production Paynet
-            if (app()->environment('local', 'testing') && env('PAYNET_ENVIRONMENT') !== 'prod') {
-                $testBanks = $this->paynetService->getTestFpxBankList();
-                $banks = array_merge($banks, $testBanks);
-            }
-            
-            return response()->json([
-                'success' => true,
-                'banks' => $banks,
-                'source' => $apiBanks ? 'api' : 'static'
-            ]);
-            
-        } catch (\Exception $e) {
-            Log::error('Error getting FPX bank list', ['error' => $e->getMessage()]);
-            return response()->json([
-                'success' => false,
-                'error' => 'Failed to get bank list',
-                'banks' => $this->paynetService->getStaticFpxBankList()
-            ]);
-        }
-    }
-
-    /**
-     * Update FPX bank status from FPX system
-     */
-    public function updateFpxBankStatus()
-    {
-        try {
-            $updatedCount = $this->paynetService->updateBankStatusFromFpx();
-            
-            if ($updatedCount !== false) {
-                return response()->json([
-                    'success' => true,
-                    'message' => "Updated {$updatedCount} banks",
-                    'updated_count' => $updatedCount
-                ]);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'error' => 'Failed to update bank status'
-                ], 500);
-            }
-            
-        } catch (\Exception $e) {
-            Log::error('Error updating FPX bank status', ['error' => $e->getMessage()]);
-            return response()->json([
-                'success' => false,
-                'error' => 'Failed to update bank status'
-            ], 500);
-        }
-    }
-    
-    /**
-     * Get FPX bank status summary
-     */
-    public function getFpxBankStatusSummary()
-    {
-        try {
-            $summary = $this->paynetService->getBankStatusSummary();
-            
-            if ($summary) {
-                return response()->json([
-                    'success' => true,
-                    'summary' => $summary
-                ]);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'error' => 'Failed to get bank status summary'
-                ], 500);
-            }
-            
-        } catch (\Exception $e) {
-            Log::error('Error getting FPX bank status summary', ['error' => $e->getMessage()]);
-            return response()->json([
-                'success' => false,
-                'error' => 'Failed to get bank status summary'
-            ], 500);
-        }
-    }
-    
-    /**
-     * Get active FPX banks for payment selection
-     */
-    public function getActiveFpxBanks()
-    {
-        try {
-            $fpxBankModel = new \App\Models\FpxBank();
-            $banks = $fpxBankModel::getActiveBanks();
-            
-            return response()->json([
-                'success' => true,
-                'banks' => $banks,
-                'count' => $banks->count()
-            ]);
-            
-        } catch (\Exception $e) {
-            Log::error('Error getting active FPX banks', ['error' => $e->getMessage()]);
-            return response()->json([
-                'success' => false,
-                'error' => 'Failed to get active banks',
-                'banks' => []
-            ]);
-        }
-    }
-
-    /**
-     * Process FPX payment through Paynet
-     */
-    public function processFpxPayment(Request $request)
-    {
-        try {
-            // Debug: Log incoming request data
-            Log::info('FPX Payment Request Received', [
-                'request_data' => $request->all(),
-                'headers' => $request->headers->all()
-            ]);
-
-            // Validate required fields
-            $request->validate([
-                'donation_id' => 'required|exists:donations,id',
-                'amount' => 'required|numeric|min:1',
-                'fpx_buyer_name' => 'required|string|max:100',
-                'fpx_buyer_email' => 'required|email',
-                'fpx_bank' => 'required|string',
-                'campaign_id' => 'required|exists:campaigns,id',
-                'accept_terms' => 'required|accepted',
-            ]);
-
-            $donation = Donation::find($request->donation_id);
-            if (!$donation) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Donation not found'
-                ], 404);
-            }
-
-            // Generate transaction ID
-            $transactionId = $this->paynetService->generateTransactionId($donation->id);
-
-            // Update donation with FPX form data
-            $donation->update([
-                'donor_name' => $request->fpx_buyer_name,
-                'donor_email' => $request->fpx_buyer_email,
-                'donor_phone' => $request->donor_phone ?? $donation->donor_phone,
-            ]);
-
-            // Create transaction record
-            $environment = env('PAYNET_ENVIRONMENT', 'uat');
-            $merchantId = env("PAYNET_" . strtoupper($environment) . "_MERCHANT_ID");
-            
-            $transaction = PaynetTransaction::create([
-                'pn_transaction_id' => $transactionId,
-                'pn_merchant_id' => $merchantId,
-                'pn_amount' => $request->amount,
-                'pn_currency' => 'MYR',
-                'pn_payment_method' => 'fpx',
-                'pn_status' => 'pending',
-                'donation_id' => $donation->id,
-                'pn_response_data' => [
-                    'fpx_bank' => $request->fpx_bank,
-                    'donor_name' => $request->fpx_buyer_name,
-                    'donor_email' => $request->fpx_buyer_email,
-                ]
-            ]);
-
-            // Prepare transaction data for Paynet
-            $transactionData = [
-                'transaction_id' => $transactionId,
-                'amount' => $request->amount,
-                'donation_id' => $donation->id,
-                'campaign_id' => $request->campaign_id,
-                'campaign_name' => $donation->campaign->name ?? 'General',
-                'donor_name' => $request->fpx_buyer_name, // Use the FPX buyer name
-                'donor_email' => $request->fpx_buyer_email, // Use the FPX buyer email
-                'donor_phone' => $request->donor_phone ?? '',
-                'message' => $request->message ?? '',
-                'is_anonymous' => $request->is_anonymous ?? false,
-                'fpx_bank' => $request->fpx_bank,
-            ];
-
-            // Create FPX payment through Paynet
-            $result = $this->paynetService->createFpxPayment($transactionData);
-
-            if ($result['success']) {
-                // Update transaction with payment URL
-                $transaction->update([
-                    'pn_status' => 'payment_created',
-                    'pn_response_data' => $result
-                ]);
-
-                return response()->json([
-                    'success' => true,
-                    'payment_url' => $result['redirect_url'] ?? $result['payment_url'],
-                    'transaction_id' => $transactionId,
-                    'message' => 'FPX payment created successfully'
-                ]);
-            } else {
-                // Update transaction as failed
-                $transaction->update([
-                    'pn_status' => 'failed',
-                    'pn_response_data' => $result
-                ]);
-
-                return response()->json([
-                    'success' => false,
-                    'message' => $result['error'] ?? 'Failed to create FPX payment'
-                ], 400);
-            }
-
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            Log::error('FPX payment validation error', [
-                'errors' => $e->errors(),
-                'request_data' => $request->all()
-            ]);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $e->errors()
-            ], 400);
-
-        } catch (\Exception $e) {
-            Log::error('FPX payment processing error', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-                'request_data' => $request->all()
-            ]);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'FPX payment processing failed. Please try again.',
-                'error' => config('app.debug') ? $e->getMessage() : null
-            ], 500);
-        }
-    }
-
-    /**
-     * Show FPX redirect page
-     */
-    public function showFpxRedirect(Request $request)
-    {
-        $transactionId = $request->query('transaction_id');
-        
-        if (!$transactionId) {
-            return redirect()->route('payment')->with('error', 'Invalid transaction ID');
-        }
-
-        $transaction = PaynetTransaction::where('pn_transaction_id', $transactionId)->first();
-        
-        if (!$transaction) {
-            return redirect()->route('payment')->with('error', 'Transaction not found');
-        }
-
-        // Get FPX payment data
-        $transactionData = [
-            'transaction_id' => $transaction->pn_transaction_id,
-            'amount' => $transaction->pn_amount,
-            'donation_id' => $transaction->donation_id,
-            'campaign_id' => $transaction->donation->campaign_id,
-            'campaign_name' => $transaction->donation->campaign->title ?? 'General',
-            'donor_name' => $transaction->donation->donor_name,
-            'donor_email' => $transaction->donation->donor_email,
-            'donor_phone' => $transaction->donation->donor_phone ?? '',
-            'message' => $transaction->donation->message ?? '',
-            'is_anonymous' => $transaction->donation->is_anonymous ?? false,
-            'fpx_bank' => $transaction->pn_response_data['payment_data']['buyerBank'] ?? $transaction->pn_response_data['fpx_bank'] ?? 'MB2U0227',
-        ];
-
-        $fpxData = $this->paynetService->createFpxPayment($transactionData);
-        
-        if (!$fpxData || !$fpxData['success']) {
-            return redirect()->route('payment')->with('error', 'Failed to create FPX payment');
-        }
-
-        // Get FPX gateway URL based on environment
-        $environment = env('PAYNET_ENVIRONMENT', 'uat');
-        $fpxUrl = env("PAYNET_" . strtoupper($environment) . "_GATEWAY_URL", config("paynet.environments.{$environment}.fpx_gateway_url", 'https://www.mepsfpx.com.my/FPXMain/seller2DReceiver.jsp'));
-
-        return view('payment.fpx-redirect', [
-            'fpxUrl' => $fpxUrl,
-            'fpxData' => $fpxData['payment_data'] ?? [],
-            'transaction' => $transaction
-        ]);
-    }
-
-    /**
-     * Show payment receipt
-     */
-    public function showReceipt(Request $request)
-    {
-        $transactionId = $request->query('transaction_id');
-        
-        if (!$transactionId) {
-            return redirect()->route('payment')->with('error', 'Invalid transaction ID');
-        }
-
-        // Try to find transaction in both tables
-        $cardzoneTransaction = CardzoneTransaction::where('cz_transaction_id', $transactionId)->first();
-        $paynetTransaction = PaynetTransaction::where('pn_transaction_id', $transactionId)->first();
-        
-        if (!$cardzoneTransaction && !$paynetTransaction) {
-            return redirect()->route('payment')->with('error', 'Transaction not found');
-        }
-        
-        $transaction = $cardzoneTransaction ?: $paynetTransaction;
-
-        $donation = $transaction->donation;
-
-        return view('payment.receipt', [
-            'transaction' => $transaction,
-            'donation' => $donation
-        ]);
-    }
-
-    /**
-     * Handle Paynet FPX callback
-     */
-    public function handlePaynetCallback(Request $request)
-    {
-        // Log callback to main Paynet log
-        Log::channel('paynet')->info('FPX Callback Received', [
-            'callback_data' => $request->all(),
-            'headers' => $request->headers->all()
-        ]);
-
-        // Log detailed callback data
-        Log::channel('paynet_transactions')->info('FPX Callback Details', [
-            'callback_data' => $request->all(),
-            'transaction_id' => $request->input('fpx_sellerExOrderNo'),
-            'status' => $request->input('fpx_txnStatus'),
-            'amount' => $request->input('fpx_txnAmount'),
-            'auth_code' => $request->input('fpx_debitAuthCode'),
-            'msg_type' => $request->input('fpx_msgType')
-        ]);
-
-        $receivedData = $request->all();
-        $transactionId = $receivedData['fpx_sellerExOrderNo'] ?? null;
-        $status = $receivedData['fpx_txnStatus'] ?? null;
-        $amount = $receivedData['fpx_txnAmount'] ?? null;
-
-        $transaction = PaynetTransaction::where('pn_transaction_id', $transactionId)->first();
-
-        if (!$transaction) {
-            Log::error('Transaction not found for Paynet callback.', [
-                'transactionId' => $transactionId, 
-                'callbackData' => $receivedData
-            ]);
-            return response('Error: Transaction not found.', 404);
-        }
-
-        // Verify the callback signature and get response details
-        $callbackResult = $this->paynetService->verifyFpxCallback($receivedData);
-
-        if ($callbackResult && is_array($callbackResult)) {
-            $isValid = $callbackResult['success'];
-            $responseCode = $callbackResult['response_code'];
-            $responseDescription = $callbackResult['response_description'];
-
-            // Determine transaction status based on response code
-            $transactionStatus = $isValid ? 'completed' : 'failed';
-            
-            // Update transaction status based on callback and save AC message data
-            $transaction->update([
-                'pn_status' => $transactionStatus,
-                'pn_response_data' => array_merge($receivedData, [
-                    'response_code' => $responseCode,
-                    'response_description' => $responseDescription
-                ]),
-                // Save AC (Acknowledgement) message data
-                'pn_fpx_ac_message_data' => $receivedData,
-                'pn_fpx_ac_received_at' => now(),
-                'pn_fpx_ac_status' => $isValid ? 'processed' : 'failed',
-                'pn_fpx_ac_response_code' => $responseCode,
-                'pn_fpx_last_message_type' => 'AC',
-                'pn_fpx_last_message_at' => now(),
-                'pn_fpx_message_sequence' => $transaction->pn_fpx_message_sequence ? $transaction->pn_fpx_message_sequence . '->AC' : 'AR->AC',
-            ]);
-
-            // Update donation status
-            $this->updateDonationStatus($transaction->donation_id, $transactionStatus, $transactionId);
-
-            // Send acknowledgment to Paynet
-            $this->paynetService->sendAcknowledgmentToPaynet($transactionId, $isValid ? 'OK' : 'FAILED');
-
-            Log::info('Paynet callback processed', [
-                'transaction_id' => $transactionId,
-                'response_code' => $responseCode,
-                'response_description' => $responseDescription,
-                'status' => $transactionStatus
-            ]);
-
-            return response('OK', 200);
-        } else {
-            // Update transaction status to failed
-            $transaction->update([
-                'pn_status' => 'failed',
-                'pn_response_data' => array_merge($receivedData, [
-                    'error' => 'Signature verification failed'
-                ])
-            ]);
-
-            // Update donation status
-            $this->updateDonationStatus($transaction->donation_id, 'failed', $transactionId);
-
-            // Send acknowledgment to Paynet
-            $this->paynetService->sendAcknowledgmentToPaynet($transactionId, 'FAILED');
-
-            Log::error('Paynet callback signature verification failed', [
-                'transaction_id' => $transactionId,
-                'received_data' => $receivedData
-            ]);
-
-            return response('OK', 200);
-        }
-    }
-
-    /**
-     * Handle AE (Acknowledgement Enquiry) message for manual transaction status check
-     * Route: POST /payment/ae-enquiry
-     */
-    public function handleAcknowledgementEnquiry(Request $request)
-    {
-        try {
-            $request->validate([
-                'transaction_id' => 'required|string|max:50',
-            ]);
-
-            $transactionId = $request->input('transaction_id');
-            
-            Log::info('AE enquiry request received', [
-                'transaction_id' => $transactionId,
-                'user_ip' => $request->ip(),
-                'user_agent' => $request->userAgent()
-            ]);
-
-            // Send AE message to FPX
-            $aeResult = $this->paynetService->sendAcknowledgementEnquiryMessage($transactionId);
-            
-            if (!$aeResult) {
-                Log::error('AE enquiry failed', [
-                    'transaction_id' => $transactionId
-                ]);
-                
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Failed to query transaction status',
-                    'transaction_id' => $transactionId
-                ], 500);
-            }
-
-            Log::info('AE enquiry completed', [
-                'transaction_id' => $transactionId,
-                'result' => $aeResult
-            ]);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Transaction status queried successfully',
-                'transaction_id' => $transactionId,
-                'data' => $aeResult
-            ]);
-
-        } catch (\Exception $e) {
-            Log::error('AE enquiry error', [
-                'transaction_id' => $request->input('transaction_id'),
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Error processing AE enquiry: ' . $e->getMessage(),
-                'transaction_id' => $request->input('transaction_id')
-            ], 500);
-        }
-    }
-
-    /**
-     * Display FPX message history for a transaction
-     * Route: GET /payment/fpx-history/{transaction_id}
-     */
-    public function showFpxMessageHistory($transactionId)
-    {
-        try {
-            $transaction = PaynetTransaction::where('pn_transaction_id', $transactionId)->first();
-            
-            if (!$transaction) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Transaction not found'
-                ], 404);
-            }
-            
-            // Prepare FPX message history
-            $fpxHistory = [
-                'transaction_id' => $transaction->transaction_id,
-                'amount' => $transaction->amount,
-                'currency' => $transaction->currency,
-                'status' => $transaction->status,
-                'created_at' => $transaction->created_at,
-                'messages' => []
-            ];
-            
-            // AR Message Data
-            if ($transaction->fpx_ar_message_data) {
-                $fpxHistory['messages']['AR'] = [
-                    'type' => 'Authorization Request',
-                    'direction' => 'Merchant → Paynet',
-                    'status' => $transaction->fpx_ar_status,
-                    'sent_at' => $transaction->fpx_ar_sent_at,
-                    'data' => $transaction->fpx_ar_message_data,
-                    'description' => 'Payment initiation message'
-                ];
-            }
-            
-            // AC Message Data
-            if ($transaction->fpx_ac_message_data) {
-                $fpxHistory['messages']['AC'] = [
-                    'type' => 'Acknowledgement',
-                    'direction' => 'Paynet → Merchant',
-                    'status' => $transaction->fpx_ac_status,
-                    'received_at' => $transaction->fpx_ac_received_at,
-                    'response_code' => $transaction->fpx_ac_response_code,
-                    'data' => $transaction->fpx_ac_message_data,
-                    'description' => 'Payment confirmation callback'
-                ];
-            }
-            
-            // BE Message Data (system messages)
-            $beTransactions = PaynetTransaction::where('pn_payment_method', 'fpx_system')
-                ->whereNotNull('fpx_be_message_data')
-                ->orderBy('created_at', 'desc')
-                ->limit(5)
-                ->get();
-                
-            if ($beTransactions->count() > 0) {
-                $fpxHistory['messages']['BE'] = [
-                    'type' => 'Bank Enquiry',
-                    'direction' => 'Merchant → Paynet',
-                    'status' => 'System Messages',
-                    'count' => $beTransactions->count(),
-                    'latest' => $beTransactions->first()->fpx_be_sent_at,
-                    'description' => 'Bank status update messages'
-                ];
-            }
-            
-            // AE Message Data
-            if ($transaction->fpx_ae_message_data) {
-                $fpxHistory['messages']['AE'] = [
-                    'type' => 'Acknowledgement Enquiry',
-                    'direction' => 'Merchant → Paynet',
-                    'status' => $transaction->fpx_ae_status,
-                    'sent_at' => $transaction->fpx_ae_sent_at,
-                    'response_code' => $transaction->fpx_ae_response_code,
-                    'data' => $transaction->fpx_ae_message_data,
-                    'description' => 'Manual status enquiry'
-                ];
-            }
-            
-            // General FPX Info
-            $fpxHistory['fpx_info'] = [
-                'message_sequence' => $transaction->fpx_message_sequence,
-                'last_message_type' => $transaction->fpx_last_message_type,
-                'last_message_at' => $transaction->fpx_last_message_at,
-                'error_log' => $transaction->fpx_error_log
-            ];
-            
-            return response()->json([
-                'success' => true,
-                'data' => $fpxHistory
-            ]);
-            
-        } catch (\Exception $e) {
-            Log::error('Error retrieving FPX message history', [
-                'transaction_id' => $transactionId,
-                'error' => $e->getMessage()
-            ]);
-            
-            return response()->json([
-                'success' => false,
-                'message' => 'Error retrieving FPX message history: ' . $e->getMessage()
-            ], 500);
-        }
     }
 } 

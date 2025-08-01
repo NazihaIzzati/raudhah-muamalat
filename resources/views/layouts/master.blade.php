@@ -115,23 +115,6 @@
                         @include('components.language-switcher')
 
                         @auth
-                            <!-- User Name Display -->
-                            <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
-                                    <span class="text-white font-bold text-sm">{{ substr(Auth::user()->name, 0, 1) }}</span>
-                                </div>
-                                <div class="flex flex-col items-start">
-                                    <span class="text-sm font-medium text-gray-900">{{ Auth::user()->name }}</span>
-                                    <span class="text-xs text-gray-500">
-                                        @if(Auth::user()->isAdmin())
-                                            {{ __('app.admin') }}
-                                        @else
-                                            {{ __('app.member') }}
-                                        @endif
-                                    </span>
-                                </div>
-                            </div>
-
                             <!-- User Profile Dropdown -->
                             <div class="relative" id="user-dropdown-container">
                                 <button type="button" class="flex items-center space-x-2 bg-gradient-to-r from-emerald-50 to-emerald-100 hover:from-emerald-100 hover:to-emerald-200 rounded-xl px-4 py-2 transition-all duration-300 hover:shadow-lg border-0" style="box-shadow: 0 1px 3px 0 rgba(16, 185, 129, 0.1), 0 1px 2px 0 rgba(16, 185, 129, 0.06);" id="user-dropdown-button">

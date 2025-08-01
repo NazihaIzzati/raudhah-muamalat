@@ -19,6 +19,13 @@ class PartnerController extends Controller
     {
         $query = Partner::with('creator');
         
+        // Show trashed partners if requested
+        if ($request->has('trashed') && $request->trashed) {
+            $query->onlyTrashed();
+        } else {
+            $query->whereNull('deleted_at'); // Only show non-deleted partners by default
+        }
+        
         // Filter by status if provided
         if ($request->has('status') && $request->status != 'all') {
             $query->where('status', $request->status);
@@ -37,7 +44,11 @@ class PartnerController extends Controller
         $partners = $query->paginate(10)->withQueryString();
         $statuses = ['all' => 'All Statuses', 'active' => 'Active', 'inactive' => 'Inactive'];
         
-        return view('admin.partners.index', compact('partners', 'statuses'));
+        // Get counts for tabs
+        $activeCount = Partner::whereNull('deleted_at')->count();
+        $trashedCount = Partner::onlyTrashed()->count();
+        
+        return view('admin.partners.index', compact('partners', 'statuses', 'activeCount', 'trashedCount'));
     }
     
     /**
@@ -89,7 +100,7 @@ class PartnerController extends Controller
         ]);
         
         return redirect()->route('admin.partners.index')
-            ->with('success', 'Partner created successfully.');
+            ->with('success', 'Partner "' . $partner->name . '" created successfully!');
     }
     
     /**
@@ -153,22 +164,72 @@ class PartnerController extends Controller
         $partner->save();
         
         return redirect()->route('admin.partners.show', $partner)
-            ->with('success', 'Partner updated successfully.');
+            ->with('success', 'Partner "' . $partner->name . '" updated successfully!');
     }
     
     /**
-     * Remove the specified partner from storage.
+     * Remove the specified partner from storage (soft delete).
      */
     public function destroy(Partner $partner)
     {
+        $partnerName = $partner->name;
+        $partner->delete(); // This will now soft delete
+        
+        return redirect()->route('admin.partners.index')
+            ->with('success', 'Partner "' . $partnerName . '" moved to trash successfully!');
+    }
+    
+    /**
+     * Restore the specified soft deleted partner.
+     */
+    public function restore($id)
+    {
+        $partner = Partner::onlyTrashed()->findOrFail($id);
+        $partnerName = $partner->name;
+        $partner->restore();
+        
+        return redirect()->back()
+            ->with('success', 'Partner "' . $partnerName . '" restored successfully!');
+    }
+    
+    /**
+     * Permanently delete the specified partner.
+     */
+    public function forceDelete($id)
+    {
+        $partner = Partner::onlyTrashed()->findOrFail($id);
+        $partnerName = $partner->name;
+        
         // Delete logo if exists
         if ($partner->logo) {
             Storage::disk('public')->delete($partner->logo);
         }
         
-        $partner->delete();
+        $partner->forceDelete();
         
-        return redirect()->route('admin.partners.index')
-            ->with('success', 'Partner deleted successfully.');
+        return redirect()->back()
+            ->with('success', 'Partner "' . $partnerName . '" permanently deleted!');
+    }
+    
+    /**
+     * Show trashed partners.
+     */
+    public function trashed(Request $request)
+    {
+        $query = Partner::onlyTrashed()->with('creator');
+        
+        // Search by name
+        if ($request->has('search') && $request->search) {
+            $search = $request->search;
+            $query->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+        }
+        
+        // Default sorting
+        $query->orderBy('deleted_at', 'desc');
+        
+        $partners = $query->paginate(10)->withQueryString();
+        
+        return view('admin.partners.trashed', compact('partners'));
     }
 }

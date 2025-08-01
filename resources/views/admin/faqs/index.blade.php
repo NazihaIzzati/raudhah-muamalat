@@ -38,6 +38,22 @@
             </div>
         </div>
 
+        <!-- Tabs -->
+        <div class="border-b border-gray-200">
+            <nav class="-mb-px flex space-x-8 px-6" aria-label="Tabs">
+                <a href="{{ route('admin.faqs.index') }}" 
+                   class="border-b-2 py-4 px-1 text-sm font-medium {{ !request('trashed') ? 'border-[#fe5000] text-[#fe5000]' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
+                    Active FAQs
+                    <span class="ml-2 bg-gray-100 text-gray-900 py-0.5 px-2.5 rounded-full text-xs font-medium">{{ $activeCount }}</span>
+                </a>
+                <a href="{{ route('admin.faqs.index', ['trashed' => 1]) }}" 
+                   class="border-b-2 py-4 px-1 text-sm font-medium {{ request('trashed') ? 'border-[#fe5000] text-[#fe5000]' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
+                    Trashed FAQs
+                    <span class="ml-2 bg-gray-100 text-gray-900 py-0.5 px-2.5 rounded-full text-xs font-medium">{{ $trashedCount }}</span>
+                </a>
+            </nav>
+        </div>
+
         <!-- Search and Filters -->
         <div class="p-6 border-b border-gray-200 bg-gray-50">
             <form method="GET" action="{{ route('admin.faqs.index') }}" class="space-y-4">
@@ -174,32 +190,59 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="flex items-center justify-end space-x-2">
-                                        <a href="{{ route('admin.faqs.show', $faq) }}" 
-                                           class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-lg shadow-sm text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fe5000] transition-all duration-200">
-                                            <svg class="-ml-1 mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                            </svg>
-                                            View
-                                        </a>
-                                        <a href="{{ route('admin.faqs.edit', $faq) }}" 
-                                           class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-lg shadow-sm text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fe5000] transition-all duration-200">
-                                            <svg class="-ml-1 mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                            </svg>
-                                            Edit
-                                        </a>
-                                        <form action="{{ route('admin.faqs.destroy', $faq) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this FAQ?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" 
+                                        @if(!request('trashed'))
+                                            <!-- Active FAQ Actions -->
+                                            <a href="{{ route('admin.faqs.show', $faq) }}" 
+                                               class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-lg shadow-sm text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fe5000] transition-all duration-200">
+                                                <svg class="-ml-1 mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                                </svg>
+                                                View
+                                            </a>
+                                            <a href="{{ route('admin.faqs.edit', $faq) }}" 
+                                               class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-lg shadow-sm text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fe5000] transition-all duration-200">
+                                                <svg class="-ml-1 mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                                </svg>
+                                                Edit
+                                            </a>
+                                            <button type="button" 
+                                                    data-delete-faq
+                                                    data-faq-question="{{ $faq->question }}"
+                                                    data-delete-url="{{ route('admin.faqs.destroy', $faq) }}"
                                                     class="inline-flex items-center px-3 py-2 border border-transparent rounded-lg shadow-sm text-xs font-medium text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-200">
                                                 <svg class="-ml-1 mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                                 </svg>
-                                                Delete
+                                                Move to Trash
                                             </button>
-                                        </form>
+                                        @else
+                                            <!-- Trashed FAQ Actions -->
+                                            <span class="text-xs text-gray-400 mr-2">
+                                                Deleted: {{ $faq->deleted_at->format('M d, Y') }}
+                                            </span>
+                                            <button type="button" 
+                                                    data-restore-faq
+                                                    data-faq-question="{{ $faq->question }}"
+                                                    data-restore-url="{{ route('admin.faqs.restore', $faq->id) }}"
+                                                    class="inline-flex items-center px-3 py-2 border border-transparent rounded-lg shadow-sm text-xs font-medium text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-200">
+                                                <svg class="-ml-1 mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                                </svg>
+                                                Restore
+                                            </button>
+                                            <button type="button" 
+                                                    data-force-delete-faq
+                                                    data-faq-question="{{ $faq->question }}"
+                                                    data-force-delete-url="{{ route('admin.faqs.force-delete', $faq->id) }}"
+                                                    class="inline-flex items-center px-3 py-2 border border-transparent rounded-lg shadow-sm text-xs font-medium text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600 transition-all duration-200">
+                                                <svg class="-ml-1 mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                </svg>
+                                                Delete Permanently
+                                            </button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -236,5 +279,30 @@
     </div>
 </div>
 
-
+@push('scripts')
+<script src="{{ asset('js/faqs-crud.js') }}"></script>
+<script>
+    // Show success/error messages from session
+    @if(session('success'))
+        showSuccess('{{ session('success') }}');
+    @endif
+    
+    @if(session('error'))
+        showError('{{ session('error') }}');
+    @endif
+    
+    @if(session('warning'))
+        showWarning('{{ session('warning') }}');
+    @endif
+    
+    @if(session('info'))
+        showInfo('{{ session('info') }}');
+    @endif
+    
+    // Show validation errors
+    @if($errors->any())
+        showValidationErrors(@json($errors->all()));
+    @endif
+</script>
+@endpush
 @endsection 

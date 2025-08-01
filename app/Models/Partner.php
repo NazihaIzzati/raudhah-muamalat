@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Partner extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     
     /**
      * The attributes that are mass assignable.
@@ -58,5 +59,37 @@ class Partner extends Model
     public function isFeatured()
     {
         return $this->featured;
+    }
+    
+    /**
+     * Check if partner is soft deleted.
+     */
+    public function isDeleted()
+    {
+        return $this->deleted_at !== null;
+    }
+    
+    /**
+     * Get the formatted deleted date.
+     */
+    public function getDeletedAtFormattedAttribute()
+    {
+        return $this->deleted_at ? $this->deleted_at->format('M d, Y H:i') : null;
+    }
+    
+    /**
+     * Scope to get only active partners (not soft deleted).
+     */
+    public function scopeActive($query)
+    {
+        return $query->whereNull('deleted_at');
+    }
+    
+    /**
+     * Scope to get only soft deleted partners.
+     */
+    public function scopeTrashed($query)
+    {
+        return $query->onlyTrashed();
     }
 }

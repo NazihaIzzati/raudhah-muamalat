@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\NotificationController as AdminNotificationContro
 use App\Http\Controllers\Admin\PartnerController as AdminPartnerController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\CardzoneDebugController;
 
 
@@ -283,6 +284,15 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/faqs/{faq}/edit', [AdminFaqController::class, 'edit'])->name('admin.faqs.edit');
     Route::put('/faqs/{faq}', [AdminFaqController::class, 'update'])->name('admin.faqs.update');
     Route::delete('/faqs/{faq}', [AdminFaqController::class, 'destroy'])->name('admin.faqs.destroy');
+    
+    // News management routes
+    Route::get('/news', [AdminNewsController::class, 'index'])->name('admin.news.index');
+    Route::get('/news/create', [AdminNewsController::class, 'create'])->name('admin.news.create');
+    Route::post('/news', [AdminNewsController::class, 'store'])->name('admin.news.store');
+    Route::get('/news/{news}', [AdminNewsController::class, 'show'])->name('admin.news.show');
+    Route::get('/news/{news}/edit', [AdminNewsController::class, 'edit'])->name('admin.news.edit');
+    Route::put('/news/{news}', [AdminNewsController::class, 'update'])->name('admin.news.update');
+    Route::delete('/news/{news}', [AdminNewsController::class, 'destroy'])->name('admin.news.destroy');
     
     // Contact management routes
     Route::get('/contacts', [AdminContactController::class, 'index'])->name('admin.contacts.index');

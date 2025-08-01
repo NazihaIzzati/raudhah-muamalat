@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Cardzone Logs')
+@section('title', 'Cardzone API')
 
 @section('content')
 <div class="space-y-6">
@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="ml-4">
-                        <h3 class="text-xl font-bold text-[#fe5000]">Cardzone Logs</h3>
+                        <h3 class="text-xl font-bold text-[#fe5000]">Cardzone API</h3>
                         <p class="text-sm text-[#fe5000] mt-1">Monitor and test Cardzone payment integration in real-time</p>
                     </div>
                 </div>
@@ -399,18 +399,11 @@ function hideResultModal() {
 // Test key exchange function
 function testKeyExchange() {
     showLoading();
-    fetch('{{ route("cardzone.key-exchange") }}', {
+    fetch('{{ route("admin.cardzone.debug.test-key-exchange") }}', {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            payment_method: 'card',
-            purchase_amount: 1000, // RM 10.00 in cents
-            purchase_currency: 'MYR',
-            donation_id: null
-        })
+        }
     })
     .then(response => response.json())
     .then(data => {
@@ -436,7 +429,7 @@ function testCardPayment() {
         card_cvv: '133'
     };
     
-    fetch('{{ route("api.cardzone.payment.process") }}', {
+    fetch('{{ route("admin.cardzone.debug.test-payment") }}', {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -481,7 +474,7 @@ function testCardPaymentWithForm() {
         card_holder_name: formData.get('card_holder_name')
     };
     
-    fetch('{{ route("api.cardzone.payment.process") }}', {
+    fetch('{{ route("admin.cardzone.debug.test-payment") }}', {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -610,7 +603,7 @@ function testOBWPayment() {
         bank_code: 'MBBEMYKL' // Maybank
     };
     
-    fetch('{{ route("api.cardzone.payment.process") }}', {
+    fetch('{{ route("admin.cardzone.debug.test-payment") }}', {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -639,7 +632,7 @@ function testQRPayment() {
         currency: 'MYR'
     };
     
-    fetch('{{ route("api.cardzone.payment.process") }}', {
+    fetch('{{ route("admin.cardzone.debug.test-payment") }}', {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -659,19 +652,45 @@ function testQRPayment() {
     });
 }
 
-// Test environment function (disabled - route not available)
+// Test environment function
 function testEnvironment() {
-    showResult('Environment Test', { 
-        success: false, 
-        message: 'Environment test function is not available. Route admin.cardzone.debug.test-environment does not exist.' 
+    showLoading();
+    fetch('{{ route("admin.cardzone.debug.test-environment") }}', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        hideLoading();
+        showResult('Environment Test Result', data);
+        setTimeout(() => refreshDashboard(), 2000);
+    })
+    .catch(error => {
+        hideLoading();
+        showResult('Environment Test Error', { success: false, message: error.message });
     });
 }
 
-// Test MAC verification function (disabled - route not available)
+// Test MAC verification function
 function testMACVerification() {
-    showResult('MAC Verification Test', { 
-        success: false, 
-        message: 'MAC verification test function is not available. Route admin.cardzone.debug.test-mac-verification does not exist.' 
+    showLoading();
+    fetch('{{ route("admin.cardzone.debug.test-mac-verification") }}', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        hideLoading();
+        showResult('MAC Verification Test Result', data);
+        setTimeout(() => refreshDashboard(), 2000);
+    })
+    .catch(error => {
+        hideLoading();
+        showResult('MAC Verification Test Error', { success: false, message: error.message });
     });
 }
 

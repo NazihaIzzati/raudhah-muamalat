@@ -17,6 +17,13 @@ class FaqController extends Controller
     {
         $query = Faq::with('creator');
         
+        // Show trashed FAQs if requested
+        if ($request->has('trashed') && $request->trashed) {
+            $query->onlyTrashed();
+        } else {
+            $query->whereNull('deleted_at'); // Only show non-deleted FAQs by default
+        }
+        
         // Filter by status if provided
         if ($request->has('status') && $request->status != 'all') {
             $query->where('status', $request->status);
@@ -41,7 +48,11 @@ class FaqController extends Controller
         $statuses = ['all' => 'All Statuses', 'active' => 'Active', 'inactive' => 'Inactive'];
         $categories = array_merge(['all' => 'All Categories'], Faq::getCategories());
         
-        return view('admin.faqs.index', compact('faqs', 'statuses', 'categories'));
+        // Get counts for tabs
+        $activeCount = Faq::whereNull('deleted_at')->count();
+        $trashedCount = Faq::onlyTrashed()->count();
+        
+        return view('admin.faqs.index', compact('faqs', 'statuses', 'categories', 'activeCount', 'trashedCount'));
     }
     
     /**
@@ -85,7 +96,7 @@ class FaqController extends Controller
         ]);
         
         return redirect()->route('admin.faqs.index')
-            ->with('success', 'FAQ created successfully.');
+            ->with('success', 'FAQ "' . $faq->question . '" created successfully!');
     }
     
     /**
@@ -138,17 +149,67 @@ class FaqController extends Controller
         $faq->save();
         
         return redirect()->route('admin.faqs.show', $faq)
-            ->with('success', 'FAQ updated successfully.');
+            ->with('success', 'FAQ "' . $faq->question . '" updated successfully!');
     }
     
     /**
-     * Remove the specified FAQ from storage.
+     * Remove the specified FAQ from storage (soft delete).
      */
     public function destroy(Faq $faq)
     {
-        $faq->delete();
+        $faqName = $faq->question;
+        $faq->delete(); // This will now soft delete
         
         return redirect()->route('admin.faqs.index')
-            ->with('success', 'FAQ deleted successfully.');
+            ->with('success', 'FAQ "' . $faqName . '" moved to trash successfully!');
+    }
+    
+    /**
+     * Restore the specified soft deleted FAQ.
+     */
+    public function restore($id)
+    {
+        $faq = Faq::onlyTrashed()->findOrFail($id);
+        $faqName = $faq->question;
+        $faq->restore();
+        
+        return redirect()->back()
+            ->with('success', 'FAQ "' . $faqName . '" restored successfully!');
+    }
+    
+    /**
+     * Permanently delete the specified FAQ.
+     */
+    public function forceDelete($id)
+    {
+        $faq = Faq::onlyTrashed()->findOrFail($id);
+        $faqName = $faq->question;
+        
+        $faq->forceDelete();
+        
+        return redirect()->back()
+            ->with('success', 'FAQ "' . $faqName . '" permanently deleted!');
+    }
+    
+    /**
+     * Show trashed FAQs.
+     */
+    public function trashed(Request $request)
+    {
+        $query = Faq::onlyTrashed()->with('creator');
+        
+        // Search by question and answer
+        if ($request->has('search') && $request->search) {
+            $search = $request->search;
+            $query->where('question', 'like', "%{$search}%")
+                  ->orWhere('answer', 'like', "%{$search}%");
+        }
+        
+        // Default sorting
+        $query->orderBy('deleted_at', 'desc');
+        
+        $faqs = $query->paginate(10)->withQueryString();
+        
+        return view('admin.faqs.trashed', compact('faqs'));
     }
 }

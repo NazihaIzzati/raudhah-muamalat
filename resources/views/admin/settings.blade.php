@@ -5,29 +5,6 @@
 
 @section('content')
 <div class="space-y-6">
-    <!-- Success/Error Messages -->
-    @if(session('success'))
-        <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
-            <div class="flex items-center">
-                <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                </svg>
-                {{ session('success') }}
-            </div>
-        </div>
-    @endif
-
-    @if(session('error'))
-        <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            <div class="flex items-center">
-                <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-                </svg>
-                {{ session('error') }}
-            </div>
-        </div>
-    @endif
-
     <!-- Header Section -->
     <div class="bg-white overflow-hidden sm:rounded-2xl border border-gray-200">
         <div class="p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 via-white to-gray-50">
@@ -66,8 +43,7 @@
                 </div>
             </div>
             <div class="p-6">
-                <form action="{{ route('admin.settings.update') }}" method="POST" class="space-y-5">
-                    @csrf
+                <form class="space-y-5">
                     <div class="space-y-4">
                         <div>
                             <label for="site_name" class="block text-sm font-medium text-gray-700 mb-2">
@@ -78,7 +54,7 @@
                                     Site Name
                                 </span>
                             </label>
-                            <input type="text" id="site_name" name="site_name" value="{{ $settings->site_name }}" 
+                            <input type="text" id="site_name" name="site_name" value="Raudhah Muamalat" 
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
                         </div>
                         
@@ -91,7 +67,7 @@
                                     Contact Email
                                 </span>
                             </label>
-                            <input type="email" id="site_email" name="site_email" value="{{ $settings->site_email }}"
+                            <input type="email" id="site_email" name="site_email" value="info@raudhahmuamalat.com"
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
                         </div>
 
@@ -104,7 +80,7 @@
                                     Contact Phone
                                 </span>
                             </label>
-                            <input type="tel" id="site_phone" name="site_phone" value="{{ $settings->site_phone }}"
+                            <input type="tel" id="site_phone" name="site_phone" value="+60 3-1234 5678"
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
                         </div>
                         
@@ -118,12 +94,12 @@
                                 </span>
                             </label>
                             <textarea id="site_description" name="site_description" rows="4"
-                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none">{{ $settings->site_description }}</textarea>
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none">A trusted Islamic crowdfunding platform dedicated to helping the underprivileged and supporting community development through Sharia-compliant financial solutions.</textarea>
                         </div>
                     </div>
                     
                     <div class="pt-4 border-t border-gray-200">
-                        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+                        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 transform hover:scale-105">
                             <span class="flex items-center justify-center">
                                 <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -152,8 +128,7 @@
                 </div>
             </div>
             <div class="p-6">
-                <form action="{{ route('admin.settings.update') }}" method="POST" class="space-y-5">
-                    @csrf
+                <form class="space-y-5">
                     <div class="space-y-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
@@ -167,10 +142,10 @@
                                 </label>
                                 <select id="currency" name="currency" 
                                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors">
-                                    <option value="MYR" {{ $settings->currency == 'MYR' ? 'selected' : '' }}>Malaysian Ringgit (MYR)</option>
-                                    <option value="USD" {{ $settings->currency == 'USD' ? 'selected' : '' }}>US Dollar (USD)</option>
-                                    <option value="EUR" {{ $settings->currency == 'EUR' ? 'selected' : '' }}>Euro (EUR)</option>
-                                    <option value="GBP" {{ $settings->currency == 'GBP' ? 'selected' : '' }}>British Pound (GBP)</option>
+                                    <option value="MYR" selected>Malaysian Ringgit (MYR)</option>
+                                    <option value="USD">US Dollar (USD)</option>
+                                    <option value="EUR">Euro (EUR)</option>
+                                    <option value="GBP">British Pound (GBP)</option>
                                 </select>
                             </div>
                             <div>
@@ -179,10 +154,10 @@
                                         <svg class="h-4 w-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
                                         </svg>
-                                        Min. Donation ({{ $settings->currency }})
+                                        Min. Donation (MYR)
                                     </span>
                                 </label>
-                                <input type="number" id="min_donation" name="min_donation" value="{{ $settings->min_donation }}" min="1" step="0.01"
+                                <input type="number" id="min_donation" name="min_donation" value="10" min="1"
                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors">
                             </div>
                         </div>
@@ -198,7 +173,7 @@
                             </label>
                             <div class="space-y-3">
                                 <label class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
-                                    <input type="checkbox" name="duitnow_qr_enabled" value="1" {{ $settings->duitnow_qr_enabled == true ? 'checked' : '' }} class="rounded border-gray-300 text-green-500 focus:ring-green-500 h-4 w-4">
+                                    <input type="checkbox" checked class="rounded border-gray-300 text-green-500 focus:ring-green-500 h-4 w-4">
                                     <div class="ml-3 flex items-center">
                                         <div class="h-8 w-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
                                             <svg class="h-4 w-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
@@ -213,7 +188,7 @@
                                     </div>
                                 </label>
                                 <label class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
-                                    <input type="checkbox" name="fpx_banking_enabled" value="1" {{ $settings->fpx_banking_enabled == true ? 'checked' : '' }} class="rounded border-gray-300 text-green-500 focus:ring-green-500 h-4 w-4">
+                                    <input type="checkbox" checked class="rounded border-gray-300 text-green-500 focus:ring-green-500 h-4 w-4">
                                     <div class="ml-3 flex items-center">
                                         <div class="h-8 w-8 bg-green-100 rounded-lg flex items-center justify-center mr-3">
                                             <svg class="h-4 w-4 text-green-600" fill="currentColor" viewBox="0 0 24 24">
@@ -227,7 +202,7 @@
                                     </div>
                                 </label>
                                 <label class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
-                                    <input type="checkbox" name="card_payment_enabled" value="1" {{ $settings->card_payment_enabled == true ? 'checked' : '' }} class="rounded border-gray-300 text-green-500 focus:ring-green-500 h-4 w-4">
+                                    <input type="checkbox" checked class="rounded border-gray-300 text-green-500 focus:ring-green-500 h-4 w-4">
                                     <div class="ml-3 flex items-center">
                                         <div class="h-8 w-8 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
                                             <svg class="h-4 w-4 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
@@ -245,7 +220,7 @@
                     </div>
                     
                     <div class="pt-4 border-t border-gray-200">
-                        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+                        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 transform hover:scale-105">
                             <span class="flex items-center justify-center">
                                 <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -274,8 +249,7 @@
                 </div>
             </div>
             <div class="p-6">
-                <form action="{{ route('admin.settings.update') }}" method="POST" class="space-y-5">
-                    @csrf
+                <form class="space-y-5">
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-3">
@@ -288,21 +262,21 @@
                             </label>
                             <div class="space-y-3">
                                 <label class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
-                                    <input type="radio" name="registration_type" value="open" {{ $settings->registration_type == 'open' ? 'checked' : '' }} class="border-gray-300 text-red-500 focus:ring-red-500 h-4 w-4">
+                                    <input type="radio" name="registration" value="open" checked class="border-gray-300 text-red-500 focus:ring-red-500 h-4 w-4">
                                     <div class="ml-3">
                                         <span class="text-sm font-medium text-gray-900">Open registration</span>
                                         <p class="text-xs text-gray-500">Anyone can register immediately</p>
                                     </div>
                                 </label>
                                 <label class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
-                                    <input type="radio" name="registration_type" value="approval" {{ $settings->registration_type == 'approval' ? 'checked' : '' }} class="border-gray-300 text-red-500 focus:ring-red-500 h-4 w-4">
+                                    <input type="radio" name="registration" value="approval" class="border-gray-300 text-red-500 focus:ring-red-500 h-4 w-4">
                                     <div class="ml-3">
                                         <span class="text-sm font-medium text-gray-900">Require admin approval</span>
                                         <p class="text-xs text-gray-500">New users need admin verification</p>
                                     </div>
                                 </label>
                                 <label class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
-                                    <input type="radio" name="registration_type" value="closed" {{ $settings->registration_type == 'closed' ? 'checked' : '' }} class="border-gray-300 text-red-500 focus:ring-red-500 h-4 w-4">
+                                    <input type="radio" name="registration" value="closed" class="border-gray-300 text-red-500 focus:ring-red-500 h-4 w-4">
                                     <div class="ml-3">
                                         <span class="text-sm font-medium text-gray-900">Closed registration</span>
                                         <p class="text-xs text-gray-500">No new registrations allowed</p>
@@ -322,7 +296,7 @@
                                     </span>
                                 </label>
                                 <div class="relative">
-                                    <input type="number" id="session_timeout" name="session_timeout" value="{{ $settings->session_timeout }}" min="5" max="1440"
+                                    <input type="number" id="session_timeout" name="session_timeout" value="120" min="5"
                                            class="w-full px-4 py-3 pr-16 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors">
                                     <span class="absolute right-3 top-3 text-sm text-gray-500">min</span>
                                 </div>
@@ -336,14 +310,14 @@
                                         Max Login Attempts
                                     </span>
                                 </label>
-                                <input type="number" id="max_login_attempts" name="max_login_attempts" value="{{ $settings->max_login_attempts }}" min="1" max="20"
+                                <input type="number" id="max_login_attempts" name="max_login_attempts" value="5" min="1"
                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors">
                             </div>
                         </div>
                     </div>
                     
                     <div class="pt-4 border-t border-gray-200">
-                        <button type="submit" class="w-full bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+                        <button type="submit" class="w-full bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 transform hover:scale-105">
                             <span class="flex items-center justify-center">
                                 <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -372,8 +346,7 @@
                 </div>
             </div>
             <div class="p-6">
-                <form action="{{ route('admin.settings.update') }}" method="POST" class="space-y-5">
-                    @csrf
+                <form class="space-y-5">
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-3">
@@ -387,7 +360,7 @@
                             <div class="space-y-3">
                                 <label class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                     <div class="flex items-center">
-                                        <input type="checkbox" name="email_new_donations" value="1" {{ $settings->email_new_donations == true ? 'checked' : '' }} class="rounded border-gray-300 text-purple-500 focus:ring-purple-500 h-4 w-4">
+                                        <input type="checkbox" checked class="rounded border-gray-300 text-purple-500 focus:ring-purple-500 h-4 w-4">
                                         <div class="ml-3">
                                             <span class="text-sm font-medium text-gray-900">New Donations</span>
                                             <p class="text-xs text-gray-500">When donations are received</p>
@@ -396,7 +369,7 @@
                                 </label>
                                 <label class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                     <div class="flex items-center">
-                                        <input type="checkbox" name="email_new_registrations" value="1" {{ $settings->email_new_registrations == true ? 'checked' : '' }} class="rounded border-gray-300 text-purple-500 focus:ring-purple-500 h-4 w-4">
+                                        <input type="checkbox" checked class="rounded border-gray-300 text-purple-500 focus:ring-purple-500 h-4 w-4">
                                         <div class="ml-3">
                                             <span class="text-sm font-medium text-gray-900">New User Registration</span>
                                             <p class="text-xs text-gray-500">When users sign up</p>
@@ -405,7 +378,7 @@
                                 </label>
                                 <label class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                     <div class="flex items-center">
-                                        <input type="checkbox" name="email_campaign_updates" value="1" {{ $settings->email_campaign_updates == true ? 'checked' : '' }} class="rounded border-gray-300 text-purple-500 focus:ring-purple-500 h-4 w-4">
+                                        <input type="checkbox" class="rounded border-gray-300 text-purple-500 focus:ring-purple-500 h-4 w-4">
                                         <div class="ml-3">
                                             <span class="text-sm font-medium text-gray-900">Campaign Updates</span>
                                             <p class="text-xs text-gray-500">When campaigns are modified</p>
@@ -424,13 +397,13 @@
                                     Admin Notification Email
                                 </span>
                             </label>
-                            <input type="email" id="admin_email" name="admin_email" value="{{ $settings->admin_email }}"
+                            <input type="email" id="admin_email" name="admin_email" value="admin@raudhahmuamalat.com"
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors">
                         </div>
                     </div>
                     
                     <div class="pt-4 border-t border-gray-200">
-                        <button type="submit" class="w-full bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+                        <button type="submit" class="w-full bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 transform hover:scale-105">
                             <span class="flex items-center justify-center">
                                 <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>

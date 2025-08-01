@@ -160,28 +160,28 @@
                             </td>
                             <td class="px-4 py-3">
                                 <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold
-                                    @if($transaction->cz_status === 'authorized' || $transaction->cz_status === 'authenticated') bg-green-100 text-green-700
-                                    @elseif($transaction->cz_status === 'pending') bg-yellow-100 text-yellow-700
-                                    @elseif($transaction->cz_status === 'failed') bg-red-100 text-red-700
+                                    @if($transaction->status === 'authorized' || $transaction->status === 'authenticated') bg-green-100 text-green-700
+                                    @elseif($transaction->status === 'pending') bg-yellow-100 text-yellow-700
+                                    @elseif($transaction->status === 'failed') bg-red-100 text-red-700
                                     @else bg-blue-100 text-blue-700
                                     @endif">
-                                    {{ strtoupper($transaction->cz_status) }}
+                                    {{ strtoupper($transaction->status) }}
                                 </span>
                             </td>
-                            <td class="px-4 py-3 font-mono text-xs text-gray-600 truncate max-w-[120px]" title="{{ $transaction->cz_transaction_id }}">
-                                {{ Str::limit($transaction->cz_transaction_id, 12) }}
+                            <td class="px-4 py-3 font-mono text-xs text-gray-600 truncate max-w-[120px]" title="{{ $transaction->transaction_id }}">
+                                {{ Str::limit($transaction->transaction_id, 12) }}
                             </td>
                             <td class="px-4 py-3">
-                                <div class="text-xs font-semibold text-gray-900">RM {{ number_format($transaction->cz_amount, 2) }}</div>
-                                <div class="text-xs text-gray-500">{{ $transaction->cz_currency }}</div>
+                                <div class="text-xs font-semibold text-gray-900">RM {{ number_format($transaction->amount, 2) }}</div>
+                                <div class="text-xs text-gray-500">{{ $transaction->currency }}</div>
                             </td>
                             <td class="px-4 py-3">
                                 <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold
-                                    @if($transaction->cz_payment_method === 'card') bg-blue-100 text-blue-800
-                                    @elseif($transaction->cz_payment_method === 'obw') bg-green-100 text-green-800
+                                    @if($transaction->payment_method === 'card') bg-blue-100 text-blue-800
+                                    @elseif($transaction->payment_method === 'obw') bg-green-100 text-green-800
                                     @else bg-purple-100 text-purple-800
                                     @endif">
-                                    {{ strtoupper($transaction->cz_payment_method) }}
+                                    {{ strtoupper($transaction->payment_method) }}
                                 </span>
                             </td>
                             <td class="px-4 py-3 text-right">
@@ -243,7 +243,7 @@ function viewTransactionDetails(transactionId) {
     fetch(`/admin/cardzone/debug/transactions/${transactionId}`)
         .then(response => response.json())
         .then(data => {
-            document.getElementById('transactionModalTitle').textContent = `Transaction: ${data.cz_transaction_id}`;
+            document.getElementById('transactionModalTitle').textContent = `Transaction: ${data.transaction_id}`;
             let html = `
                 <div class="space-y-6">
                     <div>
@@ -254,27 +254,27 @@ function viewTransactionDetails(transactionId) {
                         <div class="bg-gray-50 rounded-lg p-4 space-y-2">
                             <div class="flex justify-between">
                                 <span class="text-sm text-gray-600">Transaction ID:</span>
-                                <span class="text-sm font-medium">${data.cz_transaction_id}</span>
+                                <span class="text-sm font-medium">${data.transaction_id}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-sm text-gray-600">Amount:</span>
-                                <span class="text-sm font-medium">RM ${parseFloat(data.cz_amount).toFixed(2)}</span>
+                                <span class="text-sm font-medium">RM ${parseFloat(data.amount).toFixed(2)}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-sm text-gray-600">Currency:</span>
-                                <span class="text-sm font-medium">${data.cz_currency}</span>
+                                <span class="text-sm font-medium">${data.currency}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-sm text-gray-600">Payment Method:</span>
-                                <span class="text-sm font-medium">${data.cz_payment_method.toUpperCase()}</span>
+                                <span class="text-sm font-medium">${data.payment_method.toUpperCase()}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-sm text-gray-600">Status:</span>
                                 <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
-                                    ${data.cz_status === 'authorized' || data.cz_status === 'authenticated' ? 'bg-green-100 text-green-800' :
-                                      data.cz_status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                                      data.cz_status === 'failed' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'}">
-                                    ${data.cz_status.charAt(0).toUpperCase() + data.cz_status.slice(1)}
+                                    ${data.status === 'authorized' || data.status === 'authenticated' ? 'bg-green-100 text-green-800' :
+                                      data.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                                      data.status === 'failed' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'}">
+                                    ${data.status.charAt(0).toUpperCase() + data.status.slice(1)}
                                 </span>
                             </div>
                         </div>
@@ -299,13 +299,13 @@ function viewTransactionDetails(transactionId) {
                         <span class="text-sm text-gray-600">ECI:</span>
                         <span class="text-sm font-medium">${data.eci}</span>
                     </div>` : ''}
-                    ${data.cz_response_data ? `<div>
+                    ${data.cardzone_response_data ? `<div>
                         <div class="flex items-center gap-2 mb-2">
                             <svg class="h-5 w-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
                             <h4 class="text-sm font-semibold text-gray-900">Cardzone Response</h4>
                         </div>
                         <div class="bg-gray-900 text-green-400 p-3 rounded-lg font-mono text-xs overflow-x-auto max-h-40 overflow-y-auto">
-                            ${JSON.stringify(data.cz_response_data, null, 2)}
+                            ${JSON.stringify(data.cardzone_response_data, null, 2)}
                         </div>
                     </div>` : ''}
                 </div>

@@ -61,19 +61,8 @@ class Donation extends Model
     /**
      * Get the transaction associated with this donation.
      */
-    public function cardzoneTransaction()
-    {
-        return $this->hasOne(CardzoneTransaction::class);
-    }
-
-    public function paynetTransaction()
-    {
-        return $this->hasOne(PaynetTransaction::class);
-    }
-
     public function transaction()
     {
-        // Return the first available transaction (Cardzone or Paynet)
-        return $this->cardzoneTransaction ?: $this->paynetTransaction;
+        return $this->hasOne(Transaction::class);
     }
 }

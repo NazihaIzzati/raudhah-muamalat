@@ -313,6 +313,4 @@
         @endif
     </div>
 </div>
-
-
 @endsection 

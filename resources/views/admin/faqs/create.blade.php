@@ -7,7 +7,7 @@
 <div class="space-y-6">
     <!-- Main Content -->
     <div class="bg-white overflow-hidden shadow-lg sm:rounded-xl border border-gray-200">
-        <form action="{{ route('admin.faqs.store') }}" method="POST">
+        <form id="create-faq-form" action="{{ route('admin.faqs.store') }}" method="POST" data-confirm="Are you sure you want to create this FAQ?">
             @csrf
             
             <!-- Enhanced Header Section -->
@@ -218,4 +218,31 @@
         </form>
     </div>
 </div>
+
+@push('scripts')
+<script src="{{ asset('js/faqs-crud.js') }}"></script>
+<script>
+    // Show success/error messages from session
+    @if(session('success'))
+        showSuccess('{{ session('success') }}');
+    @endif
+    
+    @if(session('error'))
+        showError('{{ session('error') }}');
+    @endif
+    
+    @if(session('warning'))
+        showWarning('{{ session('warning') }}');
+    @endif
+    
+    @if(session('info'))
+        showInfo('{{ session('info') }}');
+    @endif
+    
+    // Show validation errors
+    @if($errors->any())
+        showValidationErrors(@json($errors->all()));
+    @endif
+</script>
+@endpush
 @endsection 

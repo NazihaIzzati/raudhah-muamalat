@@ -7,7 +7,7 @@
 <div class="space-y-6">
     <!-- Main Content -->
     <div class="bg-white overflow-hidden shadow-lg sm:rounded-xl border border-gray-200">
-        <form action="{{ route('admin.contacts.update', $contact) }}" method="POST">
+        <form id="edit-contact-form" action="{{ route('admin.contacts.update', $contact) }}" method="POST" data-confirm="Are you sure you want to update this contact?">
             @csrf
             @method('PUT')
             
@@ -298,4 +298,23 @@
         </form>
     </div>
 </div>
-@endsection 
+
+<!-- Success/Error Messages -->
+@if(session('success'))
+    <div data-success-message="{{ session('success') }}"></div>
+@endif
+
+@if(session('error'))
+    <div data-error-message="{{ session('error') }}"></div>
+@endif
+
+@if($errors->any())
+    <div data-validation-errors="{{ json_encode($errors->toArray()) }}"></div>
+@endif
+
+@endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('js/contacts-crud.js') }}"></script>
+@endpush 

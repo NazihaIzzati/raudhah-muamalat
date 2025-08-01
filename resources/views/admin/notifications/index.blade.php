@@ -514,6 +514,4 @@
     }
 </script>
 @endpush
-
-
 @endsection

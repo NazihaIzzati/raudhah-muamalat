@@ -5,14 +5,19 @@
 
 @section('content')
 <div class="min-h-screen bg-gray-50">
-    <!-- Dashboard Header -->
+    <!-- Top Navigation Bar -->
     <div class="bg-white shadow-sm border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-4">
-                    <div>
-                        <h1 class="text-lg font-semibold text-gray-900">Dashboard</h1>
-                        <p class="text-sm text-gray-500">Here's what's happening with your donations</p>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-primary-500 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">{{ substr($user->name, 0, 1) }}</span>
+                        </div>
+                        <div>
+                            <h1 class="text-lg font-semibold text-gray-900">Welcome back, {{ $user->name }}</h1>
+                            <p class="text-sm text-gray-500">Here's what's happening with your donations</p>
+                        </div>
                     </div>
                 </div>
                 

@@ -112,34 +112,6 @@ return [
             'replace_placeholders' => true,
         ],
 
-        'cardzone_transactions' => [
-            'driver' => 'single',
-            'path' => storage_path('logs/cardzone_transactions.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
-            'replace_placeholders' => true,
-        ],
-
-        'paynet' => [
-            'driver' => 'single',
-            'path' => storage_path('logs/paynet.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
-            'replace_placeholders' => true,
-        ],
-
-        'paynet_transactions' => [
-            'driver' => 'single',
-            'path' => storage_path('logs/paynet_transactions.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
-            'replace_placeholders' => true,
-        ],
-
-        'paynet_debug' => [
-            'driver' => 'single',
-            'path' => storage_path('logs/paynet_debug.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
-            'replace_placeholders' => true,
-        ],
-
         'syslog' => [
             'driver' => 'syslog',
             'level' => env('LOG_LEVEL', 'debug'),

@@ -2,8 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\CardzoneTransaction;
-use App\Models\PaynetTransaction;
+use App\Models\Transaction;
 use App\Models\Donation;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
@@ -26,37 +25,20 @@ class PaymentTransactionService
         try {
             DB::beginTransaction();
 
-            // Determine which transaction model to use based on payment method
-            $paymentMethod = $data['payment_method'] ?? '';
-            
-            if (in_array($paymentMethod, ['card', 'obw', 'qr'])) {
-                // Use CardzoneTransaction for Cardzone payments
-                $transaction = CardzoneTransaction::create([
-                    'cz_transaction_id' => $data['transaction_id'],
-                    'cz_merchant_id' => $data['merchant_id'],
-                    'cz_amount' => $data['amount'],
-                    'cz_currency' => $data['currency'],
-                    'cz_payment_method' => $data['payment_method'],
-                    'cz_status' => 'pending',
-                    'cz_card_number_masked' => $this->maskCardNumber($data['card_number'] ?? null),
-                    'cz_card_expiry' => $data['card_expiry'] ?? null,
-                    'cz_card_holder_name' => $data['card_holder_name'] ?? null,
-                    'cz_obw_bank_code' => $data['obw_bank_code'] ?? null,
-                    'cz_qr_code_data' => $data['qr_code_data'] ?? null,
-                    'donation_id' => $data['donation_id'] ?? null,
-                ]);
-            } else {
-                // Use PaynetTransaction for Paynet payments
-                $transaction = PaynetTransaction::create([
-                    'pn_transaction_id' => $data['transaction_id'],
-                    'pn_merchant_id' => $data['merchant_id'],
-                    'pn_amount' => $data['amount'],
-                    'pn_currency' => $data['currency'],
-                    'pn_payment_method' => $data['payment_method'],
-                    'pn_status' => 'pending',
-                    'donation_id' => $data['donation_id'] ?? null,
-                ]);
-            }
+            $transaction = Transaction::create([
+                'transaction_id' => $data['transaction_id'],
+                'merchant_id' => $data['merchant_id'],
+                'amount' => $data['amount'],
+                'currency' => $data['currency'],
+                'payment_method' => $data['payment_method'],
+                'status' => 'pending',
+                'card_number_masked' => $this->maskCardNumber($data['card_number'] ?? null),
+                'card_expiry' => $data['card_expiry'] ?? null,
+                'card_holder_name' => $data['card_holder_name'] ?? null,
+                'obw_bank_code' => $data['obw_bank_code'] ?? null,
+                'qr_code_data' => $data['qr_code_data'] ?? null,
+                'donation_id' => $data['donation_id'] ?? null,
+            ]);
 
             // Log the transaction creation
             $this->debugService->logTransaction(
@@ -94,40 +76,26 @@ class PaymentTransactionService
     public function updateTransactionStatus($transactionId, $status, array $additionalData = [])
     {
         try {
-            // Try to find transaction in both tables
-            $cardzoneTransaction = CardzoneTransaction::where('cz_transaction_id', $transactionId)->first();
-            $paynetTransaction = PaynetTransaction::where('pn_transaction_id', $transactionId)->first();
-            
-            if (!$cardzoneTransaction && !$paynetTransaction) {
+            $transaction = Transaction::where('transaction_id', $transactionId)->first();
+
+            if (!$transaction) {
                 throw new Exception("Transaction not found: {$transactionId}");
             }
 
-            if ($cardzoneTransaction) {
-                $transaction = $cardzoneTransaction;
-                $oldStatus = $transaction->cz_status;
-                $transaction->cz_status = $status;
+            $oldStatus = $transaction->status;
+            $transaction->status = $status;
 
-                // Update additional fields if provided
-                if (isset($additionalData['auth_value'])) {
-                    $transaction->cz_auth_value = $additionalData['auth_value'];
-                }
+            // Update additional fields if provided
+            if (isset($additionalData['auth_value'])) {
+                $transaction->auth_value = $additionalData['auth_value'];
+            }
 
-                if (isset($additionalData['eci'])) {
-                    $transaction->cz_eci = $additionalData['eci'];
-                }
+            if (isset($additionalData['eci'])) {
+                $transaction->eci = $additionalData['eci'];
+            }
 
-                if (isset($additionalData['cardzone_response_data'])) {
-                    $transaction->cz_response_data = $additionalData['cardzone_response_data'];
-                }
-            } else {
-                $transaction = $paynetTransaction;
-                $oldStatus = $transaction->pn_status;
-                $transaction->pn_status = $status;
-
-                // Update additional fields if provided
-                if (isset($additionalData['paynet_response_data'])) {
-                    $transaction->pn_response_data = $additionalData['paynet_response_data'];
-                }
+            if (isset($additionalData['cardzone_response_data'])) {
+                $transaction->cardzone_response_data = $additionalData['cardzone_response_data'];
             }
 
             $transaction->save();
@@ -197,27 +165,15 @@ class PaymentTransactionService
     public function recordPaymentSubmission($transactionId, array $requestData, array $responseData)
     {
         try {
-            // Try to find transaction in both tables
-            $cardzoneTransaction = CardzoneTransaction::where('cz_transaction_id', $transactionId)->first();
-            $paynetTransaction = PaynetTransaction::where('pn_transaction_id', $transactionId)->first();
-            
-            if (!$cardzoneTransaction && !$paynetTransaction) {
+            $transaction = Transaction::where('transaction_id', $transactionId)->first();
+
+            if (!$transaction) {
                 throw new Exception("Transaction not found: {$transactionId}");
             }
 
-            if ($cardzoneTransaction) {
-                $transaction = $cardzoneTransaction;
-                // Update transaction with response data
-                $transaction->cz_response_data = $responseData;
-                $transaction->cz_response_received_at = now();
-                $transaction->save();
-            } else {
-                $transaction = $paynetTransaction;
-                // Update transaction with response data
-                $transaction->pn_response_data = $responseData;
-                $transaction->pn_response_received_at = now();
-                $transaction->save();
-            }
+            // Update transaction with response data
+            $transaction->cardzone_response_data = $responseData;
+            $transaction->save();
 
             // Log payment submission
             $this->debugService->logTransaction(
@@ -252,11 +208,7 @@ class PaymentTransactionService
     public function recordCallbackResponse($transactionId, array $callbackData, $macValid = null)
     {
         try {
-            // Try to find transaction in both tables
-            $transaction = CardzoneTransaction::where('cz_transaction_id', $transactionId)->first();
-            if (!$transaction) {
-                $transaction = PaynetTransaction::where('pn_transaction_id', $transactionId)->first();
-            }
+            $transaction = Transaction::where('transaction_id', $transactionId)->first();
 
             if (!$transaction) {
                 throw new Exception("Transaction not found: {$transactionId}");
@@ -265,16 +217,11 @@ class PaymentTransactionService
             // Determine status from callback data
             $status = $this->determineStatusFromCallback($callbackData);
 
-            // Update transaction based on type
-            if ($transaction instanceof CardzoneTransaction) {
-                $transaction->cz_status = $status;
-                $transaction->cz_auth_value = $callbackData['MPI_CAVV'] ?? $callbackData['MPI_AAV'] ?? null;
-                $transaction->cz_eci = $callbackData['MPI_ECI'] ?? null;
-                $transaction->cz_response_data = $callbackData;
-            } else {
-                $transaction->pn_status = $status;
-                $transaction->pn_response_data = $callbackData;
-            }
+            // Update transaction
+            $transaction->status = $status;
+            $transaction->auth_value = $callbackData['MPI_CAVV'] ?? $callbackData['MPI_AAV'] ?? null;
+            $transaction->eci = $callbackData['MPI_ECI'] ?? null;
+            $transaction->cardzone_response_data = $callbackData;
             $transaction->save();
 
             // Update related donation if exists
@@ -315,22 +262,13 @@ class PaymentTransactionService
     public function recordPaymentCompletion($transactionId, $status, array $completionData = [])
     {
         try {
-            // Try to find transaction in both tables
-            $transaction = CardzoneTransaction::where('cz_transaction_id', $transactionId)->first();
-            if (!$transaction) {
-                $transaction = PaynetTransaction::where('pn_transaction_id', $transactionId)->first();
-            }
+            $transaction = Transaction::where('transaction_id', $transactionId)->first();
 
             if (!$transaction) {
                 throw new Exception("Transaction not found: {$transactionId}");
             }
 
-            // Update transaction based on type
-            if ($transaction instanceof CardzoneTransaction) {
-                $transaction->cz_status = $status;
-            } else {
-                $transaction->pn_status = $status;
-            }
+            $transaction->status = $status;
             $transaction->save();
 
             // Log payment completion
@@ -363,26 +301,14 @@ class PaymentTransactionService
     public function recordPaymentError($transactionId, $error, array $context = [])
     {
         try {
-            // Try to find transaction in both tables
-            $transaction = CardzoneTransaction::where('cz_transaction_id', $transactionId)->first();
-            if (!$transaction) {
-                $transaction = PaynetTransaction::where('pn_transaction_id', $transactionId)->first();
-            }
+            $transaction = Transaction::where('transaction_id', $transactionId)->first();
 
             if ($transaction) {
-                if ($transaction instanceof CardzoneTransaction) {
-                    $transaction->cz_status = 'failed';
-                    $transaction->cz_response_data = array_merge(
-                        $transaction->cz_response_data ?? [],
-                        ['error' => $error, 'error_context' => $context]
-                    );
-                } else {
-                    $transaction->pn_status = 'failed';
-                    $transaction->pn_response_data = array_merge(
-                        $transaction->pn_response_data ?? [],
-                        ['error' => $error, 'error_context' => $context]
-                    );
-                }
+                $transaction->status = 'failed';
+                $transaction->cardzone_response_data = array_merge(
+                    $transaction->cardzone_response_data ?? [],
+                    ['error' => $error, 'error_context' => $context]
+                );
                 $transaction->save();
             }
 
@@ -412,11 +338,7 @@ class PaymentTransactionService
      */
     public function getTransaction($transactionId)
     {
-        // Try to find transaction in both tables
-        $cardzoneTransaction = CardzoneTransaction::where('cz_transaction_id', $transactionId)->first();
-        $paynetTransaction = PaynetTransaction::where('pn_transaction_id', $transactionId)->first();
-        
-        return $cardzoneTransaction ?: $paynetTransaction;
+        return Transaction::where('transaction_id', $transactionId)->first();
     }
 
     /**
@@ -425,15 +347,12 @@ class PaymentTransactionService
     public function getTransactionStats()
     {
         return [
-            'total_transactions' => CardzoneTransaction::count() + PaynetTransaction::count(),
-            'pending_transactions' => CardzoneTransaction::where('cz_status', 'pending')->count() + PaynetTransaction::where('pn_status', 'pending')->count(),
-            'successful_transactions' => CardzoneTransaction::whereIn('cz_status', ['authorized', 'authenticated'])->count() + PaynetTransaction::whereIn('pn_status', ['completed'])->count(),
-            'failed_transactions' => CardzoneTransaction::where('cz_status', 'failed')->count() + PaynetTransaction::where('pn_status', 'failed')->count(),
-            'total_amount' => CardzoneTransaction::whereIn('cz_status', ['authorized', 'authenticated'])->sum('cz_amount') + PaynetTransaction::whereIn('pn_status', ['completed'])->sum('pn_amount'),
-            'recent_transactions' => collect([
-                CardzoneTransaction::latest()->take(5)->get(),
-                PaynetTransaction::latest()->take(5)->get()
-            ])->flatten()->sortByDesc('created_at')->take(10)
+            'total_transactions' => Transaction::count(),
+            'pending_transactions' => Transaction::where('status', 'pending')->count(),
+            'successful_transactions' => Transaction::whereIn('status', ['authorized', 'authenticated'])->count(),
+            'failed_transactions' => Transaction::where('status', 'failed')->count(),
+            'total_amount' => Transaction::whereIn('status', ['authorized', 'authenticated'])->sum('amount'),
+            'recent_transactions' => Transaction::latest()->take(10)->get()
         ];
     }
 
