@@ -360,6 +360,16 @@ return [
     'subscribe_newsletter_description' => 'Subscribe to our newsletter to receive the latest updates on our campaigns, success stories, and upcoming events. Be part of our community making a difference.',
     'subscribe_newsletter' => 'Subscribe Newsletter',
     
+    // News page hero section
+    'news_page_title' => 'News - Raudhah Muamalat',
+    'stay_updated' => 'Stay Updated',
+    'news_hero_description' => 'Stay informed about our community initiatives, Islamic programs, and charitable activities that make a difference in people\'s lives.',
+    'community_initiatives' => 'Community Initiatives',
+    'islamic_programs' => 'Islamic Programs',
+    'charitable_activities' => 'Charitable Activities',
+    'no_news_available' => 'No News Available',
+    'no_news_description' => 'We\'re currently working on bringing you the latest news and updates. Please check back soon for updates about our community initiatives and programs.',
+    
     // Campaigns page
     'campaigns_description' => 'Support meaningful campaigns that make a real difference in communities worldwide. Every donation is tracked and transparent.',
     'our_campaigns' => 'Our Campaigns',

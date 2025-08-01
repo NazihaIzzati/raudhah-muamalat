@@ -1,170 +1,156 @@
 @extends('layouts.master')
 
-@section('title', 'News - Raudhah Muamalat')
-@section('meta_description', 'Stay updated with the latest news, announcements, and events from Raudhah Muamalat. Read about our community initiatives, Islamic programs, and charitable activities.')
+@section('title', __('app.news_page_title'))
+@section('description', __('app.news_page_description'))
 
 @section('content')
-<div class="bg-gradient-to-br from-orange-50 via-white to-orange-50 min-h-screen">
-    <!-- Hero Section -->
-    <div class="relative overflow-hidden bg-gradient-to-r from-[#fe5000] to-orange-600">
-        <div class="absolute inset-0 bg-black/20"></div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-            <div class="text-center">
-                <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">
-                    Latest News & Updates
-                </h1>
-                <p class="text-xl text-orange-100 max-w-3xl mx-auto">
-                    Stay informed about our community initiatives, Islamic programs, and charitable activities that make a difference in people's lives.
-                </p>
-            </div>
-        </div>
-    </div>
 
-    <!-- News Content -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        @if($news->count() > 0)
-            <!-- Featured News Section -->
-            @php
-                $featuredNews = $news->where('featured', true);
-                $regularNews = $news->where('featured', false);
-            @endphp
+        @include('components.hero-section', [
+            'badge' => [
+                'text' => __('app.latest_news'),
+                'icon' => '<svg class="w-4 h-4 text-primary-600 mr-2 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>'
+            ],
+            'title' => __('app.stay_updated'),
+            'subtitle' => __('app.news'),
+            'description' => __('app.news_hero_description'),
+            'highlights' => [
+                ['text' => __('app.community_initiatives'), 'delay' => '0.6s'],
+                ['text' => __('app.islamic_programs'), 'delay' => '0.8s']
+            ],
+            'pills' => [
+                ['text' => __('app.latest_updates'), 'delay' => '0.6s'],
+                ['text' => __('app.charitable_activities'), 'delay' => '0.7s'],
+                ['text' => __('app.community_news'), 'delay' => '0.8s']
+            ]
+        ])
 
-            @if($featuredNews->count() > 0)
-                <div class="mb-12">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
-                        Featured News
-                    </h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        @foreach($featuredNews as $newsItem)
-                            <article class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
-                                @if($newsItem->image_path)
-                                    <div class="aspect-w-16 aspect-h-9 overflow-hidden">
-                                        <img src="{{ asset('storage/' . $newsItem->image_path) }}" 
-                                             alt="{{ $newsItem->title }}" 
-                                             class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
-                                    </div>
-                                @else
-                                    <div class="aspect-w-16 aspect-h-9 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                                        <svg class="h-16 w-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
-                                        </svg>
+        <!-- Main Content with Animations -->
+        <section class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                @if($news->count() > 0)
+                    <!-- News Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 animate-on-scroll" data-animation="fade-in-up">
+                        @foreach($news as $index => $newsItem)
+                            <div class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-primary-200 transform hover:scale-105 {{ $newsItem->featured ? 'border-2 border-primary-200 hover:border-primary-300 hover:shadow-xl' : '' }} relative">
+                                @if($newsItem->featured)
+                                    <div class="absolute top-4 right-4 bg-primary-500 text-white px-3 py-1 rounded-full text-xs font-semibold z-10">
+                                        {{ __('app.featured') }}
                                     </div>
                                 @endif
                                 
-                                <div class="p-6">
-                                    <div class="flex items-center mb-3">
-                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-[#fe5000] to-orange-600 text-white">
-                                            <svg class="-ml-1 mr-1.5 h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
-                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                <!-- Image Section -->
+                                <div class="h-56 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center overflow-hidden">
+                                    @if($newsItem->image_path)
+                                        <img src="{{ asset('storage/' . $newsItem->image_path) }}"
+                                             alt="{{ $newsItem->title }}"
+                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                                             loading="lazy">
+                                    @else
+                                        <div class="w-full h-full bg-gradient-to-br {{ $newsItem->featured ? 'from-primary-50 to-primary-100' : 'from-gray-50 to-gray-100' }} flex items-center justify-center">
+                                            <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
                                             </svg>
-                                            Featured
-                                        </span>
-                                        <span class="ml-2 text-xs text-gray-500">
-                                            {{ $newsItem->published_at ? $newsItem->published_at->format('M d, Y') : $newsItem->created_at->format('M d, Y') }}
-                                        </span>
-                                    </div>
-                                    
-                                    <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#fe5000] transition-colors duration-200">
-                                        {{ $newsItem->title }}
-                                    </h3>
-                                    
-                                    <p class="text-gray-600 mb-4 line-clamp-3">
-                                        {{ $newsItem->excerpt ?: Str::limit(strip_tags($newsItem->content), 150) }}
-                                    </p>
-                                    
-                                    <div class="flex items-center justify-between">
-                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                            {{ ucfirst($newsItem->category) }}
-                                        </span>
-                                        
-                                        <a href="#" class="text-[#fe5000] hover:text-orange-600 font-semibold text-sm transition-colors duration-200">
-                                            Read More →
-                                        </a>
-                                    </div>
+                                        </div>
+                                    @endif
                                 </div>
-                            </article>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
 
-            <!-- All News Section -->
-            @if($regularNews->count() > 0)
-                <div>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
-                        Latest News
-                    </h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        @foreach($regularNews as $newsItem)
-                            <article class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
-                                @if($newsItem->image_path)
-                                    <div class="aspect-w-16 aspect-h-9 overflow-hidden">
-                                        <img src="{{ asset('storage/' . $newsItem->image_path) }}" 
-                                             alt="{{ $newsItem->title }}" 
-                                             class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
-                                    </div>
-                                @else
-                                    <div class="aspect-w-16 aspect-h-9 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                                        <svg class="h-16 w-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
-                                        </svg>
-                                    </div>
-                                @endif
-                                
+                                <!-- Content Section -->
                                 <div class="p-6">
-                                    <div class="flex items-center mb-3">
-                                        <span class="text-xs text-gray-500">
-                                            {{ $newsItem->published_at ? $newsItem->published_at->format('M d, Y') : $newsItem->created_at->format('M d, Y') }}
-                                        </span>
+                                    <div class="mb-3">
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                                {{ ucfirst($newsItem->category) }}
+                                            </span>
+                                            <span class="text-xs text-gray-500">
+                                                {{ $newsItem->published_at ? $newsItem->published_at->format('M d, Y') : $newsItem->created_at->format('M d, Y') }}
+                                            </span>
+                                        </div>
+                                        <h3 class="text-xl font-bold text-gray-900">{{ $newsItem->title }}</h3>
                                     </div>
-                                    
-                                    <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#fe5000] transition-colors duration-200">
-                                        {{ $newsItem->title }}
-                                    </h3>
-                                    
-                                    <p class="text-gray-600 mb-4 line-clamp-3">
+                                    <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-4">
                                         {{ $newsItem->excerpt ?: Str::limit(strip_tags($newsItem->content), 150) }}
                                     </p>
-                                    
+
+                                    <!-- Action Section -->
                                     <div class="flex items-center justify-between">
-                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                            {{ ucfirst($newsItem->category) }}
-                                        </span>
-                                        
-                                        <a href="#" class="text-[#fe5000] hover:text-orange-600 font-semibold text-sm transition-colors duration-200">
-                                            Read More →
+                                        <a href="#" class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
+                                            {{ __('app.read_more') }}
+                                            <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                            </svg>
                                         </a>
+                                        <span class="text-xs text-gray-400">{{ __('app.news') }}</span>
                                     </div>
                                 </div>
-                            </article>
+                            </div>
                         @endforeach
                     </div>
-                </div>
-            @endif
-
-        @else
-            <!-- No News Available -->
-            <div class="text-center py-16">
-                <div class="mx-auto h-24 w-24 text-gray-300 mb-6">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="h-24 w-24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
-                    </svg>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-900 mb-4">No News Available</h3>
-                <p class="text-gray-600 max-w-md mx-auto">
-                    We're currently working on bringing you the latest news and updates. Please check back soon for updates about our community initiatives and programs.
-                </p>
+                @else
+                    <!-- No News Available -->
+                    <div class="text-center py-16">
+                        <div class="max-w-md mx-auto">
+                            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ __('app.no_news_available') }}</h3>
+                            <p class="text-gray-600">
+                                {{ __('app.no_news_description') }}
+                            </p>
+                        </div>
+                    </div>
+                @endif
             </div>
-        @endif
-    </div>
-</div>
+        </section>
 
 <style>
-.line-clamp-3 {
+.line-clamp-4 {
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+}
+
+.animate-on-scroll.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        observer.observe(el);
+    });
+});
+</script>
 @endsection

@@ -341,6 +341,16 @@ return [
     'subscribe_newsletter_description' => 'Langgan surat berita kami untuk menerima kemas kini terbaru tentang kempen, kisah kejayaan, dan acara akan datang. Jadilah sebahagian daripada komuniti kami yang membuat perbezaan.',
     'subscribe_newsletter' => 'Langgan Surat Berita',
     
+    // News page hero section
+    'news_page_title' => 'Berita - Raudhah Muamalat',
+    'stay_updated' => 'Terus Dikemas Kini',
+    'news_hero_description' => 'Terus dimaklumkan tentang inisiatif komuniti, program Islam, dan aktiviti amal kami yang membuat perbezaan dalam kehidupan orang.',
+    'community_initiatives' => 'Inisiatif Komuniti',
+    'islamic_programs' => 'Program Islam',
+    'charitable_activities' => 'Aktiviti Amal',
+    'no_news_available' => 'Tiada Berita Tersedia',
+    'no_news_description' => 'Kami sedang bekerja untuk membawa berita dan kemas kini terbaru kepada anda. Sila periksa semula tidak lama lagi untuk kemas kini tentang inisiatif komuniti dan program kami.',
+    
     // Campaigns page
     'campaigns_description' => 'Sokong kempen-kempen bermakna yang membuat perbezaan sebenar dalam komuniti di seluruh dunia. Setiap sumbangan dikesan dan telus.',
     'our_campaigns' => 'Kempen Kami',
