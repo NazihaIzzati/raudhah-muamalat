@@ -27,272 +27,86 @@
         <!-- Main Content with Animations -->
         <section class="py-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <!-- Partners Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 animate-on-scroll" data-animation="fade-in-up">
-                    <!-- Yayasan Muslimin -->
-                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-primary-200 transform hover:scale-105">
-                        <!-- Logo Section -->
-                        <div class="h-56 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-8">
-                            <div class="logo-container w-48 h-48 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center p-6 transition-all duration-700 hover:scale-110 hover:-translate-y-4 hover:rotate-3 group cursor-pointer animate-float"
-                                 tabindex="0"
-                                 role="button"
-                                 aria-label="{{ __('app.learn_more_about') }} {{ __('app.yayasan_muslimin') }}">
-                                <img src="{{ asset('assets/images/charity/yayasanmuslim.png') }}"
-                                     alt="{{ __('app.yayasan_muslimin_logo') }}"
-                                     class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
-                                     loading="lazy">
-                                <!-- Hover indicator -->
-                                <div class="hover-indicator absolute bottom-3 right-3 w-8 h-8 bg-emerald-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center shadow-lg">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                                    </svg>
+                @if($partners->count() > 0)
+                    <!-- Partners Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 animate-on-scroll" data-animation="fade-in-up">
+                        @foreach($partners as $index => $partner)
+                            <div class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-primary-200 transform hover:scale-105 {{ $partner->featured ? 'border-2 border-primary-200 hover:border-primary-300 hover:shadow-xl' : '' }} relative">
+                                @if($partner->featured)
+                                    <div class="absolute top-4 right-4 bg-primary-500 text-white px-3 py-1 rounded-full text-xs font-semibold z-10">
+                                        {{ __('app.featured') }}
+                                    </div>
+                                @endif
+                                
+                                <!-- Logo Section -->
+                                <div class="h-56 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-8">
+                                    <div class="logo-container w-48 h-48 bg-gradient-to-br {{ $partner->featured ? 'from-primary-50 to-primary-100' : 'from-gray-50 to-gray-100' }} rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center p-6 transition-all duration-700 hover:scale-110 hover:-translate-y-4 hover:rotate-3 group cursor-pointer animate-float"
+                                         tabindex="0"
+                                         role="button"
+                                         aria-label="{{ __('app.learn_more_about') }} {{ $partner->name }}">
+                                        @if($partner->logo)
+                                            <img src="{{ Storage::url($partner->logo) }}"
+                                                 alt="{{ $partner->name }} logo"
+                                                 class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
+                                                 loading="lazy">
+                                        @else
+                                            <div class="w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center">
+                                                <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                                </svg>
+                                            </div>
+                                        @endif
+                                        <!-- Hover indicator -->
+                                        <div class="hover-indicator absolute bottom-3 right-3 w-8 h-8 {{ $partner->featured ? 'bg-primary-500' : 'bg-gray-500' }} rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center shadow-lg">
+                                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Content Section -->
+                                <div class="p-6">
+                                    <div class="mb-3">
+                                        <h3 class="text-xl font-bold text-gray-900">{{ $partner->name }}</h3>
+                                    </div>
+                                    <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-4">
+                                        {{ $partner->description ?: __('app.no_description_available') }}
+                                    </p>
+
+                                    <!-- Action Section -->
+                                    <div class="flex items-center justify-between">
+                                        @if($partner->url)
+                                            <a href="{{ $partner->url }}" target="_blank"
+                                               class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
+                                                {{ __('app.learn_more') }}
+                                                <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                                </svg>
+                                            </a>
+                                        @else
+                                            <span class="text-gray-400 text-sm">{{ __('app.no_website_available') }}</span>
+                                        @endif
+                                        <span class="text-xs text-gray-400">{{ __('app.partner') }}</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Content Section -->
-                        <div class="p-6">
-                            <div class="mb-3">
-                                <h3 class="text-xl font-bold text-gray-900">{{ __('app.yayasan_muslimin') }}</h3>
+                        @endforeach
+                    </div>
+                @else
+                    <!-- No Partners Available -->
+                    <div class="text-center py-16">
+                        <div class="max-w-md mx-auto">
+                            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                </svg>
                             </div>
-                            <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-4">
-                                {{ __('app.yayasan_muslimin_description') }}
-                            </p>
-
-                            <!-- Action Section -->
-                            <div class="flex items-center justify-between">
-                                <a href="https://yayasanmuslimin.org/" target="_blank"
-                                   class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
-                                    {{ __('app.learn_more') }}
-                                    <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                    </svg>
-                                </a>
-                                <span class="text-xs text-gray-400">{{ __('app.islamic_foundation') }}</span>
-                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ __('app.no_partners_available') }}</h3>
+                            <p class="text-gray-600">{{ __('app.no_partners_description') }}</p>
                         </div>
                     </div>
-
-                    <!-- Yayasan Ikhlas -->
-                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-primary-200 transform hover:scale-105">
-                        <!-- Logo Section -->
-                        <div class="h-56 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-8">
-                            <div class="logo-container w-48 h-48 bg-gradient-to-br from-blue-50 to-blue-100 rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center p-6 transition-all duration-700 hover:scale-110 hover:-translate-y-4 hover:rotate-3 group cursor-pointer animate-float-delay-1"
-                                 tabindex="0"
-                                 role="button"
-                                 aria-label="{{ __('app.learn_more_about') }} {{ __('app.yayasan_ikhlas') }}">
-                                <img src="{{ asset('assets/images/charity/yayasanikhlas.png') }}"
-                                     alt="{{ __('app.yayasan_ikhlas_logo') }}"
-                                     class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
-                                     loading="lazy">
-                                <!-- Hover indicator -->
-                                <div class="hover-indicator absolute bottom-3 right-3 w-8 h-8 bg-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center shadow-lg">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Content Section -->
-                        <div class="p-6">
-                            <div class="mb-3">
-                                <h3 class="text-xl font-bold text-gray-900">{{ __('app.yayasan_ikhlas') }}</h3>
-                            </div>
-                            <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-4">
-                                {{ __('app.yayasan_ikhlas_description') }}
-                            </p>
-
-                            <!-- Action Section -->
-                            <div class="flex items-center justify-between">
-                                <a href="http://www.yayasanikhlas.org.my/" target="_blank"
-                                   class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
-                                    {{ __('app.learn_more') }}
-                                    <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                    </svg>
-                                </a>
-                                <span class="text-xs text-gray-400">{{ __('app.charitable_organization') }}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- MAB -->
-                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-primary-200 transform hover:scale-105">
-                        <!-- Logo Section -->
-                        <div class="h-56 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-8">
-                            <div class="logo-container w-48 h-48 bg-gradient-to-br from-purple-50 to-purple-100 rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center p-6 transition-all duration-700 hover:scale-110 hover:-translate-y-4 hover:rotate-3 group cursor-pointer animate-float-delay-2"
-                                 tabindex="0"
-                                 role="button"
-                                 aria-label="{{ __('app.learn_more_about') }} {{ __('app.mab_full') }}">
-                                <img src="{{ asset('assets/images/charity/mab.png') }}"
-                                     alt="{{ __('app.mab_logo') }}"
-                                     class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
-                                     loading="lazy">
-                                <!-- Hover indicator -->
-                                <div class="hover-indicator absolute bottom-3 right-3 w-8 h-8 bg-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center shadow-lg">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Content Section -->
-                        <div class="p-6">
-                            <div class="mb-3">
-                                <h3 class="text-lg font-bold text-gray-900">{{ __('app.mab_full') }}</h3>
-                            </div>
-                            <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
-                                {{ __('app.mab_description') }}
-                            </p>
-
-                            <!-- Action Section -->
-                            <div class="flex items-center justify-between">
-                                <a href="https://mab.org.my/maborg/default.html" target="_blank"
-                                   class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
-                                    {{ __('app.learn_more') }}
-                                    <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                    </svg>
-                                </a>
-                                <span class="text-xs text-gray-400">{{ __('app.disability_support') }}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- NASOM -->
-                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-primary-200 transform hover:scale-105">
-                        <!-- Logo Section -->
-                        <div class="h-56 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-8">
-                            <div class="logo-container w-48 h-48 bg-gradient-to-br from-orange-50 to-orange-100 rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center p-6 transition-all duration-700 hover:scale-110 hover:-translate-y-4 hover:rotate-3 group cursor-pointer animate-float-delay-3"
-                                 tabindex="0"
-                                 role="button"
-                                 aria-label="{{ __('app.learn_more_about') }} {{ __('app.nasom_full') }}">
-                                <img src="{{ asset('assets/images/charity/nasom.png') }}"
-                                     alt="{{ __('app.nasom_logo') }}"
-                                     class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
-                                     loading="lazy">
-                                <!-- Hover indicator -->
-                                <div class="hover-indicator absolute bottom-3 right-3 w-8 h-8 bg-orange-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center shadow-lg">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Content Section -->
-                        <div class="p-6">
-                            <div class="mb-3">
-                                <h3 class="text-xl font-bold text-gray-900">{{ __('app.nasom_full') }}</h3>
-                            </div>
-                            <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
-                                {{ __('app.nasom_description') }}
-                            </p>
-
-                            <!-- Action Section -->
-                            <div class="flex items-center justify-between">
-                                <a href="http://www.nasom.org.my/" target="_blank"
-                                   class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
-                                    {{ __('app.learn_more') }}
-                                    <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                    </svg>
-                                </a>
-                                <span class="text-xs text-gray-400">{{ __('app.autism_support') }}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PruBSN -->
-                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-primary-200 transform hover:scale-105">
-                        <!-- Logo Section -->
-                        <div class="h-56 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-8">
-                            <div class="logo-container w-48 h-48 bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center p-6 transition-all duration-700 hover:scale-110 hover:-translate-y-4 hover:rotate-3 group cursor-pointer animate-float-delay-4"
-                                 tabindex="0"
-                                 role="button"
-                                 aria-label="{{ __('app.learn_more_about') }} {{ __('app.prubsn_prihatin') }}">
-                                <img src="{{ asset('assets/images/charity/prubsn.png') }}"
-                                     alt="{{ __('app.prubsn_prihatin_logo') }}"
-                                     class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
-                                     loading="lazy">
-                                <!-- Hover indicator -->
-                                <div class="hover-indicator absolute bottom-3 right-3 w-8 h-8 bg-indigo-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center shadow-lg">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Content Section -->
-                        <div class="p-6">
-                            <div class="mb-3">
-                                <h3 class="text-xl font-bold text-gray-900">{{ __('app.prubsn_prihatin') }}</h3>
-                            </div>
-                            <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
-                                {{ __('app.prubsn_description') }}
-                            </p>
-
-                            <!-- Action Section -->
-                            <div class="flex items-center justify-between">
-                                <a href="https://www.prubsn.com.my/ms/caring-for-society/" target="_blank"
-                                   class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
-                                    {{ __('app.learn_more') }}
-                                    <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                    </svg>
-                                </a>
-                                <span class="text-xs text-gray-400">{{ __('app.corporate_foundation') }}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Yayasan Angkasa -->
-                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-primary-200 transform hover:scale-105">
-                        <!-- Logo Section -->
-                        <div class="h-56 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-8">
-                            <div class="logo-container w-48 h-48 bg-gradient-to-br from-teal-50 to-teal-100 rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center p-6 transition-all duration-700 hover:scale-110 hover:-translate-y-4 hover:rotate-3 group cursor-pointer animate-float-delay-5"
-                                 tabindex="0"
-                                 role="button"
-                                 aria-label="{{ __('app.learn_more_about') }} {{ __('app.yayasan_angkasa') }}">
-                                <img src="{{ asset('assets/images/charity/yaysanangkasa.png') }}"
-                                     alt="{{ __('app.yayasan_angkasa_logo') }}"
-                                     class="w-32 h-32 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
-                                     loading="lazy">
-                                <!-- Hover indicator -->
-                                <div class="hover-indicator absolute bottom-3 right-3 w-8 h-8 bg-teal-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center shadow-lg">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Content Section -->
-                        <div class="p-6">
-                            <div class="mb-3">
-                                <h3 class="text-xl font-bold text-gray-900">{{ __('app.yayasan_angkasa') }}</h3>
-                            </div>
-                            <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
-                                {{ __('app.yayasan_angkasa_description') }}
-                            </p>
-
-                            <!-- Action Section -->
-                            <div class="flex items-center justify-between">
-                                <a href="https://www.yayasanangkasa.coop/" target="_blank"
-                                   class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
-                                    {{ __('app.learn_more') }}
-                                    <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                    </svg>
-                                </a>
-                                <span class="text-xs text-gray-400">{{ __('app.educational_foundation') }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endif
             </div>
         </section>
 

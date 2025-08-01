@@ -34,9 +34,9 @@ get_count "App\\Models\\Campaign"
 echo -n "💰 Donations: "
 get_count "App\\Models\\Donation"
 
-# Check Posters
-echo -n "📋 Posters: "
-get_count "App\\Models\\Poster"
+# Check News
+echo -n "📋 News: "
+get_count "App\\Models\\News"
 
 # Check Events
 echo -n "📅 Events: "
@@ -62,9 +62,9 @@ php artisan tinker --execute="echo App\\Models\\Campaign::where('status', 'activ
 echo -n "   ✅ Completed donations: "
 php artisan tinker --execute="echo App\\Models\\Donation::where('payment_status', 'completed')->count();"
 
-# Active posters
-echo -n "   📋 Active posters: "
-php artisan tinker --execute="echo App\\Models\\Poster::where('status', 'active')->count();"
+# Published news
+echo -n "   📋 Published news: "
+php artisan tinker --execute="echo App\\Models\\News::where('status', 'published')->count();"
 
 # Published events
 echo -n "   📅 Published events: "

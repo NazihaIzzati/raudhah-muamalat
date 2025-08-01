@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Partner extends Model
+class News extends Model
 {
     use HasFactory, SoftDeletes;
     
@@ -16,14 +16,16 @@ class Partner extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'title',
         'slug',
-        'description',
-        'logo',
-        'url',
+        'content',
+        'image_path',
+        'excerpt',
         'status',
+        'category',
         'featured',
         'display_order',
+        'published_at',
         'created_by',
     ];
     
@@ -35,10 +37,11 @@ class Partner extends Model
     protected $casts = [
         'featured' => 'boolean',
         'display_order' => 'integer',
+        'published_at' => 'datetime',
     ];
     
     /**
-     * Get the user who created this partner.
+     * Get the user who created this news.
      */
     public function creator()
     {
@@ -46,7 +49,7 @@ class Partner extends Model
     }
     
     /**
-     * Check if partner is active.
+     * Check if news is active.
      */
     public function isActive()
     {
@@ -54,7 +57,7 @@ class Partner extends Model
     }
     
     /**
-     * Check if partner is featured.
+     * Check if news is featured.
      */
     public function isFeatured()
     {
@@ -62,7 +65,29 @@ class Partner extends Model
     }
     
     /**
-     * Check if partner is soft deleted.
+     * Check if news is published.
+     */
+    public function isPublished()
+    {
+        return $this->status === 'published';
+    }
+    
+    /**
+     * Get the available categories.
+     */
+    public static function getCategories()
+    {
+        return [
+            'general' => 'General',
+            'announcement' => 'Announcement',
+            'event' => 'Event',
+            'campaign' => 'Campaign',
+            'update' => 'Update',
+        ];
+    }
+    
+    /**
+     * Check if news is soft deleted.
      */
     public function isDeleted()
     {
@@ -78,7 +103,7 @@ class Partner extends Model
     }
     
     /**
-     * Scope to get only active partners (not soft deleted).
+     * Scope to get only active news (not soft deleted).
      */
     public function scopeActive($query)
     {
@@ -86,7 +111,7 @@ class Partner extends Model
     }
     
     /**
-     * Scope to get only soft deleted partners.
+     * Scope to get only soft deleted news.
      */
     public function scopeTrashed($query)
     {

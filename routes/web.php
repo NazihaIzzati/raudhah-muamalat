@@ -11,7 +11,8 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\DonationController as AdminDonationController;
 use App\Http\Controllers\Admin\CampaignController as AdminCampaignController;
-use App\Http\Controllers\Admin\PosterController as AdminPosterController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\CardzoneDebugController;
 use App\Http\Controllers\AdminTestController;
+use App\Http\Controllers\PartnersController;
 
 // Language switcher route
 Route::get('/language/{locale}', [LanguageController::class, 'switchLanguage'])->name('language.switch');
@@ -33,9 +35,7 @@ Route::get('/about', function () {
     return view('about');
 });
 
-Route::get('/partners', function () {
-    return view('partners');
-});
+Route::get('/partners', [PartnersController::class, 'index'])->name('partners');
 
 Route::get('/campaigns', function () {
     return view('campaigns');
@@ -49,9 +49,8 @@ Route::get('/news', function () {
     return view('news');
 });
 
-Route::get('/faq', function () {
-    return view('faq');
-});
+Route::get('/faq', [App\Http\Controllers\FaqController::class, 'index']);
+Route::get('/news', [App\Http\Controllers\NewsController::class, 'index']);
 
 // Donation routes
 Route::get('/donate/{campaignId?}', [DonationController::class, 'showForm'])->name('donate.form');
@@ -156,14 +155,17 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::put('/campaigns/{campaign}', [AdminCampaignController::class, 'update'])->name('admin.campaigns.update');
     Route::delete('/campaigns/{campaign}', [AdminCampaignController::class, 'destroy'])->name('admin.campaigns.destroy');
     
-    // Poster management routes
-    Route::get('/posters', [AdminPosterController::class, 'index'])->name('admin.posters.index');
-    Route::get('/posters/create', [AdminPosterController::class, 'create'])->name('admin.posters.create');
-    Route::post('/posters', [AdminPosterController::class, 'store'])->name('admin.posters.store');
-    Route::get('/posters/{poster}', [AdminPosterController::class, 'show'])->name('admin.posters.show');
-    Route::get('/posters/{poster}/edit', [AdminPosterController::class, 'edit'])->name('admin.posters.edit');
-    Route::put('/posters/{poster}', [AdminPosterController::class, 'update'])->name('admin.posters.update');
-    Route::delete('/posters/{poster}', [AdminPosterController::class, 'destroy'])->name('admin.posters.destroy');
+    // News management routes (replaced posters)
+Route::get('/news', [AdminNewsController::class, 'index'])->name('admin.news.index');
+Route::get('/news/create', [AdminNewsController::class, 'create'])->name('admin.news.create');
+Route::post('/news', [AdminNewsController::class, 'store'])->name('admin.news.store');
+Route::get('/news/{news}', [AdminNewsController::class, 'show'])->name('admin.news.show');
+Route::get('/news/{news}/edit', [AdminNewsController::class, 'edit'])->name('admin.news.edit');
+Route::put('/news/{news}', [AdminNewsController::class, 'update'])->name('admin.news.update');
+Route::delete('/news/{news}', [AdminNewsController::class, 'destroy'])->name('admin.news.destroy');
+Route::patch('/news/{id}/restore', [AdminNewsController::class, 'restore'])->name('admin.news.restore');
+Route::delete('/news/{id}/force-delete', [AdminNewsController::class, 'forceDelete'])->name('admin.news.force-delete');
+Route::get('/news/trashed', [AdminNewsController::class, 'trashed'])->name('admin.news.trashed');
     
     // Partner management routes
     Route::get('/partners', [AdminPartnerController::class, 'index'])->name('admin.partners.index');
@@ -173,6 +175,11 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/partners/{partner}/edit', [AdminPartnerController::class, 'edit'])->name('admin.partners.edit');
     Route::put('/partners/{partner}', [AdminPartnerController::class, 'update'])->name('admin.partners.update');
     Route::delete('/partners/{partner}', [AdminPartnerController::class, 'destroy'])->name('admin.partners.destroy');
+    Route::patch('/partners/{id}/restore', [AdminPartnerController::class, 'restore'])->name('admin.partners.restore');
+    Route::delete('/partners/{id}/force-delete', [AdminPartnerController::class, 'forceDelete'])->name('admin.partners.force-delete');
+    Route::get('/partners/trashed', [AdminPartnerController::class, 'trashed'])->name('admin.partners.trashed');
+    
+
     
     // FAQ management routes
     Route::get('/faqs', [AdminFaqController::class, 'index'])->name('admin.faqs.index');
@@ -182,16 +189,24 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/faqs/{faq}/edit', [AdminFaqController::class, 'edit'])->name('admin.faqs.edit');
     Route::put('/faqs/{faq}', [AdminFaqController::class, 'update'])->name('admin.faqs.update');
     Route::delete('/faqs/{faq}', [AdminFaqController::class, 'destroy'])->name('admin.faqs.destroy');
+Route::patch('/faqs/{id}/restore', [AdminFaqController::class, 'restore'])->name('admin.faqs.restore');
+Route::delete('/faqs/{id}/force-delete', [AdminFaqController::class, 'forceDelete'])->name('admin.faqs.force-delete');
+Route::get('/faqs/trashed', [AdminFaqController::class, 'trashed'])->name('admin.faqs.trashed');
+
+
     
     // Contact management routes
     Route::get('/contacts', [AdminContactController::class, 'index'])->name('admin.contacts.index');
+    Route::get('/contacts/trashed', [AdminContactController::class, 'trashed'])->name('admin.contacts.trashed');
+    Route::patch('/contacts/{id}/restore', [AdminContactController::class, 'restore'])->name('admin.contacts.restore');
+    Route::delete('/contacts/{id}/force-delete', [AdminContactController::class, 'forceDelete'])->name('admin.contacts.force-delete');
+    Route::patch('/contacts/{contact}/mark-urgent', [AdminContactController::class, 'markUrgent'])->name('admin.contacts.mark-urgent');
+    Route::patch('/contacts/{contact}/remove-urgent', [AdminContactController::class, 'removeUrgent'])->name('admin.contacts.remove-urgent');
+    Route::patch('/contacts/{contact}/mark-replied', [AdminContactController::class, 'markReplied'])->name('admin.contacts.mark-replied');
     Route::get('/contacts/{contact}', [AdminContactController::class, 'show'])->name('admin.contacts.show');
     Route::get('/contacts/{contact}/edit', [AdminContactController::class, 'edit'])->name('admin.contacts.edit');
     Route::put('/contacts/{contact}', [AdminContactController::class, 'update'])->name('admin.contacts.update');
     Route::delete('/contacts/{contact}', [AdminContactController::class, 'destroy'])->name('admin.contacts.destroy');
-    Route::patch('/contacts/{contact}/mark-urgent', [AdminContactController::class, 'markUrgent'])->name('admin.contacts.mark-urgent');
-    Route::patch('/contacts/{contact}/remove-urgent', [AdminContactController::class, 'removeUrgent'])->name('admin.contacts.remove-urgent');
-    Route::patch('/contacts/{contact}/mark-replied', [AdminContactController::class, 'markReplied'])->name('admin.contacts.mark-replied');
     
     // Cardzone Debug routes
                 Route::prefix('cardzone')->group(function () {

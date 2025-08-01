@@ -7,7 +7,7 @@
 <div class="space-y-6">
     <!-- Main Content -->
     <div class="bg-white overflow-hidden shadow-lg sm:rounded-xl border border-gray-200">
-        <form action="{{ route('admin.partners.update', $partner) }}" method="POST" enctype="multipart/form-data">
+        <form id="edit-partner-form" action="{{ route('admin.partners.update', $partner) }}" method="POST" enctype="multipart/form-data" data-confirm="Are you sure you want to update this partner?">
             @csrf
             @method('PUT')
             
@@ -273,12 +273,29 @@
                         </div>
                     @endif
                     
-                    <!-- Logo Upload -->
+                    <!-- Logo Upload with Preview -->
                     <div class="group">
                         <label for="logo" class="block text-sm font-semibold text-gray-700 mb-2">
                             {{ $partner->logo ? 'Replace Logo' : 'Partner Logo' }} <span class="text-gray-400 text-xs">(Optional)</span>
                         </label>
-                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-xl hover:border-[#fe5000] transition-colors duration-200 bg-gray-50 hover:bg-gray-100">
+                        
+                        <!-- Image Preview Container -->
+                        <div id="image-preview-container" class="mb-4 {{ $partner->logo ? 'block' : 'hidden' }}">
+                            <div class="relative inline-block">
+                                <img id="image-preview" src="{{ $partner->logo ? asset('storage/' . $partner->logo) : '' }}" 
+                                     alt="Logo preview" 
+                                     class="h-32 w-32 rounded-lg object-cover border-2 border-gray-200 shadow-sm">
+                                <button type="button" id="remove-image" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors duration-200">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">Click the X to remove this image</p>
+                        </div>
+                        
+                        <!-- Upload Area -->
+                        <div id="upload-area" class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-xl hover:border-[#fe5000] transition-colors duration-200 bg-gray-50 hover:bg-gray-100">
                             <div class="space-y-1 text-center">
                                 <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -308,6 +325,8 @@
                         Cancel
                     </a>
                     
+
+                    
                     <button type="submit" class="inline-flex items-center justify-center px-8 py-3 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-gradient-to-r from-[#fe5000] to-orange-600 hover:from-[#fe5000]/90 hover:to-orange-600/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fe5000] transition-all duration-200 transform hover:scale-105">
                         <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -319,4 +338,102 @@
         </form>
     </div>
 </div>
+
+@push('scripts')
+<script src="{{ asset('js/partners-crud.js') }}"></script>
+<script>
+    // Show success/error messages from session
+    @if(session('success'))
+        showSuccess('{{ session('success') }}');
+    @endif
+    
+    @if(session('error'))
+        showError('{{ session('error') }}');
+    @endif
+    
+    @if(session('warning'))
+        showWarning('{{ session('warning') }}');
+    @endif
+    
+    @if(session('info'))
+        showInfo('{{ session('info') }}');
+    @endif
+    
+    // Show validation errors
+    @if($errors->any())
+        showValidationErrors(@json($errors->all()));
+    @endif
+    
+    // Image Preview Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const logoInput = document.getElementById('logo');
+        const imagePreview = document.getElementById('image-preview');
+        const imagePreviewContainer = document.getElementById('image-preview-container');
+        const uploadArea = document.getElementById('upload-area');
+        const removeImageBtn = document.getElementById('remove-image');
+        
+        // Handle file selection
+        logoInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Validate file type
+                const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/svg+xml'];
+                if (!validTypes.includes(file.type)) {
+                    showError('Please select a valid image file (PNG, JPG, GIF, SVG)');
+                    this.value = '';
+                    return;
+                }
+                
+                // Validate file size (2MB)
+                if (file.size > 2 * 1024 * 1024) {
+                    showError('File size must be less than 2MB');
+                    this.value = '';
+                    return;
+                }
+                
+                // Create preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreviewContainer.classList.remove('hidden');
+                    imagePreviewContainer.classList.add('block');
+                    uploadArea.classList.add('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Handle remove image
+        removeImageBtn.addEventListener('click', function() {
+            logoInput.value = '';
+            imagePreview.src = '';
+            imagePreviewContainer.classList.add('hidden');
+            imagePreviewContainer.classList.remove('block');
+            uploadArea.classList.remove('hidden');
+        });
+        
+        // Drag and drop functionality
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('border-[#fe5000]', 'bg-[#fe5000]/5');
+        });
+        
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.classList.remove('border-[#fe5000]', 'bg-[#fe5000]/5');
+        });
+        
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('border-[#fe5000]', 'bg-[#fe5000]/5');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                logoInput.files = files;
+                logoInput.dispatchEvent(new Event('change'));
+            }
+        });
+    });
+</script>
+@endpush
 @endsection 

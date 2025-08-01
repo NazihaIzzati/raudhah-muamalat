@@ -524,6 +524,13 @@ return [
     // Partners CTA Section
     'want_to_become_partner' => 'Want to Become Our Partner?',
     'partner_application_description' => 'If your organization is interested in partnering with Jariah Fund to help the community, contact us to learn about the application process to become a verified partner.',
+    'featured_partners' => 'Featured Partners',
+    'featured' => 'Featured',
+    'no_description_available' => 'No description available',
+    'no_website_available' => 'No website available',
+    'partner' => 'Partner',
+    'no_partners_available' => 'No Partners Available',
+    'no_partners_description' => 'We are currently working on establishing partnerships. Please check back soon or contact us if you are interested in becoming a partner.',
     'about_jariah_fund' => 'About Jariah Fund',
     
     // FAQ Page

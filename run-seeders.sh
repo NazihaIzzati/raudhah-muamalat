@@ -43,7 +43,7 @@ if [ $? -eq 0 ]; then
     echo "   👥 Users (admins and regular users)"
     echo "   🎯 Campaigns (fundraising campaigns)"
     echo "   💰 Donations (realistic donation data)"
-    echo "   📋 Posters (promotional materials)"
+    echo "   📋 News (articles and announcements)"
     echo "   📅 Events (community events)"
     echo ""
     echo "🔑 Admin Login Credentials:"

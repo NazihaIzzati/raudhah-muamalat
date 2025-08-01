@@ -4,7 +4,7 @@ This document provides comprehensive information about all database seeders for 
 
 ## Overview
 
-The seeding system creates realistic test data for all modules in the application, including users, campaigns, donations, posters, and events. All data is designed with Malaysian context and Islamic values in mind.
+The seeding system creates realistic test data for all modules in the application, including users, campaigns, donations, news, and events. All data is designed with Malaysian context and Islamic values in mind.
 
 ## Available Seeders
 
@@ -75,21 +75,18 @@ Creates 160+ donations with realistic distribution:
 - Malaysian names for guest donations
 - Automatic campaign raised amount updates
 
-### 4. PosterSeeder
-**File:** `database/seeders/PosterSeeder.php`
+### 4. NewsSeeder
+**File:** `database/seeders/NewsSeeder.php`
 
-Creates 12 promotional posters:
+Creates 12 news articles:
 
 **Categories:**
-- Humanitarian, Infrastructure, Water, Food
-- Education, Event, Volunteer, Zakat
-- Youth, Empowerment, Emergency
+- General, Announcement, Event, Campaign, Update
 
 **Features:**
-- 9 active, 3 inactive posters
-- Featured poster designation
-- File size simulation (900KB - 2.5MB)
-- Display date ranges
+- 9 published, 3 draft articles
+- Featured news designation
+- Rich content with excerpts
 - Campaign associations where relevant
 - SEO-friendly slugs
 
@@ -129,7 +126,7 @@ php artisan migrate:fresh --seed
 php artisan db:seed --class=UserSeeder
 php artisan db:seed --class=CampaignSeeder
 php artisan db:seed --class=DonationSeeder
-php artisan db:seed --class=PosterSeeder
+php artisan db:seed --class=NewsSeeder
 php artisan db:seed --class=EventSeeder
 ```
 
@@ -144,7 +141,7 @@ The seeders run in dependency order:
 1. **UserSeeder** - Creates admin and regular users
 2. **CampaignSeeder** - Creates campaigns (requires users)
 3. **DonationSeeder** - Creates donations (requires users and campaigns)
-4. **PosterSeeder** - Creates posters (can reference campaigns)
+4. **NewsSeeder** - Creates news articles (can reference campaigns)
 5. **EventSeeder** - Creates events (independent)
 
 ## Test Data Summary
@@ -153,7 +150,7 @@ After running all seeders, you'll have:
 - **👥 Users:** 14 (2 admins, 12 regular users)
 - **🎯 Campaigns:** 5 diverse fundraising campaigns
 - **💰 Donations:** 160+ realistic donations
-- **📋 Posters:** 12 promotional materials
+- **📋 News:** 12 news articles
 - **📅 Events:** 8 community events
 
 ## Admin Access

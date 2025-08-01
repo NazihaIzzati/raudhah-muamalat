@@ -165,7 +165,7 @@ class PartnerFactory extends Factory
     /**
      * Generate a realistic URL
      */
-    private function generateUrl(string $name): string
+    private function generateUrl(string $name): ?string
     {
         // 20% chance of no URL
         if ($this->faker->boolean(20)) {

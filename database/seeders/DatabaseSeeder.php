@@ -26,8 +26,8 @@ class DatabaseSeeder extends Seeder
             // Donations (depends on users and campaigns)
             DonationSeeder::class,
             
-            // Posters (can reference campaigns)
-            PosterSeeder::class,
+            // News (can reference campaigns)
+NewsSeeder::class,
             
             // Events (independent)
             EventSeeder::class,
@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
         $this->command->info('👥 Users: ' . \App\Models\User::count());
         $this->command->info('🎯 Campaigns: ' . \App\Models\Campaign::count());
         $this->command->info('💰 Donations: ' . \App\Models\Donation::count());
-        $this->command->info('📋 Posters: ' . \App\Models\Poster::count());
+        $this->command->info('📋 News: ' . \App\Models\News::count());
         $this->command->info('📅 Events: ' . \App\Models\Event::count());
         $this->command->info('🤝 Partners: ' . \App\Models\Partner::count());
         $this->command->info('❓ FAQs: ' . \App\Models\Faq::count());
