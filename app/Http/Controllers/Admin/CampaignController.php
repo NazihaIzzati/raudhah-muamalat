@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Campaign;
 use App\Models\Donation;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -60,6 +61,7 @@ class CampaignController extends Controller
             'description' => 'required|string|max:500',
             'content' => 'nullable|string',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'qr_code_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'goal_amount' => 'required|numeric|min:1',
             'currency' => 'required|string|max:3',
             'start_date' => 'required|date',
@@ -73,10 +75,16 @@ class CampaignController extends Controller
                 ->withInput();
         }
         
-        // Handle image upload
+        // Handle featured image upload
         $imagePath = null;
         if ($request->hasFile('featured_image')) {
             $imagePath = $request->file('featured_image')->store('campaigns', 'public');
+        }
+
+        // Handle QR code image upload
+        $qrCodePath = null;
+        if ($request->hasFile('qr_code_image')) {
+            $qrCodePath = $request->file('qr_code_image')->store('campaigns/qr-codes', 'public');
         }
         
         // Create campaign
@@ -86,13 +94,14 @@ class CampaignController extends Controller
             'description' => $request->description,
             'content' => $request->content,
             'featured_image' => $imagePath,
+            'qr_code_image' => $qrCodePath,
             'goal_amount' => $request->goal_amount,
             'raised_amount' => 0,
             'currency' => $request->currency,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'status' => $request->status,
-            'created_by' => Auth::id(),
+            'created_by' => Auth::user()->staff->id,
         ]);
         
         return redirect()->route('admin.campaigns.index')
@@ -144,6 +153,7 @@ class CampaignController extends Controller
             'description' => 'required|string|max:500',
             'content' => 'nullable|string',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'qr_code_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'goal_amount' => 'required|numeric|min:1',
             'currency' => 'required|string|max:3',
             'start_date' => 'required|date',
@@ -157,7 +167,7 @@ class CampaignController extends Controller
                 ->withInput();
         }
         
-        // Handle image upload
+        // Handle featured image upload
         if ($request->hasFile('featured_image')) {
             // Delete old image if exists
             if ($campaign->featured_image) {
@@ -166,6 +176,17 @@ class CampaignController extends Controller
             
             $imagePath = $request->file('featured_image')->store('campaigns', 'public');
             $campaign->featured_image = $imagePath;
+        }
+
+        // Handle QR code image upload
+        if ($request->hasFile('qr_code_image')) {
+            // Delete old QR code if exists
+            if ($campaign->qr_code_image) {
+                Storage::disk('public')->delete($campaign->qr_code_image);
+            }
+            
+            $qrCodePath = $request->file('qr_code_image')->store('campaigns/qr-codes', 'public');
+            $campaign->qr_code_image = $qrCodePath;
         }
         
         // Update campaign
@@ -200,6 +221,11 @@ class CampaignController extends Controller
         // Delete featured image if exists
         if ($campaign->featured_image) {
             Storage::disk('public')->delete($campaign->featured_image);
+        }
+
+        // Delete QR code image if exists
+        if ($campaign->qr_code_image) {
+            Storage::disk('public')->delete($campaign->qr_code_image);
         }
         
         $campaign->delete();

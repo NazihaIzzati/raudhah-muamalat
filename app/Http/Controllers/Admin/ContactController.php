@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -15,39 +16,32 @@ class ContactController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Contact::with('repliedBy')->whereNull('deleted_at');
+        $query = Contact::query();
         
-        // Filter by status if provided
-        if ($request->has('status') && $request->status != 'all') {
+        // Filter by status
+        if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
         
-        // Filter by urgent if provided
-        if ($request->has('urgent') && $request->urgent == '1') {
-            $query->where('is_urgent', true);
-        }
-        
-        // Search by name, email, or subject
-        if ($request->has('search') && $request->search) {
+        // Search functionality
+        if ($request->filled('search')) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('first_name', 'like', "%{$search}%")
-                  ->orWhere('last_name', 'like', "%{$search}%")
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
                   ->orWhere('email', 'like', "%{$search}%")
-                  ->orWhere('subject', 'like', "%{$search}%");
+                  ->orWhere('subject', 'like', "%{$search}%")
+                  ->orWhere('message', 'like', "%{$search}%");
             });
         }
         
-        // Default sorting
-        $query->orderBy('created_at', 'desc');
+        $contacts = $query->latest()->paginate(15);
         
-        $contacts = $query->paginate(10)->withQueryString();
         $statuses = [
-            'all' => 'All Status',
-            'new' => 'New',
+            '' => 'All Statuses',
+            'unread' => 'Unread',
             'read' => 'Read',
             'replied' => 'Replied',
-            'closed' => 'Closed'
+            'closed' => 'Closed',
         ];
         
         return view('admin.contacts.index', compact('contacts', 'statuses'));
@@ -58,39 +52,32 @@ class ContactController extends Controller
      */
     public function trashed(Request $request)
     {
-        $query = Contact::with('repliedBy')->onlyTrashed();
+        $query = Contact::onlyTrashed();
         
-        // Filter by status if provided
-        if ($request->has('status') && $request->status != 'all') {
+        // Filter by status
+        if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
         
-        // Filter by urgent if provided
-        if ($request->has('urgent') && $request->urgent == '1') {
-            $query->where('is_urgent', true);
-        }
-        
-        // Search by name, email, or subject
-        if ($request->has('search') && $request->search) {
+        // Search functionality
+        if ($request->filled('search')) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('first_name', 'like', "%{$search}%")
-                  ->orWhere('last_name', 'like', "%{$search}%")
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
                   ->orWhere('email', 'like', "%{$search}%")
-                  ->orWhere('subject', 'like', "%{$search}%");
+                  ->orWhere('subject', 'like', "%{$search}%")
+                  ->orWhere('message', 'like', "%{$search}%");
             });
         }
         
-        // Default sorting
-        $query->orderBy('deleted_at', 'desc');
+        $contacts = $query->latest()->paginate(15);
         
-        $contacts = $query->paginate(10)->withQueryString();
         $statuses = [
-            'all' => 'All Status',
-            'new' => 'New',
+            '' => 'All Statuses',
+            'unread' => 'Unread',
             'read' => 'Read',
             'replied' => 'Replied',
-            'closed' => 'Closed'
+            'closed' => 'Closed',
         ];
         
         return view('admin.contacts.trashed', compact('contacts', 'statuses'));
@@ -133,8 +120,7 @@ class ContactController extends Controller
     public function update(Request $request, Contact $contact)
     {
         $validator = Validator::make($request->all(), [
-            'status' => 'required|in:new,read,replied,closed',
-            'is_urgent' => 'boolean',
+            'status' => 'required|in:unread,read,replied,closed',
             'admin_notes' => 'nullable|string',
         ]);
         
@@ -147,15 +133,8 @@ class ContactController extends Controller
         // Update contact
         $updateData = [
             'status' => $request->status,
-            'is_urgent' => $request->has('is_urgent'),
             'admin_notes' => $request->admin_notes,
         ];
-        
-        // If status is being changed to replied, set replied_by and replied_at
-        if ($request->status === 'replied' && $contact->status !== 'replied') {
-            $updateData['replied_by'] = Auth::id();
-            $updateData['replied_at'] = now();
-        }
         
         $contact->update($updateData);
         
@@ -168,7 +147,7 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        $contactName = $contact->full_name;
+        $contactName = $contact->name;
         $contact->delete();
         
         return redirect()->route('admin.contacts.index')
@@ -181,7 +160,7 @@ class ContactController extends Controller
     public function restore($id)
     {
         $contact = Contact::onlyTrashed()->findOrFail($id);
-        $contactName = $contact->full_name;
+        $contactName = $contact->name;
         $contact->restore();
         
         return redirect()->route('admin.contacts.index')
@@ -194,33 +173,11 @@ class ContactController extends Controller
     public function forceDelete($id)
     {
         $contact = Contact::onlyTrashed()->findOrFail($id);
-        $contactName = $contact->full_name;
+        $contactName = $contact->name;
         $contact->forceDelete();
         
         return redirect()->route('admin.contacts.trashed')
             ->with('success', "Contact \"{$contactName}\" permanently deleted successfully!");
-    }
-    
-    /**
-     * Mark contact as urgent.
-     */
-    public function markUrgent(Contact $contact)
-    {
-        $contact->update(['is_urgent' => true]);
-        
-        return redirect()->back()
-            ->with('success', 'Contact marked as urgent.');
-    }
-    
-    /**
-     * Remove urgent status from contact.
-     */
-    public function removeUrgent(Contact $contact)
-    {
-        $contact->update(['is_urgent' => false]);
-        
-        return redirect()->back()
-            ->with('success', 'Urgent status removed from contact.');
     }
     
     /**
@@ -230,8 +187,6 @@ class ContactController extends Controller
     {
         $contact->update([
             'status' => 'replied',
-            'replied_by' => Auth::id(),
-            'replied_at' => now(),
         ]);
         
         return redirect()->back()

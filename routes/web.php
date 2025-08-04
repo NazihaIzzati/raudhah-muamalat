@@ -293,13 +293,14 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     
     // Contact management routes
     Route::get('/contacts', [AdminContactController::class, 'index'])->name('admin.contacts.index');
+    Route::get('/contacts/trashed', [AdminContactController::class, 'trashed'])->name('admin.contacts.trashed');
     Route::get('/contacts/{contact}', [AdminContactController::class, 'show'])->name('admin.contacts.show');
     Route::get('/contacts/{contact}/edit', [AdminContactController::class, 'edit'])->name('admin.contacts.edit');
     Route::put('/contacts/{contact}', [AdminContactController::class, 'update'])->name('admin.contacts.update');
     Route::delete('/contacts/{contact}', [AdminContactController::class, 'destroy'])->name('admin.contacts.destroy');
-    Route::patch('/contacts/{contact}/mark-urgent', [AdminContactController::class, 'markUrgent'])->name('admin.contacts.mark-urgent');
-    Route::patch('/contacts/{contact}/remove-urgent', [AdminContactController::class, 'removeUrgent'])->name('admin.contacts.remove-urgent');
     Route::patch('/contacts/{contact}/mark-replied', [AdminContactController::class, 'markReplied'])->name('admin.contacts.mark-replied');
+    Route::patch('/contacts/{contact}/restore', [AdminContactController::class, 'restore'])->name('admin.contacts.restore');
+    Route::delete('/contacts/{contact}/force-delete', [AdminContactController::class, 'forceDelete'])->name('admin.contacts.force-delete');
     
     // =============================================================================
     // CARDZONE DEBUG & ADMIN ROUTES

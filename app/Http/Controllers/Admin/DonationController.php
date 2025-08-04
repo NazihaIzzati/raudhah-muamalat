@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Donation;
 use App\Models\Campaign;
-use App\Models\User;
+use App\Models\Donor;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,7 +17,7 @@ class DonationController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Donation::with(['user', 'campaign']);
+        $query = Donation::with(['donor', 'campaign']);
         
         // Filter by status if provided
         if ($request->has('status') && $request->status != 'all') {
@@ -44,9 +44,10 @@ class DonationController extends Controller
         
         $donations = $query->paginate(10)->withQueryString();
         $campaigns = Campaign::pluck('title', 'id');
+        $donors = Donor::with('user')->get()->pluck('user.name', 'id');
         $statuses = ['all' => 'All Statuses', 'completed' => 'Completed', 'pending' => 'Pending', 'failed' => 'Failed', 'refunded' => 'Refunded'];
         
-        return view('admin.donations.index', compact('donations', 'campaigns', 'statuses'));
+        return view('admin.donations.index', compact('donations', 'campaigns', 'donors', 'statuses'));
     }
     
     /**
@@ -55,12 +56,12 @@ class DonationController extends Controller
     public function create()
     {
         $campaigns = Campaign::where('status', 'active')->pluck('title', 'id');
-        $users = User::pluck('name', 'id');
+        $donors = Donor::with('user')->get()->pluck('user.name', 'id');
         $paymentMethods = ['credit_card' => 'Credit Card', 'bank_transfer' => 'Bank Transfer', 'paypal' => 'PayPal', 'cash' => 'Cash', 'other' => 'Other'];
         $statuses = ['completed' => 'Completed', 'pending' => 'Pending', 'failed' => 'Failed', 'refunded' => 'Refunded'];
         $currencies = ['USD' => 'USD', 'EUR' => 'EUR', 'GBP' => 'GBP', 'MYR' => 'MYR', 'IDR' => 'IDR'];
         
-        return view('admin.donations.create', compact('campaigns', 'users', 'paymentMethods', 'statuses', 'currencies'));
+        return view('admin.donations.create', compact('campaigns', 'donors', 'paymentMethods', 'statuses', 'currencies'));
     }
     
     /**
@@ -69,7 +70,7 @@ class DonationController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'nullable|exists:users,id',
+            'donor_id' => 'nullable|exists:donors,id',
             'campaign_id' => 'required|exists:campaigns,id',
             'donor_name' => 'required|string|max:255',
             'donor_email' => 'required|email|max:255',

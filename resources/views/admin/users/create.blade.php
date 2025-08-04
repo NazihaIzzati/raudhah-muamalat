@@ -132,18 +132,18 @@
                             </div>
                         </div>
                         
-                        <!-- Role -->
+                        <!-- User Type -->
                         <div class="group">
-                            <label for="role" class="block text-sm font-semibold text-gray-700 mb-2">
-                                User Role <span class="text-red-500">*</span>
+                            <label for="user_type" class="block text-sm font-semibold text-gray-700 mb-2">
+                                User Type <span class="text-red-500">*</span>
                             </label>
                             <div class="relative">
-                                <select id="role" name="role" 
+                                <select id="user_type" name="user_type" 
                                     class="focus:ring-2 focus:ring-[#fe5000] focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-[#fe5000] py-3 px-4 bg-white transition-all duration-200 appearance-none" 
                                     required>
-                                    <option value="" disabled {{ old('role') ? '' : 'selected' }}>Select user role</option>
-                                    <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
-                                    <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrator</option>
+                                    <option value="" disabled {{ old('user_type') ? '' : 'selected' }}>Select user type</option>
+                                    <option value="staff" {{ old('user_type') == 'staff' ? 'selected' : '' }}>Staff</option>
+                                    <option value="donor" {{ old('user_type') == 'donor' ? 'selected' : '' }}>Donor</option>
                                 </select>
                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
                                     <svg class="h-5 w-5 group-hover:text-[#fe5000] transition-colors duration-200" fill="currentColor" viewBox="0 0 20 20">
@@ -153,24 +153,309 @@
                             </div>
                         </div>
                         
-                        <!-- Status -->
+                        <!-- Account Status -->
                         <div class="group">
-                            <label for="status" class="block text-sm font-semibold text-gray-700 mb-2">
+                            <label for="is_active" class="block text-sm font-semibold text-gray-700 mb-2">
                                 Account Status <span class="text-red-500">*</span>
                             </label>
                             <div class="relative">
-                                <select id="status" name="status" 
+                                <select id="is_active" name="is_active" 
                                     class="focus:ring-2 focus:ring-[#fe5000] focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-[#fe5000] py-3 px-4 bg-white transition-all duration-200 appearance-none" 
                                     required>
-                                    <option value="active" {{ old('status') == 'active' || !old('status') ? 'selected' : '' }}>Active</option>
-                                    <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
-                                    <option value="suspended" {{ old('status') == 'suspended' ? 'selected' : '' }}>Suspended</option>
+                                    <option value="1" {{ old('is_active', '1') == '1' ? 'selected' : '' }}>Active</option>
+                                    <option value="0" {{ old('is_active') == '0' ? 'selected' : '' }}>Inactive</option>
                                 </select>
                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
                                     <svg class="h-5 w-5 group-hover:text-[#fe5000] transition-colors duration-200" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                     </svg>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Staff Profile Section -->
+                <div id="staff-section" class="space-y-6" style="display: none;">
+                    <div class="flex items-center bg-gradient-to-r from-blue-500/10 to-blue-50 p-4 rounded-xl border border-blue-500/20">
+                        <div class="flex-shrink-0">
+                            <div class="h-10 w-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                                <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold text-blue-600">Staff Profile</h4>
+                            <p class="text-sm text-blue-600/70">Enter staff-specific information</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                        <!-- Employee ID -->
+                        <div class="group">
+                            <label for="employee_id" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Employee ID <span class="text-gray-400 text-xs">(Auto-generated)</span>
+                            </label>
+                            <div class="relative rounded-xl shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400 group-hover:text-blue-500 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V4a2 2 0 114 0v2m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path>
+                                    </svg>
+                                </div>
+                                <input type="text" name="employee_id" id="employee_id" value="{{ old('employee_id') }}" 
+                                    class="pl-12 pr-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-blue-500 bg-white transition-all duration-200 placeholder-gray-400" 
+                                    placeholder="EMP12345678">
+                            </div>
+                        </div>
+                        
+                        <!-- Position -->
+                        <div class="group">
+                            <label for="position" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Position <span class="text-gray-400 text-xs">(Optional)</span>
+                            </label>
+                            <div class="relative rounded-xl shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400 group-hover:text-blue-500 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M9 16h.01"></path>
+                                    </svg>
+                                </div>
+                                <input type="text" name="position" id="position" value="{{ old('position') }}" 
+                                    class="pl-12 pr-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-blue-500 bg-white transition-all duration-200 placeholder-gray-400" 
+                                    placeholder="e.g., Manager, Staff">
+                            </div>
+                        </div>
+                        
+                        <!-- Department -->
+                        <div class="group">
+                            <label for="department" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Department <span class="text-gray-400 text-xs">(Optional)</span>
+                            </label>
+                            <div class="relative rounded-xl shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400 group-hover:text-blue-500 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                    </svg>
+                                </div>
+                                <input type="text" name="department" id="department" value="{{ old('department') }}" 
+                                    class="pl-12 pr-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-blue-500 bg-white transition-all duration-200 placeholder-gray-400" 
+                                    placeholder="e.g., IT, Marketing">
+                            </div>
+                        </div>
+                        
+                        <!-- Staff Role -->
+                        <div class="group">
+                            <label for="role" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Staff Role <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <select id="role" name="role" 
+                                    class="focus:ring-2 focus:ring-blue-500 focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-blue-500 py-3 px-4 bg-white transition-all duration-200 appearance-none" 
+                                    required>
+                                    <option value="staff" {{ old('role') == 'staff' || !old('role') ? 'selected' : '' }}>Staff</option>
+                                    <option value="manager" {{ old('role') == 'manager' ? 'selected' : '' }}>Manager</option>
+                                    <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                                    <option value="hq" {{ old('role') == 'hq' ? 'selected' : '' }}>HQ</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                                    <svg class="h-5 w-5 group-hover:text-blue-500 transition-colors duration-200" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Staff Status -->
+                        <div class="group">
+                            <label for="status" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Staff Status <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <select id="status" name="status" 
+                                    class="focus:ring-2 focus:ring-blue-500 focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-blue-500 py-3 px-4 bg-white transition-all duration-200 appearance-none" 
+                                    required>
+                                    <option value="active" {{ old('status') == 'active' || !old('status') ? 'selected' : '' }}>Active</option>
+                                    <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                    <option value="terminated" {{ old('status') == 'terminated' ? 'selected' : '' }}>Terminated</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                                    <svg class="h-5 w-5 group-hover:text-blue-500 transition-colors duration-200" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Hire Date -->
+                        <div class="group">
+                            <label for="hire_date" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Hire Date <span class="text-gray-400 text-xs">(Optional)</span>
+                            </label>
+                            <div class="relative rounded-xl shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400 group-hover:text-blue-500 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <input type="date" name="hire_date" id="hire_date" value="{{ old('hire_date') }}" 
+                                    class="pl-12 pr-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-blue-500 bg-white transition-all duration-200">
+                            </div>
+                        </div>
+                        
+                        <!-- Address -->
+                        <div class="group sm:col-span-2">
+                            <label for="address" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Address <span class="text-gray-400 text-xs">(Optional)</span>
+                            </label>
+                            <div class="relative rounded-xl shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-4 pt-3 flex items-start pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400 group-hover:text-blue-500 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                </div>
+                                <textarea name="address" id="address" rows="3" 
+                                    class="pl-12 pr-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-blue-500 bg-white transition-all duration-200 placeholder-gray-400" 
+                                    placeholder="Enter full address...">{{ old('address') }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Donor Profile Section -->
+                <div id="donor-section" class="space-y-6" style="display: none;">
+                    <div class="flex items-center bg-gradient-to-r from-green-500/10 to-green-50 p-4 rounded-xl border border-green-500/20">
+                        <div class="flex-shrink-0">
+                            <div class="h-10 w-10 bg-green-500 rounded-lg flex items-center justify-center">
+                                <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold text-green-600">Donor Profile</h4>
+                            <p class="text-sm text-green-600/70">Enter donor-specific information</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                        <!-- Donor ID -->
+                        <div class="group">
+                            <label for="donor_id" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Donor ID <span class="text-gray-400 text-xs">(Auto-generated)</span>
+                            </label>
+                            <div class="relative rounded-xl shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400 group-hover:text-green-500 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V4a2 2 0 114 0v2m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path>
+                                    </svg>
+                                </div>
+                                <input type="text" name="donor_id" id="donor_id" value="{{ old('donor_id') }}" 
+                                    class="pl-12 pr-4 py-3 focus:ring-2 focus:ring-green-500 focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-green-500 bg-white transition-all duration-200 placeholder-gray-400" 
+                                    placeholder="DON12345678">
+                            </div>
+                        </div>
+                        
+                        <!-- Identification Number -->
+                        <div class="group">
+                            <label for="identification_number" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Identification Number <span class="text-gray-400 text-xs">(Optional)</span>
+                            </label>
+                            <div class="relative rounded-xl shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400 group-hover:text-green-500 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                    </svg>
+                                </div>
+                                <input type="text" name="identification_number" id="identification_number" value="{{ old('identification_number') }}" 
+                                    class="pl-12 pr-4 py-3 focus:ring-2 focus:ring-green-500 focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-green-500 bg-white transition-all duration-200 placeholder-gray-400" 
+                                    placeholder="e.g., IC Number, Passport">
+                            </div>
+                        </div>
+                        
+                        <!-- Donor Type -->
+                        <div class="group">
+                            <label for="donor_type" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Donor Type <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <select id="donor_type" name="donor_type" 
+                                    class="focus:ring-2 focus:ring-green-500 focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-green-500 py-3 px-4 bg-white transition-all duration-200 appearance-none" 
+                                    required>
+                                    <option value="individual" {{ old('donor_type') == 'individual' || !old('donor_type') ? 'selected' : '' }}>Individual</option>
+                                    <option value="corporate" {{ old('donor_type') == 'corporate' ? 'selected' : '' }}>Corporate</option>
+                                    <option value="anonymous" {{ old('donor_type') == 'anonymous' ? 'selected' : '' }}>Anonymous</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                                    <svg class="h-5 w-5 group-hover:text-green-500 transition-colors duration-200" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Donor Status -->
+                        <div class="group">
+                            <label for="donor_status" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Donor Status <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <select id="donor_status" name="donor_status" 
+                                    class="focus:ring-2 focus:ring-green-500 focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-green-500 py-3 px-4 bg-white transition-all duration-200 appearance-none" 
+                                    required>
+                                    <option value="active" {{ old('donor_status') == 'active' || !old('donor_status') ? 'selected' : '' }}>Active</option>
+                                    <option value="inactive" {{ old('donor_status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                    <option value="suspended" {{ old('donor_status') == 'suspended' ? 'selected' : '' }}>Suspended</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                                    <svg class="h-5 w-5 group-hover:text-green-500 transition-colors duration-200" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Registration Date -->
+                        <div class="group">
+                            <label for="registration_date" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Registration Date <span class="text-gray-400 text-xs">(Optional)</span>
+                            </label>
+                            <div class="relative rounded-xl shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400 group-hover:text-green-500 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <input type="date" name="registration_date" id="registration_date" value="{{ old('registration_date') }}" 
+                                    class="pl-12 pr-4 py-3 focus:ring-2 focus:ring-green-500 focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-green-500 bg-white transition-all duration-200">
+                            </div>
+                        </div>
+                        
+                        <!-- Newsletter Subscription -->
+                        <div class="group">
+                            <label class="flex items-center">
+                                <input type="checkbox" name="newsletter_subscribed" id="newsletter_subscribed" value="1" 
+                                    {{ old('newsletter_subscribed') ? 'checked' : '' }}
+                                    class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                                <span class="ml-2 text-sm font-semibold text-gray-700">Subscribe to Newsletter</span>
+                            </label>
+                        </div>
+                        
+                        <!-- Address -->
+                        <div class="group sm:col-span-2">
+                            <label for="donor_address" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Address <span class="text-gray-400 text-xs">(Optional)</span>
+                            </label>
+                            <div class="relative rounded-xl shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-4 pt-3 flex items-start pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400 group-hover:text-green-500 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                </div>
+                                <textarea name="address" id="donor_address" rows="3" 
+                                    class="pl-12 pr-4 py-3 focus:ring-2 focus:ring-green-500 focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-green-500 bg-white transition-all duration-200 placeholder-gray-400" 
+                                    placeholder="Enter full address...">{{ old('address') }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -263,6 +548,7 @@
 </div>
 
 <script>
+// Password toggle functionality
 document.getElementById('toggle-password').addEventListener('click', function() {
     const passwordField = document.getElementById('password');
     const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -272,6 +558,44 @@ document.getElementById('toggle-password').addEventListener('click', function() 
     this.innerHTML = type === 'password' 
         ? '<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>'
         : '<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path></svg>';
+});
+
+// User type change handler
+document.getElementById('user_type').addEventListener('change', function() {
+    const userType = this.value;
+    const staffSection = document.getElementById('staff-section');
+    const donorSection = document.getElementById('donor-section');
+    
+    // Hide both sections initially
+    staffSection.style.display = 'none';
+    donorSection.style.display = 'none';
+    
+    // Show appropriate section based on user type
+    if (userType === 'staff') {
+        staffSection.style.display = 'block';
+        // Make staff fields required
+        document.getElementById('role').required = true;
+        document.getElementById('status').required = true;
+        // Make donor fields not required
+        document.getElementById('donor_type').required = false;
+        document.getElementById('donor_status').required = false;
+    } else if (userType === 'donor') {
+        donorSection.style.display = 'block';
+        // Make donor fields required
+        document.getElementById('donor_type').required = true;
+        document.getElementById('donor_status').required = true;
+        // Make staff fields not required
+        document.getElementById('role').required = false;
+        document.getElementById('status').required = false;
+    }
+});
+
+// Initialize form on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const userType = document.getElementById('user_type').value;
+    if (userType) {
+        document.getElementById('user_type').dispatchEvent(new Event('change'));
+    }
 });
 </script>
 @endsection 

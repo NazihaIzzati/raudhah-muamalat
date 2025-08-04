@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -142,7 +143,7 @@ class EventController extends Controller
             'registration_deadline' => $request->registration_deadline,
             'contact_info' => !empty($contactInfo) ? $contactInfo : null,
             'social_links' => !empty($socialLinks) ? $socialLinks : null,
-            'created_by' => Auth::id(),
+            'created_by' => Auth::user()->staff->id,
         ]);
         
         return redirect()->route('admin.events.index')

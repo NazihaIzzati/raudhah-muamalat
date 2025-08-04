@@ -54,6 +54,18 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if user is admin
+     */
+    public function isAdmin(): bool
+    {
+        if ($this->user_type !== 'staff') {
+            return false;
+        }
+        
+        return $this->staff && $this->staff->role === 'admin';
+    }
+
+    /**
      * Check if user is staff
      */
     public function isStaff(): bool
@@ -67,6 +79,26 @@ class User extends Authenticatable
     public function isDonor(): bool
     {
         return $this->user_type === 'donor';
+    }
+    
+    /**
+     * Check if user is HQ
+     */
+    public function isHQ(): bool
+    {
+        if ($this->user_type !== 'staff') {
+            return false;
+        }
+        
+        return $this->staff && $this->staff->role === 'hq';
+    }
+    
+    /**
+     * Check if user has executive access (admin or hq)
+     */
+    public function hasExecutiveAccess(): bool
+    {
+        return $this->isAdmin() || $this->isHQ();
     }
     
     /**

@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Faq;
 use App\Models\User;
+use App\Models\Staff;
 
 class FaqSeeder extends Seeder
 {
@@ -14,13 +15,30 @@ class FaqSeeder extends Seeder
      */
     public function run(): void
     {
-        // Ensure we have an admin user
-        $adminUser = User::where('role', 'admin')->first();
-        if (!$adminUser) {
-            $adminUser = User::factory()->create([
+        // Ensure we have an admin staff user
+        $adminStaff = Staff::whereHas('user', function($query) {
+            $query->where('user_type', 'staff');
+        })->where('role', 'admin')->first();
+        
+        if (!$adminStaff) {
+            $user = User::create([
                 'name' => 'Admin User',
-                'email' => 'admin@raudhahmuamalat.com',
+                'email' => 'admin@jariahfund.com',
+                'password' => bcrypt('password123'),
+                'user_type' => 'staff',
+                'is_active' => true,
+                'email_verified_at' => now(),
+            ]);
+            
+            $adminStaff = Staff::create([
+                'user_id' => $user->id,
+                'employee_id' => 'EMP001',
+                'position' => 'System Administrator',
+                'department' => 'IT',
                 'role' => 'admin',
+                'status' => 'active',
+                'hire_date' => now()->subYear(),
+                'address' => 'Kuala Lumpur, Malaysia',
             ]);
         }
 
@@ -33,7 +51,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => true,
                 'display_order' => 1,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'What is Jariah Fund?',
@@ -42,7 +60,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => true,
                 'display_order' => 2,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'What is Crowdfunding?',
@@ -51,7 +69,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => false,
                 'display_order' => 3,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'What types of Jariah Fund campaigns are conducted?',
@@ -60,7 +78,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => false,
                 'display_order' => 4,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
 
             // Donations Category
@@ -71,7 +89,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => true,
                 'display_order' => 5,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'Do I need to register to donate?',
@@ -80,7 +98,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => false,
                 'display_order' => 6,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'What are the minimum and maximum amounts for donations?',
@@ -89,7 +107,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => false,
                 'display_order' => 7,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'Are there any charges for donors?',
@@ -98,7 +116,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => false,
                 'display_order' => 8,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'Does Jariah Fund charge any fees for crowdfunding donations?',
@@ -107,7 +125,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => false,
                 'display_order' => 9,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'Are my donations tax deductible?',
@@ -116,7 +134,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => true,
                 'display_order' => 10,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'Are my donations secure?',
@@ -125,7 +143,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => true,
                 'display_order' => 11,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'How do I apply for a tax exemption receipt?',
@@ -134,7 +152,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => false,
                 'display_order' => 12,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'When will I receive the tax exemption receipt after donating?',
@@ -143,7 +161,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => false,
                 'display_order' => 13,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
 
             // Campaigns Category
@@ -154,7 +172,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => true,
                 'display_order' => 14,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'How do I get updates from campaigns I\'ve donated to?',
@@ -163,7 +181,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => false,
                 'display_order' => 15,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'How do I contact charity partners?',
@@ -172,7 +190,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => false,
                 'display_order' => 16,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
 
             // Operations Category
@@ -183,7 +201,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => false,
                 'display_order' => 17,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'What is the due diligence process in selecting charity partners?',
@@ -192,7 +210,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => true,
                 'display_order' => 18,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'What is the breakdown of management costs taken by charity partners?',
@@ -201,7 +219,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => false,
                 'display_order' => 19,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
 
             // Partnerships Category (mapped from "Other Matters" section)
@@ -212,7 +230,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => false,
                 'display_order' => 20,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'Is there a registration fee for charity partners to launch campaigns on the platform?',
@@ -221,7 +239,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => false,
                 'display_order' => 21,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'Will we receive a receipt after donating?',
@@ -230,7 +248,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => false,
                 'display_order' => 22,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'Is there a fee for transferring funds from Jariah Fund to charity partners?',
@@ -239,7 +257,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => false,
                 'display_order' => 23,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'If we are an Organization/Foundation/NGO/NPO and interested in uploading campaigns on the Jariah Fund portal, what are the steps?',
@@ -248,7 +266,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => true,
                 'display_order' => 24,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'When can charity partners collect funds for their campaigns?',
@@ -257,7 +275,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => false,
                 'display_order' => 25,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
             [
                 'question' => 'How are funds transferred to charity partners?',
@@ -266,7 +284,7 @@ class FaqSeeder extends Seeder
                 'status' => 'active',
                 'featured' => false,
                 'display_order' => 26,
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ],
         ];
 
@@ -275,17 +293,16 @@ class FaqSeeder extends Seeder
 
         // Create FAQs
         foreach ($faqs as $faqData) {
-            Faq::create($faqData);
+            Faq::create([
+                'question' => $faqData['question'],
+                'answer' => $faqData['answer'],
+                'category' => $faqData['category'],
+                'sort_order' => $faqData['display_order'],
+                'is_active' => $faqData['featured'],
+            ]);
         }
-
-        echo "✅ FAQ Seeder completed successfully!\n";
-        echo "📊 Created " . count($faqs) . " FAQs across 5 categories\n";
-        echo "🌟 Featured FAQs: " . collect($faqs)->where('featured', true)->count() . "\n";
-        echo "📚 Categories:\n";
-        echo "   • General: " . collect($faqs)->where('category', 'general')->count() . " FAQs\n";
-        echo "   • Donations: " . collect($faqs)->where('category', 'donations')->count() . " FAQs\n";
-        echo "   • Campaigns: " . collect($faqs)->where('category', 'campaigns')->count() . " FAQs\n";
-        echo "   • Operations: " . collect($faqs)->where('category', 'operations')->count() . " FAQs\n";
-        echo "   • Partnerships: " . collect($faqs)->where('category', 'partnerships')->count() . " FAQs\n";
+        
+        $this->command->info('✅ FAQ seeding completed!');
+        $this->command->info('❓ FAQs created: ' . Faq::count());
     }
 }

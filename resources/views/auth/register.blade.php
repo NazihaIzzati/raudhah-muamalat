@@ -15,7 +15,7 @@
         
         <!-- Header -->
         <h2 class="text-center text-2xl font-bold text-gray-800 mb-2">Create your account</h2>
-        <p class="text-center text-gray-500 mb-6">Join our community and start making a difference</p>
+        <p class="text-center text-gray-500 mb-6">Join our community as a donor and start making a difference</p>
 
         <!-- Error Messages -->
         @if($errors->any())

@@ -56,12 +56,12 @@
                         </div>
                     </div>
                     
-                    <!-- Role Filter -->
+                    <!-- User Type Filter -->
                     <div>
-                        <select name="role" 
+                        <select name="user_type" 
                             class="focus:ring-2 focus:ring-[#fe5000] focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-[#fe5000] py-3 px-4 bg-white transition-all duration-200 appearance-none">
-                            @foreach($roles as $value => $label)
-                                <option value="{{ $value }}" {{ request('role') == $value ? 'selected' : '' }}>{{ $label }}</option>
+                            @foreach($userTypes as $value => $label)
+                                <option value="{{ $value }}" {{ request('user_type') == $value ? 'selected' : '' }}>{{ $label }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -96,9 +96,9 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">User</th>
-                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Role</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Type</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Profile</th>
                             <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Status</th>
-                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Donations</th>
                             <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Created</th>
                             <th scope="col" class="px-6 py-4 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">Actions</th>
                         </tr>
@@ -132,33 +132,48 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold shadow-sm
-                                        @if($user->role === 'admin') bg-gradient-to-r from-red-100 to-red-200 text-red-800 border border-red-200
-                                        @else bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 border border-blue-200
+                                        @if($user->user_type === 'staff') bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 border border-blue-200
+                                        @else bg-gradient-to-r from-green-100 to-green-200 text-green-800 border border-green-200
                                         @endif">
-                                        @if($user->role === 'admin')
+                                        @if($user->user_type === 'staff')
                                             <svg class="h-3 w-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M9.385 2.667l.615-1.333L10.615 2.667A1.001 1.001 0 0011 3.001h2a2 2 0 012 2v10a2 2 0 01-2 2H7a2 2 0 01-2-2V5.001a2 2 0 012-2h2c.183 0 .366-.05.512-.144.173-.112.288-.272.288-.446 0-.174-.115-.334-.288-.446A.999.999 0 019 2.001H8a1 1 0 000 2h1z" clip-rule="evenodd"></path>
                                             </svg>
+                                        @else
+                                            <svg class="h-3 w-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" clip-rule="evenodd"></path>
+                                            </svg>
                                         @endif
-                                        {{ ucfirst($user->role) }}
+                                        {{ ucfirst($user->user_type) }}
                                     </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if($user->user_type === 'staff' && $user->staff)
+                                        <div class="text-sm font-semibold text-gray-900">{{ $user->staff->position ?? 'Staff' }}</div>
+                                        <div class="text-sm text-gray-500">{{ $user->staff->department ?? 'Department' }}</div>
+                                        <div class="text-xs text-gray-400">{{ ucfirst($user->staff->role) }}</div>
+                                    @elseif($user->user_type === 'donor' && $user->donor)
+                                        <div class="text-sm font-semibold text-gray-900">{{ ucfirst($user->donor->donor_type) }}</div>
+                                        <div class="text-sm text-gray-500">{{ $user->donor->donor_id ?? 'N/A' }}</div>
+                                        <div class="text-xs text-gray-400">{{ $user->donor->donation_count ?? 0 }} donations</div>
+                                    @else
+                                        <div class="text-sm text-gray-400">No profile</div>
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold shadow-sm
-                                        @if($user->status === 'active') bg-gradient-to-r from-green-100 to-green-200 text-green-800 border border-green-200
-                                        @elseif($user->status === 'inactive') bg-gradient-to-r from-yellow-100 to-yellow-200 text-yellow-800 border border-yellow-200
+                                        @if($user->is_active) bg-gradient-to-r from-green-100 to-green-200 text-green-800 border border-green-200
                                         @else bg-gradient-to-r from-red-100 to-red-200 text-red-800 border border-red-200
                                         @endif">
-                                        @if($user->status === 'active')
+                                        @if($user->is_active)
                                             <span class="h-2 w-2 rounded-full mr-1 bg-green-400 animate-pulse"></span>
+                                            Active
+                                        @else
+                                            Inactive
                                         @endif
-                                        {{ ucfirst($user->status) }}
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-semibold text-gray-900">{{ $user->donations_count ?? 0 }}</div>
-                                    <div class="text-sm text-gray-500">donations</div>
-                                </td>
+
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <div>{{ $user->created_at->format('M d, Y') }}</div>
                                     <div class="text-xs text-gray-400">{{ $user->created_at->diffForHumans() }}</div>

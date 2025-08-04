@@ -16,17 +16,13 @@ class Contact extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'first_name',
-        'last_name',
+        'name',
         'email',
         'phone',
         'subject',
         'message',
         'status',
-        'is_urgent',
         'admin_notes',
-        'replied_by',
-        'replied_at',
     ];
     
     /**
@@ -35,8 +31,6 @@ class Contact extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'is_urgent' => 'boolean',
-        'replied_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
     
@@ -49,11 +43,11 @@ class Contact extends Model
     }
     
     /**
-     * Get the full name of the contact.
+     * Get the full name of the contact (alias for name).
      */
     public function getFullNameAttribute()
     {
-        return $this->first_name . ' ' . $this->last_name;
+        return $this->name;
     }
     
     /**
@@ -61,15 +55,7 @@ class Contact extends Model
      */
     public function isNew()
     {
-        return $this->status === 'new';
-    }
-    
-    /**
-     * Check if contact is urgent.
-     */
-    public function isUrgent()
-    {
-        return $this->is_urgent;
+        return $this->status === 'unread';
     }
     
     /**
@@ -121,20 +107,12 @@ class Contact extends Model
     }
     
     /**
-     * Scope for urgent contacts.
-     */
-    public function scopeUrgent($query)
-    {
-        return $query->where('is_urgent', true);
-    }
-    
-    /**
      * Get status badge class.
      */
     public function getStatusBadgeClassAttribute()
     {
         return match($this->status) {
-            'new' => 'bg-blue-100 text-blue-800',
+            'unread' => 'bg-blue-100 text-blue-800',
             'read' => 'bg-yellow-100 text-yellow-800',
             'replied' => 'bg-green-100 text-green-800',
             'closed' => 'bg-gray-100 text-gray-800',
@@ -148,7 +126,7 @@ class Contact extends Model
     public function getStatusDisplayNameAttribute()
     {
         return match($this->status) {
-            'new' => 'New',
+            'unread' => 'Unread',
             'read' => 'Read',
             'replied' => 'Replied',
             'closed' => 'Closed',

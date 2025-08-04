@@ -54,6 +54,21 @@ class CardzoneLogController extends Controller
         $offset = ($page - 1) * $perPage;
         $logs = array_slice($allLogs, $offset, $perPage);
 
+        // Create Laravel paginator
+        $logs = new \Illuminate\Pagination\LengthAwarePaginator(
+            $logs,
+            $total,
+            $perPage,
+            $page,
+            [
+                'path' => $request->url(),
+                'pageName' => 'page',
+            ]
+        );
+        
+        // Append query parameters
+        $logs->appends($request->query());
+
         $title = ucfirst($type) . ' Logs';
         
         return view('admin.cardzone.logs', compact('logs', 'title', 'type', 'filter'));

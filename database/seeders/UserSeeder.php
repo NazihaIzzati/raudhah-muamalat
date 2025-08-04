@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Staff;
+use App\Models\Donor;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
@@ -14,190 +16,248 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create admin users
-        $adminUsers = [
+        // Create staff users
+        $staffUsers = [
             [
-                'name' => 'Admin User',
-                'email' => 'admin@raudhahmuamalat.com',
-                'password' => Hash::make('password123'),
-                'role' => 'admin',
-                'phone' => '+60 3-1234 5678',
-                'address' => 'Kuala Lumpur, Malaysia',
-                'bio' => 'System Administrator for Raudhah Muamalat platform',
-                'status' => 'active',
-                'email_verified_at' => now(),
+                'user' => [
+                    'name' => 'Admin User',
+                    'email' => 'admin@jariahfund.com',
+                    'password' => Hash::make('password123'),
+                    'user_type' => 'staff',
+                    'is_active' => true,
+                    'email_verified_at' => now(),
+                ],
+                'staff' => [
+                    'employee_id' => 'EMP001',
+                    'position' => 'System Administrator',
+                    'department' => 'IT',
+                    'role' => 'admin',
+                    'status' => 'active',
+                    'hire_date' => now()->subYears(2),
+                    'address' => 'Kuala Lumpur, Malaysia',
+                ]
             ],
             [
-                'name' => 'Sarah Ahmad',
-                'email' => 'sarah.admin@raudhahmuamalat.com',
-                'password' => Hash::make('password123'),
-                'role' => 'admin',
-                'phone' => '+60 3-2345 6789',
-                'address' => 'Petaling Jaya, Selangor',
-                'bio' => 'Operations Manager overseeing daily platform operations',
-                'status' => 'active',
-                'email_verified_at' => now(),
-            ],
-        ];
-
-        foreach ($adminUsers as $userData) {
-            if (!User::where('email', $userData['email'])->exists()) {
-                User::create($userData);
-            }
-        }
-
-        // Create regular users/donors
-        $regularUsers = [
-            [
-                'name' => 'Ahmad Ibrahim',
-                'email' => 'ahmad.ibrahim@example.com',
-                'password' => Hash::make('password123'),
-                'role' => 'user',
-                'phone' => '+60 12-345 6789',
-                'address' => 'Shah Alam, Selangor',
-                'bio' => 'Software Engineer passionate about helping the community',
-                'status' => 'active',
-                'email_verified_at' => now(),
+                'user' => [
+                    'name' => 'Sarah Ahmad',
+                    'email' => 'sarah.admin@jariahfund.com',
+                    'password' => Hash::make('password123'),
+                    'user_type' => 'staff',
+                    'is_active' => true,
+                    'email_verified_at' => now(),
+                ],
+                'staff' => [
+                    'employee_id' => 'EMP002',
+                    'position' => 'Operations Manager',
+                    'department' => 'Operations',
+                    'role' => 'manager',
+                    'status' => 'active',
+                    'hire_date' => now()->subYear(),
+                    'address' => 'Petaling Jaya, Selangor',
+                ]
             ],
             [
-                'name' => 'Fatimah Zahra',
-                'email' => 'fatimah.zahra@example.com',
-                'password' => Hash::make('password123'),
-                'role' => 'user',
-                'phone' => '+60 13-456 7890',
-                'address' => 'Johor Bahru, Johor',
-                'bio' => 'Teacher dedicated to education and community service',
-                'status' => 'active',
-                'email_verified_at' => now(),
+                'user' => [
+                    'name' => 'Ahmad Hassan',
+                    'email' => 'ahmad.hassan@jariahfund.com',
+                    'password' => Hash::make('password123'),
+                    'user_type' => 'staff',
+                    'is_active' => true,
+                    'email_verified_at' => now(),
+                ],
+                'staff' => [
+                    'employee_id' => 'EMP003',
+                    'position' => 'Campaign Coordinator',
+                    'department' => 'Marketing',
+                    'role' => 'staff',
+                    'status' => 'active',
+                    'hire_date' => now()->subMonths(6),
+                    'address' => 'Shah Alam, Selangor',
+                ]
             ],
             [
-                'name' => 'Muhammad Ali',
-                'email' => 'muhammad.ali@example.com',
-                'password' => Hash::make('password123'),
-                'role' => 'user',
-                'phone' => '+60 14-567 8901',
-                'address' => 'Penang, Malaysia',
-                'bio' => 'Business Owner supporting charitable causes',
-                'status' => 'active',
-                'email_verified_at' => now(),
-            ],
-            [
-                'name' => 'Aisha Rahman',
-                'email' => 'aisha.rahman@example.com',
-                'password' => Hash::make('password123'),
-                'role' => 'user',
-                'phone' => '+60 15-678 9012',
-                'address' => 'Kota Kinabalu, Sabah',
-                'bio' => 'Doctor committed to healthcare and humanitarian work',
-                'status' => 'active',
-                'email_verified_at' => now(),
-            ],
-            [
-                'name' => 'Omar Hassan',
-                'email' => 'omar.hassan@example.com',
-                'password' => Hash::make('password123'),
-                'role' => 'user',
-                'phone' => '+60 16-789 0123',
-                'address' => 'Kuching, Sarawak',
-                'bio' => 'Engineer with a passion for community development',
-                'status' => 'active',
-                'email_verified_at' => now(),
-            ],
-            [
-                'name' => 'Khadijah Yusof',
-                'email' => 'khadijah.yusof@example.com',
-                'password' => Hash::make('password123'),
-                'role' => 'user',
-                'phone' => '+60 17-890 1234',
-                'address' => 'Ipoh, Perak',
-                'bio' => 'Accountant supporting financial transparency in charity',
-                'status' => 'active',
-                'email_verified_at' => now(),
-            ],
-            [
-                'name' => 'Yusuf Abdullah',
-                'email' => 'yusuf.abdullah@example.com',
-                'password' => Hash::make('password123'),
-                'role' => 'user',
-                'phone' => '+60 18-901 2345',
-                'address' => 'Melaka, Malaysia',
-                'bio' => 'Marketing Manager promoting social causes',
-                'status' => 'active',
-                'email_verified_at' => now(),
-            ],
-            [
-                'name' => 'Maryam Salleh',
-                'email' => 'maryam.salleh@example.com',
-                'password' => Hash::make('password123'),
-                'role' => 'user',
-                'phone' => '+60 19-012 3456',
-                'address' => 'Alor Setar, Kedah',
-                'bio' => 'Nurse dedicated to healthcare and community welfare',
-                'status' => 'active',
-                'email_verified_at' => now(),
-            ],
-            [
-                'name' => 'Zaid Malik',
-                'email' => 'zaid.malik@example.com',
-                'password' => Hash::make('password123'),
-                'role' => 'user',
-                'phone' => '+60 11-234 5678',
-                'address' => 'Putrajaya, Malaysia',
-                'bio' => 'Government officer supporting public welfare initiatives',
-                'status' => 'active',
-                'email_verified_at' => now(),
-            ],
-            [
-                'name' => 'Halimah Sadiq',
-                'email' => 'halimah.sadiq@example.com',
-                'password' => Hash::make('password123'),
-                'role' => 'user',
-                'phone' => '+60 12-987 6543',
-                'address' => 'Cyberjaya, Selangor',
-                'bio' => 'IT Professional contributing to digital charity solutions',
-                'status' => 'active',
-                'email_verified_at' => now(),
+                'user' => [
+                    'name' => 'Fatimah Omar',
+                    'email' => 'fatimah.omar@jariahfund.com',
+                    'password' => Hash::make('password123'),
+                    'user_type' => 'staff',
+                    'is_active' => true,
+                    'email_verified_at' => now(),
+                ],
+                'staff' => [
+                    'employee_id' => 'EMP004',
+                    'position' => 'HQ Representative',
+                    'department' => 'Management',
+                    'role' => 'hq',
+                    'status' => 'active',
+                    'hire_date' => now()->subYears(3),
+                    'address' => 'Putrajaya, Malaysia',
+                ]
             ],
         ];
 
-        foreach ($regularUsers as $userData) {
-            if (!User::where('email', $userData['email'])->exists()) {
-                User::create($userData);
+        foreach ($staffUsers as $staffData) {
+            if (!User::where('email', $staffData['user']['email'])->exists()) {
+                $user = User::create($staffData['user']);
+                Staff::create(array_merge($staffData['staff'], ['user_id' => $user->id]));
             }
         }
 
-        // Create some unverified users for testing
-        $unverifiedUsers = [
+        // Create donor users
+        $donorUsers = [
             [
-                'name' => 'Test User',
-                'email' => 'test@example.com',
-                'password' => Hash::make('password123'),
-                'role' => 'user',
-                'phone' => '+60 11-111 1111',
-                'address' => 'Test Address, Malaysia',
-                'bio' => 'Test user account for development purposes',
-                'status' => 'active',
-                'email_verified_at' => null,
+                'user' => [
+                    'name' => 'Ahmad Ibrahim',
+                    'email' => 'ahmad.ibrahim@example.com',
+                    'password' => Hash::make('password123'),
+                    'user_type' => 'donor',
+                    'is_active' => true,
+                    'email_verified_at' => now(),
+                ],
+                'donor' => [
+                    'donor_id' => 'DON001',
+                    'identification_number' => '800101-01-1234',
+                    'donor_type' => 'individual',
+                    'status' => 'active',
+                    'registration_date' => now()->subMonths(3),
+                    'newsletter_subscribed' => true,
+                    'address' => 'Shah Alam, Selangor',
+                ]
             ],
             [
-                'name' => 'Inactive User',
-                'email' => 'inactive@example.com',
-                'password' => Hash::make('password123'),
-                'role' => 'user',
-                'phone' => '+60 11-222 2222',
-                'address' => 'Inactive Address, Malaysia',
-                'bio' => 'Inactive user account for testing',
-                'status' => 'inactive',
-                'email_verified_at' => now(),
+                'user' => [
+                    'name' => 'Fatimah Zahra',
+                    'email' => 'fatimah.zahra@example.com',
+                    'password' => Hash::make('password123'),
+                    'user_type' => 'donor',
+                    'is_active' => true,
+                    'email_verified_at' => now(),
+                ],
+                'donor' => [
+                    'donor_id' => 'DON002',
+                    'identification_number' => '850515-02-5678',
+                    'donor_type' => 'individual',
+                    'status' => 'active',
+                    'registration_date' => now()->subMonths(2),
+                    'newsletter_subscribed' => true,
+                    'address' => 'Johor Bahru, Johor',
+                ]
+            ],
+            [
+                'user' => [
+                    'name' => 'Muhammad Ali',
+                    'email' => 'muhammad.ali@example.com',
+                    'password' => Hash::make('password123'),
+                    'user_type' => 'donor',
+                    'is_active' => true,
+                    'email_verified_at' => now(),
+                ],
+                'donor' => [
+                    'donor_id' => 'DON003',
+                    'identification_number' => '900320-03-9012',
+                    'donor_type' => 'individual',
+                    'status' => 'active',
+                    'registration_date' => now()->subMonths(1),
+                    'newsletter_subscribed' => false,
+                    'address' => 'Penang, Malaysia',
+                ]
+            ],
+            [
+                'user' => [
+                    'name' => 'Aisha Rahman',
+                    'email' => 'aisha.rahman@example.com',
+                    'password' => Hash::make('password123'),
+                    'user_type' => 'donor',
+                    'is_active' => true,
+                    'email_verified_at' => now(),
+                ],
+                'donor' => [
+                    'donor_id' => 'DON004',
+                    'identification_number' => '920625-04-3456',
+                    'donor_type' => 'individual',
+                    'status' => 'active',
+                    'registration_date' => now()->subWeeks(2),
+                    'newsletter_subscribed' => true,
+                    'address' => 'Kota Kinabalu, Sabah',
+                ]
+            ],
+            [
+                'user' => [
+                    'name' => 'Omar Hassan',
+                    'email' => 'omar.hassan@example.com',
+                    'password' => Hash::make('password123'),
+                    'user_type' => 'donor',
+                    'is_active' => true,
+                    'email_verified_at' => now(),
+                ],
+                'donor' => [
+                    'donor_id' => 'DON005',
+                    'identification_number' => '880812-05-7890',
+                    'donor_type' => 'individual',
+                    'status' => 'active',
+                    'registration_date' => now()->subWeeks(1),
+                    'newsletter_subscribed' => false,
+                    'address' => 'Kuching, Sarawak',
+                ]
+            ],
+            [
+                'user' => [
+                    'name' => 'Corporate Donor Ltd',
+                    'email' => 'donations@corporatedonor.com',
+                    'password' => Hash::make('password123'),
+                    'user_type' => 'donor',
+                    'is_active' => true,
+                    'email_verified_at' => now(),
+                ],
+                'donor' => [
+                    'donor_id' => 'DON006',
+                    'identification_number' => '202012345678',
+                    'donor_type' => 'corporate',
+                    'status' => 'active',
+                    'registration_date' => now()->subMonths(4),
+                    'newsletter_subscribed' => true,
+                    'address' => 'Kuala Lumpur, Malaysia',
+                ]
+            ],
+            // Additional donor user from AdminUserSeeder
+            [
+                'user' => [
+                    'name' => 'John Doe',
+                    'email' => 'user@jariahfund.com',
+                    'password' => Hash::make('password123'),
+                    'user_type' => 'donor',
+                    'is_active' => true,
+                    'email_verified_at' => now(),
+                ],
+                'donor' => [
+                    'donor_id' => 'DON007',
+                    'identification_number' => '900101-01-1234',
+                    'donor_type' => 'individual',
+                    'status' => 'active',
+                    'registration_date' => now()->subMonths(2),
+                    'newsletter_subscribed' => true,
+                    'address' => 'Kuala Lumpur, Malaysia',
+                ]
             ],
         ];
 
-        foreach ($unverifiedUsers as $userData) {
-            if (!User::where('email', $userData['email'])->exists()) {
-                User::create($userData);
+        foreach ($donorUsers as $donorData) {
+            if (!User::where('email', $donorData['user']['email'])->exists()) {
+                $user = User::create($donorData['user']);
+                Donor::create(array_merge($donorData['donor'], ['user_id' => $user->id]));
             }
         }
 
-        $this->command->info('Created ' . User::count() . ' users (' . User::where('role', 'admin')->count() . ' admins, ' . User::where('role', 'user')->count() . ' regular users)');
+        $this->command->info('✅ User seeding completed!');
+        $this->command->info('👥 Staff users created: ' . Staff::count());
+        $this->command->info('💝 Donor users created: ' . Donor::count());
+        $this->command->info('');
+        $this->command->info('🔑 Admin Login Credentials:');
+        $this->command->info('Email: admin@jariahfund.com');
+        $this->command->info('Password: password123');
+        $this->command->info('');
+        $this->command->info('🔑 Test Donor Login:');
+        $this->command->info('Email: user@jariahfund.com');
+        $this->command->info('Password: password123');
     }
 } 

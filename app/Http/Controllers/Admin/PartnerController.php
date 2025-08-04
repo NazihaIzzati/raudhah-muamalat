@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Partner;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -96,7 +97,7 @@ class PartnerController extends Controller
             'status' => $request->status,
             'featured' => $request->has('featured'),
             'display_order' => $request->display_order ?? 0,
-            'created_by' => Auth::id(),
+            'created_by' => Auth::user()->staff->id,
         ]);
         
         return redirect()->route('admin.partners.index')

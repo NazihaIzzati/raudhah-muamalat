@@ -19,7 +19,7 @@
                     </div>
                     <div class="ml-4 flex-1">
                         <h3 class="text-sm font-medium text-[#fe5000]">Account Status</h3>
-                        <p class="text-2xl font-bold">{{ ucfirst($user->status) }}</p>
+                        <p class="text-2xl font-bold">{{ $user->is_active ? 'Active' : 'Inactive' }}</p>
                     </div>
                 </div>
             </div>
@@ -141,23 +141,17 @@
         
         <!-- Status Banner -->
         <div class="px-6 py-4 flex items-center
-            @if($user->status === 'active') bg-gradient-to-r from-green-50 to-green-100 border-b border-green-200
-            @elseif($user->status === 'inactive') bg-gradient-to-r from-yellow-50 to-yellow-100 border-b border-yellow-200
+            @if($user->is_active) bg-gradient-to-r from-green-50 to-green-100 border-b border-green-200
             @else bg-gradient-to-r from-red-50 to-red-100 border-b border-red-200
             @endif">
             <div class="flex-shrink-0">
                 <div class="h-10 w-10 rounded-lg flex items-center justify-center
-                    @if($user->status === 'active') bg-green-500
-                    @elseif($user->status === 'inactive') bg-yellow-500
+                    @if($user->is_active) bg-green-500
                     @else bg-red-500
                     @endif">
-                    @if($user->status === 'active')
+                    @if($user->is_active)
                         <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    @elseif($user->status === 'inactive')
-                        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                         </svg>
                     @else
                         <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -168,23 +162,19 @@
             </div>
             <div class="ml-4">
                 <h4 class="text-lg font-semibold 
-                    @if($user->status === 'active') text-green-900
-                    @elseif($user->status === 'inactive') text-yellow-900
+                    @if($user->is_active) text-green-900
                     @else text-red-900
                     @endif">
-                    Account Status: {{ ucfirst($user->status) }}
+                    Account Status: {{ $user->is_active ? 'Active' : 'Inactive' }}
                 </h4>
                 <p class="text-sm 
-                    @if($user->status === 'active') text-green-700
-                    @elseif($user->status === 'inactive') text-yellow-700
+                    @if($user->is_active) text-green-700
                     @else text-red-700
                     @endif">
-                    @if($user->status === 'active')
+                    @if($user->is_active)
                         This user can log in and access the system.
-                    @elseif($user->status === 'inactive')
-                        This user cannot log in to the system.
                     @else
-                        This user's account has been suspended.
+                        This user cannot log in to the system.
                     @endif
                 </p>
             </div>
@@ -271,21 +261,25 @@
                         <div class="p-6 space-y-4">
                             <div class="text-center">
                                 <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold shadow-sm
-                                    @if($user->role === 'admin') bg-gradient-to-r from-red-100 to-red-200 text-red-800 border border-red-200
+                                    @if($user->user_type === 'staff') bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 border border-blue-200
                                     @else bg-gradient-to-r from-green-100 to-green-200 text-green-800 border border-green-200
                                     @endif">
-                                    @if($user->role === 'admin')
+                                    @if($user->user_type === 'staff')
                                         <svg class="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M9.385 2.667l.615-1.333L10.615 2.667A1.001 1.001 0 0011 3.001h2a2 2 0 012 2v10a2 2 0 01-2 2H7a2 2 0 01-2-2V5.001a2 2 0 012-2h2c.183 0 .366-.05.512-.144.173-.112.288-.272.288-.446 0-.174-.115-.334-.288-.446A.999.999 0 019 2.001H8a1 1 0 000 2h1z" clip-rule="evenodd"></path>
                                         </svg>
+                                    @else
+                                        <svg class="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" clip-rule="evenodd"></path>
+                                        </svg>
                                     @endif
-                                    {{ ucfirst($user->role) }}
+                                    {{ ucfirst($user->user_type) }}
                                 </span>
                                 <p class="text-xs text-gray-500 mt-2">
-                                    @if($user->role === 'admin')
-                                        Full system access and management permissions
+                                    @if($user->user_type === 'staff')
+                                        Staff member with system access
                                     @else
-                                        Standard user access with limited permissions
+                                        Donor with donation capabilities
                                     @endif
                                 </p>
                             </div>

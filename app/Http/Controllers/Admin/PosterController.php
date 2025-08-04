@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Poster;
 use App\Models\Campaign;
+use App\Models\Staff;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -108,7 +109,7 @@ class PosterController extends Controller
             'campaign_id' => $validated['campaign_id'] ?? null,
             'featured' => $validated['featured'] ?? false,
             'file_size' => $fileSize ?? null,
-            'created_by' => auth()->id(),
+            'created_by' => auth()->user()->staff->id,
         ]);
         
         return redirect()->route('admin.posters.show', $poster)

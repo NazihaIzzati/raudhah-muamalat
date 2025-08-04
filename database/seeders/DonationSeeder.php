@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Donation;
 use App\Models\Campaign;
 use App\Models\User;
+use App\Models\Donor;
 use Carbon\Carbon;
 
 class DonationSeeder extends Seeder
@@ -24,8 +25,8 @@ class DonationSeeder extends Seeder
             return;
         }
         
-        // Get users (for registered donations)
-        $users = User::where('role', 'user')->get();
+        // Get donor users (for registered donations)
+        $donors = Donor::with('user')->get();
         
         // Payment methods (Malaysian context)
         $paymentMethods = [
@@ -103,108 +104,48 @@ class DonationSeeder extends Seeder
             // Select status from weighted distribution
             $status = $statuses[array_rand($statuses)];
             
-            // Set payment date based on status
-            $paidAt = null;
-            $createdDaysAgo = rand(1, 90);
+            // Determine if this is a registered or guest donation
+            $isRegistered = !$isAnonymous && $donors->isNotEmpty() && rand(0, 100) < 60; // 60% registered
             
-            if ($status === 'completed') {
-                $paidAt = Carbon::now()->subDays($createdDaysAgo);
-            } elseif ($status === 'refunded') {
-                $paidAt = Carbon::now()->subDays($createdDaysAgo + rand(1, 7));
-            }
-            
-            // Randomly assign to a user or make it a guest donation
-            $user = null;
-            $donorName = '';
-            $donorEmail = '';
-            
-            if (rand(0, 100) < 60 && !$users->isEmpty()) { // 60% registered users
-                $user = $users->random();
-                $donorName = $user->name;
-                $donorEmail = $user->email;
-            } else { // 40% guest donations
-                $donorName = $malaysianNames[array_rand($malaysianNames)];
-                $donorEmail = strtolower(str_replace(' ', '.', $donorName)) . '@example.com';
-            }
-            
-            // Generate Malaysian phone number
-            $donorPhone = null;
-            if (rand(0, 100) < 70) { // 70% provide phone
-                $donorPhone = '+60 1' . rand(0, 9) . '-' . rand(100, 999) . ' ' . rand(1000, 9999);
-            }
-            
-            // Add donation message
-            $message = null;
-            if (rand(0, 100) < 40) { // 40% include message
-                $message = $donationMessages[array_rand($donationMessages)];
-            }
-            
-            // Generate transaction ID for non-pending donations
-            $transactionId = null;
-            if ($status !== 'pending') {
-                $transactionId = strtoupper(substr(md5(microtime() . $i), 0, 12));
-            }
-            
-            Donation::create([
-                'user_id' => $user?->id,
-                'campaign_id' => $campaign->id,
-                'donor_name' => $isAnonymous ? 'Anonymous' : $donorName,
-                'donor_email' => $donorEmail,
-                'donor_phone' => $donorPhone,
-                'amount' => $amount,
-                'currency' => 'MYR', // Malaysian Ringgit
-                'payment_method' => $paymentMethods[array_rand($paymentMethods)],
-                'payment_status' => $status,
-                'transaction_id' => $transactionId,
-                'message' => $message,
-                'is_anonymous' => $isAnonymous,
-                'paid_at' => $paidAt,
-                'created_at' => Carbon::now()->subDays($createdDaysAgo),
-                'updated_at' => $paidAt ?? Carbon::now()->subDays($createdDaysAgo),
-            ]);
-        }
-        
-        // Create some recurring donations (monthly donors)
-        $recurringDonors = $users->take(10); // Top 10 users as recurring donors
-        
-        foreach ($recurringDonors as $donor) {
-            $campaign = $campaigns->random();
-            $monthlyAmount = rand(50, 300);
-            
-            // Create 6 months of recurring donations
-            for ($month = 0; $month < 6; $month++) {
-                $donationDate = Carbon::now()->subMonths($month)->subDays(rand(1, 28));
-                
-                Donation::create([
-                    'user_id' => $donor->id,
+            if ($isRegistered) {
+                $donor = $donors->random();
+                $donationData = [
                     'campaign_id' => $campaign->id,
-                    'donor_name' => $donor->name,
-                    'donor_email' => $donor->email,
-                    'donor_phone' => $donor->phone,
-                    'amount' => $monthlyAmount + rand(-10, 10), // Slight variation
-                    'currency' => 'MYR',
-                    'payment_method' => 'fpx_online_banking',
-                    'payment_status' => 'completed',
-                    'transaction_id' => strtoupper(substr(md5(microtime() . $donor->id . $month), 0, 12)),
-                    'message' => 'Monthly recurring donation - Barakallahu feeki',
-                    'is_anonymous' => false,
-                    'paid_at' => $donationDate,
-                    'created_at' => $donationDate,
-                    'updated_at' => $donationDate,
-                ]);
+                    'donor_id' => $donor->id,
+                    'donor_name' => $donor->user->name,
+                    'donor_email' => $donor->user->email,
+                    'amount' => $amount,
+                    'currency' => $campaign->currency,
+                    'payment_method' => $paymentMethods[array_rand($paymentMethods)],
+                    'payment_status' => $status,
+                    'message' => $donationMessages[array_rand($donationMessages)],
+                    'created_at' => Carbon::now()->subDays(rand(1, 90)),
+                    'updated_at' => Carbon::now()->subDays(rand(1, 90)),
+                ];
+            } else {
+                // Guest donation
+                $donationData = [
+                    'campaign_id' => $campaign->id,
+                    'donor_id' => null, // No registered donor
+                    'donor_name' => $isAnonymous ? 'Anonymous Donor' : $malaysianNames[array_rand($malaysianNames)],
+                    'donor_email' => $isAnonymous ? 'anonymous@example.com' : 'guest' . rand(1, 999) . '@example.com',
+                    'donor_phone' => $isAnonymous ? null : '+60 1' . rand(10000000, 99999999),
+                    'amount' => $amount,
+                    'currency' => $campaign->currency,
+                    'payment_method' => $paymentMethods[array_rand($paymentMethods)],
+                    'payment_status' => $status,
+                    'message' => $isAnonymous ? null : $donationMessages[array_rand($donationMessages)],
+                    'created_at' => Carbon::now()->subDays(rand(1, 90)),
+                    'updated_at' => Carbon::now()->subDays(rand(1, 90)),
+                ];
             }
-        }
-        
-        // Update campaign raised amounts based on completed donations
-        foreach ($campaigns as $campaign) {
-            $completedDonations = Donation::where('campaign_id', $campaign->id)
-                ->where('payment_status', 'completed')
-                ->sum('amount');
             
-            $campaign->raised_amount = $completedDonations;
-            $campaign->save();
+            Donation::create($donationData);
         }
         
-        $this->command->info('Created ' . Donation::count() . ' donations across ' . $campaigns->count() . ' campaigns.');
+        $this->command->info('✅ Donation seeding completed!');
+        $this->command->info('💰 Donations created: ' . Donation::count());
+        $this->command->info('👥 Registered donations: ' . Donation::whereNotNull('donor_id')->count());
+        $this->command->info('👤 Guest donations: ' . Donation::whereNull('donor_id')->count());
     }
 }

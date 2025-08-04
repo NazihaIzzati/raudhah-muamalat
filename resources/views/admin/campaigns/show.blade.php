@@ -348,6 +348,19 @@
                                 </div>
                             @endif
                             
+                            @if($campaign->qr_code_image)
+                                <div class="mb-6">
+                                    <h4 class="text-sm font-semibold text-gray-700 mb-3">QR Code</h4>
+                                    <div class="flex items-center space-x-4">
+                                        <img src="{{ asset('storage/' . $campaign->qr_code_image) }}" alt="QR Code" class="w-32 h-32 object-contain rounded-xl border border-gray-200">
+                                        <div class="flex-1">
+                                            <p class="text-sm text-gray-600">QR code for payment/donation links</p>
+                                            <p class="text-xs text-gray-500 mt-1">Scan to access campaign donation page</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                            
                             <div class="prose max-w-none">
                                 <p class="text-gray-700 leading-relaxed mb-4">{{ $campaign->description }}</p>
                                 

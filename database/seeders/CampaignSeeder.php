@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Campaign;
 use App\Models\User;
+use App\Models\Staff;
 use Illuminate\Support\Str;
 
 class CampaignSeeder extends Seeder
@@ -15,16 +16,30 @@ class CampaignSeeder extends Seeder
      */
     public function run(): void
     {
-        // Get admin user for created_by
-        $adminUser = User::where('role', 'admin')->first();
+        // Get admin staff user for created_by
+        $adminStaff = Staff::whereHas('user', function($query) {
+            $query->where('user_type', 'staff');
+        })->where('role', 'admin')->first();
         
-        if (!$adminUser) {
-            // Create an admin user if none exists
-            $adminUser = User::create([
+        if (!$adminStaff) {
+            $user = User::create([
                 'name' => 'Admin User',
                 'email' => 'admin@jariahfund.com',
                 'password' => bcrypt('password123'),
+                'user_type' => 'staff',
+                'is_active' => true,
+                'email_verified_at' => now(),
+            ]);
+            
+            $adminStaff = Staff::create([
+                'user_id' => $user->id,
+                'employee_id' => 'EMP001',
+                'position' => 'System Administrator',
+                'department' => 'IT',
                 'role' => 'admin',
+                'status' => 'active',
+                'hire_date' => now()->subYear(),
+                'address' => 'Kuala Lumpur, Malaysia',
             ]);
         }
         
@@ -95,8 +110,11 @@ class CampaignSeeder extends Seeder
                 'start_date' => $campaignData['start_date'],
                 'end_date' => $campaignData['end_date'],
                 'status' => $campaignData['status'],
-                'created_by' => $adminUser->id,
+                'created_by' => $adminStaff->id,
             ]);
         }
+        
+        $this->command->info('✅ Campaign seeding completed!');
+        $this->command->info('🎯 Campaigns created: ' . Campaign::count());
     }
 }

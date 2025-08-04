@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Faq;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -92,7 +93,7 @@ class FaqController extends Controller
             'status' => $request->status,
             'featured' => $request->has('featured'),
             'display_order' => $request->display_order,
-            'created_by' => Auth::id(),
+            'created_by' => Auth::user()->staff->id,
         ]);
         
         return redirect()->route('admin.faqs.index')

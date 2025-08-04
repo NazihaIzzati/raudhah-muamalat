@@ -249,15 +249,55 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-500 mb-1">Full Name</label>
-                            <p class="text-sm text-gray-900">{{ $donation->donor_name ?? 'Anonymous' }}</p>
+                            <p class="text-sm text-gray-900">
+                                @if($donation->donor)
+                                    {{ $donation->donor->user->name ?? 'Unknown Donor' }}
+                                @else
+                                    {{ $donation->donor_name ?? 'Anonymous' }}
+                                @endif
+                            </p>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-500 mb-1">Email Address</label>
-                            <p class="text-sm text-gray-900">{{ $donation->donor_email ?? 'Not provided' }}</p>
+                            <p class="text-sm text-gray-900">
+                                @if($donation->donor)
+                                    {{ $donation->donor->user->email ?? 'Not provided' }}
+                                @else
+                                    {{ $donation->donor_email ?? 'Not provided' }}
+                                @endif
+                            </p>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-500 mb-1">Phone Number</label>
-                            <p class="text-sm text-gray-900">{{ $donation->donor_phone ?? 'Not provided' }}</p>
+                            <p class="text-sm text-gray-900">
+                                @if($donation->donor)
+                                    {{ $donation->donor->phone ?? 'Not provided' }}
+                                @else
+                                    {{ $donation->donor_phone ?? 'Not provided' }}
+                                @endif
+                            </p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-1">Donor ID</label>
+                            <p class="text-sm text-gray-900">
+                                @if($donation->donor)
+                                    {{ $donation->donor->donor_id ?? 'N/A' }}
+                                @else
+                                    <span class="text-gray-400">Not registered</span>
+                                @endif
+                            </p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-1">Donor Type</label>
+                            <p class="text-sm text-gray-900">
+                                @if($donation->donor)
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        {{ ucfirst($donation->donor->donor_type ?? 'Individual') }}
+                                    </span>
+                                @else
+                                    <span class="text-gray-400">Not registered</span>
+                                @endif
+                            </p>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-500 mb-1">Privacy Setting</label>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\News;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -117,7 +118,7 @@ class NewsController extends Controller
             'featured' => $request->has('featured'),
             'display_order' => $request->display_order ?? 0,
             'published_at' => $request->status === 'published' ? now() : null,
-            'created_by' => Auth::id(),
+            'created_by' => Auth::user()->staff->id,
         ]);
         
         return redirect()->route('admin.news.index')

@@ -130,6 +130,32 @@
                     </div>
                     
                     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                        <!-- Donor Selection -->
+                        <div class="group">
+                            <label for="donor_id" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Select Donor <span class="text-gray-400 text-xs">(Optional)</span>
+                            </label>
+                            <div class="relative">
+                                <select id="donor_id" name="donor_id" 
+                                    class="focus:ring-2 focus:ring-[#fe5000] focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-[#fe5000] py-3 px-4 bg-white transition-all duration-200 appearance-none">
+                                    <option value="" {{ old('donor_id', $donation->donor_id) ? '' : 'selected' }}>Select registered donor (optional)</option>
+                                    @if(isset($donors))
+                                        @foreach($donors as $donorId => $donorName)
+                                            <option value="{{ $donorId }}" {{ old('donor_id', $donation->donor_id) == $donorId ? 'selected' : '' }}>
+                                                {{ $donorName }}
+                                            </option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                                    <svg class="h-5 w-5 group-hover:text-[#fe5000] transition-colors duration-200" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <p class="mt-1 text-xs text-gray-500">Leave empty for anonymous or unregistered donors</p>
+                        </div>
+                        
                         <!-- Donor Name -->
                         <div class="group">
                             <label for="donor_name" class="block text-sm font-semibold text-gray-700 mb-2">

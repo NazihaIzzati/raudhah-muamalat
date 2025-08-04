@@ -102,6 +102,7 @@
                             <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Category</th>
                             <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Date</th>
                             <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Status</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Created By</th>
                             <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Created</th>
                             <th scope="col" class="px-6 py-4 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">Actions</th>
                         </tr>
@@ -168,6 +169,27 @@
                                         @endif
                                         {{ ucfirst($event->status) }}
                                     </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if($event->creator)
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-8 w-8">
+                                                @if($event->creator->profile_picture)
+                                                    <img class="h-8 w-8 rounded-full object-cover" src="{{ asset('storage/' . $event->creator->profile_picture) }}" alt="{{ $event->creator->user->name }}">
+                                                @else
+                                                    <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                                        <span class="text-sm font-medium text-blue-600">{{ substr($event->creator->user->name ?? 'S', 0, 1) }}</span>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="ml-3">
+                                                <div class="text-sm font-medium text-gray-900">{{ $event->creator->user->name ?? 'Unknown' }}</div>
+                                                <div class="text-xs text-gray-500">{{ ucfirst($event->creator->role ?? 'Staff') }}</div>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <span class="text-sm text-gray-400">Unknown</span>
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <div>{{ $event->created_at->format('M d, Y') }}</div>

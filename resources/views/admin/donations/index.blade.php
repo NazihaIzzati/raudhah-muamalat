@@ -114,17 +114,34 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0 h-12 w-12">
-                                            <div class="h-12 w-12 rounded-xl bg-gradient-to-br from-[#fe5000]/10 to-orange-100 flex items-center justify-center border border-gray-200">
-                                                <svg class="h-6 w-6 text-[#fe5000]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                                </svg>
-                                            </div>
+                                            @if($donation->donor && $donation->donor->profile_picture)
+                                                <img class="h-12 w-12 rounded-xl object-cover border border-gray-200" src="{{ asset('storage/' . $donation->donor->profile_picture) }}" alt="{{ $donation->donor->user->name ?? 'Donor' }}">
+                                            @else
+                                                <div class="h-12 w-12 rounded-xl bg-gradient-to-br from-[#fe5000]/10 to-orange-100 flex items-center justify-center border border-gray-200">
+                                                    <span class="text-sm font-bold text-[#fe5000]">
+                                                        {{ substr($donation->donor->user->name ?? $donation->donor_name ?? 'A', 0, 1) }}
+                                                    </span>
+                                                </div>
+                                            @endif
                                         </div>
                                         <div class="ml-4">
                                             <div class="text-xs font-semibold text-gray-900">
-                                                {{ $donation->donor_name ?? 'Anonymous' }}
+                                                @if($donation->donor)
+                                                    {{ $donation->donor->user->name ?? 'Unknown Donor' }}
+                                                @else
+                                                    {{ $donation->donor_name ?? 'Anonymous' }}
+                                                @endif
                                             </div>
-                                            <div class="text-xs text-gray-500">{{ $donation->donor_email ?? 'No email' }}</div>
+                                            <div class="text-xs text-gray-500">
+                                                @if($donation->donor)
+                                                    {{ $donation->donor->user->email ?? 'No email' }}
+                                                @else
+                                                    {{ $donation->donor_email ?? 'No email' }}
+                                                @endif
+                                            </div>
+                                            @if($donation->donor)
+                                                <div class="text-xs text-gray-400">{{ $donation->donor->donor_id ?? 'N/A' }}</div>
+                                            @endif
                                             @if($donation->is_anonymous)
                                                 <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800 mt-1">
                                                     Anonymous

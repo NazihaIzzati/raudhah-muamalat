@@ -46,9 +46,15 @@ class LoginController extends Controller
 
             $user = Auth::user();
             
-            // Redirect based on user role
-            if ($user->isAdmin()) {
-                return redirect()->intended('/admin/dashboard');
+            // Redirect based on user type and role
+            if ($user->isStaff()) {
+                if ($user->staff && $user->staff->hasExecutiveAccess()) {
+                    return redirect()->intended('/admin/dashboard');
+                } else {
+                    return redirect()->intended('/staff/dashboard');
+                }
+            } elseif ($user->isDonor()) {
+                return redirect()->intended('/donor/dashboard');
             }
             
             return redirect()->intended('/dashboard');
