@@ -73,12 +73,22 @@
 
                                     <!-- Action Section -->
                                     <div class="flex items-center justify-between">
-                                        <a href="#" class="inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group">
+                                        <button 
+                                            type="button"
+                                            class="read-more-btn inline-flex items-center text-primary-500 font-semibold hover:text-primary-600 transition-colors group cursor-pointer"
+                                            data-news-id="{{ $newsItem->id }}"
+                                            data-news-title="{{ $newsItem->title }}"
+                                            data-news-excerpt="{{ $newsItem->excerpt ?: Str::limit(strip_tags($newsItem->content), 150) }}"
+                                            data-news-content="{{ $newsItem->content }}"
+                                            data-news-image="{{ $newsItem->image_path ? asset('storage/' . $newsItem->image_path) : '' }}"
+                                            data-news-category="{{ ucfirst($newsItem->category) }}"
+                                            data-news-date="{{ $newsItem->published_at ? $newsItem->published_at->format('M d, Y') : $newsItem->created_at->format('M d, Y') }}"
+                                        >
                                             {{ __('app.read_more') }}
                                             <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                                             </svg>
-                                        </a>
+                                        </button>
                                         <span class="text-xs text-gray-400">{{ __('app.news') }}</span>
                                     </div>
                                 </div>
@@ -104,6 +114,10 @@
             </div>
         </section>
 
+@endsection
+
+@push('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <style>
 .line-clamp-4 {
     display: -webkit-box;
@@ -131,10 +145,73 @@
     opacity: 1;
     transform: translateY(0);
 }
-</style>
 
+/* Custom SweetAlert2 Styles */
+.swal2-popup {
+    border-radius: 16px !important;
+    font-family: inherit !important;
+}
+
+.swal2-title {
+    color: #1f2937 !important;
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+}
+
+.swal2-html-container {
+    text-align: left !important;
+    margin: 0 !important;
+}
+
+.news-modal-content {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.news-modal-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.news-modal-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.news-modal-category {
+    background-color: #f3f4f6;
+    color: #374151;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.news-modal-date {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.news-modal-content-text {
+    line-height: 1.7;
+    color: #374151;
+    white-space: pre-line;
+}
+</style>
+@endpush
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Animation observer
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -151,6 +228,73 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.animate-on-scroll').forEach(el => {
         observer.observe(el);
     });
+
+    // Read More button event listeners
+    document.querySelectorAll('.read-more-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const newsId = this.getAttribute('data-news-id');
+            const newsTitle = this.getAttribute('data-news-title');
+            const newsExcerpt = this.getAttribute('data-news-excerpt');
+            const newsContent = this.getAttribute('data-news-content');
+            const newsImage = this.getAttribute('data-news-image');
+            const newsCategory = this.getAttribute('data-news-category');
+            const newsDate = this.getAttribute('data-news-date');
+            
+            showNewsModal(newsId, newsTitle, newsExcerpt, newsContent, newsImage, newsCategory, newsDate);
+        });
+    });
 });
+
+function showNewsModal(id, title, excerpt, content, imagePath, category, date) {
+    // Decode HTML entities
+    function decodeHTMLEntities(text) {
+        const textarea = document.createElement('textarea');
+        textarea.innerHTML = text;
+        return textarea.value;
+    }
+
+    const decodedTitle = decodeHTMLEntities(title);
+    const decodedContent = decodeHTMLEntities(content);
+    const decodedExcerpt = decodeHTMLEntities(excerpt);
+
+    let imageHtml = '';
+    if (imagePath && imagePath !== '') {
+        imageHtml = `<img src="${imagePath}" alt="${decodedTitle}" class="news-modal-image">`;
+    }
+
+    const modalContent = `
+        <div class="news-modal-content">
+            ${imageHtml}
+            <div class="news-modal-meta">
+                <span class="news-modal-category">${category}</span>
+                <span class="news-modal-date">${date}</span>
+            </div>
+            <div class="news-modal-content-text">${decodedContent}</div>
+        </div>
+    `;
+
+    Swal.fire({
+        title: decodedTitle,
+        html: modalContent,
+        width: '800px',
+        showCloseButton: true,
+        showConfirmButton: false,
+        customClass: {
+            popup: 'swal2-popup',
+            title: 'swal2-title',
+            htmlContainer: 'swal2-html-container'
+        },
+        didOpen: () => {
+            // Add smooth scrolling to modal content
+            const modalContent = Swal.getHtmlContainer().querySelector('.news-modal-content');
+            if (modalContent) {
+                modalContent.style.scrollbarWidth = 'thin';
+                modalContent.style.scrollbarColor = '#d1d5db #f3f4f6';
+            }
+        }
+    });
+}
 </script>
-@endsection
+@endpush

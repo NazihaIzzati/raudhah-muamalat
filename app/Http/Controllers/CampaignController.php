@@ -58,4 +58,37 @@ class CampaignController extends Controller
         
         return view('all-campaigns', compact('campaigns'));
     }
+
+    /**
+     * Display the campaigns page with featured campaigns.
+     */
+    public function index()
+    {
+        // Get featured campaigns with audit trails
+        $featuredCampaigns = Campaign::where('status', 'active')
+            ->where('featured', true)
+            ->orderBy('display_order', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->with(['auditTrails.performer'])
+            ->take(3)
+            ->get();
+
+        // Get recent active campaigns (excluding featured ones) with audit trails
+        $recentCampaigns = Campaign::where('status', 'active')
+            ->where('featured', false)
+            ->orderBy('created_at', 'desc')
+            ->with(['auditTrails.performer'])
+            ->take(6)
+            ->get();
+
+        // Get successful campaigns using the new scope with audit trails
+        $successfulCampaigns = Campaign::successful()
+            ->orderBy('raised_amount', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->with(['auditTrails.performer'])
+            ->take(4)
+            ->get();
+
+        return view('campaigns', compact('featuredCampaigns', 'recentCampaigns', 'successfulCampaigns'));
+    }
 } 

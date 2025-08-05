@@ -3,6 +3,10 @@
 @section('title', 'Partner Details - Admin Dashboard')
 @section('page-title', 'Partner Details')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/sweetalert2-custom.css') }}">
+@endpush
+
 @section('content')
 <div class="space-y-6">
     <!-- Statistics Cards with Consistent Design -->
@@ -429,4 +433,9 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('js/partners-crud.js') }}"></script>
+@endpush 

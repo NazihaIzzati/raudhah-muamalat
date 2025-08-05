@@ -175,6 +175,38 @@
                 <!-- Featured News -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mb-12 md:mb-16">
                     <!-- Main News Article -->
+                    @if(isset($featuredNews) && $featuredNews)
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                        @if($featuredNews->image_path)
+                            <img src="{{ asset('storage/' . $featuredNews->image_path) }}"
+                                 alt="{{ $featuredNews->title }}" class="w-full h-48 md:h-64 object-cover">
+                        @else
+                            <img src="{{ asset('assets/images/news/success.jpg') }}"
+                                 alt="{{ $featuredNews->title }}" class="w-full h-48 md:h-64 object-cover">
+                        @endif
+                        <div class="p-6 md:p-8">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-primary-100 text-primary-600 px-3 py-1 rounded-full text-xs md:text-sm font-medium">
+                                    {{ ucfirst($featuredNews->category) }}
+                                </span>
+                                <span class="text-gray-500 text-xs md:text-sm ml-3">
+                                    {{ $featuredNews->published_at ? $featuredNews->published_at->format('F j, Y') : $featuredNews->created_at->format('F j, Y') }}
+                                </span>
+                            </div>
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">{{ $featuredNews->title }}</h3>
+                            <p class="text-sm md:text-base text-gray-600 mb-4 md:mb-6 leading-relaxed">
+                                {{ $featuredNews->excerpt ?: Str::limit(strip_tags($featuredNews->content), 150) }}
+                            </p>
+                            <a href="{{ url('/news') }}" class="inline-flex items-center text-primary-500 font-medium hover:text-primary-600 transition-colors text-sm md:text-base">
+                                {{ __('app.read_more') }}
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    @else
+                    <!-- Fallback static content if no news -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
                         <img src="{{ asset('assets/images/news/success.jpg') }}"
                              alt="Community Event" class="w-full h-48 md:h-64 object-cover">
@@ -195,71 +227,69 @@
                             </a>
                         </div>
                     </div>
+                    @endif
 
-                    <!-- Event Highlights -->
+                    <!-- Recent News Highlights -->
                     <div class="space-y-6">
-                        <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
-                            <div class="flex items-start space-x-4">
-                                <img src="{{ asset('assets/images/news/success.jpg') }}"
-                                     alt="Workshop" class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
-                                <div>
-                                    <div class="flex items-center mb-2">
-                                        <span class="bg-purple-100 text-purple-600 px-2 py-1 rounded-full text-xs font-medium">{{ __('app.event') }}</span>
-                                        <span class="text-gray-500 text-xs ml-2">{{ __('app.january_10_2025') }}</span>
+                        @if(isset($recentNews) && $recentNews->count() > 0)
+                            @foreach($recentNews as $news)
+                            <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+                                <div class="flex items-start space-x-4">
+                                    @if($news->image_path)
+                                        <img src="{{ asset('storage/' . $news->image_path) }}"
+                                             alt="{{ $news->title }}" class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
+                                    @else
+                                        <img src="{{ asset('assets/images/news/success.jpg') }}"
+                                             alt="{{ $news->title }}" class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
+                                    @endif
+                                    <div>
+                                        <div class="flex items-center mb-2">
+                                            @if($news->category === 'event')
+                                                <span class="bg-purple-100 text-purple-600 px-2 py-1 rounded-full text-xs font-medium">{{ __('app.event') }}</span>
+                                            @elseif($news->category === 'announcement')
+                                                <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs font-medium">{{ __('app.announcement') }}</span>
+                                            @else
+                                                <span class="bg-green-100 text-green-600 px-2 py-1 rounded-full text-xs font-medium">{{ __('app.news') }}</span>
+                                            @endif
+                                            <span class="text-gray-500 text-xs ml-2">
+                                                {{ $news->published_at ? $news->published_at->format('M j, Y') : $news->created_at->format('M j, Y') }}
+                                            </span>
+                                        </div>
+                                        <h4 class="font-semibold text-gray-900 text-base mb-1">{{ $news->title }}</h4>
+                                        <p class="text-xs text-gray-600 mb-2">{{ $news->excerpt ?: Str::limit(strip_tags($news->content), 80) }}</p>
+                                        <a href="{{ url('/news') }}" class="inline-flex items-center text-primary-500 hover:text-primary-600 text-xs font-medium">
+                                            {{ __('app.learn_more') }}
+                                            <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </a>
                                     </div>
-                                    <h4 class="font-semibold text-gray-900 text-base mb-1">{{ __('app.financial_literacy_workshop') }}</h4>
-                                    <p class="text-xs text-gray-600 mb-2">{{ __('app.workshop_description') }}</p>
-                                    <a href="{{ url('/news') }}" class="inline-flex items-center text-primary-500 hover:text-primary-600 text-xs font-medium">
-                                        {{ __('app.learn_more') }}
-                                        <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                        </svg>
-                                    </a>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
-                            <div class="flex items-start space-x-4">
-                                <img src="{{ asset('assets/images/news/success_02.jpg') }}"
-                                     alt="Annual Gala" class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
-                                <div>
-                                    <div class="flex items-center mb-2">
-                                        <span class="bg-purple-100 text-purple-600 px-2 py-1 rounded-full text-xs font-medium">{{ __('app.event') }}</span>
-                                        <span class="text-gray-500 text-xs ml-2">{{ __('app.december_20_2024') }}</span>
+                            @endforeach
+                        @else
+                            <!-- Fallback static content if no recent news -->
+                            <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+                                <div class="flex items-start space-x-4">
+                                    <img src="{{ asset('assets/images/news/success.jpg') }}"
+                                         alt="Workshop" class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
+                                    <div>
+                                        <div class="flex items-center mb-2">
+                                            <span class="bg-purple-100 text-purple-600 px-2 py-1 rounded-full text-xs font-medium">{{ __('app.event') }}</span>
+                                            <span class="text-gray-500 text-xs ml-2">{{ __('app.january_10_2025') }}</span>
+                                        </div>
+                                        <h4 class="font-semibold text-gray-900 text-base mb-1">{{ __('app.financial_literacy_workshop') }}</h4>
+                                        <p class="text-xs text-gray-600 mb-2">{{ __('app.workshop_description') }}</p>
+                                        <a href="{{ url('/news') }}" class="inline-flex items-center text-primary-500 hover:text-primary-600 text-xs font-medium">
+                                            {{ __('app.learn_more') }}
+                                            <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </a>
                                     </div>
-                                    <h4 class="font-semibold text-gray-900 text-base mb-1">{{ __('app.annual_charity_gala_title') }}</h4>
-                                    <p class="text-xs text-gray-600 mb-2">{{ __('app.gala_description') }}</p>
-                                    <a href="{{ url('/news') }}" class="inline-flex items-center text-primary-500 hover:text-primary-600 text-xs font-medium">
-                                        {{ __('app.learn_more') }}
-                                        <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                        </svg>
-                                    </a>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
-                            <div class="flex items-start space-x-4">
-                                <img src="{{ asset('assets/images/news/success_03.jpg') }}"
-                                     alt="Partnership" class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
-                                <div>
-                                    <div class="flex items-center mb-2">
-                                        <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs font-medium">{{ __('app.news') }}</span>
-                                        <span class="text-gray-500 text-xs ml-2">{{ __('app.december_5_2024') }}</span>
-                                    </div>
-                                    <h4 class="font-semibold text-gray-900 text-base mb-1">{{ __('app.partnership_title') }}</h4>
-                                    <p class="text-xs text-gray-600 mb-2">{{ __('app.partnership_description') }}</p>
-                                    <a href="{{ url('/news') }}" class="inline-flex items-center text-primary-500 hover:text-primary-600 text-xs font-medium">
-                                        {{ __('app.learn_more') }}
-                                        <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
 

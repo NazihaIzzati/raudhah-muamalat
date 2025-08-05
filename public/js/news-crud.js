@@ -1,30 +1,17 @@
 /**
- * SweetAlert2 Configuration for News Module
+ * News CRUD Operations with SweetAlert2
  */
+
+// SweetAlert2 configuration
 const SwalConfig = {
+    confirmButtonColor: '#fe5000',
+    cancelButtonColor: '#6b7280',
     customClass: {
-        popup: 'swal2-popup',
-        title: 'swal2-title',
-        content: 'swal2-content',
         confirmButton: 'swal2-confirm',
         cancelButton: 'swal2-cancel',
-        icon: 'swal2-icon',
-        progressBar: 'swal2-progress-bar',
-        htmlContainer: 'swal2-html-container'
-    },
-    buttonsStyling: false,
-    confirmButtonColor: '#fe5000',
-    cancelButtonColor: '#6b7280'
+        popup: 'swal2-popup'
+    }
 };
-
-/**
- * Decode HTML entities
- */
-function decodeHTMLEntities(text) {
-    const textarea = document.createElement('textarea');
-    textarea.innerHTML = text;
-    return textarea.value;
-}
 
 /**
  * Show success message
@@ -42,6 +29,15 @@ function showSuccess(message, title = 'Success!') {
         showConfirmButton: false,
         ...SwalConfig
     });
+}
+
+/**
+ * Decode HTML entities
+ */
+function decodeHTMLEntities(text) {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = text;
+    return textarea.value;
 }
 
 /**
@@ -205,14 +201,15 @@ function confirmForceDelete(newsTitle, forceDeleteUrl) {
  * Confirm status change
  */
 function confirmStatusChange(newsTitle, newStatus, changeUrl) {
-    const statusText = newStatus === 'published' ? 'publish' : newStatus === 'draft' ? 'save as draft' : 'archive';
+    const statusText = newStatus === 'published' ? 'publish' : 'unpublish';
+    const statusIcon = newStatus === 'published' ? 'success' : 'warning';
     
     Swal.fire({
-        title: 'Change News Status',
-        text: `Are you sure you want to ${statusText} "${newsTitle}"?`,
-        icon: 'question',
+        title: 'Change Status?',
+        text: `Do you want to ${statusText} "${newsTitle}"?`,
+        icon: statusIcon,
         showCancelButton: true,
-        confirmButtonText: `Yes, ${statusText}!`,
+        confirmButtonText: `Yes, ${statusText} it!`,
         cancelButtonText: 'Cancel',
         reverseButtons: true,
         ...SwalConfig
@@ -323,16 +320,17 @@ function confirmFormSubmission(formId, message = 'Are you sure you want to submi
  */
 function showNewsDetails(news) {
     Swal.fire({
-        title: news.title,
+        title: 'News Details',
         html: `
-            <div class="text-left">
-                <p class="mb-3"><strong>Excerpt:</strong> ${news.excerpt || 'No excerpt available'}</p>
+            <div class="text-left max-h-96 overflow-y-auto">
+                <p class="mb-3"><strong>Title:</strong> ${news.title}</p>
+                <p class="mb-3"><strong>Content:</strong> ${news.content ? news.content.substring(0, 200) + '...' : 'No content'}</p>
                 <p class="mb-3"><strong>Category:</strong> <span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800">${news.category}</span></p>
-                <p class="mb-3"><strong>Status:</strong> <span class="px-2 py-1 rounded text-xs ${news.status === 'published' ? 'bg-green-100 text-green-800' : news.status === 'draft' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'}">${news.status}</span></p>
-                <p class="mb-3"><strong>Featured:</strong> <span class="px-2 py-1 rounded text-xs ${news.featured ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'}">${news.featured ? 'Yes' : 'No'}</span></p>
+                <p class="mb-3"><strong>Status:</strong> <span class="px-2 py-1 rounded text-xs ${news.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">${news.status}</span></p>
+                <p class="mb-3"><strong>Featured:</strong> <span class="px-2 py-1 rounded text-xs ${news.featured ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800'}">${news.featured ? 'Yes' : 'No'}</span></p>
                 <p class="mb-3"><strong>Display Order:</strong> ${news.display_order}</p>
-                <p class="mb-3"><strong>Published:</strong> ${news.published_at || 'Not published'}</p>
                 <p class="mb-3"><strong>Created:</strong> ${news.created_at}</p>
+                ${news.published_at ? `<p class="mb-3"><strong>Published:</strong> ${news.published_at}</p>` : ''}
             </div>
         `,
         width: '600px',
@@ -340,6 +338,30 @@ function showNewsDetails(news) {
         confirmButtonText: 'Close',
         ...SwalConfig
     });
+}
+
+/**
+ * Delete news with SweetAlert
+ */
+function deleteNews(id, title) {
+    const deleteUrl = `/admin/news/${id}`;
+    confirmDelete(title, deleteUrl);
+}
+
+/**
+ * Restore news with SweetAlert
+ */
+function restoreNews(id, title) {
+    const restoreUrl = `/admin/news/${id}/restore`;
+    confirmRestore(title, restoreUrl);
+}
+
+/**
+ * Force delete news with SweetAlert
+ */
+function forceDeleteNews(id, title) {
+    const forceDeleteUrl = `/admin/news/${id}/force-delete`;
+    confirmForceDelete(title, forceDeleteUrl);
 }
 
 /**
@@ -410,6 +432,20 @@ function initNewsCRUD() {
             showNewsDetails(newsData);
         });
     });
+
+    // Show success messages from session
+    const successMessage = document.querySelector('[data-success-message]');
+    if (successMessage) {
+        const message = successMessage.getAttribute('data-success-message');
+        showSuccess(message);
+    }
+
+    // Show error messages from session
+    const errorMessage = document.querySelector('[data-error-message]');
+    if (errorMessage) {
+        const message = errorMessage.getAttribute('data-error-message');
+        showError(message);
+    }
 }
 
 // Initialize when DOM is loaded

@@ -1,30 +1,17 @@
 /**
- * SweetAlert2 Configuration for FAQ Module
+ * FAQ CRUD Operations with SweetAlert2
  */
+
+// SweetAlert2 configuration
 const SwalConfig = {
+    confirmButtonColor: '#fe5000',
+    cancelButtonColor: '#6b7280',
     customClass: {
-        popup: 'swal2-popup',
-        title: 'swal2-title',
-        content: 'swal2-content',
         confirmButton: 'swal2-confirm',
         cancelButton: 'swal2-cancel',
-        icon: 'swal2-icon',
-        progressBar: 'swal2-progress-bar',
-        htmlContainer: 'swal2-html-container'
-    },
-    buttonsStyling: false,
-    confirmButtonColor: '#fe5000',
-    cancelButtonColor: '#6b7280'
+        popup: 'swal2-popup'
+    }
 };
-
-/**
- * Decode HTML entities
- */
-function decodeHTMLEntities(text) {
-    const textarea = document.createElement('textarea');
-    textarea.innerHTML = text;
-    return textarea.value;
-}
 
 /**
  * Show success message
@@ -42,6 +29,15 @@ function showSuccess(message, title = 'Success!') {
         showConfirmButton: false,
         ...SwalConfig
     });
+}
+
+/**
+ * Decode HTML entities
+ */
+function decodeHTMLEntities(text) {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = text;
+    return textarea.value;
 }
 
 /**
@@ -206,13 +202,14 @@ function confirmForceDelete(faqQuestion, forceDeleteUrl) {
  */
 function confirmStatusChange(faqQuestion, newStatus, changeUrl) {
     const statusText = newStatus === 'active' ? 'activate' : 'deactivate';
+    const statusIcon = newStatus === 'active' ? 'success' : 'warning';
     
     Swal.fire({
-        title: 'Change FAQ Status',
-        text: `Are you sure you want to ${statusText} "${faqQuestion}"?`,
-        icon: 'question',
+        title: 'Change Status?',
+        text: `Do you want to ${statusText} "${faqQuestion}"?`,
+        icon: statusIcon,
         showCancelButton: true,
-        confirmButtonText: `Yes, ${statusText}!`,
+        confirmButtonText: `Yes, ${statusText} it!`,
         cancelButtonText: 'Cancel',
         reverseButtons: true,
         ...SwalConfig
@@ -323,13 +320,14 @@ function confirmFormSubmission(formId, message = 'Are you sure you want to submi
  */
 function showFaqDetails(faq) {
     Swal.fire({
-        title: faq.question,
+        title: 'FAQ Details',
         html: `
-            <div class="text-left">
+            <div class="text-left max-h-96 overflow-y-auto">
+                <p class="mb-3"><strong>Question:</strong> ${faq.question}</p>
                 <p class="mb-3"><strong>Answer:</strong> ${faq.answer}</p>
                 <p class="mb-3"><strong>Category:</strong> <span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800">${faq.category}</span></p>
                 <p class="mb-3"><strong>Status:</strong> <span class="px-2 py-1 rounded text-xs ${faq.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">${faq.status}</span></p>
-                <p class="mb-3"><strong>Featured:</strong> <span class="px-2 py-1 rounded text-xs ${faq.featured ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'}">${faq.featured ? 'Yes' : 'No'}</span></p>
+                <p class="mb-3"><strong>Featured:</strong> <span class="px-2 py-1 rounded text-xs ${faq.featured ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800'}">${faq.featured ? 'Yes' : 'No'}</span></p>
                 <p class="mb-3"><strong>Display Order:</strong> ${faq.display_order}</p>
                 <p class="mb-3"><strong>Created:</strong> ${faq.created_at}</p>
             </div>
@@ -342,7 +340,31 @@ function showFaqDetails(faq) {
 }
 
 /**
- * Initialize FAQs CRUD functionality
+ * Delete FAQ with SweetAlert
+ */
+function deleteFaq(id, question) {
+    const deleteUrl = `/admin/faqs/${id}`;
+    confirmDelete(question, deleteUrl);
+}
+
+/**
+ * Restore FAQ with SweetAlert
+ */
+function restoreFaq(id, question) {
+    const restoreUrl = `/admin/faqs/${id}/restore`;
+    confirmRestore(question, restoreUrl);
+}
+
+/**
+ * Force delete FAQ with SweetAlert
+ */
+function forceDeleteFaq(id, question) {
+    const forceDeleteUrl = `/admin/faqs/${id}/force-delete`;
+    confirmForceDelete(question, forceDeleteUrl);
+}
+
+/**
+ * Initialize FAQ CRUD functionality
  */
 function initFaqsCRUD() {
     // Handle form submissions with confirmation
@@ -409,6 +431,20 @@ function initFaqsCRUD() {
             showFaqDetails(faqData);
         });
     });
+
+    // Show success messages from session
+    const successMessage = document.querySelector('[data-success-message]');
+    if (successMessage) {
+        const message = successMessage.getAttribute('data-success-message');
+        showSuccess(message);
+    }
+
+    // Show error messages from session
+    const errorMessage = document.querySelector('[data-error-message]');
+    if (errorMessage) {
+        const message = errorMessage.getAttribute('data-error-message');
+        showError(message);
+    }
 }
 
 // Initialize when DOM is loaded

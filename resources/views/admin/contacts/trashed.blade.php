@@ -61,7 +61,7 @@
         <!-- Search and Filters -->
         <div class="p-6 border-b border-gray-200 bg-gray-50">
             <form method="GET" action="{{ route('admin.contacts.trashed') }}" class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
                     <div class="md:col-span-2">
                         <div class="relative rounded-xl shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -81,6 +81,15 @@
                             @foreach($statuses as $value => $label)
                                 <option value="{{ $value }}" {{ request('status') == $value ? 'selected' : '' }}>{{ $label }}</option>
                             @endforeach
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <select name="urgent" 
+                            class="focus:ring-2 focus:ring-red-500 focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-red-500 py-3 px-4 bg-white transition-all duration-200 appearance-none">
+                            <option value="">All Urgency</option>
+                            <option value="true" {{ request('urgent') == 'true' ? 'selected' : '' }}>Urgent Only</option>
+                            <option value="false" {{ request('urgent') == 'false' ? 'selected' : '' }}>Not Urgent</option>
                         </select>
                     </div>
                     

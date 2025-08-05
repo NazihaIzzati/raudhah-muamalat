@@ -26,4 +26,41 @@ class NewsController extends Controller
 
         return view('news', compact('news', 'newsByCategory', 'categories'));
     }
+
+    /**
+     * Get featured news for home page.
+     */
+    public function getFeaturedNews()
+    {
+        // Get the latest featured news or the most recent news if no featured
+        $featuredNews = News::where('status', 'published')
+            ->whereNull('deleted_at')
+            ->where('featured', true)
+            ->orderBy('display_order', 'asc')
+            ->orderBy('published_at', 'desc')
+            ->first();
+
+        // If no featured news, get the latest news
+        if (!$featuredNews) {
+            $featuredNews = News::where('status', 'published')
+                ->whereNull('deleted_at')
+                ->orderBy('published_at', 'desc')
+                ->first();
+        }
+
+        // Get recent news for the sidebar (excluding the featured one)
+        $recentNews = News::where('status', 'published')
+            ->whereNull('deleted_at')
+            ->when($featuredNews, function($query) use ($featuredNews) {
+                return $query->where('id', '!=', $featuredNews->id);
+            })
+            ->orderBy('published_at', 'desc')
+            ->take(3)
+            ->get();
+
+        return [
+            'featured' => $featuredNews,
+            'recent' => $recentNews
+        ];
+    }
 }

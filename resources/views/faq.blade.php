@@ -27,47 +27,39 @@
         <section class="py-6 mt-4 mb-4 bg-gray-50">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-wrap justify-center gap-4">
-                    <button onclick="scrollToSection('basics')" class="category-btn bg-white text-gray-700 px-6 py-3 rounded-full font-medium hover:bg-primary-500 hover:text-white transition-all duration-300 shadow-sm border border-gray-200">
-                        <span class="flex items-center">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            {{ __('app.basics') }}
-                        </span>
-                    </button>
-                    <button onclick="scrollToSection('donations')" class="category-btn bg-white text-gray-700 px-6 py-3 rounded-full font-medium hover:bg-primary-500 hover:text-white transition-all duration-300 shadow-sm border border-gray-200">
-                        <span class="flex items-center">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
-                            </svg>
-                            {{ __('app.donations') }}
-                        </span>
-                    </button>
-                    <button onclick="scrollToSection('campaigns')" class="category-btn bg-white text-gray-700 px-6 py-3 rounded-full font-medium hover:bg-primary-500 hover:text-white transition-all duration-300 shadow-sm border border-gray-200">
-                        <span class="flex items-center">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                            </svg>
-                            {{ __('app.campaigns') }}
-                        </span>
-                    </button>
-                    <button onclick="scrollToSection('operations')" class="category-btn bg-white text-gray-700 px-6 py-3 rounded-full font-medium hover:bg-primary-500 hover:text-white transition-all duration-300 shadow-sm border border-gray-200">
-                        <span class="flex items-center">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                            {{ __('app.operations') }}
-                        </span>
-                    </button>
-                    <button onclick="scrollToSection('other')" class="category-btn bg-white text-gray-700 px-6 py-3 rounded-full font-medium hover:bg-primary-500 hover:text-white transition-all duration-300 shadow-sm border border-gray-200">
-                        <span class="flex items-center">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            {{ __('app.other') }}
-                        </span>
-                    </button>
+                    @foreach($categories as $categoryKey => $categoryName)
+                        <button onclick="scrollToSection('{{ $categoryKey }}')" class="category-btn bg-white text-gray-700 px-6 py-3 rounded-full font-medium hover:bg-primary-500 hover:text-white transition-all duration-300 shadow-sm border border-gray-200">
+                            <span class="flex items-center">
+                                @if($categoryKey === 'general')
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                @elseif($categoryKey === 'donations')
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                                    </svg>
+                                @elseif($categoryKey === 'campaigns')
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                    </svg>
+                                @elseif($categoryKey === 'operations')
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                @elseif($categoryKey === 'partnerships')
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                @else
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                @endif
+                                {{ $categoryName }}
+                            </span>
+                        </button>
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -76,427 +68,87 @@
         <section class="py-12 md:py-16 bg-white">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                <!-- Basics Section -->
-                <div id="basics" class="mb-16">
-                    <div class="text-center mb-12">
-                        <div class="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-full mb-4">
-                            <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                        </div>
-                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ __('app.basics') }}</h2>
-                        <p class="text-lg text-gray-600">{{ __('app.basics_description') }}</p>
-                    </div>
-                    <div class="space-y-4">
-                        <!-- FAQ Item 1 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.what_is_jariah') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.jariah_answer') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 2 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.what_is_jariah_fund') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.jariah_fund_answer') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 3 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.what_is_crowdfunding') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.crowdfunding_answer') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 4 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.what_types_of_campaigns') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.campaign_types_answer') }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Donations Section -->
-                <div id="donations" class="mb-16">
-                    <div class="text-center mb-12">
-                        <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
-                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
-                            </svg>
-                        </div>
-                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ __('app.donations') }}</h2>
-                        <p class="text-lg text-gray-600">{{ __('app.donations_description') }}</p>
-                    </div>
-                    <div class="space-y-4">
-                        <!-- FAQ Item 1 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.how_to_donate') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <div class="text-gray-600 leading-relaxed">
-                                    <p class="mb-4"><strong>{{ __('app.payment_via_fpx') }}</strong></p>
-                                    <ol class="list-decimal list-inside space-y-1 mb-4">
-                                        <li>{{ __('app.login_register') }}</li>
-                                        <li>{{ __('app.select_campaign') }}</li>
-                                        <li>{{ __('app.click_donate_button') }}</li>
-                                        <li>{{ __('app.enter_amount_and_pay') }}</li>
-                                        <li>{{ __('app.taken_to_payment_page') }}</li>
-                                        <li>{{ __('app.choose_payment_method') }}</li>
-                                    </ol>
-                                    <p class="mb-4"><strong>{{ __('app.payment_via_qr') }}</strong></p>
-                                    <ol class="list-decimal list-inside space-y-1">
-                                        <li>{{ __('app.select_campaign') }}</li>
-                                        <li>{{ __('app.click_duitnow') }}</li>
-                                        <li>{{ __('app.select_banking_app') }}</li>
-                                        <li>{{ __('app.scan_qr_code') }}</li>
-                                        <li>{{ __('app.enter_donation_amount') }}</li>
-                                    </ol>
+                @foreach($categories as $categoryKey => $categoryName)
+                    @if(isset($faqsByCategory[$categoryKey]) && $faqsByCategory[$categoryKey]->count() > 0)
+                        <div id="{{ $categoryKey }}" class="mb-16">
+                            <div class="text-center mb-12">
+                                <div class="inline-flex items-center justify-center w-16 h-16 
+                                    @if($categoryKey === 'general') bg-primary-100
+                                    @elseif($categoryKey === 'donations') bg-green-100
+                                    @elseif($categoryKey === 'campaigns') bg-blue-100
+                                    @elseif($categoryKey === 'operations') bg-purple-100
+                                    @elseif($categoryKey === 'partnerships') bg-orange-100
+                                    @else bg-gray-100
+                                    @endif rounded-full mb-4">
+                                    <svg class="w-8 h-8 
+                                        @if($categoryKey === 'general') text-primary-600
+                                        @elseif($categoryKey === 'donations') text-green-600
+                                        @elseif($categoryKey === 'campaigns') text-blue-600
+                                        @elseif($categoryKey === 'operations') text-purple-600
+                                        @elseif($categoryKey === 'partnerships') text-orange-600
+                                        @else text-gray-600
+                                        @endif" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        @if($categoryKey === 'general')
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        @elseif($categoryKey === 'donations')
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                                        @elseif($categoryKey === 'campaigns')
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                        @elseif($categoryKey === 'operations')
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        @elseif($categoryKey === 'partnerships')
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        @else
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        @endif
+                                    </svg>
                                 </div>
+                                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ $categoryName }}</h2>
+                                <p class="text-lg text-gray-600">
+                                    @if($categoryKey === 'general')
+                                        {{ __('app.basics_description') }}
+                                    @elseif($categoryKey === 'donations')
+                                        {{ __('app.donations_description') }}
+                                    @elseif($categoryKey === 'campaigns')
+                                        {{ __('app.campaigns_section_description') }}
+                                    @elseif($categoryKey === 'operations')
+                                        {{ __('app.operations_section_description') }}
+                                    @elseif($categoryKey === 'partnerships')
+                                        {{ __('app.other_section_description') }}
+                                    @else
+                                        {{ __('app.faq_category_description') }}
+                                    @endif
+                                </p>
+                            </div>
+                            <div class="space-y-4">
+                                @foreach($faqsByCategory[$categoryKey] as $faq)
+                                    <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
+                                        <div class="flex items-center justify-between">
+                                            <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ $faq->question }}</h3>
+                                            <div class="flex items-center space-x-2">
+                                                @if($faq->featured)
+                                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                                        </svg>
+                                                        Featured
+                                                    </span>
+                                                @endif
+                                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="faq-answer mt-4 hidden">
+                                            <div class="text-gray-600 leading-relaxed whitespace-pre-line">{{ $faq->answer }}</div>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
-
-                        <!-- FAQ Item 2 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.need_to_register') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.need_to_register_answer') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 3 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.min_max_donation') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.min_max_donation_answer') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 4 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.donor_charges') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.donor_charges_answer') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 5 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.jariah_fund_fees') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.jariah_fund_fees_answer') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 6 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.tax_deductible') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.tax_deductible_answer') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 7 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.donations_secure') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.donations_secure_answer') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 8 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.apply_tax_receipt') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.apply_tax_receipt_answer') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 9 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.when_receive_receipt') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.when_receive_receipt_answer') }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Campaigns Section -->
-                <div id="campaigns" class="mb-16">
-                    <div class="text-center mb-12">
-                        <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                            </svg>
-                        </div>
-                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ __('app.campaigns_section_title') }}</h2>
-                        <p class="text-lg text-gray-600">{{ __('app.campaigns_section_description') }}</p>
-                    </div>
-                    <div class="space-y-4">
-                        <!-- FAQ Item 1 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.campaign_not_reach_target') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <div class="text-gray-600 leading-relaxed">
-                                    <p class="mb-2">{{ __('app.campaign_not_reach_target_answer_intro') }}</p>
-                                    <ul class="list-disc list-inside space-y-1">
-                                        <li>{{ __('app.campaign_extend_period') }}</li>
-                                        <li>{{ __('app.campaign_end_incomplete_transfer') }}</li>
-                                        <li>{{ __('app.campaign_end_incomplete_add_balance') }}</li>
-                                    </ul>
-                                    <p class="mt-2 text-sm italic">{{ __('app.campaign_decisions_discretion') }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 2 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.campaign_updates') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.campaign_updates_answer') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 3 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.contact_charity_partners') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.contact_charity_partners_answer') }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Operations Section -->
-                <div id="operations" class="mb-16">
-                    <div class="text-center mb-12">
-                        <div class="inline-flex items-center justify-center w-16 h-16 bg-purple-100 rounded-full mb-4">
-                            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                        </div>
-                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ __('app.operations_section_title') }}</h2>
-                        <p class="text-lg text-gray-600">{{ __('app.operations_section_description') }}</p>
-                    </div>
-                    <div class="space-y-4">
-                        <!-- FAQ Item 1 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.operational_costs') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.operational_costs_answer') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 2 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.due_diligence_process') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.due_diligence_process_answer') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 3 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.management_costs_breakdown') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.management_costs_breakdown_answer') }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Other Matters Section -->
-                <div id="other" class="mb-16">
-                    <div class="text-center mb-12">
-                        <div class="inline-flex items-center justify-center w-16 h-16 bg-orange-100 rounded-full mb-4">
-                            <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                        </div>
-                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ __('app.other_section_title') }}</h2>
-                        <p class="text-lg text-gray-600">{{ __('app.other_section_description') }}</p>
-                    </div>
-                    <div class="space-y-4">
-                        <!-- FAQ Item 1 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.receipt_after_donating') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.receipt_after_donating_answer') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 2 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.registration_fee_for_partners') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.registration_fee_answer') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 3 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.fee_for_transferring_funds') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.fee_for_transferring_funds_answer') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 4 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.organization_interested_in_campaigns') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.organization_interested_in_campaigns_answer') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 5 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.when_collect_funds') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.when_collect_funds_answer') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 6 -->
-                        <div class="faq-item bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="toggleFaq(this)">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ __('app.how_funds_transferred') }}</h3>
-                                <svg class="faq-icon w-5 h-5 text-primary-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </div>
-                            <div class="faq-answer mt-4 hidden">
-                                <p class="text-gray-600 leading-relaxed">{{ __('app.how_funds_transferred_answer') }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    @endif
+                @endforeach
 
             </div>
         </section>

@@ -297,8 +297,10 @@ class FaqSeeder extends Seeder
                 'question' => $faqData['question'],
                 'answer' => $faqData['answer'],
                 'category' => $faqData['category'],
-                'sort_order' => $faqData['display_order'],
-                'is_active' => $faqData['featured'],
+                'status' => $faqData['status'],
+                'featured' => $faqData['featured'],
+                'display_order' => $faqData['display_order'],
+                'created_by' => $faqData['created_by'],
             ]);
         }
         

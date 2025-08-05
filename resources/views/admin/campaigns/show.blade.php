@@ -452,6 +452,93 @@
                             @endif
                         </div>
                     </div>
+                    
+                    <!-- Campaign Audit Trail -->
+                    <div class="bg-gradient-to-br from-gray-50 to-white shadow-lg rounded-xl border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 bg-gradient-to-r from-indigo-50 to-indigo-100 border-b border-indigo-200">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="h-8 w-8 bg-indigo-500 rounded-lg flex items-center justify-center mr-3">
+                                        <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-indigo-900">Campaign Audit Trail</h3>
+                                </div>
+                                <span class="text-sm text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full">
+                                    {{ $auditTrails->count() }} Events
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            @if($auditTrails && $auditTrails->count() > 0)
+                                <div class="space-y-4">
+                                    @foreach($auditTrails as $audit)
+                                        <div class="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                                            <!-- Action Icon -->
+                                            <div class="flex-shrink-0">
+                                                <div class="h-10 w-10 rounded-lg flex items-center justify-center {{ $audit->action_color }}">
+                                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $audit->action_icon }}"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Content -->
+                                            <div class="flex-1 min-w-0">
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <h4 class="text-sm font-semibold text-gray-900">{{ $audit->action_label }}</h4>
+                                                    <span class="text-xs text-gray-500">{{ $audit->created_at->diffForHumans() }}</span>
+                                                </div>
+                                                
+                                                <p class="text-sm text-gray-600 mb-2">{{ $audit->description }}</p>
+                                                
+                                                <!-- Changes Details -->
+                                                @if($audit->formatted_changes)
+                                                    <div class="mt-3 space-y-2">
+                                                        @foreach($audit->formatted_changes as $change)
+                                                            <div class="flex items-center text-xs text-gray-500">
+                                                                <span class="font-medium">{{ $change['field'] }}:</span>
+                                                                <span class="mx-2 text-red-500 line-through">{{ $change['old'] }}</span>
+                                                                <span class="mx-1">→</span>
+                                                                <span class="text-green-600 font-medium">{{ $change['new'] }}</span>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                @endif
+                                                
+                                                <!-- Performer Info -->
+                                                @if($audit->performer)
+                                                    <div class="mt-3 flex items-center text-xs text-gray-500">
+                                                        <svg class="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                                        </svg>
+                                                        By {{ $audit->performer->user->name ?? 'Unknown User' }}
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                
+                                <!-- View All Link -->
+                                <div class="mt-6 text-center">
+                                    <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors duration-200">
+                                        View Complete Audit Trail →
+                                    </a>
+                                </div>
+                            @else
+                                <div class="text-center py-8">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                    </svg>
+                                    <h3 class="mt-2 text-sm font-medium text-gray-900">No audit trail yet</h3>
+                                    <p class="mt-1 text-sm text-gray-500">Campaign activity will be logged here.</p>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

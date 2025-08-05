@@ -98,6 +98,23 @@
                             </div>
                         </div>
                         
+                        <!-- Organization Name -->
+                        <div class="group">
+                            <label for="organization_name" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Organization Name <span class="text-gray-400 text-xs">(Optional)</span>
+                            </label>
+                            <div class="relative rounded-xl shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400 group-hover:text-[#fe5000] transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                    </svg>
+                                </div>
+                                <input type="text" name="organization_name" id="organization_name" value="{{ old('organization_name') }}" 
+                                    class="pl-12 pr-4 py-3 focus:ring-2 focus:ring-[#fe5000] focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-[#fe5000] bg-white transition-all duration-200 placeholder-gray-400" 
+                                    placeholder="Enter organization name...">
+                            </div>
+                        </div>
+                        
                         <!-- Goal Amount -->
                         <div class="group">
                             <label for="goal_amount" class="block text-sm font-semibold text-gray-700 mb-2">
@@ -159,6 +176,61 @@
                             </div>
                         </div>
                         
+                        <!-- Category -->
+                        <div class="group">
+                            <label for="category" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Campaign Category <span class="text-gray-400 text-xs">(Optional)</span>
+                            </label>
+                            <div class="relative">
+                                <select id="category" name="category" 
+                                    class="focus:ring-2 focus:ring-[#fe5000] focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-[#fe5000] py-3 px-4 bg-white transition-all duration-200 appearance-none">
+                                    <option value="general" {{ old('category') == 'general' ? 'selected' : '' }}>General</option>
+                                    <option value="emergency" {{ old('category') == 'emergency' ? 'selected' : '' }}>Emergency Relief</option>
+                                    <option value="education" {{ old('category') == 'education' ? 'selected' : '' }}>Education</option>
+                                    <option value="healthcare" {{ old('category') == 'healthcare' ? 'selected' : '' }}>Healthcare</option>
+                                    <option value="infrastructure" {{ old('category') == 'infrastructure' ? 'selected' : '' }}>Infrastructure</option>
+                                    <option value="food" {{ old('category') == 'food' ? 'selected' : '' }}>Food & Nutrition</option>
+                                    <option value="orphan" {{ old('category') == 'orphan' ? 'selected' : '' }}>Orphan Support</option>
+                                    <option value="mosque" {{ old('category') == 'mosque' ? 'selected' : '' }}>Mosque Building</option>
+                                    <option value="water" {{ old('category') == 'water' ? 'selected' : '' }}>Water & Sanitation</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                                    <svg class="h-5 w-5 group-hover:text-[#fe5000] transition-colors duration-200" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Featured -->
+                        <div class="group">
+                            <label for="featured" class="flex items-center">
+                                <input type="checkbox" name="featured" id="featured" value="1" {{ old('featured') ? 'checked' : '' }} 
+                                    class="h-4 w-4 text-[#fe5000] focus:ring-[#fe5000] border-gray-300 rounded">
+                                <span class="ml-2 text-sm font-semibold text-gray-700">Featured Campaign</span>
+                                <span class="text-gray-400 text-xs ml-1">(Optional)</span>
+                            </label>
+                            <p class="mt-1 text-xs text-gray-500">Featured campaigns appear prominently on the homepage</p>
+                        </div>
+                        
+                        <!-- Display Order -->
+                        <div class="group">
+                            <label for="display_order" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Display Order <span class="text-gray-400 text-xs">(Optional)</span>
+                            </label>
+                            <div class="relative rounded-xl shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400 group-hover:text-[#fe5000] transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                                    </svg>
+                                </div>
+                                <input type="number" name="display_order" id="display_order" value="{{ old('display_order', 0) }}" min="0" 
+                                    class="pl-12 pr-4 py-3 focus:ring-2 focus:ring-[#fe5000] focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-[#fe5000] bg-white transition-all duration-200 placeholder-gray-400" 
+                                    placeholder="0">
+                            </div>
+                            <p class="mt-1 text-xs text-gray-500">Lower numbers appear first (0 = default order)</p>
+                        </div>
+                        
                         <!-- Start Date -->
                         <div class="group">
                             <label for="start_date" class="block text-sm font-semibold text-gray-700 mb-2">
@@ -205,6 +277,19 @@
                         <p class="mt-2 text-xs text-gray-500">Brief description of the campaign (max 500 characters)</p>
                     </div>
                     
+                    <!-- Detailed Description -->
+                    <div class="group">
+                        <label for="short_description" class="block text-sm font-semibold text-gray-700 mb-2">
+                            Detailed Description <span class="text-gray-400 text-xs">(Optional)</span>
+                        </label>
+                        <div class="relative rounded-xl shadow-sm">
+                            <textarea name="short_description" id="short_description" rows="3" 
+                                class="px-4 py-3 focus:ring-2 focus:ring-[#fe5000] focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-[#fe5000] bg-white transition-all duration-200 placeholder-gray-400" 
+                                placeholder="More detailed description for campaign display...">{{ old('short_description') }}</textarea>
+                        </div>
+                        <p class="mt-2 text-xs text-gray-500">Detailed description for campaign cards and listings</p>
+                    </div>
+                    
                     <!-- Content -->
                     <div class="group">
                         <label for="content" class="block text-sm font-semibold text-gray-700 mb-2">
@@ -239,8 +324,8 @@
                         <label for="featured_image" class="block text-sm font-semibold text-gray-700 mb-2">
                             Featured Image <span class="text-gray-400 text-xs">(Optional)</span>
                         </label>
-                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-xl hover:border-[#fe5000] transition-colors duration-200">
-                            <div class="space-y-1 text-center">
+                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-xl hover:border-[#fe5000] transition-colors duration-200" id="featured_image_upload_area">
+                            <div class="space-y-1 text-center" id="featured_image_upload_content">
                                 <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
@@ -254,7 +339,43 @@
                                 <p class="text-xs text-gray-500">PNG, JPG, GIF up to 2MB</p>
                             </div>
                         </div>
+                        <!-- Image Preview Area -->
+                        <div id="featured_image_preview" class="mt-4 hidden">
+                            <div class="relative inline-block">
+                                <img id="featured_image_preview_img" src="" alt="Featured Image Preview" class="max-w-full h-auto max-h-64 rounded-xl border-2 border-gray-200">
+                                <button type="button" id="featured_image_remove" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-colors duration-200">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <p class="mt-2 text-xs text-gray-500">Click the X button to remove this image</p>
+                        </div>
                         <p class="mt-2 text-xs text-gray-500">Recommended size: 1200x630px (16:9 ratio)</p>
+                    </div>
+                    
+                    <!-- Partner Selection -->
+                    <div>
+                        <label for="partner_id" class="block text-sm font-semibold text-gray-700 mb-2">
+                            Organization Partner <span class="text-gray-400 text-xs">(Optional)</span>
+                        </label>
+                        <div class="relative">
+                            <select id="partner_id" name="partner_id" 
+                                class="focus:ring-2 focus:ring-[#fe5000] focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-[#fe5000] py-3 px-4 bg-white transition-all duration-200 appearance-none">
+                                <option value="">Select a partner organization ({{ $partners->count() }} available)</option>
+                                @foreach($partners as $partner)
+                                    <option value="{{ $partner->id }}" {{ old('partner_id') == $partner->id ? 'selected' : '' }}>
+                                        {{ $partner->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-xs text-gray-500">Select a partner organization to use their logo and information</p>
                     </div>
                     
                     <!-- QR Code Image -->
@@ -262,8 +383,8 @@
                         <label for="qr_code_image" class="block text-sm font-semibold text-gray-700 mb-2">
                             QR Code Image <span class="text-gray-400 text-xs">(Optional)</span>
                         </label>
-                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-xl hover:border-[#fe5000] transition-colors duration-200">
-                            <div class="space-y-1 text-center">
+                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-xl hover:border-[#fe5000] transition-colors duration-200" id="qr_code_image_upload_area">
+                            <div class="space-y-1 text-center" id="qr_code_image_upload_content">
                                 <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
@@ -276,6 +397,18 @@
                                 </div>
                                 <p class="text-xs text-gray-500">PNG, JPG, GIF up to 2MB</p>
                             </div>
+                        </div>
+                        <!-- QR Code Preview Area -->
+                        <div id="qr_code_image_preview" class="mt-4 hidden">
+                            <div class="relative inline-block">
+                                <img id="qr_code_image_preview_img" src="" alt="QR Code Preview" class="max-w-full h-auto max-h-48 rounded-xl border-2 border-gray-200">
+                                <button type="button" id="qr_code_image_remove" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-colors duration-200">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <p class="mt-2 text-xs text-gray-500">Click the X button to remove this QR code</p>
                         </div>
                         <p class="mt-2 text-xs text-gray-500">QR code for payment/donation links</p>
                     </div>
@@ -291,6 +424,18 @@
                         </svg>
                         Cancel
                     </a>
+                    <button type="button" onclick="testSweetAlert()" class="inline-flex items-center justify-center px-4 py-3 border border-gray-300 rounded-xl shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fe5000] transition-all duration-200">
+                        <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Test SweetAlert
+                    </button>
+                    <button type="button" onclick="debugElements()" class="inline-flex items-center justify-center px-4 py-3 border border-gray-300 rounded-xl shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fe5000] transition-all duration-200">
+                        <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Debug Elements
+                    </button>
                     <button type="submit" class="inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-gradient-to-r from-[#fe5000] to-orange-600 hover:from-[#fe5000]/90 hover:to-orange-600/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fe5000] transition-all duration-200 transform hover:scale-105">
                         <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -303,17 +448,352 @@
     </div>
 </div>
 
+<!-- SweetAlert2 for notifications -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="{{ asset('css/sweetalert2-custom.css') }}">
+
 <script>
-// File upload preview
-document.getElementById('featured_image').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            // You can add preview functionality here if needed
-        };
-        reader.readAsDataURL(file);
+// SweetAlert2 Configuration
+const SwalConfig = {
+    confirmButtonColor: '#fe5000',
+    cancelButtonColor: '#6b7280',
+    reverseButtons: true,
+    focusCancel: true
+};
+
+// Global variables to store image previews
+let featuredImagePreview = null;
+let qrCodeImagePreview = null;
+
+// Initialize image preview functionality when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing image preview functionality...');
+    
+    // Featured image upload preview with SweetAlert
+    const featuredImageInput = document.getElementById('featured_image');
+    if (featuredImageInput) {
+        console.log('Featured image input found');
+        featuredImageInput.addEventListener('change', function(e) {
+            console.log('Featured image selected:', e.target.files[0]);
+            const file = e.target.files[0];
+            if (file) {
+                // Validate file size (2MB limit)
+                if (file.size > 2 * 1024 * 1024) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'File Too Large!',
+                        text: 'Featured image must be less than 2MB.',
+                        confirmButtonText: 'OK',
+                        ...SwalConfig
+                    });
+                    this.value = '';
+                    return;
+                }
+
+                // Validate file type
+                if (!file.type.match('image.*')) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid File Type!',
+                        text: 'Please select an image file (PNG, JPG, GIF).',
+                        confirmButtonText: 'OK',
+                        ...SwalConfig
+                    });
+                    this.value = '';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    console.log('Featured image loaded for preview');
+                    featuredImagePreview = e.target.result;
+                    
+                    // Show inline preview
+                    const previewArea = document.getElementById('featured_image_preview');
+                    const previewImg = document.getElementById('featured_image_preview_img');
+                    const uploadArea = document.getElementById('featured_image_upload_area');
+                    
+                    previewImg.src = featuredImagePreview;
+                    previewArea.classList.remove('hidden');
+                    uploadArea.classList.add('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    } else {
+        console.log('Featured image input not found');
     }
+
+    // QR code image upload preview with SweetAlert
+    const qrCodeImageInput = document.getElementById('qr_code_image');
+    if (qrCodeImageInput) {
+        console.log('QR code image input found');
+        qrCodeImageInput.addEventListener('change', function(e) {
+            console.log('QR code image selected:', e.target.files[0]);
+            const file = e.target.files[0];
+            if (file) {
+                // Validate file size (2MB limit)
+                if (file.size > 2 * 1024 * 1024) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'File Too Large!',
+                        text: 'QR code image must be less than 2MB.',
+                        confirmButtonText: 'OK',
+                        ...SwalConfig
+                    });
+                    this.value = '';
+                    return;
+                }
+
+                // Validate file type
+                if (!file.type.match('image.*')) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid File Type!',
+                        text: 'Please select an image file (PNG, JPG, GIF).',
+                        confirmButtonText: 'OK',
+                        ...SwalConfig
+                    });
+                    this.value = '';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    console.log('QR code image loaded for preview');
+                    qrCodeImagePreview = e.target.result;
+                    
+                    // Show inline preview
+                    const previewArea = document.getElementById('qr_code_image_preview');
+                    const previewImg = document.getElementById('qr_code_image_preview_img');
+                    const uploadArea = document.getElementById('qr_code_image_upload_area');
+                    
+                    previewImg.src = qrCodeImagePreview;
+                    previewArea.classList.remove('hidden');
+                    uploadArea.classList.add('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    } else {
+        console.log('QR code image input not found');
+    }
+
+    // Add remove button functionality
+    const featuredImageRemove = document.getElementById('featured_image_remove');
+    if (featuredImageRemove) {
+        featuredImageRemove.addEventListener('click', function() {
+            // Reset featured image
+            document.getElementById('featured_image').value = '';
+            featuredImagePreview = null;
+            
+            // Hide preview and show upload area
+            document.getElementById('featured_image_preview').classList.add('hidden');
+            document.getElementById('featured_image_upload_area').classList.remove('hidden');
+        });
+    }
+
+    const qrCodeImageRemove = document.getElementById('qr_code_image_remove');
+    if (qrCodeImageRemove) {
+        qrCodeImageRemove.addEventListener('click', function() {
+            // Reset QR code image
+            document.getElementById('qr_code_image').value = '';
+            qrCodeImagePreview = null;
+            
+            // Hide preview and show upload area
+            document.getElementById('qr_code_image_preview').classList.add('hidden');
+            document.getElementById('qr_code_image_upload_area').classList.remove('hidden');
+        });
+    }
+
 });
+
+// Form submission with SweetAlert confirmation
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(form);
+        const title = formData.get('title');
+        const description = formData.get('description');
+        const goalAmount = formData.get('goal_amount');
+        
+        // Basic validation
+        if (!title || !description || !goalAmount) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Missing Required Fields!',
+                text: 'Please fill in all required fields (Title, Description, Goal Amount).',
+                confirmButtonText: 'OK',
+                ...SwalConfig
+            });
+            return;
+        }
+        
+        // Prepare preview content
+        let previewContent = `
+            <div class="text-left">
+                <p><strong>Campaign Title:</strong> ${title}</p>
+                <p><strong>Description:</strong> ${description.substring(0, 100)}${description.length > 100 ? '...' : ''}</p>
+                <p><strong>Goal Amount:</strong> ${formData.get('currency')} ${parseFloat(goalAmount).toLocaleString()}</p>
+                <p><strong>Organization:</strong> ${formData.get('organization_name') || 'Not specified'}</p>
+                <p><strong>Category:</strong> ${formData.get('category') || 'General'}</p>
+                <p><strong>Status:</strong> ${formData.get('status')}</p>
+                <p><strong>Featured:</strong> ${formData.get('featured') ? 'Yes' : 'No'}</p>
+        `;
+        
+        // Add image previews if available
+        if (featuredImagePreview) {
+            previewContent += `<p><strong>Featured Image:</strong> ✓ Selected</p>`;
+        }
+        if (qrCodeImagePreview) {
+            previewContent += `<p><strong>QR Code:</strong> ✓ Selected</p>`;
+        }
+        
+        // Add partner selection if available
+        const partnerId = formData.get('partner_id');
+        if (partnerId) {
+            const partnerSelect = document.getElementById('partner_id');
+            const selectedOption = partnerSelect.options[partnerSelect.selectedIndex];
+            previewContent += `<p><strong>Partner Organization:</strong> ${selectedOption.text}</p>`;
+        }
+        
+        previewContent += '</div>';
+        
+        // Show confirmation dialog with preview
+        Swal.fire({
+            title: 'Create Campaign?',
+            html: previewContent,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Create Campaign!',
+            cancelButtonText: 'Review & Edit',
+            confirmButtonColor: '#fe5000',
+            cancelButtonColor: '#6b7280',
+            reverseButtons: true,
+            focusCancel: true,
+            width: '600px'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Show loading state
+                Swal.fire({
+                    title: 'Creating Campaign...',
+                    text: 'Please wait while we save your campaign.',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+                
+                // Submit the form
+                form.submit();
+            }
+        });
+    });
+});
+
+// Display session messages
+@if(session('success'))
+    Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: '{{ session('success') }}',
+        confirmButtonColor: '#fe5000'
+    });
+@endif
+
+@if(session('error'))
+    Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: '{{ session('error') }}',
+        confirmButtonColor: '#fe5000'
+    });
+@endif
+
+@if(session('warning'))
+    Swal.fire({
+        icon: 'warning',
+        title: 'Warning!',
+        text: '{{ session('warning') }}',
+        confirmButtonColor: '#fe5000'
+    });
+@endif
+
+@if(session('info'))
+    Swal.fire({
+        icon: 'info',
+        title: 'Info!',
+        text: '{{ session('info') }}',
+        confirmButtonColor: '#fe5000'
+    });
+@endif
+
+// Test SweetAlert function
+function testSweetAlert() {
+    console.log('Testing SweetAlert...');
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            title: 'SweetAlert Test!',
+            text: 'SweetAlert2 is working correctly!',
+            icon: 'success',
+            confirmButtonColor: '#fe5000'
+        });
+    } else {
+        alert('SweetAlert2 is not loaded!');
+    }
+}
+
+// Debug elements function
+function debugElements() {
+    console.log('=== DEBUGGING ELEMENTS ===');
+    
+    const elements = [
+        'featured_image',
+        'qr_code_image', 
+        'partner_id'
+    ];
+    
+    elements.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            console.log(`✓ ${id} found:`, element);
+        } else {
+            console.log(`✗ ${id} NOT found`);
+        }
+    });
+    
+    // Check SweetAlert
+    if (typeof Swal !== 'undefined') {
+        console.log('✓ SweetAlert2 is loaded');
+    } else {
+        console.log('✗ SweetAlert2 is NOT loaded');
+    }
+    
+    // Show debug info in alert
+    const foundElements = elements.filter(id => document.getElementById(id)).length;
+    alert(`Debug Results:\n- Elements found: ${foundElements}/${elements.length}\n- SweetAlert2: ${typeof Swal !== 'undefined' ? 'Loaded' : 'Not Loaded'}`);
+}
+
+// Display validation errors
+@if($errors->any())
+    Swal.fire({
+        icon: 'error',
+        title: 'Validation Error!',
+        html: `
+            <ul class="text-left">
+                @foreach($errors->all() as $error)
+                    <li>• {{ $error }}</li>
+                @endforeach
+            </ul>
+        `,
+        confirmButtonColor: '#fe5000'
+    });
+@endif
 </script>
 @endsection

@@ -155,9 +155,11 @@ class PartnerSeeder extends Seeder
             Partner::create([
                 'name' => $partnerData['name'],
                 'description' => $partnerData['description'],
-                'website' => $partnerData['website'],
+                'url' => $partnerData['website'], // Map website to url
                 'status' => $partnerData['status'],
-                'sort_order' => $partnerData['sort_order'],
+                'featured' => false,
+                'display_order' => $partnerData['sort_order'], // Map sort_order to display_order
+                'created_by' => $adminStaff ? $adminStaff->id : null,
             ]);
         }
         

@@ -92,4 +92,16 @@ class Partner extends Model
     {
         return $query->onlyTrashed();
     }
+    
+    /**
+     * Get unique active partners for dropdown selection.
+     */
+    public static function getUniqueActivePartners()
+    {
+        return static::where('status', 'active')
+            ->select('id', 'name', 'description')
+            ->groupBy('name')
+            ->orderBy('name')
+            ->get();
+    }
 }

@@ -4,6 +4,7 @@
 @section('description', 'Get in touch with our expert team. We provide professional guidance and assistance to help you make a meaningful impact in your community.')
 
 @push('styles')
+<link rel="stylesheet" href="{{ asset('css/sweetalert2-custom.css') }}">
 <style>
 /* Clean Card Styling */
 .contact-form-card {
@@ -405,7 +406,8 @@
                                 {{ __('app.fill_out_the_form_below_and_we_ll_get_back_to_you_within') }} <span class="font-semibold text-primary-600 animate-highlight">{{ __('app.24_hours') }}</span>
                             </p>
                         </div>
-                        <form id="contact-form" class="space-y-6">
+                        <form id="contact-form" class="space-y-6" action="{{ route('contact.store') }}" method="POST">
+                            @csrf
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label for="first-name" class="block text-sm font-semibold text-gray-700 mb-2">
@@ -495,8 +497,7 @@
                                 </span>
                             </button>
 
-                            <!-- Success/Error Messages -->
-                            <div id="form-message" class="hidden mt-4 p-4 rounded-lg"></div>
+                            <!-- Success/Error Messages will be shown via SweetAlert -->
 
                             <!-- Form Footer -->
                             <div class="mt-6 text-center">
@@ -514,6 +515,7 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     // Contact interactions
     function openMap() {
@@ -578,7 +580,6 @@
         const submitBtn = document.getElementById('submit-btn');
         const submitText = document.getElementById('submit-text');
         const submitLoading = document.getElementById('submit-loading');
-        const formMessage = document.getElementById('form-message');
 
         // Form validation
         function validateForm() {
@@ -589,34 +590,63 @@
             const message = document.getElementById('message').value.trim();
 
             if (!firstName || !lastName || !email || !subject || !message) {
-                showMessage('{{ __('app.please_fill_in_all_required_fields') }}', 'error');
+                showValidationError('{{ __('app.please_fill_in_all_required_fields') }}');
                 return false;
             }
 
             if (message.length < 10) {
-                showMessage('{{ __('app.message_must_be_at_least_10_characters_long') }}', 'error');
+                showValidationError('{{ __('app.message_must_be_at_least_10_characters_long') }}');
                 return false;
             }
 
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
-                showMessage('{{ __('app.please_enter_a_valid_email') }}', 'error');
+                showValidationError('{{ __('app.please_enter_a_valid_email') }}');
                 return false;
             }
 
             return true;
         }
 
-        // Show message function
-        function showMessage(text, type) {
-            formMessage.className = `mt-4 p-4 rounded-lg ${type === 'success' ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-red-100 text-red-700 border border-red-200'}`;
-            formMessage.textContent = text;
-            formMessage.classList.remove('hidden');
+        // SweetAlert2 Configuration
+        const SwalConfig = {
+            confirmButtonColor: '#fe5000',
+            cancelButtonColor: '#6b7280',
+            reverseButtons: true,
+            focusCancel: true
+        };
 
-            // Auto hide after 5 seconds
-            setTimeout(() => {
-                formMessage.classList.add('hidden');
-            }, 5000);
+        // Show success message with SweetAlert
+        function showSuccess(message) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Message Sent Successfully!',
+                text: message,
+                confirmButtonText: 'Thank You!',
+                ...SwalConfig
+            });
+        }
+
+        // Show error message with SweetAlert
+        function showError(message) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops! Something went wrong',
+                text: message,
+                confirmButtonText: 'Try Again',
+                ...SwalConfig
+            });
+        }
+
+        // Show validation error with SweetAlert
+        function showValidationError(message) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Please Check Your Input',
+                text: message,
+                confirmButtonText: 'OK',
+                ...SwalConfig
+            });
         }
 
         // Form submission
@@ -627,26 +657,84 @@
                 return;
             }
 
-            // Show loading state
-            submitBtn.disabled = true;
-            submitText.classList.add('hidden');
-            submitLoading.classList.remove('hidden');
-            submitLoading.classList.add('flex');
+            // Show confirmation dialog
+            Swal.fire({
+                title: 'Send Message?',
+                text: 'Are you sure you want to send this message?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Send Message!',
+                cancelButtonText: 'Cancel',
+                ...SwalConfig
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Show loading state
+                    submitBtn.disabled = true;
+                    submitText.classList.add('hidden');
+                    submitLoading.classList.remove('hidden');
+                    submitLoading.classList.add('flex');
 
-            // Simulate form submission (replace with actual API call)
-            setTimeout(() => {
+            // Get form data
+            const formData = new FormData(form);
+
+            // Submit form via AJAX
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
                 // Reset button state
                 submitBtn.disabled = false;
                 submitText.classList.remove('hidden');
                 submitLoading.classList.add('hidden');
                 submitLoading.classList.remove('flex');
 
-                // Show success message
-                showMessage('{{ __('app.thank_you_for_your_message') }} {{ __('app.we_ll_get_back_to_you_within_24_hours') }}', 'success');
+                if (data.success) {
+                    // Show success message with SweetAlert
+                    showSuccess(data.message);
+                    
+                    // Reset form
+                    form.reset();
+                    
+                    // Reset validation styling
+                    inputs.forEach(input => {
+                        input.classList.remove('border-red-300', 'focus:border-red-500', 'focus:ring-red-500');
+                        input.classList.add('border-gray-300', 'focus:border-primary-500', 'focus:ring-primary-500');
+                    });
+                } else {
+                    // Show error message with SweetAlert
+                    showError(data.message);
+                    
+                    // Show validation errors if any
+                    if (data.errors) {
+                        Object.keys(data.errors).forEach(field => {
+                            const input = document.getElementById(field.replace('-', '-'));
+                            if (input) {
+                                input.classList.add('border-red-300', 'focus:border-red-500', 'focus:ring-red-500');
+                                input.classList.remove('border-gray-300', 'focus:border-primary-500', 'focus:ring-primary-500');
+                            }
+                        });
+                    }
+                }
+            })
+            .catch(error => {
+                // Reset button state
+                submitBtn.disabled = false;
+                submitText.classList.remove('hidden');
+                submitLoading.classList.add('hidden');
+                submitLoading.classList.remove('flex');
 
-                // Reset form
-                form.reset();
-            }, 2000);
+                // Show error message with SweetAlert
+                showError('Sorry, there was an error sending your message. Please try again.');
+                console.error('Error:', error);
+            });
+                }
+            });
         });
 
         // Real-time validation feedback

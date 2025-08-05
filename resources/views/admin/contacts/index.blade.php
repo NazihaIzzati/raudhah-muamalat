@@ -63,7 +63,7 @@
         <!-- Search and Filters -->
         <div class="p-6 border-b border-gray-200 bg-gray-50">
             <form method="GET" action="{{ route('admin.contacts.index') }}" class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
                     <div class="md:col-span-2">
                         <div class="relative rounded-xl shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -83,6 +83,15 @@
                             @foreach($statuses as $value => $label)
                                 <option value="{{ $value }}" {{ request('status') == $value ? 'selected' : '' }}>{{ $label }}</option>
                             @endforeach
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <select name="urgent" 
+                            class="focus:ring-2 focus:ring-[#fe5000] focus:border-transparent block w-full text-sm border border-gray-300 rounded-xl hover:border-[#fe5000] py-3 px-4 bg-white transition-all duration-200 appearance-none">
+                            <option value="">All Urgency</option>
+                            <option value="true" {{ request('urgent') == 'true' ? 'selected' : '' }}>Urgent Only</option>
+                            <option value="false" {{ request('urgent') == 'false' ? 'selected' : '' }}>Not Urgent</option>
                         </select>
                     </div>
                     
@@ -167,9 +176,19 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $contact->status_badge_class }}">
-                                        {{ $contact->status_display_name }}
-                                    </span>
+                                    <div class="flex flex-col space-y-1">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $contact->status_badge_class }}">
+                                            {{ $contact->status_display_name }}
+                                        </span>
+                                        @if($contact->is_urgent)
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                                </svg>
+                                                Urgent
+                                            </span>
+                                        @endif
+                                    </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $contact->created_at->format('M d, Y H:i') }}
@@ -191,17 +210,14 @@
                                             </svg>
                                             Edit
                                         </a>
-                                        <form action="{{ route('admin.contacts.destroy', $contact) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this contact?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" 
-                                                    class="inline-flex items-center px-3 py-2 border border-transparent rounded-lg shadow-sm text-xs font-medium text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-200">
-                                                <svg class="-ml-1 mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                                </svg>
-                                                Delete
-                                            </button>
-                                        </form>
+                                        <button type="button" 
+                                                onclick="confirmDelete('{{ $contact->name }}', '{{ route('admin.contacts.destroy', $contact) }}')"
+                                                class="inline-flex items-center px-3 py-2 border border-transparent rounded-lg shadow-sm text-xs font-medium text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-200">
+                                            <svg class="-ml-1 mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                            </svg>
+                                            Delete
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -246,4 +262,27 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('js/contacts-crud.js') }}"></script>
+<script>
+    // Show success/error messages from session
+    @if(session('success'))
+        showSuccess('{{ session('success') }}');
+    @endif
+    
+    @if(session('error'))
+        showError('{{ session('error') }}');
+    @endif
+    
+    @if(session('warning'))
+        showWarning('{{ session('warning') }}');
+    @endif
+    
+    @if(session('info'))
+        showInfo('{{ session('info') }}');
+    @endif
+    
+    // Show validation errors
+    @if($errors->any())
+        showValidationErrors(@json($errors->all()));
+    @endif
+</script>
 @endpush 

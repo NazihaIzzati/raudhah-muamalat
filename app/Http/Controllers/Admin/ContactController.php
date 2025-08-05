@@ -33,6 +33,11 @@ class ContactController extends Controller
                   ->orWhere('message', 'like', "%{$search}%");
             });
         }
+
+        // Filter by urgent status
+        if ($request->filled('urgent')) {
+            $query->where('is_urgent', $request->urgent === 'true');
+        }
         
         $contacts = $query->latest()->paginate(15);
         
@@ -68,6 +73,11 @@ class ContactController extends Controller
                   ->orWhere('subject', 'like', "%{$search}%")
                   ->orWhere('message', 'like', "%{$search}%");
             });
+        }
+
+        // Filter by urgent status
+        if ($request->filled('urgent')) {
+            $query->where('is_urgent', $request->urgent === 'true');
         }
         
         $contacts = $query->latest()->paginate(15);
@@ -191,5 +201,20 @@ class ContactController extends Controller
         
         return redirect()->back()
             ->with('success', 'Contact marked as replied.');
+    }
+
+    /**
+     * Mark contact as urgent.
+     */
+    public function markUrgent(Contact $contact)
+    {
+        $contact->update([
+            'is_urgent' => !$contact->is_urgent,
+        ]);
+        
+        $status = $contact->is_urgent ? 'marked as urgent' : 'unmarked as urgent';
+        
+        return redirect()->back()
+            ->with('success', "Contact {$status} successfully.");
     }
 } 

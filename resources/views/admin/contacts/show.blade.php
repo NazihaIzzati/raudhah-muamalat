@@ -344,29 +344,25 @@
                                 </form>
                             @endif
                             
-                            @if(!$contact->is_urgent)
-                                <form action="{{ route('admin.contacts.mark-urgent', $contact) }}" method="POST">
-                                    @csrf
-                                    @method('PATCH')
+                            <form action="{{ route('admin.contacts.mark-urgent', $contact) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                @if(!$contact->is_urgent)
                                     <button type="submit" class="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200">
                                         <svg class="-ml-1 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.664-.833-2.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
                                         </svg>
                                         Mark as Urgent
                                     </button>
-                                </form>
-                            @else
-                                <form action="{{ route('admin.contacts.remove-urgent', $contact) }}" method="POST">
-                                    @csrf
-                                    @method('PATCH')
+                                @else
                                     <button type="submit" class="w-full inline-flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fe5000] transition-all duration-200">
                                         <svg class="-ml-1 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                         </svg>
                                         Remove Urgent
                                     </button>
-                                </form>
-                            @endif
+                                @endif
+                            </form>
                         </div>
                     </div>
                 </div>

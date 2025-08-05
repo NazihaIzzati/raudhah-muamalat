@@ -22,6 +22,7 @@ class Contact extends Model
         'subject',
         'message',
         'status',
+        'is_urgent',
         'admin_notes',
     ];
     
@@ -32,6 +33,7 @@ class Contact extends Model
      */
     protected $casts = [
         'deleted_at' => 'datetime',
+        'is_urgent' => 'boolean',
     ];
     
     /**
@@ -64,6 +66,14 @@ class Contact extends Model
     public function hasReply()
     {
         return $this->status === 'replied';
+    }
+
+    /**
+     * Check if contact is urgent.
+     */
+    public function isUrgent()
+    {
+        return $this->is_urgent;
     }
     
     /**

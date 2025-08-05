@@ -1,6 +1,10 @@
 @extends('layouts.admin')
 
 @section('title', 'Create Partner - Admin Dashboard')
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/sweetalert2-custom.css') }}">
+@endpush
 @section('page-title', 'Create Partner')
 
 @section('content')
@@ -261,6 +265,7 @@
 </div>
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('js/partners-crud.js') }}"></script>
 <script>
     // Show success/error messages from session

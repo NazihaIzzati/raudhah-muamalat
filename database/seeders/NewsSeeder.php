@@ -118,8 +118,11 @@ Selected participants will receive full scholarships covering all program costs.
                 'title' => $data['title'],
                 'slug' => $slug,
                 'content' => $data['content'],
-                'featured_image' => $data['featured_image'] ?? null,
-                'author' => $data['author'] ?? null,
+                'image_path' => $data['image_path'] ?? null, // Map featured_image to image_path
+                'excerpt' => $data['excerpt'] ?? Str::limit(strip_tags($data['content']), 200),
+                'category' => $data['category'] ?? 'general',
+                'featured' => $data['featured'] ?? false,
+                'display_order' => $data['display_order'] ?? 0,
                 'published_at' => $data['published_at'] ?? now(),
                 'status' => $data['status'],
                 'created_by' => $data['created_by'],
